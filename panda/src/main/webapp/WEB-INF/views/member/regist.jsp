@@ -17,15 +17,12 @@
 form h4 {
 	display: none
 }
-
 * {
 	text-align: center;
 }
-
 form label {
 	font-size: 20px;
 }
-
 form input {
 	width: 60%;
 	margin: 5px 0px;
@@ -36,7 +33,6 @@ form input {
 	border-style: solid;
 	border-radius: 1px;
 }
-/*        input:nth-child(7){*/
 input[type=submit] {
 	align: center;
 	width: 50px;
@@ -45,7 +41,6 @@ input[type=submit] {
 	color: white;
 	width: 50%;
 }
-
 .v {
 	padding: 0px 30px 0px 200px;
 	height: 35px;
@@ -192,7 +187,7 @@ $(function() {
 			<table >
 				<tbody>
 					<tr>
-						<td><label>아이디</label></td>
+						<td>아이디</td>
 						<td><input class="id" type="text" name="id" placeholder="아이디 8~16글자"
 							required>
 							<h4 class="id_right">올바른 형식입니다</h4>
@@ -200,12 +195,18 @@ $(function() {
 					</tr>
 				
 					<tr>
-						<td><label>비밀번호</label></td>
+						<td>비밀번호</td>
 						<td><input class="pw" type="password" name="pw"
 							id="user_pass" placeholder="비밀번호 8~14글자" required>
 							<h4 class="pw_right">올바른 형식입니다</h4>
 							<h4 class="pw_fail">형식에 맞는 비밀번호를 입력하세요</h4></td>
 						</tr>
+					<tr>
+						<td><label>비밀번호 확인</label></td>
+						<td><input type="password" id="chpass" name="pw_check"
+							placeholder="비밀번호 확인" required><br> <font name="check"
+							size="5" color="red"></font></td>
+					</tr>
 					
 					<tr>
 						<td>이름</td>

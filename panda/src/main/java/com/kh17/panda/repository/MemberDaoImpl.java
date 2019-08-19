@@ -1,5 +1,6 @@
 package com.kh17.panda.repository;
 
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -10,6 +11,7 @@ public class MemberDaoImpl implements MemberDao{
 	@Autowired
 	private SqlSession sqlSession;
 
+	//회원 가입
 	@Override
 	public boolean regist(MemberDto memberDto) {
 					try {
@@ -21,7 +23,29 @@ public class MemberDaoImpl implements MemberDao{
 			}
 }
 
+	
+//	로그인
+	@Override
+	public MemberDto login(MemberDto memberDto) {
+		MemberDto result = sqlSession.selectOne("member.login", memberDto);
+		return result;
+	}
 
+	
+//	로그인 섹션 확인
+	@Override
+	public MemberDto get(String id) {
+
+		return sqlSession.selectOne("member.get", id);
+	}
+
+// 회원 탈퇴
+	@Override
+	public void delete(String id) {
+		sqlSession.delete("member.delete", id);
+	}
+	
+	
 
 
 }

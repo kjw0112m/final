@@ -16,7 +16,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	
+	<select id="login" parameterType="memberDto" resultType="memberDto">
+		select * from member where id = #{id} and pw = #{pw}
+	</select>
+	
+		<select id="get" parameterType="string" resultType="memberDto">
+		select * from member where id= #{id}
+	</select>
+	
+		<delete id="delete" parameterType="string">
+		delete member where id = #{id} 
+	</delete>
 </mapper>
+
+
+
+
+
+
+
+
 
 
 
