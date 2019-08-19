@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,7 @@
 		<header class="main_header">
 			<div class="inner">
 				<h1 class="tit" style="padding: 0">
-					<a href="/" class=""><span class="tit_text">PANDA</span></a>
+					<a href="${pageContext.request.contextPath}" class=""><span class="tit_text">PANDA</span></a>
 				</h1>
 				<nav id="main_nav" class="main_nav">
 					<ul class="menu">
@@ -54,8 +55,18 @@
 					</ul>
 				</nav>
 				<div class="dis_f header_links ai_c">
-					<a href="#" class="">로그인</a> <a href="#" class="">회원가입</a> <a
-						href="#" class=""><img src="${pageContext.request.contextPath}/image/search.PNG"></a> <a href="#"
+					<c:choose>
+						<c:when test="${not empty sessionScope.sid}">
+							<a href="#" class="">나의 정보</a> 
+							<a href="#" class="">로그아웃</a> 
+						</c:when>
+						<c:otherwise>
+							<a href="#" class="">로그인</a> 
+							<a href="${pageContext.request.contextPath }/member/regist" class="">회원가입</a> 
+						</c:otherwise>
+					</c:choose>
+					
+						<a href="#" class=""><img src="${pageContext.request.contextPath}/image/search.PNG"></a> <a href="#"
 						class=""><img src="${pageContext.request.contextPath}/image/cart.PNG"></a> <a href="#" class=""><img
 						src="${pageContext.request.contextPath}/image/contact.PNG"></a>
 				</div>

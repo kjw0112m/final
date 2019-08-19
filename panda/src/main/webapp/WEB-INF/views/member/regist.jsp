@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <%--암호화 --%>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
@@ -113,9 +114,9 @@ function findAddress() {
 			// document.querySelector("input[name=detailaddr]").focus();
 
 			// 이 코드는 jquery.js 를 먼저 불러온 경우만 사용 가능
-			$("input[name=post_code]").val(data.zonecode);
-			$("input[name=basic_addr]").val(addr);
-			$("input[name=detail_addr]").focus();
+			$("input[name=postCode]").val(data.zonecode);
+			$("input[name=basicAddr]").val(addr);
+			$("input[name=detailAddr]").focus();
 		}
 	}).open();
 }
@@ -228,9 +229,9 @@ $(function() {
 						<td>주소</td>
 						<td><div>
 								<input class="addr" type="button" value="우편번호 찾기"><br>
-								<input type="text" name="post_code" placeholder="우편번호" readonly>
-								<input type="text" name="basic_addr" placeholder="주소" readonly>
-								<input type="text" name="detail_addr" placeholder="상세주소">
+								<input type="text" name="postCode" placeholder="우편번호" readonly>
+								<input type="text" name="basicAddr" placeholder="주소" readonly>
+								<input type="text" name="detailAddr" placeholder="상세주소">
 							</div></td>
 					</tr>
 					

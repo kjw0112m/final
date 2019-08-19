@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	<!-- 별칭 설정 -->
 	<typeAliases>
 		<typeAlias type="com.kh17.panda.entity.MemberDto" alias="memberDto"/>
-
+		<typeAlias type="com.kh17.panda.entity.OrdersDto" alias="ordersDto"/>
 	</typeAliases>
 	
 </configuration>
