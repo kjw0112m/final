@@ -11,12 +11,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="regist" parameterType="memberDto">
 		insert into member values(
 		#{id},#{pw}, #{name},  #{email}, #{phone},
-			#{post_code}, #{basic_addr},#{detail_addr}, sysdate,null,sysdate, #{birth} 
+			#{postCode}, #{basicAddr},#{detailAddr}, sysdate,null,sysdate, #{birth} 
 		)
 	</insert>
 	
 	
+	<select id="login" parameterType="memberDto" resultType="memberDto">
+		select * from member where id = #{id} and pw = #{pw}
+	</select>
+	
+		<delete id="delete" parameterType="string">
+		delete member where id = #{id} 
+	</delete>
+	
+		<select id="get" parameterType="string" resultType="memberDto">
+		select * from member where id= #{id}
+	</select>
+	
 </mapper>
+
+
+
+
+
+
+
+
 
 
 

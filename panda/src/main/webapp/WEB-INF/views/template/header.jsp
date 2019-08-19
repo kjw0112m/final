@@ -54,8 +54,10 @@
 					</ul>
 				</nav>
 				<div class="dis_f header_links ai_c">
-					<a href="#" class="">로그인</a> <a href="#" class="">회원가입</a> <a
-						href="#" class=""><img src="${pageContext.request.contextPath}/image/search.PNG"></a> <a href="#"
+				<a href="${pageContext.request.contextPath}/member/info" class="">회원정보</a>
+					<a href="${pageContext.request.contextPath}/member/login" class="">로그인</a>
+					 <a href="${pageContext.request.contextPath}/member/regist" class="">회원가입</a> 
+					<a href="#" class=""><img src="${pageContext.request.contextPath}/image/search.PNG"></a> <a href="#"
 						class=""><img src="${pageContext.request.contextPath}/image/cart.PNG"></a> <a href="#" class=""><img
 						src="${pageContext.request.contextPath}/image/contact.PNG"></a>
 				</div>
