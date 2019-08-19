@@ -14,8 +14,15 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<!-- 
+		Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory 
+		리소스 부여
+	-->
     <resources mapping="/js/**" location="/resources/js/" />
+    <resources mapping="/css/**" location="/resources/css/" />
+	<resources mapping="/font/**" location="/resources/font/" />
+	<resources mapping="/image/**" location="/resources/image/" />
+    
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
