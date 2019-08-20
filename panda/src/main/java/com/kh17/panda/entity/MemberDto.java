@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 
 @Data@Builder@AllArgsConstructor@NoArgsConstructor
 public class MemberDto {
-  private String id,pw,name,email,  phone, 
-  							post_code,basic_addr,detail_addr
-                          ,regist_dt,login_dt,pw_dt,birth;
+  private String id,pw,name,email, phone, 
+  							postCode,basicAddr,detailAddr
+                          ,registDt,loginDt,pwDt,birth;
 
 }
