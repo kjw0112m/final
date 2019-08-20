@@ -42,7 +42,12 @@ public class MemberDaoImpl implements MemberDao{
 
 		return sqlSession.selectOne("member.get", id);
 	}
-
+//	마지막 회원 로그인 시간
+	@Override
+	public void lastlogin(String id) {
+		sqlSession.update("member.lastlogin", id);
+		
+	}
 // 회원 탈퇴
 	@Override
 	public void delete(String id) {

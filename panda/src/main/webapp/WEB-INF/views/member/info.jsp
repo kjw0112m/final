@@ -52,6 +52,10 @@
 			<th>가입일</th>
 			<td>${mdto.regist_dt}</td>
 		</tr>
+			<tr>
+			<th>마지막 로그인 시간</th>
+			<td>${mdto.login_dt}</td>
+		</tr>
 	</tbody>
 </table>
 <%-- 회원이 이용할 수 있는 기능들을 링크로 제공 --%>

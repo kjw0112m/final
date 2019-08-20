@@ -1,8 +1,5 @@
 package com.kh17.panda;
 
-import java.util.List;
-
-import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +23,11 @@ public class Test01 {
 	@Autowired
 	private MemberDao memberDao;
 	
-	@Autowired
-	private SqlSession sqlSession;
-	
 	@Test
 	public void test() {
-		List<MemberDto> list = sqlSession.selectList("member.test");
-		for(MemberDto memberDto : list) {
-			System.out.println(memberDto);
-		}
+		MemberDto memberDto = memberDao.get("ssssssss");
+		System.out.println(memberDto.getLogin_dt());
+	
 	}
 	
 }

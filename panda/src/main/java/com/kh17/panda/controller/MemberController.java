@@ -95,6 +95,7 @@ public class MemberController {
 		MemberDto result = memberDao.get(memberDto.getId());
 		if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
 			session.setAttribute("ok", result.getId());
+			memberDao.lastlogin(memberDto.getId());
 			Cookie c = new Cookie("saveId", memberDto.getId());
 			if(remember == null) 
 				c.setMaxAge(0);
@@ -108,7 +109,7 @@ public class MemberController {
 			return "member/login_fail";
 		}
 	}
-	
+
 //	로그아웃
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
@@ -122,14 +123,6 @@ public class MemberController {
 		String id = (String) session.getAttribute("ok");
 		MemberDto memberDto = memberDao.get(id);
 		model.addAttribute("mdto", memberDto);
-		System.out.println(memberDto.getId());
-		System.out.println(memberDto.getPw());
-		System.out.println(memberDto.getEmail());
-		System.out.println(memberDto.getBasic_addr());
-		System.out.println(memberDto.getDetail_addr());
-		System.out.println(memberDto.getRegist_dt());
-		System.out.println(memberDto.getLogin_dt());
-		System.out.println(memberDto.getPost_code());
 		return "member/info";
 	}
 	

@@ -7,6 +7,7 @@ public interface MemberDao {
 	MemberDto idCheck(String id);
 	MemberDto login(MemberDto memberDto);
 	MemberDto get(String id);
+	void lastlogin(String id);
 	void delete(String id);
 	void change(MemberDto memberDto);
 }

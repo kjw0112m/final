@@ -54,6 +54,7 @@
 					</ul>
 				</nav>
 				<div class="dis_f header_links ai_c">
+				<a href="${pageContext.request.contextPath}/member/logout" class="">로그아웃</a>
 				<a href="${pageContext.request.contextPath}/member/info" class="">회원정보</a>
 					<a href="${pageContext.request.contextPath}/member/login" class="">로그인</a>
 					 <a href="${pageContext.request.contextPath}/member/agree" class="">회원가입</a> 

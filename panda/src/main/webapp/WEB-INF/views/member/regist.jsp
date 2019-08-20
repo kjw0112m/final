@@ -158,8 +158,22 @@ input[type=submit] {
 			}); //#chpass.keyup
 		});
 	});
-	
 
+	// 비밀번호 확인 숨기기
+	$(function(){
+		$("form").submit(function(e){
+			e.preventDefault();	
+			
+			var pw = $("input[name=pw]").val();
+			var encPw = CryptoJS.SHA256(pw).toString();
+			var ck_pw = $("input[name=pw_check]").val();
+			$("input[name=pw]").attr("name","");
+			var newInput1 = $("<input/>").attr("name","pw").val(encPw).attr("type","hidden");
+			$("input[name=pw_check]").attr("name","");
+			$(this).append(newInput1);
+			this.submit();
+		});
+	});
 </script>
 </head>
 <body>
@@ -172,7 +186,7 @@ input[type=submit] {
 		
 					<tr>
 						<td>아이디</td>
-						<td><input class="id" type="text" name="id"
+						<td><input  class="id" type="text" name="id"
 							placeholder="아이디 8~16글자" required><br>
 							<span class="sid"></span></td>
 						
