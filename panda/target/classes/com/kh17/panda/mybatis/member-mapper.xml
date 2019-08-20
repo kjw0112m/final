@@ -11,7 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="regist" parameterType="memberDto">
 		insert into member values(
 		#{id},#{pw}, #{name},  #{email}, #{phone},
-			#{post_code}, #{basic_addr},#{detail_addr}, sysdate,null,sysdate, #{birth} 
+			#{postCode}, #{basicAddr},#{detailAddr}, sysdate, null, sysdate, #{birth} 
 		)
 	</insert>
 	

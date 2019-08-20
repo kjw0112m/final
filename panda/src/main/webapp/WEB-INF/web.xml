@@ -2,9 +2,11 @@
 <web-app version="4.0"
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
 	
 	<!-- The definition of the Root Spring Container shared by all Servlets 	and Filters -->
+
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring/root-context.xml</param-value>
@@ -12,13 +14,16 @@
 
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+		<listener-class>org.springframework.web.context.ContextLoaderListener
+		</listener-class>
 	</listener>
 
 	<!-- 이 프로젝트 전체에 대한 인코딩 형식 설정(UTF-8) -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
+
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+
 
 		<!-- 인코딩 방식 지정 -->
 		<init-param>
@@ -41,10 +46,12 @@
 	<!-- Processes application requests -->
 	<servlet>
 		<servlet-name>appServlet</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml
+			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -54,6 +61,7 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
+
 	<!-- 
 		4xx 오류 처리
 		- 400(Bad Request) 	 			컨트롤러에서 요청하는 파라미터 미충족
@@ -62,6 +70,8 @@
 		- 404(Not Found)					해당 페이지 없음
 		- 405(Method Not Allowed)	처리할 수 없는 메소드
 	-->
+
+
 	<error-page>
 		<error-code>400</error-code>
 		<location>/error/400</location>
