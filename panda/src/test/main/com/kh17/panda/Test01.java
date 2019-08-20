@@ -26,7 +26,7 @@ public class Test01 {
 	@Test
 	public void test() {
 		MemberDto memberDto = memberDao.get("ssssssss");
-	
+	System.out.println(memberDto);
 	
 	}
 	

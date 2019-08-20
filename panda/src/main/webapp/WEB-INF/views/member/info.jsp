@@ -38,12 +38,12 @@
 		<tr>
 			<th>주소</th>
 			<td><div>
-					<input type="text" name="post_code" placeholder="${mdto.post_code}"
+					<input type="text" name="post_code" value="${mdto.post_code}"
 						readonly><br> 
 						<input type="text" name="basic_addr"
-						placeholder="${mdto.basic_addr}" readonly width="150px"> 
+						value="${mdto.basic_addr}" readonly width="150px"> 
 						<input
-						type="text" name="detail_addr" placeholder="${mdto.detail_addr}"
+						type="text" name="detail_addr" value="${mdto.detail_addr}"
 						readonly>
 				</div></td>
 		</tr>
