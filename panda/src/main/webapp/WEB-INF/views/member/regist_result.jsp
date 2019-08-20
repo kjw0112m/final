@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <style>
+* {
+	text-align: center;
+	margin: auto;
+}
+</style>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>    
 
 <h2>회원 등록이 완료되었습니다</h2>

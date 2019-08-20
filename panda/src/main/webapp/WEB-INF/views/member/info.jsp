@@ -1,11 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<style>
+* {
+	text-align: center;
+	margin: auto;
+}
 
+</style>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <h1>${mdto.name}님의정보</h1>
-
-<table >
+<br>
+<table border="1" width="400">
 	<tbody>
 
 		<tr>
@@ -31,13 +37,20 @@
 
 		<tr>
 			<th>주소</th>
-			<td>${mdto.postCode}</td>
-			<td>${mdto.basicAddr}</td>
-			<td>${mdto.detailAddr}</td>
+			<td><div>
+					<input type="text" name="post_code" placeholder="${mdto.post_code}"
+						readonly><br> 
+						<input type="text" name="basic_addr"
+						placeholder="${mdto.basic_addr}" readonly width="150px"> 
+						<input
+						type="text" name="detail_addr" placeholder="${mdto.detail_addr}"
+						readonly>
+				</div></td>
 		</tr>
+
 		<tr>
 			<th>가입일</th>
-			<td>${mdto.registDt}</td>
+			<td>${mdto.regist_dt}</td>
 		</tr>
 	</tbody>
 </table>

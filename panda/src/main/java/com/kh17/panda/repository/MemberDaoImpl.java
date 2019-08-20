@@ -22,7 +22,11 @@ public class MemberDaoImpl implements MemberDao{
 				return false;
 			}
 }
-
+// 아이디 중복검사
+	@Override
+	public MemberDto idCheck(String id) {
+		return sqlSession.selectOne("member.idCheck", id);
+	}
 	
 //	로그인
 	@Override
@@ -44,6 +48,15 @@ public class MemberDaoImpl implements MemberDao{
 	public void delete(String id) {
 		sqlSession.delete("member.delete", id);
 	}
+	
+	// 회원 정보 수정
+	@Override
+	public void change(MemberDto memberDto) {
+		sqlSession.update("member.change", memberDto);
+		System.out.println(memberDto);
+	}
+
+
 	
 	
 

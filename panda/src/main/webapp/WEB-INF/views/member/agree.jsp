@@ -34,10 +34,11 @@
 	});
 </script>
 <style>
-textarea {
-	padding: 10px;
+* {
+	text-align: center;
+	margin: auto;
 }
-</style>
+</style>>
 
 </head>
 <body>
@@ -45,6 +46,7 @@ textarea {
 
 	<br>
 	<h1>이용약관</h1>
+	<br>
 	<textarea rows="30" cols="100" readonly>전자상거래(인터넷사이버몰) 표준약관
 
 

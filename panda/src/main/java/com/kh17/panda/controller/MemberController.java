@@ -1,6 +1,8 @@
 package com.kh17.panda.controller;
 
 
+import java.io.IOException;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,16 +30,22 @@ public class MemberController {
 	@Autowired
 	private MemberDao memberDao;
 
-//	약정 동의
+//	약관 동의
 	@GetMapping("/agree")
 	public String agree() {
 		return "member/agree";
 	}
 	
 //	회원가입
+	
 	@GetMapping("/regist")
-	public String regist() {
-		return "member/regist";
+	public String regist(@RequestParam(required = false, defaultValue = "no") String agree) {
+		if(agree.equals("no")) {
+			return "redirect:/member/agree";
+		}
+		else {
+			return "member/regist";
+		}
 	}
 	
 // 회원가입	
@@ -53,6 +61,21 @@ public class MemberController {
 		else
 			return "member/regist_fail";
 	}
+	// 아이디 중복 검사
+	@GetMapping("/idCheck")
+	public void idCheck(@RequestParam String id, HttpServletResponse resp) throws IOException  {
+		resp.setContentType("text/plain");
+		MemberDto mdto = memberDao.get(id);
+		if(mdto==null) {
+			resp.getWriter().print("Y");
+		}
+		else {
+			resp.getWriter().print("N");
+		}
+			
+		
+	}
+	
 	
 //	로그인
 	@GetMapping("/login")
@@ -101,11 +124,12 @@ public class MemberController {
 		model.addAttribute("mdto", memberDto);
 		System.out.println(memberDto.getId());
 		System.out.println(memberDto.getPw());
-		System.out.println(memberDto.getBasicAddr());
-		System.out.println(memberDto.getDetailAddr());
-		System.out.println(memberDto.getRegistDt());
-		System.out.println(memberDto.getLoginDt());
-		System.out.println(memberDto.getPostCode());
+		System.out.println(memberDto.getEmail());
+		System.out.println(memberDto.getBasic_addr());
+		System.out.println(memberDto.getDetail_addr());
+		System.out.println(memberDto.getRegist_dt());
+		System.out.println(memberDto.getLogin_dt());
+		System.out.println(memberDto.getPost_code());
 		return "member/info";
 	}
 	
@@ -117,6 +141,22 @@ public class MemberController {
 		memberDao.delete(id);
 		session.removeAttribute("ok");
 		return "member/goodbye";
+	}
+	
+//	회원 정보 수정 기능
+//	요청 -> 수정입력 -> 수정처리 -> 내정보
+	@GetMapping("/change")
+	public String change(HttpSession session, Model model) {
+		String id = (String) session.getAttribute("ok");
+		MemberDto memberDto = memberDao.get(id);
+		model.addAttribute("mdto", memberDto);
+		return "member/change";
+	}
+	
+	@PostMapping("/change")
+	public String change(@ModelAttribute MemberDto memberDto) {
+		memberDao.change(memberDto);
+		return "redirect:info";
 	}
 	
 }

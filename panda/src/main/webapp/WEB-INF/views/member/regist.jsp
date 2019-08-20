@@ -10,18 +10,11 @@
 <%--암호화 --%>
 
 <style>
-.addr {width 10%
-	
-}
-
-form h4 {
-	display: none
-}
 
 * {
 	text-align: center;
+	margin: auto;
 }
-
 input[type=submit] {
 	align: center;
 	width: 50px;
@@ -37,22 +30,6 @@ input[type=submit] {
 	width: 465px;
 }
 
-.id_right {
-	color: blue;
-}
-
-.id_fail {
-	color: red;
-}
-
-.pw_right {
-	color: blue;
-}
-
-.pw_fail {
-	color: red;
-}
-}
 </style>
 <script>
 	$(function() {
@@ -96,94 +73,125 @@ input[type=submit] {
 
 				}
 
-				// 우편번호와 주소 정보를 해당 필드에 넣는다.
-				// document.querySelector('input[name=postcode]').value = data.zonecode;
-				// document.querySelector("input[name=basicaddr]").value = addr;
-				// 커서를 상세주소 필드로 이동한다.
-				// document.querySelector("input[name=detailaddr]").focus();
+		
 
 				// 이 코드는 jquery.js 를 먼저 불러온 경우만 사용 가능
-				$("input[name=postCode]").val(data.zonecode);
-				$("input[name=basicAddr]").val(addr);
-				$("input[name=detailAddr]").focus();
+				$("input[name=post_code]").val(data.zonecode);
+				$("input[name=basic_addr]").val(addr);
+				$("input[name=detail_addr]").focus();
 			}
 		}).open();
 	}
+	
+	
+	// 아이디 중복 검사
+	$(function(){
+	$("input[name=checkId]").prop("disabled", true).css("background-color", "#788784");
+								
+	 $("input[name=idCheck]").prop("disabled", true).css("background-color", "#788784");
+});
+	
+	$(function() {
+		$("input[name=idCheck]").click(function() {
+				$.ajax({
+				url : "idCheck",
+				data : {
+					id : $("input[name=id]").val()
+				},
+				dataType : "text",
+				success : function(resp) {
+					if (resp == "N") {
+						window.alert("이미 사용중인 아이디입니다");
+						$("input[name=id]").select();
+					}
+					//중복검사해서 사용할 수 있는 아이디이면 가입버튼 활성화
+					else {
+						window.alert("사용 가능한 아이디입니다")
+						$("input[name=checkId]").prop("disabled", false).css("background-color", "#30cccf")
+					}
+				}
+			});
+		});
+	});
+	// 아이디 형식 검사
 	$(function() {
 		$(".id").on("blur", function() {
-			var regex1 = /^[a-z0-9A-Z]{8,16}$/;
+			var regex = /^[a-z0-9A-Z]{8,16}$/;
 			var id = $(this).val();
-			var result = regex1.test(id);
+			var result = regex.test(id);
+			var span=document.querySelector(".sid");
 			if (result) {
-				$(".id_right").css("display", "block")
-				$(".id_fail").css("display", "none")
-			} else {
-				$(".id_fail").css("display", "block")
-				$(".id_right").css("display", "none")
+				span.innerHTML=""
+	    $("input[name=idCheck]").prop("disabled", false).css("background-color", "#4790b8");
+			}
+			else {
+		span.innerHTML = "<font color = '#de2195' size = '2'>8~15자의 영문 소문자,대문자, 숫자로 입력해주세요</font>"
+		 $("input[name=idCheck]").prop("disabled", true).css("background-color", "#6c9391");
 			}
 
 		});
-
+//  비밀번호 형식 검사
 		$(".pw").on("blur", function() {
-
-			var regex1 = /^[a-z0-9A-Z]{8,14}$/;
+			var regex = /^[a-zA-Z0-9!@#$\-_]{8,15}$/;
 			var pw = $(this).val();
-			var result = regex1.test(pw);
+			var result = regex.test(pw);
+			var span=document.querySelector(".spw");
 			if (result) {
-				$(".pw_right").css("display", "block")
-				$(".pw_fail").css("display", "none")
+				span.innerHTML=""
 			} else {
-				$(".pw_fail").css("display", "block")
-				$(".pw_right").css("display", "none")
+		 span.innerHTML = "<font color = '#de2195' size = '2'>8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)로 입력해주세요</font>"
 			}
 		});
-
+		//비밀 번호 확인 검사
 		$(function() {
+		var span=document.querySelector(".cpw");
 			$('#user_pass').keyup(function() {
-				$('font[name=check]').text('');
+				span.innerHTML=""
 			}); //#user_pass.keyup
 
 			$('#chpass').keyup(function() {
 				if ($('#user_pass').val() != $('#chpass').val()) {
-					$('font[name=check]').text('');
-					$('font[name=check]').html("암호틀림");
+				 span.innerHTML = "<font color = '#de2195' size = '2'>암호틀림</font>"
 				} else {
-					$('font[name=check]').text('');
-					$('font[name=check]').html("암호맞음");
+				span.innerHTML = "<font color = '#de2195' size = '2'>암호맞음</font>"
 				}
 			}); //#chpass.keyup
 		});
 	});
+	
+
 </script>
 </head>
 <body>
 	<%-- 회원 가입 페이지의 내용을 구현 --%>
+	<h1>회원 가입</h1><br>
 	<form action="regist" method="post">
 		<div>
-			<table>
+			<table border="0" width="600" height="350">
 				<tbody>
+		
 					<tr>
 						<td>아이디</td>
 						<td><input class="id" type="text" name="id"
-							placeholder="아이디 8~16글자" required>
-						<td><h4 class="id_right">올바른 형식입니다</h4></td>
-						<td><h4 class="id_fail">올바른 형식으로 입력해 주세요</h4></td>
-						<td><button>아이디 중복확인</button>
+							placeholder="아이디 8~16글자" required><br>
+							<span class="sid"></span></td>
+						
+					<td><input type="button" name="idCheck" value="아이디 중복확인" ></td>
 					</tr>
 
 					<tr>
 						<td>비밀번호</td>
 						<td><input class="pw" type="password" name="pw"
-							id="user_pass" placeholder="비밀번호 8~14글자" required>
-						<td><h4 class="pw_right">올바른 형식입니다</h4></td>
-						<td><h4 class="pw_fail">형식에 맞는 비밀번호를 입력하세요</h4></td>
+							id="user_pass" placeholder="8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)" required><br>
+                       <span class="spw"></span></td>
 					</tr>
 					<tr>
 						<td>비밀번호 확인</td>
 						<td><input type="password" id="chpass" name="pw_check"
-							placeholder="비밀번호 확인" required></td>
-						<td><font name="check" size="5" color="red"></font></td>
-					</tr>
+							placeholder="비밀번호 확인" required><br>
+							<span class="cpw"></span></td>
+							</td>
+						</tr>
 
 					<tr>
 						<td>이름</td>
@@ -194,7 +202,6 @@ input[type=submit] {
 						<td>이메일</td>
 						<td><input type="email" name="email" placeholder="이메일"
 							required></td>
-						<td></td>
 						<td><button>이메일본인인증</button>
 					</tr>
 
@@ -207,9 +214,9 @@ input[type=submit] {
 						<td>주소</td>
 						<td><div>
 								<input class="addr" type="button" value="우편번호 찾기"> 
-								<input type="text" name="postCode" placeholder="우편번호" readonly><br>
-								<input type="text" name="basicAddr" placeholder="주소" readonly>
-								<input type="text" name="detailAddr" placeholder="상세주소">
+								<input type="text" name="post_code" placeholder="우편번호" readonly><br>
+								<input type="text" name="basic_addr" placeholder="주소" readonly>
+								<input type="text" name="detail_addr" placeholder="상세주소">
 							</div></td>
 					</tr>
 
@@ -219,7 +226,7 @@ input[type=submit] {
 					</tr>
 
 					<tr>
-						<td colspan="2"><input type="submit" value="가입하기"></td>
+						<td colspan="3"><input  type="submit" name = "checkId" value="가입하기" ></td>
 					</tr>
 
 				</tbody>

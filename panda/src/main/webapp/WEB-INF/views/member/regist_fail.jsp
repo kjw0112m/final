@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<style>
+* {
+	text-align: center;
+	margin: auto;
+}
+</style>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>    
 <h2>가입 실패</h2>
 <h3><a href="regist">다시 가입하러 가기</a></h3>
