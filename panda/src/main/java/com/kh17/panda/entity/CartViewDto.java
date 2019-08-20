@@ -5,12 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Data
-public class OrdersDto {
-	private String memberId,orderDt,status,csStatus,payType;
-	private int id,productId,quantity,totalPrice,discountPrice,team;
-
+public class CartViewDto {
+	private int cart_id, product_price;
+	private String product_seller_id, product_name, sizes_sizes;
 }
