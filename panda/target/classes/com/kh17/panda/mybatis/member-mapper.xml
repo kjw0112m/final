@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	이 파일은 SQL 명령만 보관하는 파일
+	따라서 외부에서 접근할 수 있도록 namespace를 지정
+ -->
+<mapper namespace="member">
+	<!-- 회원등록-->
+	<insert id="regist" parameterType="memberDto">
+		insert into member values(
+		#{id},#{pw}, #{name},  #{email}, #{phone},
+			#{post_code}, #{basic_addr},#{detail_addr}, sysdate, null, sysdate, #{birth} 
+		)
+	</insert>
+	
+		<!-- 회원 아이디 중복 확인-->
+	<select id="idCheck" parameterType="string" resultType="memberDto">
+		select * from member where id = #{id}
+	</select>
+	
+		<!-- 회원 로그인-->
+	<select id="login" parameterType="memberDto" resultType="memberDto">
+		select * from member where id = #{id} and pw = #{pw}
+	</select>
+	
+		<!-- 회원 탈퇴-->
+		<delete id="delete" parameterType="string">
+		delete member where id = #{id} 
+	</delete>
+	
+		<!-- 회원 정보 수정-->
+			<select id="get" parameterType="string" resultType="memberDto">
+		select * from member where id= #{id}
+	</select>
+	
+	<!-- 최종접속시간 -->
+	<update id="lastlogin" parameterType="memberDto">
+		update member 
+		set 
+		login_dt = sysdate
+				 where id = #{id}
+	</update>
+	
+	<!-- 회원 정보 수정-->
+	<update id="change" parameterType="memberDto">
+		update member 
+			set 
+				phone = #{phone}, 
+				email = #{email},
+				post_code=#{post_code},
+				basic_addr=#{basic_addr},
+				detail_addr=#{detail_addr}
+				
+			where
+				id = #{id}
+	</update>
+	 
+	<select id="test" resultType="memberDto">
+		select 
+			detail_addr
+			from member	
+	</select>
+	
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

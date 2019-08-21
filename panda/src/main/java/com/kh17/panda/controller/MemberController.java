@@ -1,0 +1,182 @@
+package com.kh17.panda.controller;
+
+
+import java.io.IOException;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.kh17.panda.entity.MemberDto;
+import com.kh17.panda.repository.MemberDao;
+
+
+
+
+@Controller
+@RequestMapping("/member")
+public class MemberController {
+	
+	@Autowired
+	private MemberDao memberDao;
+
+//	약관 동의
+	@GetMapping("/agree")
+	public String agree() {
+		return "member/agree";
+	}
+	
+//	회원가입
+	
+	@GetMapping("/regist")
+	public String regist(@RequestParam(required = false, defaultValue = "no") String agree) {
+		if(agree.equals("no")) {
+			return "redirect:/member/agree";
+		}
+		else {
+			return "member/regist";
+		}
+	}
+	
+// 회원가입	
+	@PostMapping("/regist")
+	public String regist(@ModelAttribute MemberDto memberDto) {
+		String origin = memberDto.getPw();
+		String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
+		memberDto.setPw(encrypt);
+			
+		boolean result =memberDao.regist(memberDto);
+		if(result)
+			return "member/regist_result";
+		else
+			return "member/regist_fail";
+	}
+	// 아이디 중복 검사
+	@GetMapping("/idCheck")
+	public void idCheck(@RequestParam String id, HttpServletResponse resp) throws IOException  {
+		resp.setContentType("text/plain");
+		MemberDto mdto = memberDao.get(id);
+		if(mdto==null) {
+			resp.getWriter().print("Y");
+		}
+		else {
+			resp.getWriter().print("N");
+		}
+			
+		
+	}
+	
+	
+//	로그인
+	@GetMapping("/login")
+	public String login() {
+		return "member/login";
+	}
+	
+//	로그인
+	@PostMapping("/login")
+	public String login(
+			@ModelAttribute MemberDto memberDto,
+			@RequestParam(required=false) String remember,
+			HttpSession session,
+			HttpServletResponse response) {
+		
+// 비밀번호 암호화처리
+		MemberDto result = memberDao.get(memberDto.getId());
+		if(result!=null) {
+			if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
+				session.setAttribute("sid", result.getId());
+								
+				System.out.println("로그인 성공");
+				
+				memberDao.lastlogin(memberDto.getId());
+				
+				//쿠키객체를 만들고 체크여부에 따라 시간 설정 후 response에 추가
+				Cookie c = new Cookie("saveId", memberDto.getId());
+				if(remember == null)//체크 안했을때 
+					c.setMaxAge(0);
+				else //체크 했을때
+					c.setMaxAge(1 * 7 * 24 * 60 * 60);//1주
+				response.addCookie(c);
+				
+				return "redirect:/";
+			}else {
+				return "member/login_fail";
+			}
+		}
+		else {
+			return "member/login_fail";
+		}
+	}
+
+//	로그아웃
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("sid");
+		return "redirect:/member/login";
+	}
+	
+//	내정보 보기 기능
+	@GetMapping("/info")
+	public String info(HttpSession session, Model model) {
+		String id = (String) session.getAttribute("sid");
+		MemberDto memberDto = memberDao.get(id);
+		model.addAttribute("mdto", memberDto);
+		return "member/info";
+	}
+	
+	
+//	회원탈퇴
+	@GetMapping("/delete")
+	public String delete(HttpSession session) {
+		String id = (String)session.getAttribute("sid");
+		memberDao.delete(id);
+		session.removeAttribute("ok");
+		return "member/goodbye";
+	}
+	
+//	회원 정보 수정 기능
+//	요청 -> 수정입력 -> 수정처리 -> 내정보
+	@GetMapping("/change")
+	public String change(HttpSession session, Model model) {
+		String id = (String) session.getAttribute("sid");
+		MemberDto memberDto = memberDao.get(id);
+		model.addAttribute("mdto", memberDto);
+		return "member/change";
+	}
+	
+	@PostMapping("/change")
+	public String change(@ModelAttribute MemberDto memberDto, HttpSession session) {
+		memberDto.setId((String) session.getAttribute("sid"));
+		memberDao.change(memberDto);
+		return "redirect:info";
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
