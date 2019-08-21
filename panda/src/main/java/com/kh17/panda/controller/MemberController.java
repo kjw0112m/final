@@ -93,17 +93,26 @@ public class MemberController {
 		
 // 비밀번호 암호화처리
 		MemberDto result = memberDao.get(memberDto.getId());
-		if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
-			session.setAttribute("ok", result.getId());
-			memberDao.lastlogin(memberDto.getId());
-			Cookie c = new Cookie("saveId", memberDto.getId());
-			if(remember == null) 
-				c.setMaxAge(0);
-			else 
-				c.setMaxAge(1* 7 * 24 * 60 * 60);
-			response.addCookie(c);
-			
-			return "redirect:/";
+		if(result!=null) {
+			if(BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
+				session.setAttribute("sid", result.getId());
+								
+				System.out.println("로그인 성공");
+				
+				memberDao.lastlogin(memberDto.getId());
+				
+				//쿠키객체를 만들고 체크여부에 따라 시간 설정 후 response에 추가
+				Cookie c = new Cookie("saveId", memberDto.getId());
+				if(remember == null)//체크 안했을때 
+					c.setMaxAge(0);
+				else //체크 했을때
+					c.setMaxAge(1 * 7 * 24 * 60 * 60);//1주
+				response.addCookie(c);
+				
+				return "redirect:/";
+			}else {
+				return "member/login_fail";
+			}
 		}
 		else {
 			return "member/login_fail";
@@ -113,14 +122,14 @@ public class MemberController {
 //	로그아웃
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		session.removeAttribute("ok");
+		session.removeAttribute("sid");
 		return "redirect:/member/login";
 	}
 	
 //	내정보 보기 기능
 	@GetMapping("/info")
 	public String info(HttpSession session, Model model) {
-		String id = (String) session.getAttribute("ok");
+		String id = (String) session.getAttribute("sid");
 		MemberDto memberDto = memberDao.get(id);
 		model.addAttribute("mdto", memberDto);
 		return "member/info";
@@ -130,7 +139,7 @@ public class MemberController {
 //	회원탈퇴
 	@GetMapping("/delete")
 	public String delete(HttpSession session) {
-		String id = (String)session.getAttribute("ok");
+		String id = (String)session.getAttribute("sid");
 		memberDao.delete(id);
 		session.removeAttribute("ok");
 		return "member/goodbye";
@@ -140,14 +149,15 @@ public class MemberController {
 //	요청 -> 수정입력 -> 수정처리 -> 내정보
 	@GetMapping("/change")
 	public String change(HttpSession session, Model model) {
-		String id = (String) session.getAttribute("ok");
+		String id = (String) session.getAttribute("sid");
 		MemberDto memberDto = memberDao.get(id);
 		model.addAttribute("mdto", memberDto);
 		return "member/change";
 	}
 	
 	@PostMapping("/change")
-	public String change(@ModelAttribute MemberDto memberDto) {
+	public String change(@ModelAttribute MemberDto memberDto, HttpSession session) {
+		memberDto.setId((String) session.getAttribute("sid"));
 		memberDao.change(memberDto);
 		return "redirect:info";
 	}

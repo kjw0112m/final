@@ -2,8 +2,38 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
+<%--암호화 --%>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
+<script src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
+<script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
+<%--암호화 --%>
+
+
+<%--디자인 --%>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>    
 <script>
+//비밀번호 암호화
+$(function(){
+	$("form").submit(function(e){
+		e.preventDefault();	
+		
+		var pw = $("input[name=pw]").val();
+		var encPw = CryptoJS.SHA256(pw).toString();
+		
+		$("input[name=pw]").attr("name","");
+		var newInput = $("<input/>").attr("name","pw").val(encPw).attr("type","hidden");
+		
+		$(this).append(newInput);
+		this.submit();
+	});
+});
+
 // Disable form submissions if there are invalid fields
 (function() {
   'use strict';
@@ -24,20 +54,6 @@
 });
 </script>
 
-
-<%--암호화 --%>
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-<script src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
-<script src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
-<script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
-<%--암호화 --%>
-
-
-<%--디자인 --%>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <style>
 h1, h2, a {
 	color: black !important;

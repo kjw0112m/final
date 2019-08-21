@@ -205,8 +205,7 @@ input[type=submit] {
 						<td><input type="password" id="chpass" name="pw_check"
 							placeholder="비밀번호 확인" required><br>
 							<span class="cpw"></span></td>
-							</td>
-						</tr>
+													</tr>
 
 					<tr>
 						<td>이름</td>
