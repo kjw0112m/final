@@ -56,12 +56,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where
 				id = #{id}
 	</update>
-	 
+	
+	
+	 <!--테스트 -->
 	<select id="test" resultType="memberDto">
 		select 
 			detail_addr
 			from member	
 	</select>
+	
+		<!-- 비밀번호 찾기 기능 -->
+	<select id="findpw" parameterType="memberDto" resultType="memberDto">
+		select * from member
+			where 
+					id= #{id}
+				and 
+				email= #{email}
+				and
+				phone=#{phone}
+		
+	</select>
+	
+	<update id="changePw" parameterType="memberDto">
+		update member
+			set
+				pw = #{pw}
+			where
+				id = #{id}
+	</update>
 	
 	
 </mapper>

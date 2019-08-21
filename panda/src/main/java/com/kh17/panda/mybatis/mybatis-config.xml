@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh17.panda.entity.CartDto" alias="cartDto"/>
 		<typeAlias type="com.kh17.panda.entity.CartViewDto" alias="cartViewDto"/>
 		<typeAlias type="com.kh17.panda.entity.OrdersDto" alias="ordersDto"/>
+		<typeAlias type="com.kh17.panda.entity.CertDto" alias="certDto"/>
 	</typeAliases>
 	
 </configuration>

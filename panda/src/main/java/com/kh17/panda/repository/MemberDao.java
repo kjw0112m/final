@@ -10,4 +10,6 @@ public interface MemberDao {
 	void lastlogin(String id);
 	void delete(String id);
 	void change(MemberDto memberDto);
+	boolean findPassword(MemberDto memberDto);
+	void changePw(MemberDto memberDto);
 }
