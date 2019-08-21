@@ -9,8 +9,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh17.panda.entity.MemberDto" alias="memberDto"/>
 		<typeAlias type="com.kh17.panda.entity.CartDto" alias="cartDto"/>
 		<typeAlias type="com.kh17.panda.entity.CartViewDto" alias="cartViewDto"/>
-		<typeAlias type="com.kh17.panda.entity.OrdersDto" alias="ordersDto"/>
 		<typeAlias type="com.kh17.panda.entity.CertDto" alias="certDto"/>
+		<typeAlias type="com.kh17.panda.entity.OrdersDto" alias="ordersDto"/>
+		<typeAlias type="com.kh17.panda.entity.ProductDto" alias="productDto"/>
+		<typeAlias type="com.kh17.panda.entity.SubcategoryDto" alias="subcategoryDto"/>
+		<typeAlias type="com.kh17.panda.entity.SizesDto" alias="sizesDto"/>
 	</typeAliases>
-	
 </configuration>

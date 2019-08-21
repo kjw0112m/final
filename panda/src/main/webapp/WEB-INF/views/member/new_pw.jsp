@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%--암호화 --%>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
+<script src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
+<script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
+<%--암호화 --%>
 <%-- 
 	비밀번호 변경 페이지 
 	 - new_pw.do라는 서블릿에게 이메일, 새로운 비밀번호를 전달한다
@@ -38,12 +44,6 @@
 			});
 		});
 		</script>
-<%--암호화 --%>
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-<script src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
-<script src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
-<script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
-<%--암호화 --%>
 
 
 <h1>비밀번호 변경</h1>
