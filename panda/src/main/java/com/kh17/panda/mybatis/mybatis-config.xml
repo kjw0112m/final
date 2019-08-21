@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.kh17.panda.entity.ProductDto" alias="productDto"/>
+		<typeAlias type="com.kh17.panda.entity.SubcategoryDto" alias="subcategoryDto"/>
+		<typeAlias type="com.kh17.panda.entity.SizesDto" alias="sizesDto"/>
+	</typeAliases>
+</configuration>
