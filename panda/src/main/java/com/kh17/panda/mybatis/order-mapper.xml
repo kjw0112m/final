@@ -10,6 +10,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<choose>
 			<when test="searchType != null and searchKeyword != null">
 				and
+				<foreach collection=""></foreach>
+				${searchType} like '%' || #{searchKeyword} || '%'
+				${searchType} like '%' || #{searchKeyword} || '%'
+				${searchType} like '%' || #{searchKeyword} || '%'
+				${searchType} like '%' || #{searchKeyword} || '%'
 				${searchType} like '%' || #{searchKeyword} || '%'
 			</when>
 			<when test="start_dt != null and end_dt !=null">
