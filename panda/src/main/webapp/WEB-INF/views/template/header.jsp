@@ -55,19 +55,21 @@
 					</ul>
 				</nav>
 				<div class="dis_f header_links ai_c">
+
 					<c:choose>
 						<c:when test="${not empty sessionScope.sid}">
-							<a href="#" class="">나의 정보</a> 
-							<a href="#" class="">로그아웃</a> 
+							<a href="${pageContext.request.contextPath }/member/info" class="">나의 정보</a> 
+							<a href="${pageContext.request.contextPath }/member/logout" class="">로그아웃</a> 
 						</c:when>
 						<c:otherwise>
-							<a href="#" class="">로그인</a> 
+							<a href="${pageContext.request.contextPath }/member/login" class="">로그인</a> 
 							<a href="${pageContext.request.contextPath }/member/regist" class="">회원가입</a> 
 						</c:otherwise>
 					</c:choose>
 					
 						<a href="#" class=""><img src="${pageContext.request.contextPath}/image/search.PNG"></a> <a href="#"
-						class=""><img src="${pageContext.request.contextPath}/image/cart.PNG"></a> <a href="#" class=""><img
+
+						class=""><img src="${pageContext.request.contextPath}/image/cart.PNG"></a> <a href="${pageContext.request.contextPath}/notice/noticeList" class=""><img
 						src="${pageContext.request.contextPath}/image/contact.PNG"></a>
 				</div>
 			</div>

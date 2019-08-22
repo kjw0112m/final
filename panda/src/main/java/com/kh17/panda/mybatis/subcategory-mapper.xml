@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="subcategory">
+
+	<select id="list" resultType="subcategoryDto">
+		select * from sub_category order by name desc
+	</select>
+	
+	<select id="get" parameterType="int" resultType="String">
+		select name from sub_category where id = #{sub_category_id}
+	</select>
+
+</mapper>
