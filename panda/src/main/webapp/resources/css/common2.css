@@ -1,0 +1,159 @@
+/* ��Ʈ ��� */
+@font-face {
+    font-family: nanum;
+    src: url("../font/NanumGothic.ttf");
+}
+
+/* ��ü ��Ÿ�� */
+* {
+    /* ũ�� ������ "�׵θ� ����"���� ���� */
+    box-sizing: border-box;
+    font-family: nanum;
+}
+
+/* body �� test �� �پ��ִٸ� �� �ȿ� �ִ� div�� �׵θ� �ο� */
+/* > �� "���� �ڽ�" �±׸� �ǹ� */
+/* body[test] > div{*/
+/* �׳� ����� ���� "��� �ڽ�" �±׸� �ǹ� */
+body[test] div,
+body[test] p,
+body[test] span,
+body[test] label,
+body[test] header,
+body[test] main,
+body[test] nav,
+body[test] aside,
+body[test] footer,
+body[test] section,
+body[test] article{
+    border: 1px dotted gray;
+}
+
+
+
+/*****************************************
+���̺� ��Ÿ��
+*****************************************/
+.table {
+	margin:auto;
+    border: 1px solid gray;
+    border-collapse: collapse;
+}
+
+.table > thead > tr {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.table > thead > tr > th, 
+.table > thead > tr > td, 
+.table > tbody > tr > th, 
+.table > tbody > tr > td,
+.table > tfoot > tr > th, 
+.table > tfoot > tr > td {
+    border: 1px solid gray;
+    padding: 0.5rem;
+}
+
+/* table hover ��Ÿ�� */
+.table.table-hover > tbody > tr:hover{
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* �ٹ��� ���̺�*/
+.table.table-stripe > tbody > tr:nth-child(2n){
+    background-color:rgba(0, 0, 0, 0.05);
+}
+
+/* �� ���� ���̺� */
+.table.table-noline,
+.table.table-noline > thead > tr > th, 
+.table.table-noline > thead > tr > td, 
+.table.table-noline > tbody > tr > th, 
+.table.table-noline > tbody > tr > td,
+.table.table-noline > tfoot > tr > th, 
+.table.table-noline > tfoot > tr > td {
+    border:none;
+}
+/* ���μ��� �ִ� ���̺� */
+.table.table-hamburg{
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    border-left: none;
+    border-right:none;
+}
+.table.table-hamburg > thead{
+    border-bottom: 2px solid black;
+}
+.table.table-hamburg > thead > tr > th, 
+.table.table-hamburg > thead > tr > td, 
+.table.table-hamburg > tbody > tr > th, 
+.table.table-hamburg > tbody > tr > td,
+.table.table-hamburg > tfoot > tr > th, 
+.table.table-hamburg > tfoot > tr > td{
+    border:none;
+}
+.table.table-hamburg > tbody > tr{
+    border-bottom:1px dotted black;
+}
+
+/***************************************
+���� ����
+***************************************/
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+
+/* ĭ �о��� �� �� */
+.empty{
+	height:25px;
+}
+
+
+.Notileft {
+	float: left;
+	width: calc(100% - 530px);
+}
+
+
+
+/*******************************
+    ������ �׺������ ��Ÿ��    페이지 관련 만들었음. 
+*******************************/
+/**간격 **/
+.empty{
+	height:25px;
+}
+
+
+/*        ul[class=navigator]{*/
+.navigator1 {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.navigator1 > li {
+    display: inline-block;
+    padding: 0.5rem;
+    /*            �ּ� �� ���� : �Ѿ ��� �þ*/
+    min-width: 40px;
+    text-align: center;
+}
+
+.navigator1 > .active {
+    background-color: black;
+    color: white;
+}
+
+/******************************
+    �޴�
+******************************/

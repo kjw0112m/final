@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	이 파일은 SQL 명령만 보관하는 파일
+	따라서 외부에서 접근할 수 있도록 namespace를 지정
+ -->
+<mapper namespace="notice">
+
+	<select id="count" parameterType="map" resultType="int">
+		select count(*) from notice_list
+			<if test="type != null and keyword != null">
+			where ${type} like '%' || #{keyword} || '%'
+			</if>
+	</select>
+	
+	<select id="list" parameterType="map" resultType="noticeDto">
+		<!-- 부등호 등 태그 형식에서 사용 불가한 글자를 허용하는 지역 생성 -->
+		<![CDATA[
+		select ID
+		,TITLE
+		,CONTENT
+		,TO_CHAR(CREATEDATE,'YYYY/MM/DD') AS CREATEDATE
+		,CREATEUSER
+		,READCOUNT
+		,rn
+		 from(
+			select rownum rn, A.* from (
+				select * from notice_list
+		]]>
+				<if test="type != null and keyword != null">
+				where
+					${type} like '%' || #{keyword} || '%'
+				</if>
+		<![CDATA[
+				order by createdate desc
+			)A
+		) where rn >= #{start} and rn <= #{end}
+		]]>
+	</select>
+	
+	
+	<insert id="insertNotice" parameterType="noticeDto">
+		insert into notice_list values(
+			notice_list_seq.nextval, #{title}, #{content}, sysdate, '관리자', 0
+		)
+	</insert>
+	
+	<update id="updateNotice" parameterType="noticeDto">
+		update notice_list set title = #{title}, content = #{content}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteNotice" parameterType="noticeDto">
+		delete notice_list where id = #{id}
+	</delete>
+	
+	<select id="selectNotice" parameterType="noticeDto" resultType="noticeDto">
+		select * from notice_list where id = #{id}
+	</select>
+	
+	<update id="updateReadCnt" parameterType="noticeDto">
+		update notice_list set READCOUNT = (SELECT READCOUNT+1 FROM notice_list WHERE id = #{id})
+		where id = #{id}
+	</update>
+	
+	<insert id="insertComment" parameterType="noticeDto">
+		insert into comments values(
+			comments_seq.nextval, #{commentcontent}, sysdate, '관리자', #{id}
+		)
+	</insert>
+	
+	<select id="commentlist" parameterType="noticeDto" resultType="noticeDto">
+		SELECT * FROM comments
+		WHERE NOTICEID = #{id}
+		ORDER BY CREATEDATE DESC
+	</select>
+	
+	<delete id="deleteComment" parameterType="map">
+		delete comments where id = #{deleteComment}
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
