@@ -5,37 +5,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 <mapper namespace="order">
-	<select id="list" parameterType="orderViewDto" resultType="orderViewDto">
-		select * from order_view where 1=1
-		<choose>
-			<when test="searchType != null and searchKeyword != null">
-				and
-				<foreach collection=""></foreach>
-				${searchType} like '%' || #{searchKeyword} || '%'
-				${searchType} like '%' || #{searchKeyword} || '%'
-				${searchType} like '%' || #{searchKeyword} || '%'
-				${searchType} like '%' || #{searchKeyword} || '%'
-				${searchType} like '%' || #{searchKeyword} || '%'
-			</when>
-			<when test="start_dt != null and end_dt !=null">
-				and
-				order_date between to_date(#{start_dt},
-				'YYYY-MM-DD') and to_date(#{end_dt}, 'YYYY-MM-DD') + 0.99999
-			</when>
-			<when test="product_name != null">
-				and
-				product_name like '%' || #{product_name} || '%'
-			</when>
-			<when test="status != null">
-				and
-				status like '%' || #{status} || '%'
-			</when>
-			<when test="cs_status != null">
-				and
-				cs_status like '%' || #{cs_status} || '%'
-			</when>
-		</choose>
-	</select>
+<!-- 	<select id="list" parameterType="orderViewDto" resultType="orderViewDto"> -->
+<!-- 		select * from order_view where 1=1 -->
+<!-- 		<choose> -->
+<!-- 			<when test="searchType != null and searchKeyword != null"> -->
+<!-- 				and -->
+<!-- 				<foreach collection=""></foreach> -->
+<!-- 				${searchType} like '%' || #{searchKeyword} || '%' -->
+<!-- 				${searchType} like '%' || #{searchKeyword} || '%' -->
+<!-- 				${searchType} like '%' || #{searchKeyword} || '%' -->
+<!-- 				${searchType} like '%' || #{searchKeyword} || '%' -->
+<!-- 				${searchType} like '%' || #{searchKeyword} || '%' -->
+<!-- 			</when> -->
+<!-- 			<when test="start_dt != null and end_dt !=null"> -->
+<!-- 				and -->
+<!-- 				order_date between to_date(#{start_dt}, -->
+<!-- 				'YYYY-MM-DD') and to_date(#{end_dt}, 'YYYY-MM-DD') + 0.99999 -->
+<!-- 			</when> -->
+<!-- 			<when test="product_name != null"> -->
+<!-- 				and -->
+<!-- 				product_name like '%' || #{product_name} || '%' -->
+<!-- 			</when> -->
+<!-- 			<when test="status != null"> -->
+<!-- 				and -->
+<!-- 				status like '%' || #{status} || '%' -->
+<!-- 			</when> -->
+<!-- 			<when test="cs_status != null"> -->
+<!-- 				and -->
+<!-- 				cs_status like '%' || #{cs_status} || '%' -->
+<!-- 			</when> -->
+<!-- 		</choose> -->
+<!-- 	</select> -->
 
 	<select id="seq" resultType="int">
 		select orders_seq.nextval from dual
