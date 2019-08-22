@@ -14,7 +14,7 @@
 	<br><br>
 	${productDto.name}
 	<br><br>
-	${productDto.price} 원
+	${productDto.price}원
 	<br><br>
 	</c:forEach>
 </div>
