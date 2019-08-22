@@ -3,6 +3,7 @@ package com.kh17.panda.controller;
 
 import java.io.IOException;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,8 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh17.panda.entity.CertDto;
 import com.kh17.panda.entity.MemberDto;
+import com.kh17.panda.repository.CertDao;
 import com.kh17.panda.repository.MemberDao;
+import com.kh17.panda.service.EmailService;
 
 
 
@@ -162,6 +166,76 @@ public class MemberController {
 		return "redirect:info";
 	}
 	
+//	비밀번호 찾기 기능
+	
+//	목표 : 정보 입력 페이지로 전달
+	@GetMapping("/find_pw")
+	public String findPassword() {
+		return "member/find_pw";
+	}
+	
+	
+	@Autowired 
+	private EmailService emailService;
+//	목표 : 넘긴 정보를 조회하여 일치할 경우 이메일을 발송
+	@PostMapping("/find_pw")
+	public String findPassword(@ModelAttribute MemberDto memberDto) throws MessagingException {
+		boolean exist = memberDao.findPassword(memberDto);
+		if(exist) {
+			emailService.sendCertification(memberDto);
+//			
+			return "redirect:find_pw_result";//새로운 기능으로 전송
+		}
+		else {
+			return "redirect:find_pw?error";
+		}
+	}
+	
+	@GetMapping("/find_pw_result")
+	public String findPasswordResult() {
+		return "member/find_pw_result";
+	}
+	
+	@Autowired
+	private CertDao certDao;
+	
+//	비밀번호 변경 처리
+//	목표 : 입력페이지로 전달
+	@GetMapping("/new_pw")
+	public String newPassword(
+			@RequestParam String email,
+			@RequestParam String id,
+			@RequestParam String no,
+			HttpServletResponse response,
+			Model model) throws IOException {
+//		검증
+		CertDto certDto = CertDto.builder().who(email).no(no).build();
+		boolean result = certDao.validate(certDto);
+		certDao.delete(certDto);
+		
+		if(result) {
+			model.addAttribute("id", id);
+			return "member/new_pw";
+		}
+		else {
+			response.sendError(401);
+			return null;
+		}
+	}
+	
+//	목표 : 변경 처리 수행
+	@PostMapping("/new_pw")
+	public String newPassword(@ModelAttribute MemberDto memberDto) {
+//		비밀번호 암호화 처리(bcrypt)
+		String origin = memberDto.getPw();
+		String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
+		System.out.println(origin+", "+encrypt);
+		memberDto.setPw(encrypt);
+		
+		System.out.println(memberDto);
+		memberDao.changePw(memberDto);
+		return "member/new_pw_result";
+	}
 }
 
 
