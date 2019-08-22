@@ -69,7 +69,7 @@
 					
 						<a href="#" class=""><img src="${pageContext.request.contextPath}/image/search.PNG"></a> <a href="#"
 
-						class=""><img src="${pageContext.request.contextPath}/image/cart.PNG"></a> <a href="#" class=""><img
+						class=""><img src="${pageContext.request.contextPath}/image/cart.PNG"></a> <a href="${pageContext.request.contextPath}/notice/noticeList" class=""><img
 						src="${pageContext.request.contextPath}/image/contact.PNG"></a>
 				</div>
 			</div>
