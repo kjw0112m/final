@@ -173,8 +173,6 @@ public class MemberController {
 	public String findPassword() {
 		return "member/find_pw";
 	}
-	
-	
 	@Autowired 
 	private EmailService emailService;
 //	목표 : 넘긴 정보를 조회하여 일치할 경우 이메일을 발송
@@ -187,7 +185,7 @@ public class MemberController {
 			return "redirect:find_pw_result";//새로운 기능으로 전송
 		}
 		else {
-			return "redirect:find_pw?error";
+			return "redirect:find_pw?error=1";
 		}
 	}
 	
@@ -229,14 +227,42 @@ public class MemberController {
 //		비밀번호 암호화 처리(bcrypt)
 		String origin = memberDto.getPw();
 		String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
-		System.out.println(origin+", "+encrypt);
 		memberDto.setPw(encrypt);
 		
-		System.out.println(memberDto);
 		memberDao.changePw(memberDto);
 		return "member/new_pw_result";
 	}
+	
+//아이디 찾기 기능
+	@GetMapping("/find_id")
+	public String findId() {
+		return "member/find_id";
+	}
+	
+
+	@PostMapping("/find_id")
+	public String findId(@ModelAttribute MemberDto memberDto, Model model) {
+			MemberDto mdto = memberDao.findId(memberDto);
+			model.addAttribute("id", memberDto.getId());
+		if(mdto != null) {
+			return "member/find_id_result";
+		}
+		else {
+			return "redirect:find_id?error=1";
+		}
+	}
+	
+	
+	@GetMapping("/find_id_result")
+	public String findIdResult() {
+		return "member/find_id_result";
+	}
+	//아이디 찾기 기능
+	
+	
 }
+
+
 
 
 
