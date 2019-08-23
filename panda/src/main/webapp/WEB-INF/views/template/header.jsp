@@ -21,34 +21,34 @@
 				</h1>
 				<nav id="main_nav" class="main_nav">
 					<ul class="menu">
-						<li class="dis_f ai_c"><a href="/new">NEW</a></li>
+						<li class="dis_f ai_c"><a href="${pageContext.request.contextPath}/product/newArrivals">NEW</a></li>
 						<li class="dis_f ai_c"><a href="/sellers">SELLERS</a></li>
-						<li class="dis_f ai_c c_w" id="tops"><a href="/tops">TOPS</a>
+						<li class="dis_f ai_c c_w" id="tops"><a href="${pageContext.request.contextPath}/product/categoryList?category_id=1">TOPS</a>
 							<ul class="menus" id="topsmenu">
 								<strong class="tit">TOPS</strong>
-								<li><a href="#">원피스</a></li>
-								<li><a href="#">티셔츠</a></li>
-								<li><a href="#">셔츠</a></li>
-								<li><a href="#">맨투맨</a></li>
-								<li><a href="#">후드티</a></li>
-								<li><a href="#">아우터</a></li>
+								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=1">원피스</a></li>
+								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=2">티셔츠</a></li>
+								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=3">셔츠</a></li>
+								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=4">맨투맨</a></li>
+								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=5">후드티</a></li>
+								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=6">아우터</a></li>
 							</ul></li>
-						<li class="dis_f ai_c c_w" id="bottoms"><a href="/bottoms">BOTTOMS</a>
+						<li class="dis_f ai_c c_w" id="bottoms"><a href="${pageContext.request.contextPath}/product/categoryList?category_id=2">BOTTOMS</a>
 							<ul id="bottomsmenu" class="menus">
 								<strong class="tit">BOTTOMS</strong>
-								<li><a href="#">슬랙스</a></li>
-								<li><a href="#">청바지</a></li>
-								<li><a href="#">스커트</a></li>
-								<li><a href="#">반바지</a></li>
-								<li><a href="#">면바지</a></li>
+								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=7">슬랙스</a></li>
+								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=8">청바지</a></li>
+								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=9">스커트</a></li>
+								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=10">반바지</a></li>
+								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=11">면바지</a></li>
 							</ul></li>
-						<li class="dis_f ai_c c_w" id="acc"><a href="/acc">ACC</a>
+						<li class="dis_f ai_c c_w" id="acc"><a href="${pageContext.request.contextPath}/product/categoryList?category_id=3">ACC</a>
 							<ul id="accmenu" class="menus">
 								<strong class="tit">ACC</strong>
-								<li><a href="#">목걸이</a></li>
-								<li><a href="#">팔찌</a></li>
-								<li><a href="#">반지</a></li>
-								<li><a href="#">모자</a></li>
+								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=12">목걸이</a></li>
+								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=13">팔찌</a></li>
+								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=14">반지</a></li>
+								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=15">모자</a></li>
 							</ul></li>
 						<li class="dis_f ai_c"><a href="/sale">SALE</a></li>
 						<li class="dis_f ai_c"><a href="/event">EVENT</a></li>

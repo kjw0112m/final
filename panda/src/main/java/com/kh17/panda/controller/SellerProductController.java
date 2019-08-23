@@ -46,7 +46,7 @@ public class SellerProductController {
 	@GetMapping("/regist")
 	public String regist(Model model) {
 		model.addAttribute("list", subcategoryDao.list());
-		return "product/regist";		
+		return "seller/product/regist";		
 	}
 	
 	@PostMapping("/regist")
@@ -58,7 +58,7 @@ public class SellerProductController {
 		vo.setSeller_id("abc");
 		int id = productService.regist(vo);
 		
-		return "product/regist_result";
+		return "seller/product/regist_result";
 	}
 	
 	@GetMapping("/edit")
@@ -70,7 +70,7 @@ public class SellerProductController {
 		model.addAttribute("productDto", productDto);
 		model.addAttribute("list", sizesDao.get(id));
 		model.addAttribute("subcategory", subcategoryDao.get(productDto.getSub_category_id()));
-		return "product/edit";
+		return "seller/product/edit";
 	}
 	
 	@PostMapping("/edit")
