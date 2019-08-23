@@ -9,13 +9,6 @@ public class OrdersDaoImpl implements OrdersDao{
 	
 	@Autowired
 	private SqlSession sqlSession;
-
-	@Override
-	public void initSequnce() {
-		sqlSession.delete("order.dropSequence");
-		sqlSession.update("order.createSequence");
-		
-	}
 	
 	
 }

@@ -12,4 +12,7 @@ public interface MemberDao {
 	void change(MemberDto memberDto);
 	boolean findPassword(MemberDto memberDto);
 	void changePw(MemberDto memberDto);
+	MemberDto findId(MemberDto memberDto);
+	void lastchangepw(String id);
+	
 }

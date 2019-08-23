@@ -3,7 +3,6 @@
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
 	<!-- 별칭 설정 -->
 	<typeAliases>
 		<typeAlias type="com.kh17.panda.entity.MemberDto" alias="memberDto"/>
@@ -14,6 +13,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh17.panda.entity.ProductDto" alias="productDto"/>
 		<typeAlias type="com.kh17.panda.entity.SubcategoryDto" alias="subcategoryDto"/>
 		<typeAlias type="com.kh17.panda.entity.SizesDto" alias="sizesDto"/>
+		<typeAlias type="com.kh17.panda.entity.NoticeDto" alias="noticeDto"/>
 		<typeAlias type="com.kh17.panda.entity.ProductSubcategoryDto" alias="productSubcategoryDto"/>
 		<typeAlias type="com.kh17.panda.entity.SellerDto" alias="sellerDto"/>
 		<typeAlias type="com.kh17.panda.entity.NoticeDto" alias="noticeDto"/>

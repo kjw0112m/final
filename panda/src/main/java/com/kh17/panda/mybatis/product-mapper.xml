@@ -40,19 +40,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete product where id = #{id}
 	</delete>
 	
-	<select id="newArrivals" resultType="productDto">
-		select * from product order by regist_dt desc
+	<select id="list" parameterType="String" resultType="productDto">
+		select * from product where seller_id = #{seller_id} order by regist_dt desc
 	</select>
-	
-	<select id="nickList" parameterType="String" resultType="productDto">
-		select * from product where
-		seller_id = (select id from seller where nickname=#{nickname})
-	</select>
-	
-	<select id="categoryList" parameterType="String" resultType="productDto">
-		select * from product where
-		sub_category_id = (select id from sub_category where name=#{name})
-	</select>
-	
 	
 </mapper>

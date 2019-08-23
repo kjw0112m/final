@@ -144,8 +144,9 @@ public class MemberController {
 	@GetMapping("/delete")
 	public String delete(HttpSession session) {
 		String id = (String)session.getAttribute("sid");
+		
 		memberDao.delete(id);
-		session.removeAttribute("ok");
+		session.removeAttribute("sid");
 		return "member/goodbye";
 	}
 	
@@ -187,7 +188,7 @@ public class MemberController {
 			return "redirect:find_pw_result";//새로운 기능으로 전송
 		}
 		else {
-			return "redirect:find_pw?error";
+			return "redirect:find_pw?error=1";
 		}
 	}
 	
@@ -229,28 +230,73 @@ public class MemberController {
 //		비밀번호 암호화 처리(bcrypt)
 		String origin = memberDto.getPw();
 		String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
-		System.out.println(origin+", "+encrypt);
 		memberDto.setPw(encrypt);
 		
-		System.out.println(memberDto);
 		memberDao.changePw(memberDto);
 		return "member/new_pw_result";
 	}
+	
+//아이디 찾기 기능
+	@GetMapping("/find_id")
+	public String findId() {
+		return "member/find_id";
+	}
+	
+
+	@PostMapping("/find_id")
+	public String findId(@ModelAttribute MemberDto memberDto, Model model) {
+			MemberDto mdto = memberDao.findId(memberDto);
+			model.addAttribute("id", memberDto.getId());
+		if(mdto != null) {
+			return "member/find_id_result";
+		}
+		else {
+			return "redirect:find_id?error=1";
+		}
+	}
+	
+	
+	@GetMapping("/find_id_result")
+	public String findIdResult() {
+		return "member/find_id_result";
+	}
+	
+	// 회원 비밀번호 바꾸기
+	@GetMapping("/change_pw")
+	public String change_pw() {
+		return "member/change_pw";
+	}
+	
+	
+	@PostMapping("/change_pw")
+	public String change_pw(HttpSession session, @ModelAttribute MemberDto memberDto, 
+			Model model, @RequestParam String new_pw) {
+	
+		memberDto.setId((String) session.getAttribute("sid"));				
+
+		//		기존 비밀번호와 새로운 비밀번호가 들어옴
+		String newpw = BCrypt.hashpw(new_pw, BCrypt.gensalt());
+		
+		//먼저 세션에 있는 계정 정보를 가져옴
+		MemberDto check = memberDao.get((String) session.getAttribute("sid"));
+		
+			//기존 비밀번호와 입력 비밀번호를 비교하여 확인
+		boolean result = BCrypt.checkpw(memberDto.getPw(),check.getPw());
+ 
+		if(result) {
+//		[2] 비밀번호가 맞으면 새로운 비밀번호로 변경
+			memberDto.setId((String) session.getAttribute("sid"));
+			memberDto.setPw(newpw);
+			
+			memberDao.changePw(memberDto);
+			memberDao.lastchangepw(memberDto.getId());
+			return "member/change_pw_result";
+		}
+//		[3] 비밀번호가 다르면 비밀번호 변경 실패 안내
+		else {
+			return "redirect:change_pw?error=1";
+		}
+	}
+	
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

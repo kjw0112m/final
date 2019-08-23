@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>    
+ 
 
 <script>
 	//프로그램 시작시 체크박스에 이벤트 설정
@@ -40,7 +40,7 @@
 }
 </style>
 
-</head>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>   
 <body>
 
 

@@ -3,13 +3,17 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
 <mapper namespace="order">
 <!-- 	<select id="list" parameterType="orderViewDto" resultType="orderViewDto"> -->
 <!-- 		select * from order_view where 1=1 -->
 <!-- 		<choose> -->
 <!-- 			<when test="searchType != null and searchKeyword != null"> -->
 <!-- 				and -->
+<!-- 				<foreach collection=""></foreach> -->
+<!-- 				${searchType} like '%' || #{searchKeyword} || '%' -->
+<!-- 				${searchType} like '%' || #{searchKeyword} || '%' -->
+<!-- 				${searchType} like '%' || #{searchKeyword} || '%' -->
+<!-- 				${searchType} like '%' || #{searchKeyword} || '%' -->
 <!-- 				${searchType} like '%' || #{searchKeyword} || '%' -->
 <!-- 			</when> -->
 <!-- 			<when test="start_dt != null and end_dt !=null"> -->

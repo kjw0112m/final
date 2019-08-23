@@ -2,92 +2,60 @@
 <!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
-<!-- 
-Appender : 로그 출력위치를 결정하는 도구(...Appender)
-	- ConsoleAppender : 출력을 콘솔창에
-	- FileAppender : 출력을 파일에
-	- RollingFileAppender : 일정 용량 이상이 되면 백업 파일 생성 후 초기화
-	- DailyRollingFileAppender : 일정 기간 단위로 Rolling
-	- JDBCAppender : 출력을 DB에
-	- SMTPAppender : 출력을 이메일에
-	- NTEventAppender : 출력을 윈도우 시스템 로그에
+   <!-- Appenders -->
+   <appender name="console" class="org.apache.log4j.ConsoleAppender">
+      <param name="Target" value="System.out" />
+      <layout class="org.apache.log4j.PatternLayout">
+<!--          <param name="ConversionPattern" value="%-5p: %c - %m%n" /> -->
+         <param name="ConversionPattern" value="[%-5p] %c - %m[%d]%n" />
+      </layout>
+   </appender>
+   
+   <appender name="xml" class="org.apache.log4j.FileAppender">
+      <param name="file" value="log.xml"></param>
+      <param name="Append" value="true"></param>
+      <layout class="org.apache.log4j.xml.XMLLayout">
+      </layout>
+   </appender>
+   
+   <appender class="org.apache.log4j.DailyRollingFileAppender" name="daily">
+      <!-- 위치 -->
+      <param name="file" value="log/daily.log"/>
+      <!-- 덧붙임 여부 -->
+      <param name="Append" value="true"/>
+      <!-- 파일에 추가할 날짜 패턴 -->
+      <param name="DatePattern" value="'.'yyMMdd"/>
+      <!-- 롤링을 사용할 용량 설정(1개 파일 크기) - RollingFileAppender 전용, KB, MB 등 사용 가능 -->
+      <!-- <param name="MaxFileSize" value="1MB"></param> -->
+      <!-- 로그 패턴 -->
+      <layout class="org.apache.log4j.PatternLayout">
+         <param name="ConversionPattern" value="[%p] [%c] - %m [%d{yyyy-MM-dd HH:mm:ss}]%n"/>
+      </layout>
+   </appender>
 
-Layout : 출력 패턴을 정의
-	- %p : priority, 메시지 수준
-	- %m : 실제 출력 로그
-	- %d : 시간 설정(SimpleDateFormat 형식으로 설정 가능)
-				ex : %d{yyyy-MM-dd HH:mm:ss}
-	- %t : 로깅이 발생한 쓰레드 이름 출력
-	- %M : 로깅이 발생한 메소드 이름 출력
-	- %n : 개행 문자 출력
-	- %c : 카테고리 출력 (ex : %c{2} 로 설정하면 a.b.c 에서 b.c만 출력)
-	- %C : 클래스명 출력
-	- %r : 어플리케이션 시작 후 로깅이 발생한 시점까지의 시간(millis) 출력
- -->
+   <!-- Application Loggers -->
+   
+   <!-- 3rdparty Loggers -->
+   <logger name="org.springframework.core">
+      <level value="info" />
+   </logger>   
+   
+   <logger name="org.springframework.beans">
+      <level value="info" />
+   </logger>
+   
+   <logger name="org.springframework.context">
+      <level value="info" />
+   </logger>
 
-<!-- 	Appender 등록 -->
-	<appender name="console" class="org.apache.log4j.ConsoleAppender">
-		<param name="Target" value="System.out" />
-		<layout class="org.apache.log4j.PatternLayout">
-<!-- 			<param name="ConversionPattern" value="%-5p: %c - %m%n" /> -->
-			<param name="ConversionPattern" value="[%-5p] %c - %m [%d]%n" />
-		</layout>
-	</appender>
-	
-	<appender name="xml" class="org.apache.log4j.FileAppender">
-		<param name="file" value="log.xml"></param>
-		<param name="Append" value="true"></param>
-		<layout class="org.apache.log4j.xml.XMLLayout"></layout>
-	</appender>
-	
-	<appender name="daily" class="org.apache.log4j.DailyRollingFileAppender">
-		<!-- 위치 -->
-		<param name="file" value="log/daily.log"></param>
-		<!-- 덧붙임 여부 -->
-		<param name="Append" value="true"></param>
-		<!-- 파일에 추가할 날짜 패턴 -->
-		<param name="DatePattern" value="'.'yyMMdd"></param>
-<!-- 		롤링을 사용할 용량 설정(1개 파일 크기) - RollingFileAppender 전용, KB, MB 등 사용 가능 -->
-<!-- 		<param name="MaxFileSize" value="1MB"></param> -->
-		<!-- 로그 패턴 -->
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="[%p] [%c] - %m [%d{yyyy-MM-dd HH:mm:ss}]%n" />
-		</layout>
-	</appender>
-	
-	<!-- Application Loggers -->
-	<logger name="com.kh17.panda">
-		<level value="debug" />
-	</logger>
-	
-	<!-- 3rdparty Loggers -->
-	<logger name="org.springframework.core">
-		<level value="error" />
-	</logger>	
-	
-	<logger name="org.springframework.beans">
-		<level value="error" />
-	</logger>
-	
-	<logger name="org.springframework.context">
-		<level value="error" />
-	</logger>
+   <logger name="org.springframework.web">
+      <level value="info" />
+   </logger>
 
-	<logger name="org.springframework.web">
-		<level value="error" />
-	</logger>
-
-	<!-- Root Logger -->
-	<root>
-		<!-- 개발시에는 일반적으로 debug, 배포시에는 warn으로 설정 -->
-		<priority value="debug" />
-		<appender-ref ref="console" />
-<!-- 		<appender-ref ref="daily" /> -->
-<!-- 		<appender-ref ref="xml" /> -->
-	</root>
-	
+   <!-- Root Logger -->
+   <root>
+      <priority value="debug" />
+      <appender-ref ref="console" />
+   </root>
+   
 </log4j:configuration>
-
-
-
-

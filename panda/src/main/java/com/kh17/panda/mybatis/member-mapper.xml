@@ -77,6 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 	</select>
 	
+	<!-- 비밀 번호 바꾸기 -->
 	<update id="changePw" parameterType="memberDto">
 		update member
 			set
@@ -85,6 +86,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				id = #{id}
 	</update>
 	
+		<!-- 비밀번호 찾기 기능 -->
+	<select id="findId" parameterType="memberDto" resultType="memberDto">
+		select * from member
+			where 
+					name= #{name}
+				and 
+				email= #{email}
+				and
+				phone=#{phone}
+		
+	</select>
+	
+		<!-- 마지막 비밀번호 바꾼시간 -->
+	<update id="lastchangepw" parameterType="memberDto">
+		update member 
+		set 
+		pw_dt = sysdate
+				 where id = #{id}
+	</update>
 	
 </mapper>
 
