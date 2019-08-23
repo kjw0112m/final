@@ -78,6 +78,12 @@ public class MemberDaoImpl implements MemberDao {
 	public MemberDto findId(MemberDto memberDto) {
 		return sqlSession.selectOne("member.findId", memberDto);
 	}
+	@Override
+	public void lastchangepw(String id) {
+		sqlSession.update("member.lastchangepw", id);
+		
+	}
+	
 	
 }
 

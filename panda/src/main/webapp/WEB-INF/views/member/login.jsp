@@ -7,7 +7,6 @@
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
 <script src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
-<script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
 <%--암호화 --%>
 
 
@@ -34,7 +33,7 @@ $(function(){
 	});
 });
 
-// Disable form submissions if there are invalid fields
+// 디자인
 (function() {
   'use strict';
   window.addEventListener('load', function() {

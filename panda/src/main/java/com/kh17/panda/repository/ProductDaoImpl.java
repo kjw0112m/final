@@ -44,21 +44,6 @@ public class ProductDaoImpl implements ProductDao{
 		return sqlSession.selectList("product.list", seller_id);
 	}
 
-	@Override
-	public List<ProductDto> newArrivals() {
-		return sqlSession.selectList("product.newArrivals");
-	}
-
-	@Override
-	public List<ProductDto> nickList(String nickname) {
-		return sqlSession.selectList("product.nickList", nickname);
-	}
-
-	@Override
-	public List<ProductDto> categoryList(String name) {
-		return sqlSession.selectList("product.categoryList", name);
-	}
-
 	
 	
 }
