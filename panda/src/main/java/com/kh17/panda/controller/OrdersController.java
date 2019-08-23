@@ -1,19 +1,16 @@
 package com.kh17.panda.controller;
 
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh17.panda.entity.CartViewDto;
+import com.kh17.panda.entity.OrderViewDto;
 import com.kh17.panda.repository.OrdersDao;
+import com.kh17.panda.vo.OrderViewListVO;
 
 @Controller
 @RequestMapping("/orders")
@@ -55,5 +52,16 @@ public class OrdersController {
 //		orderDao.insert();
 //		model
 //	}
-//	
+	@GetMapping("/list")
+	public String list() {
+		return "orders/list";
+	}
+	
+	@PostMapping("/list")
+	public String list(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO, Model model){
+		System.out.println(orderViewDto);
+		System.out.println(orderViewListVO);
+		ordersDao.list(orderViewDto, orderViewListVO);
+		return "orders/list";
+	}
 }
