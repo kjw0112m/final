@@ -14,6 +14,7 @@
 	<br><br>
 	<a href="sellerList?seller_id=${productSellerDto.seller_id}">${productSellerDto.nickname}</a>
 	<br><br>
+	${productDto.price}원 
 	${productSellerDto.product_name}
 	<br><br>
 	${productSellerDto.price} 원
