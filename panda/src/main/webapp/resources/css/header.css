@@ -118,7 +118,7 @@ h1, h2, a {
 }
 
 .c_w:hover>a {
-	color: white;
+	color: white !important;
 }
 
 #tops:hover>#topsmenu, #bottoms:hover>#bottomsmenu, #acc:hover>#accmenu

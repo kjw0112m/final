@@ -61,7 +61,29 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public void change(MemberDto memberDto) {
 		sqlSession.update("member.change", memberDto);
-		System.out.println(memberDto);
 	}
-
+	//비밀번호 찾기 
+	@Override
+	public boolean findPassword(MemberDto memberDto) {
+		MemberDto result = sqlSession.selectOne("member.findpw", memberDto);
+		return result != null;
+	}
+	//비밀번호 바꾸기
+	@Override
+	public void changePw(MemberDto memberDto) {
+		sqlSession.update("member.changePw", memberDto);
+	}
+	//아이디 찾기
+	@Override
+	public MemberDto findId(MemberDto memberDto) {
+		return sqlSession.selectOne("member.findId", memberDto);
+	}
+	@Override
+	public void lastchangepw(String id) {
+		sqlSession.update("member.lastchangepw", id);
+		
+	}
+	
+	
 }
+

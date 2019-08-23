@@ -3,6 +3,7 @@ package com.kh17.panda.controller;
 
 import java.io.IOException;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,8 +18,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh17.panda.entity.CertDto;
 import com.kh17.panda.entity.MemberDto;
+import com.kh17.panda.repository.CertDao;
 import com.kh17.panda.repository.MemberDao;
+import com.kh17.panda.service.EmailService;
 
 
 
@@ -140,8 +144,9 @@ public class MemberController {
 	@GetMapping("/delete")
 	public String delete(HttpSession session) {
 		String id = (String)session.getAttribute("sid");
+		
 		memberDao.delete(id);
-		session.removeAttribute("ok");
+		session.removeAttribute("sid");
 		return "member/goodbye";
 	}
 	
@@ -162,21 +167,136 @@ public class MemberController {
 		return "redirect:info";
 	}
 	
+//	비밀번호 찾기 기능
+	
+//	목표 : 정보 입력 페이지로 전달
+	@GetMapping("/find_pw")
+	public String findPassword() {
+		return "member/find_pw";
+	}
+	
+	
+	@Autowired 
+	private EmailService emailService;
+//	목표 : 넘긴 정보를 조회하여 일치할 경우 이메일을 발송
+	@PostMapping("/find_pw")
+	public String findPassword(@ModelAttribute MemberDto memberDto) throws MessagingException {
+		boolean exist = memberDao.findPassword(memberDto);
+		if(exist) {
+			emailService.sendCertification(memberDto);
+//			
+			return "redirect:find_pw_result";//새로운 기능으로 전송
+		}
+		else {
+			return "redirect:find_pw?error=1";
+		}
+	}
+	
+	@GetMapping("/find_pw_result")
+	public String findPasswordResult() {
+		return "member/find_pw_result";
+	}
+	
+	@Autowired
+	private CertDao certDao;
+	
+//	비밀번호 변경 처리
+//	목표 : 입력페이지로 전달
+	@GetMapping("/new_pw")
+	public String newPassword(
+			@RequestParam String email,
+			@RequestParam String id,
+			@RequestParam String no,
+			HttpServletResponse response,
+			Model model) throws IOException {
+//		검증
+		CertDto certDto = CertDto.builder().who(email).no(no).build();
+		boolean result = certDao.validate(certDto);
+		certDao.delete(certDto);
+		
+		if(result) {
+			model.addAttribute("id", id);
+			return "member/new_pw";
+		}
+		else {
+			response.sendError(401);
+			return null;
+		}
+	}
+	
+//	목표 : 변경 처리 수행
+	@PostMapping("/new_pw")
+	public String newPassword(@ModelAttribute MemberDto memberDto) {
+//		비밀번호 암호화 처리(bcrypt)
+		String origin = memberDto.getPw();
+		String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
+		memberDto.setPw(encrypt);
+		
+		memberDao.changePw(memberDto);
+		return "member/new_pw_result";
+	}
+	
+//아이디 찾기 기능
+	@GetMapping("/find_id")
+	public String findId() {
+		return "member/find_id";
+	}
+	
+
+	@PostMapping("/find_id")
+	public String findId(@ModelAttribute MemberDto memberDto, Model model) {
+			MemberDto mdto = memberDao.findId(memberDto);
+			model.addAttribute("id", memberDto.getId());
+		if(mdto != null) {
+			return "member/find_id_result";
+		}
+		else {
+			return "redirect:find_id?error=1";
+		}
+	}
+	
+	
+	@GetMapping("/find_id_result")
+	public String findIdResult() {
+		return "member/find_id_result";
+	}
+	
+	// 회원 비밀번호 바꾸기
+	@GetMapping("/change_pw")
+	public String change_pw() {
+		return "member/change_pw";
+	}
+	
+	
+	@PostMapping("/change_pw")
+	public String change_pw(HttpSession session, @ModelAttribute MemberDto memberDto, 
+			Model model, @RequestParam String new_pw) {
+	
+		memberDto.setId((String) session.getAttribute("sid"));				
+
+		//		기존 비밀번호와 새로운 비밀번호가 들어옴
+		String newpw = BCrypt.hashpw(new_pw, BCrypt.gensalt());
+		
+		//먼저 세션에 있는 계정 정보를 가져옴
+		MemberDto check = memberDao.get((String) session.getAttribute("sid"));
+		
+			//기존 비밀번호와 입력 비밀번호를 비교하여 확인
+		boolean result = BCrypt.checkpw(memberDto.getPw(),check.getPw());
+ 
+		if(result) {
+//		[2] 비밀번호가 맞으면 새로운 비밀번호로 변경
+			memberDto.setId((String) session.getAttribute("sid"));
+			memberDto.setPw(newpw);
+			
+			memberDao.changePw(memberDto);
+			memberDao.lastchangepw(memberDto.getId());
+			return "member/change_pw_result";
+		}
+//		[3] 비밀번호가 다르면 비밀번호 변경 실패 안내
+		else {
+			return "redirect:change_pw?error=1";
+		}
+	}
+	
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

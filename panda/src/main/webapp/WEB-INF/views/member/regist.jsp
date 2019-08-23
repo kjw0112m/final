@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <%--암호화 --%>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script	src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
 <script	src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
-<script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
 <%--암호화 --%>
 
 <style>
@@ -176,7 +175,7 @@ input[type=submit] {
 		});
 	});
 </script>
-</head>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <body>
 	<%-- 회원 가입 페이지의 내용을 구현 --%>
 	<h1>회원 가입</h1><br>

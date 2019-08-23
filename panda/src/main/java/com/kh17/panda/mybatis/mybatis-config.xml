@@ -3,13 +3,22 @@
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
 	<!-- 별칭 설정 -->
 	<typeAliases>
 		<typeAlias type="com.kh17.panda.entity.MemberDto" alias="memberDto"/>
 		<typeAlias type="com.kh17.panda.entity.CartDto" alias="cartDto"/>
 		<typeAlias type="com.kh17.panda.entity.CartViewDto" alias="cartViewDto"/>
+		<typeAlias type="com.kh17.panda.entity.CertDto" alias="certDto"/>
 		<typeAlias type="com.kh17.panda.entity.OrdersDto" alias="ordersDto"/>
+		<typeAlias type="com.kh17.panda.entity.ProductDto" alias="productDto"/>
+		<typeAlias type="com.kh17.panda.entity.SubcategoryDto" alias="subcategoryDto"/>
+		<typeAlias type="com.kh17.panda.entity.SizesDto" alias="sizesDto"/>
+		<typeAlias type="com.kh17.panda.entity.NoticeDto" alias="noticeDto"/>
+		<typeAlias type="com.kh17.panda.entity.ProductSubcategoryDto" alias="productSubcategoryDto"/>
+		<typeAlias type="com.kh17.panda.entity.SellerDto" alias="sellerDto"/>
+		<typeAlias type="com.kh17.panda.entity.NoticeDto" alias="noticeDto"/>
+		<typeAlias type="com.kh17.panda.entity.ProductSellerDto" alias="productSellerDto"/>
+		<typeAlias type="com.kh17.panda.entity.CategoryListDto" alias="categoryListDto"/>
+		<typeAlias type="com.kh17.panda.entity.CategoryDto" alias="categoryDto"/>
 	</typeAliases>
-	
 </configuration>

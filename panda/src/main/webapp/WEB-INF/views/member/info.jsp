@@ -56,11 +56,15 @@
 			<th>마지막 로그인 시간</th>
 			<td>${mdto.login_dt}</td>
 		</tr>
+					<tr>
+			<th>마지막 비밀번호 변경</th>
+			<td>${mdto.pw_dt}</td>
+		</tr>
 	</tbody>
 </table>
 <%-- 회원이 이용할 수 있는 기능들을 링크로 제공 --%>
 <h3>
-	<a href="#">비밀번호 변경</a>
+	<a href="change_pw">비밀번호 변경</a>
 </h3>
 <h3>
 	<a href="change">개인정보 변경</a>
