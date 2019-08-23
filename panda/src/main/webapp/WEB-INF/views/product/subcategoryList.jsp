@@ -5,9 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>New Arrivals</title>
+<title></title>
 </head>
 <body>
+<h2>${subcategoryDto.name}</h2>
 <div>
 	<c:forEach var="productSellerDto" items="${list}">
 	<img src="http://placehold.it/350x350">

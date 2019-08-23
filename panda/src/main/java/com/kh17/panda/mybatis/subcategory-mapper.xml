@@ -11,5 +11,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="get" parameterType="int" resultType="String">
 		select name from sub_category where id = #{sub_category_id}
 	</select>
+	
+	<select id="getDto" parameterType="int" resultType="subcategoryDto">
+		select * from sub_category where id = #{sub_category_id}
+	</select>
 
 </mapper>

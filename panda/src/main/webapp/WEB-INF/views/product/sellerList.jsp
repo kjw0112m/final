@@ -9,8 +9,14 @@
 </head>
 <body>
 <div>
-	<c:forEach var="sellerDto" items="${list}">
-	<a href="nicklist?nickname=${sellerDto.nickname}">${sellerDto.nickname}</a>
+	<c:forEach var="productSellerDto" items="${list}">
+	<img src="http://placehold.it/350x350">
+	<br><br>
+	<a href="sellerList?seller_id=${productSellerDto.seller_id}">${productSellerDto.nickname}</a>
+	<br><br>
+	${productSellerDto.product_name}
+	<br><br>
+	${productSellerDto.price} 원
 	<br><br>
 	</c:forEach>
 </div>
