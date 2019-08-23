@@ -2,6 +2,8 @@ package com.kh17.panda.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,16 +34,18 @@ public class CartController {
 	}
 	
 	@GetMapping("/delete")
-	public String delete(@RequestParam int id) {
-		cartDao.delete(id);
+	public String delete(@RequestParam int[] id) {
+		for(int no : id) {
+			cartDao.delete(no);
+		}
 		return "redirect:view";
 	}
 	
 	@GetMapping("/view")
-	public String view(Model model) {
+	public String view(Model model, HttpSession session) {
 //		카트 목록 불러오기
-		List<CartViewDto> list = cartDao.list(); 
-		
+		String member_id = (String) session.getAttribute("sid");
+		List<CartViewDto> list = cartDao.list(member_id); 
 		model.addAttribute("cList",list);
 		
 		return "cart/view"; 
