@@ -13,4 +13,6 @@ public interface MemberDao {
 	boolean findPassword(MemberDto memberDto);
 	void changePw(MemberDto memberDto);
 	MemberDto findId(MemberDto memberDto);
+	void lastchangepw(String id);
+	
 }
