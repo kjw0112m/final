@@ -10,6 +10,6 @@ public interface CartDao {
 
 	void delete(int id);
 
-	List<CartViewDto> list();
+	List<CartViewDto> list(String member_id);
 
 }

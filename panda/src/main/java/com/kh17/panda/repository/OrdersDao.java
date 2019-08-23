@@ -10,4 +10,5 @@ public interface OrdersDao {
 	void initSequnce();
 
 	List<OrderViewDto> list(OrderViewDto orderViewDto, OrderViewListVO orderViewListVO);
+	
 }

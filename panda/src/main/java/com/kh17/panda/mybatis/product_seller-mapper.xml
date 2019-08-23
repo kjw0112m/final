@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="productSeller">
+
+	<select id="newArrivals" resultType="productSellerDto">
+		select * from product_seller order by regist_dt desc
+	</select>
+
+	<select id="sellerList" parameterType="String" resultType="productSellerDto">
+		select * from product_seller where seller_id = #{seller_id} order by regist_dt desc
+	</select>
+	
+	<select id="categoryList" parameterType="int" resultType="productSellerDto">
+		select * from product_seller where sub_category_id = #{sub_category_id} order by regist_dt desc
+	</select>
+
+</mapper>

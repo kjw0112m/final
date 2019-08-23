@@ -144,8 +144,9 @@ public class MemberController {
 	@GetMapping("/delete")
 	public String delete(HttpSession session) {
 		String id = (String)session.getAttribute("sid");
+		
 		memberDao.delete(id);
-		session.removeAttribute("ok");
+		session.removeAttribute("sid");
 		return "member/goodbye";
 	}
 	
@@ -173,6 +174,8 @@ public class MemberController {
 	public String findPassword() {
 		return "member/find_pw";
 	}
+	
+	
 	@Autowired 
 	private EmailService emailService;
 //	목표 : 넘긴 정보를 조회하여 일치할 경우 이메일을 발송
@@ -257,26 +260,43 @@ public class MemberController {
 	public String findIdResult() {
 		return "member/find_id_result";
 	}
-	//아이디 찾기 기능
+	
+	// 회원 비밀번호 바꾸기
+	@GetMapping("/change_pw")
+	public String change_pw() {
+		return "member/change_pw";
+	}
+	
+	
+	@PostMapping("/change_pw")
+	public String change_pw(HttpSession session, @ModelAttribute MemberDto memberDto, 
+			Model model, @RequestParam String new_pw) {
+	
+		memberDto.setId((String) session.getAttribute("sid"));				
+
+		//		기존 비밀번호와 새로운 비밀번호가 들어옴
+		String newpw = BCrypt.hashpw(new_pw, BCrypt.gensalt());
+		
+		//먼저 세션에 있는 계정 정보를 가져옴
+		MemberDto check = memberDao.get((String) session.getAttribute("sid"));
+		
+			//기존 비밀번호와 입력 비밀번호를 비교하여 확인
+		boolean result = BCrypt.checkpw(memberDto.getPw(),check.getPw());
+ 
+		if(result) {
+//		[2] 비밀번호가 맞으면 새로운 비밀번호로 변경
+			memberDto.setId((String) session.getAttribute("sid"));
+			memberDto.setPw(newpw);
+			
+			memberDao.changePw(memberDto);
+			memberDao.lastchangepw(memberDto.getId());
+			return "member/change_pw_result";
+		}
+//		[3] 비밀번호가 다르면 비밀번호 변경 실패 안내
+		else {
+			return "redirect:change_pw?error=1";
+		}
+	}
 	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -23,11 +23,12 @@ public class CartDaoImpl implements CartDao{
 	@Override
 	public void delete(int id) {
 		sqlSession.delete("cart.delete",id);
+		
 	}
 
 	@Override
-	public List<CartViewDto> list() {
-		return sqlSession.selectList("cart.list");
+	public List<CartViewDto> list(String member_id) {
+		return sqlSession.selectList("cart.list",member_id);
 	}
 	
 }

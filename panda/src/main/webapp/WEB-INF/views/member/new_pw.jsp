@@ -1,19 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <%--암호화 --%>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
 <script src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
-<script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
 <%--암호화 --%>
-<%-- 
-	비밀번호 변경 페이지 
-	 - new_pw.do라는 서블릿에게 이메일, 새로운 비밀번호를 전달한다
-	 - 이메일은 요청 정보 파라미터에서 추출 가능 --> 자동 첨부 처리
-	 - 비밀번호는 사용자가 입력
---%>
-
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script>
 //  비밀번호 형식 검사
 		$(".pw").on("blur", function() {

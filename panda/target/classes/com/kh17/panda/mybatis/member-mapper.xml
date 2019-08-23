@@ -97,6 +97,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				phone=#{phone}
 		
 	</select>
+	
+		<!-- 마지막 비밀번호 바꾼시간 -->
+	<update id="lastchangepw" parameterType="memberDto">
+		update member 
+		set 
+		pw_dt = sysdate
+				 where id = #{id}
+	</update>
+	
 </mapper>
 
 
