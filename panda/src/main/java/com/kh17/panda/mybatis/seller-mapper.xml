@@ -8,4 +8,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from seller order by name asc
 	</select>
 	
+	<insert id="regist" parameterType="sellerDto">
+		insert into seller values(
+			#{id}, #{pw}, #{name}, #{nickname}, #{email}, #{phone}, sysdate, null
+		)
+	</insert>
+	
+	<update id="edit" parameterType="sellerDto">
+		update seller set nickname=#{nickname} where id=#{id}
+	</update>
+	
+	<select id="get" parameterType="string" resultType="sellerDto">
+		select * from seller where id=#{id}
+	</select>
+	
+<!-- https://forms.gle/PMPMAMyqRh6c7Ucj6  이미지 신청 주소-->
 </mapper>

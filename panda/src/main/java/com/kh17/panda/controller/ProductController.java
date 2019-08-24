@@ -51,9 +51,6 @@ public class ProductController {
 	@Autowired
 	private CategoryDao categoryDao;
 
-	@Autowired
-	private SizesDao sizesDao;
-
 	@GetMapping("/newArrivals")
 	public String newArrivals(Model model) {
 		List<ProductSellerDto> list = productSellerDao.newArrivals();

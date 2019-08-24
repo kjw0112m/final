@@ -18,5 +18,20 @@ public class SellerDaoImpl implements SellerDao{
 	public List<SellerDto> list() {
 		return sqlSession.selectList("seller.list");
 	}
+
+	@Override
+	public void regist(SellerDto sellerDto) {
+		sqlSession.insert("seller.regist", sellerDto);
+	}
+
+	@Override
+	public void edit(SellerDto sellerDto) {
+		sqlSession.update("seller.edit", sellerDto);
+	}
+
+	@Override
+	public List<SellerDto> get(String id) {
+		return sqlSession.selectOne(id);
+	}
 	
 }
