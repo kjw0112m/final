@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class OrdersDto {
-	private String memberId,orderDt,status,csStatus,payType;
-	private int id,productId,quantity,totalPrice,discountPrice,team;
+	private String member_id,order_dt,status,cs_status,pay_type, order_id, t_invoice, t_id, sizes, team;
+	private int id,product_id,quantity,total_price,discount_price;
 
 }
