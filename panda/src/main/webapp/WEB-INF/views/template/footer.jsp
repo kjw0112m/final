@@ -11,7 +11,7 @@
             </div>
             <div class="right">
                 <ul class="inlink tc_3 dis_f jc_e">
-                    <li><a href="#" target="_blank" style="color: rgb(255, 78, 37) !important;">판매자문의</a></li>
+                    <li><a href="https://forms.gle/oCB8JX98smpNjJCS8" target="_blank" style="color: rgb(255, 78, 37) !important;">판매자문의</a></li>
                     <li><a href="/policy">이용약관</a></li>
                     <li><a href="/privacypolicy">개인정보 처리방침</a></li>
                 </ul>

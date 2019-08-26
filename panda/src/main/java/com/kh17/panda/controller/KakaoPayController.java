@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
-import com.kh17.panda.controller.vo.KakaoPayReturnVO;
-import com.kh17.panda.controller.vo.KakaoPaySuccessVO;
+import com.kh17.panda.vo.KakaoPayReturnVO;
+import com.kh17.panda.vo.KakaoPaySuccessVO;
 
 @Controller
 @RequestMapping("/pay/kakao")
