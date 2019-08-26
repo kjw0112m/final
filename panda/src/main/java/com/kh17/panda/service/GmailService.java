@@ -12,6 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.kh17.panda.entity.CertDto;
 import com.kh17.panda.entity.MemberDto;
 import com.kh17.panda.repository.CertDao;
+import com.kh17.panda.repository.IdentityVerificationDao;
 
 @Service
 public class GmailService implements EmailService{
@@ -25,6 +26,9 @@ public class GmailService implements EmailService{
 	
 	@Autowired
 	private CertDao certDao;
+	
+	@Autowired
+	private IdentityVerificationDao identityVerificationDao;
 	
 	@Override
 	public void sendCertification(MemberDto memberDto) throws MessagingException {
@@ -54,7 +58,31 @@ public class GmailService implements EmailService{
 		sender.send(mail);
 	}
 	
-}
+
+	@Override
+	public boolean verification_no(String email) throws MessagingException  {
+
+			String no = randomStringService.Verification(6, 1);
+			identityVerificationDao.insert(no);
+			
+			System.out.println(email);
+			MimeMessage mail = sender.createMimeMessage();
+			MimeMessageHelper helper = 
+					new MimeMessageHelper(mail, false, "UTF-8");
+			
+			helper.setFrom("PanDa");
+			helper.setTo(email);
+			helper.setSubject("인증번호 메일 입니다.");
+			helper.setText("귀하의 인증번호는 "+no+" 입니다");
+			
+			sender.send(mail);
+			return true;
+	
+		}
+		
+	}
+
+
 
 
 
