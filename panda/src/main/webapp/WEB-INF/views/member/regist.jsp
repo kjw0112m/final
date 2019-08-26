@@ -4,16 +4,18 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <%--암호화 --%>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
-<script	src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
-<script	src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
 <%--암호화 --%>
 
 <style>
-
 * {
 	text-align: center;
 	margin: auto;
 }
+
 input[type=submit] {
 	align: center;
 	width: 50px;
@@ -22,20 +24,15 @@ input[type=submit] {
 	color: white;
 	width: 50%;
 }
-
-.v {
-	padding: 0px 30px 0px 200px;
-	height: 35px;
-	width: 465px;
-}
-
 </style>
 <script>
 
 	$(function() {
 		$(".addr").click(findAddress);
+ 		$("input[type=submit]").prop("disabled", true).css("background-color", "#788784");
+	    $("#idCheck").prop("disabled", true).css("background-color", "#788784");
 	});
-
+	
 	function findAddress() {
 		new daum.Postcode({
 			oncomplete : function(data) {
@@ -84,15 +81,8 @@ input[type=submit] {
 	}
 	
 	
-	// 아이디 중복 검사
-	$(function(){
-	$("input[name=checkId]").prop("disabled", true).css("background-color", "#788784");
-								
-	 $("input[name=idCheck]").prop("disabled", true).css("background-color", "#788784");
-});
-	
 	$(function() {
-		$("input[name=idCheck]").click(function() {
+		$("#idCheck").click(function() {
 				$.ajax({
 				url : "idCheck",
 				data : {
@@ -107,7 +97,6 @@ input[type=submit] {
 					//중복검사해서 사용할 수 있는 아이디이면 가입버튼 활성화
 					else {
 						window.alert("사용 가능한 아이디입니다")
-						$("input[name=checkId]").prop("disabled", false).css("background-color", "#30cccf")
 					}
 				}
 			});
@@ -122,11 +111,11 @@ input[type=submit] {
 			var span=document.querySelector(".sid");
 			if (result) {
 				span.innerHTML=""
-	    $("input[name=idCheck]").prop("disabled", false).css("background-color", "#4790b8");
+	    $("#idCheck").prop("disabled", false).css("background-color", "#4790b8");
 			}
 			else {
 		span.innerHTML = "<font color = '#de2195' size = '2'>8~15자의 영문 소문자,대문자, 숫자로 입력해주세요</font>"
-		 $("input[name=idCheck]").prop("disabled", true).css("background-color", "#6c9391");
+		 $("#idCheck").prop("disabled", true).css("background-color", "#6c9391");
 			}
 
 		});
@@ -174,49 +163,84 @@ input[type=submit] {
 			this.submit();
 		});
 	});
+ 		//이메일 본인 인증
+ 		$(function(){
+ 			$(".email").click(
+				function(){
+					$.ajax({
+ 						url : "email_cert",
+ 						data : {
+ 							email : $("input[name=email]").val(),
+					
+ 						},
+ 						success:function(resp){
+ 							if (resp == "Y") {
+ 							}
+ 						}
+ 					});
+ 				});
+ 			});
+
+ 		$(function() {
+ 					$(".verification_check").click(
+ 					function() {
+						$.ajax({
+							url : "email_cert_check",
+							data : {
+								identity : $("input[name=identity]").val()
+						},
+						dataType : "text",
+							success : function(resp) {
+								if (resp == "Y"){
+									window.alert("올바른 인증번호 입니다");
+ 									$("input[type=submit]").prop("disabled",false).css("background-color", "#4790b8");
+								}
+								else {
+									window.alert("인증번호가 올바르지 않습니다")
+									$("input[name=identity]").select();
+								}
+							}
+						});
+					});
+	});
 </script>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <body>
 	<%-- 회원 가입 페이지의 내용을 구현 --%>
-	<h1>회원 가입</h1><br>
+	<h1>회원 가입</h1>
+	<br>
 	<form action="regist" method="post">
 		<div>
-			<table >
+			<table>
 				<tbody>
-		
+
 					<tr>
 						<td>아이디</td>
-						<td><input  class="id" type="text" name="id"
-							placeholder="아이디 8~16글자" required><br>
-							<span class="sid"></span></td>
-						
-					<td><input type="button" name="idCheck" value="아이디 중복확인" ></td>
+						<td><input class="id" type="text" name="id"
+							placeholder="아이디 8~16글자" required><br> <span
+							class="sid"></span></td>
+
+						<td><input type="button" id="idCheck" value="아이디 중복확인"></td>
 					</tr>
 
 					<tr>
 						<td>비밀번호</td>
 						<td><input class="pw" type="password" name="pw"
-							id="user_pass" placeholder="8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)" required><br>
-                       <span class="spw"></span></td>
+							id="user_pass" placeholder="8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)"
+							required><br> <span class="spw"></span></td>
 					</tr>
 					<tr>
 						<td>비밀번호 확인</td>
 						<td><input type="password" id="chpass" name="pw_check"
-							placeholder="비밀번호 확인" required><br>
-							<span class="cpw"></span></td>
-													</tr>
+							placeholder="비밀번호 확인" required><br> <span
+							class="cpw"></span></td>
+					</tr>
 
 					<tr>
 						<td>이름</td>
 						<td><input type="text" name="name" placeholder="이름" required></td>
 					</tr>
 
-					<tr>
-						<td>이메일</td>
-						<td><input type="email" name="email" placeholder="이메일"
-							required></td>
-						<td><button>이메일본인인증</button>
-					</tr>
 
 					<tr>
 						<td>핸드폰번호</td>
@@ -227,8 +251,8 @@ input[type=submit] {
 						<td>주소</td>
 						<td><div>
 
-								<input class="addr" type="button" value="우편번호 찾기"> 
-								<input type="text" name="post_code" placeholder="우편번호" readonly><br>
+								<input class="addr" type="button" value="우편번호 찾기"> <input
+									type="text" name="post_code" placeholder="우편번호" readonly><br>
 								<input type="text" name="basic_addr" placeholder="주소" readonly>
 								<input type="text" name="detail_addr" placeholder="상세주소">
 
@@ -241,9 +265,22 @@ input[type=submit] {
 					</tr>
 
 					<tr>
-						<td colspan="3"><input  type="submit" name = "checkId" value="가입하기" ></td>
+						<td>이메일</td>
+						<td><input type="text" name="email" required> <input
+							type="button" class="email" value="인증하기"> <input
+							id="indentity" type="text" name="identity" required
+							style="width: 20%;"> <input type="button" id="indentity"
+							class="verification_check" value="인증번호확인" style="width: 20%;">
+							<div class="emailD"></div></td>
 					</tr>
 
+					<tr>
+						<td colspan="3">
+							<input id="registcheck" type="submit" value="가입하기">
+						</td>
+					</tr>
+
+					<tr>
 				</tbody>
 			</table>
 		</div>
