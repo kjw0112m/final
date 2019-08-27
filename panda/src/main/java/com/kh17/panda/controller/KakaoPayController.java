@@ -19,9 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import com.kh17.panda.controller.vo.KakaoPayCancelVO;
-import com.kh17.panda.controller.vo.KakaoPayReturnVO;
 import com.kh17.panda.controller.vo.KakaoPaySuccessVO;
-
+import com.kh17.panda.vo.KakaoPayReturnVO;
 
 @Controller
 @RequestMapping("/pay/kakao")

@@ -8,4 +8,8 @@ public interface EmailService {
 
 
 	void sendCertification(MemberDto memberDto) throws MessagingException;
+
+	boolean verification_no(String email) throws MessagingException;
+
+
 }

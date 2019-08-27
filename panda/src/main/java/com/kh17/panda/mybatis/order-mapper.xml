@@ -4,37 +4,84 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="order">
-<!-- 	<select id="list" parameterType="orderViewDto" resultType="orderViewDto"> -->
-<!-- 		select * from order_view where 1=1 -->
-<!-- 		<choose> -->
-<!-- 			<when test="searchType != null and searchKeyword != null"> -->
-<!-- 				and -->
-<!-- 				<foreach collection=""></foreach> -->
-<!-- 				${searchType} like '%' || #{searchKeyword} || '%' -->
-<!-- 				${searchType} like '%' || #{searchKeyword} || '%' -->
-<!-- 				${searchType} like '%' || #{searchKeyword} || '%' -->
-<!-- 				${searchType} like '%' || #{searchKeyword} || '%' -->
-<!-- 				${searchType} like '%' || #{searchKeyword} || '%' -->
-<!-- 			</when> -->
-<!-- 			<when test="start_dt != null and end_dt !=null"> -->
-<!-- 				and -->
-<!-- 				order_date between to_date(#{start_dt}, -->
-<!-- 				'YYYY-MM-DD') and to_date(#{end_dt}, 'YYYY-MM-DD') + 0.99999 -->
-<!-- 			</when> -->
-<!-- 			<when test="product_name != null"> -->
-<!-- 				and -->
-<!-- 				product_name like '%' || #{product_name} || '%' -->
-<!-- 			</when> -->
-<!-- 			<when test="status != null"> -->
-<!-- 				and -->
-<!-- 				status like '%' || #{status} || '%' -->
-<!-- 			</when> -->
-<!-- 			<when test="cs_status != null"> -->
-<!-- 				and -->
-<!-- 				cs_status like '%' || #{cs_status} || '%' -->
-<!-- 			</when> -->
-<!-- 		</choose> -->
-<!-- 	</select> -->
+	<select id="list" parameterType="map" resultType="orderViewDto">
+		select * from (
+		<![CDATA[
+			select rownum rn, O.* from(
+				select * from order_view
+		]]>
+		where 1=1
+		<choose>
+			<when test="vo != null">
+				and
+				<foreach collection="vo" separator="and" item="item"
+					open="(" close=")">
+					${item.type} like '%' || #{item.keyword} || '%'
+				</foreach>
+			</when>
+			<when test="dto.start_dt != null and dto.end_dt !=null">
+				and
+				order_dt between to_date(#{dto.start_dt},
+				'YYYY-MM-DD') and to_date(#{dto.end_dt}, 'YYYY-MM-DD') + 0.99999
+			</when>
+			<when test="dto.product_name != null">
+				and
+				product_name like '%' || #{dto.product_name} ||
+				'%'
+			</when>
+			<when test="dto.status != null">
+				and
+				status = #{dto.status}
+			</when>
+			<when test="dto.cs_status != null">
+				and
+				cs_status = #{dto.cs_status}
+			</when>
+			<when test="dto.member_id != null">
+				and
+				member_id = #{dto.member_id}
+			</when>
+			<when test="dto.seller_id != null">
+				and
+				seller_id = #{dto.seller_id}
+			</when>
+		</choose>
+		)O
+		<![CDATA[
+		) where rn >= #{start} and rn <= #{end}
+		]]>
+	</select>
+
+	<select id="count" parameterType="map" resultType="int">
+		select count(*) from order_view where 1=1
+		<choose>
+			<when test="vo != null">
+				and
+				<foreach collection="vo" separator="and" item="item"
+					open="(" close=")">
+					${item.type} like '%' || #{item.keyword} || '%'
+				</foreach>
+			</when>
+			<when test="dto.start_dt != null and dto.end_dt !=null">
+				and
+				order_dt between to_date(#{dto.start_dt},
+				'YYYY-MM-DD') and to_date(#{dto.end_dt}, 'YYYY-MM-DD') + 0.99999
+			</when>
+			<when test="dto.product_name != null">
+				and
+				product_name like '%' || #{dto.product_name} ||
+				'%'
+			</when>
+			<when test="dto.status != null">
+				and
+				status = #{dto.status}
+			</when>
+			<when test="dto.cs_status != null">
+				and
+				cs_status = #{dto.cs_status}
+			</when>
+		</choose>
+	</select>
 
 	<select id="seq" resultType="int">
 		select orders_seq.nextval from dual
@@ -45,9 +92,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		to_char(sysdate,
 		'YYYYMMDDHH24MISS')||#{id},
 		#{id},
-		#{product_id}, #{member_id},
-		#{quantity}, sysdate, #{pay_type},
-		#{total_price}, #{discount_price},
+		#{product_id}, #{member_id}, #{t_id},
+		#{quantity}, sysdate,
+		#{pay_type},
+		#{total_price}, #{discount_price}, #{status}, null, null
 		<choose>
 			<when test="team == null">
 				to_char(sysdate,'YYYYMMDDHH24MISS')||#{order_id},
@@ -56,7 +104,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				#{team},
 			</otherwise>
 		</choose>
-		null, #{cs_status}
+		#{sizes}
 		)
 	</insert>
 
@@ -71,11 +119,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="dropSequence">
 		drop sequence orders_seq
 	</delete>
+
+	<delete id="delete">
+		delete orders where order_dt between
+		sysdate-(INTERVAL '1' YEAR) and sysdate-(INTERVAL '1' MINUTE)
+	</delete>
+
+	<update id="cs_status" parameterType="ordersDto">
+		update orders set
+		cs_status = #{cs_status}
+		where team=#{team}
+	</update>
+	
+	<update id="status" parameterType="ordersDto">
+		update orders set
+		status = #{status}
+		where team=#{team}
+	</update>
+
+	<update id="invoice" parameterType="ordersDto">
+		update orders set t_invoice =
+		#{t_invoice}, t_id = #{t_id} where team=#{team}
+	</update>
+	
+	<select id="getTeam" parameterType="string" resultType="orderViewDto">
+		select * from order_view where team = #{team}
+	</select>
 </mapper>
 
 
 
-
+ 
 
 
 
