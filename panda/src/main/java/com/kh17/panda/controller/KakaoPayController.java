@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import com.kh17.panda.controller.vo.KakaoPayCancelVO;
 import com.kh17.panda.controller.vo.KakaoPayReturnVO;
 import com.kh17.panda.controller.vo.KakaoPaySuccessVO;
+
 
 @Controller
 @RequestMapping("/pay/kakao")
@@ -41,6 +43,8 @@ public class KakaoPayController {
 			) throws URISyntaxException {
 //		목표 : 사용자가 보낸 정보에 추가 정보를 작성하여 api 호출
 //		추가할 정보 : 가맹점코드, 주문번호, 회원id, 비과세액, 성공/실패/취소주소
+		
+		session.setAttribute("total_amount", total_amount);
 		
 //		서버에서 다른 서버를 호출하려면 RestTemplate이 필요
 		RestTemplate template = new RestTemplate();
@@ -124,9 +128,8 @@ public class KakaoPayController {
 	}
 	
 	@GetMapping("/cancel")		//취소시 예약한 주소
-	public String cancel() {
+	public String cancel() throws URISyntaxException {
 //		목표 : PG사에 결제 취소 요청을 보낸다
-		
 		return "cancel";
 	}
 	
@@ -134,7 +137,45 @@ public class KakaoPayController {
 	public String fail() {
 		return "fail";
 	}
+	
+//	결제 완료된 항목에 대한 취소 처리
+	@GetMapping("/cancel_order")
+	public String cancelOrder(
+			@RequestParam String tid,
+			@RequestParam int total_amount,
+			Model model
+			) throws URISyntaxException {
+		
+		RestTemplate template = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "KakaoAK 35fa20f25ea37935f657e69b289db050");
+		headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
+		headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
+		
+		MultiValueMap<String, String> params = 
+								new LinkedMultiValueMap<String, String>();
+		params.add("cid", "TC0ONETIME");
+		params.add("tid", tid);
+		params.add("cancel_amount", String.valueOf(total_amount));
+		params.add("cancel_tax_free_amount", "0");
+		
+		HttpEntity<MultiValueMap<String, String>> send
+			= new HttpEntity<MultiValueMap<String,String>>(params, headers);
+	
+		URI uri = new URI("https://kapi.kakao.com/v1/payment/cancel");
+	
+		KakaoPayCancelVO cancel = template.postForObject(
+											uri, send, KakaoPayCancelVO.class);
+//		취소된 정보를 이용하여 DB 처리...(삭제, 수정)
+		
+//		테스트를 위하여 전달
+		model.addAttribute("cancel", cancel);		
+		
+		return "cancel";
+	}
 }
+
 
 
 

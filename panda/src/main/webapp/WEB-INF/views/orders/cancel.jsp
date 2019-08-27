@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <head>
     <meta charset="UTF-8">
@@ -39,7 +37,7 @@
         position: fixed;
         z-index: 201;
         top: 0;
-        left:  0;
+        left: 0;
         width: 220px;
         height: 100%;
         margin-left: 30px;
@@ -315,9 +313,9 @@
         </table>
         <div style="margin-top: 50px">
                 <span style="font-size: 15px">${orderview.order_dt}</span>
-                <span style="color: #bbb">|</span>
+                <span style="color: #bbb">&nbsp&nbsp|&nbsp&nbsp</span>
                 <span style="font-size: 15px">주문번호 2019082664883377</span>
-                <span style="color: #bbb">|</span>
+                <span style="color: #bbb">&nbsp&nbsp|&nbsp&nbsp</span>
                 <span style="font-size: 15px">주문 상품 1개</span>
             </div>
             <form action="">
@@ -366,5 +364,4 @@
                     </div>
                     </body>
                     </html>
-<h3><a href="cancel_order?tid=${success.tid}&total_amount=${success.amount.total}">이 결제 취소하기</a></h3>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

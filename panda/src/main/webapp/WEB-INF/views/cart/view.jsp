@@ -56,7 +56,6 @@ pageEncoding="UTF-8"%>
     .text-left {
         text-align: left;
     }
-
     .text-conter {
         text-align: center;
     }
