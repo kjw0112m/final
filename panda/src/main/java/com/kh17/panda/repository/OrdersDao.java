@@ -9,7 +9,7 @@ import com.kh17.panda.vo.OrderViewVO;
 public interface OrdersDao {
 	void initSequnce();
 
-	List<OrderViewDto> list(OrderViewDto orderViewDto, List<OrderViewVO> orderViewVO, int start, int end);
+	List<OrderViewDto> list(OrderViewDto orderViewDto, List<OrderViewVO> orderViewVO, int start, int end, String[] csStatus, String[] tStatus);
 
 	void insert(OrdersDto ordersDto);
 

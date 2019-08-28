@@ -29,13 +29,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				product_name like '%' || #{dto.product_name} ||
 				'%'
 			</when>
-			<when test="dto.status != null">
+			<when test="dto.pay_status != null">
 				and
-				status = #{dto.status}
+				pay_status = #{dto.pay_status}
 			</when>
-			<when test="dto.cs_status != null">
-				and
-				cs_status = #{dto.cs_status}
+			<when test="tStatus != null">
+				<foreach collection="tStatus" separator="and" item="tStat"
+					open="(" close=")">
+					and
+					t_status = #{tStat}
+				</foreach>
+			</when>
+			<when test="csStatus != null">
+				<foreach collection="csStatus" separator="and" item="csStat"
+					open="(" close=")">
+					and
+					cs_status = #{csStat}
+				</foreach>
 			</when>
 			<when test="dto.member_id != null">
 				and
@@ -127,13 +137,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<update id="cs_status" parameterType="ordersDto">
 		update orders set
-		cs_status = #{cs_status}
+		cs_status
+		= #{cs_status}
 		where team=#{team}
 	</update>
-	
+
 	<update id="status" parameterType="ordersDto">
 		update orders set
-		status = #{status}
+		status =
+		#{status}
 		where team=#{team}
 	</update>
 
@@ -141,8 +153,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update orders set t_invoice =
 		#{t_invoice}, t_id = #{t_id} where team=#{team}
 	</update>
-	
-	<select id="getTeam" parameterType="string" resultType="orderViewDto">
+
+	<select id="getTeam" parameterType="string"
+		resultType="orderViewDto">
 		select * from order_view where team = #{team}
 	</select>
 </mapper>

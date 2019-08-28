@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Builder @NoArgsConstructor @AllArgsConstructor @Data
 public class OrderViewDto {
-	private String product_name, seller_id, cs_status, status, member_id;
+	private String product_name, seller_id, cs_status, t_status, pay_status, member_id;
 	private String order_dt, order_id, pay_type, t_invoice, team, basic_addr, detail_addr;
 	private String member_name, phone, sizes;
 	

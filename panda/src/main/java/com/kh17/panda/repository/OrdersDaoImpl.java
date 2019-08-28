@@ -27,12 +27,14 @@ public class OrdersDaoImpl implements OrdersDao{
 	}
 
 	@Override
-	public List<OrderViewDto> list(OrderViewDto orderViewDto, List<OrderViewVO> orderViewVO, int start, int end) {
+	public List<OrderViewDto> list(OrderViewDto orderViewDto, List<OrderViewVO> orderViewVO, int start, int end, String[] csStatus, String[] tStatus) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("dto", orderViewDto);
 		map.put("vo", orderViewVO);
 		map.put("start", start);
 		map.put("end", end);
+		map.put("csStatus", csStatus);
+		map.put("tStatus", tStatus);
 		
 		return sqlSession.selectList("order.list", map);
 	}

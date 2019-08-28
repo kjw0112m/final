@@ -35,7 +35,8 @@ public class SellerOrderController {
 
 	@GetMapping("/list")
 	public String list(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
-			Model model, @RequestParam(required = false, defaultValue = "1") int page, HttpSession session) {
+			Model model, @RequestParam(required = false, defaultValue = "1") int page, HttpSession session, @RequestParam String[] csStatus,
+			@RequestParam String[] tStatus) {
 		int pagesize = 10;
 		int start = pagesize * page - (pagesize - 1);
 		int end = pagesize * page;
@@ -55,7 +56,7 @@ public class SellerOrderController {
 		model.addAttribute("endBlock", endBlock);
 		
 		orderViewDto.setSeller_id((String) session.getAttribute("sid"));
-		List<OrderViewDto> list = ordersDao.list(orderViewDto, orderViewListVO.getSearch(), start, end);
+		List<OrderViewDto> list = ordersDao.list(orderViewDto, orderViewListVO.getSearch(), start, end, csStatus, tStatus);
 		model.addAttribute("orderViewDto", list);
 		return "seller/orders/list";
 	}
