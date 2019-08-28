@@ -21,7 +21,6 @@ import com.kh17.panda.entity.ProductDto;
 import com.kh17.panda.repository.CartDao;
 import com.kh17.panda.repository.OrdersDao;
 import com.kh17.panda.repository.ProductDao;
-import com.kh17.panda.vo.OrderViewListVO;
 
 @Controller
 @RequestMapping("/orders")

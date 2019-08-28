@@ -18,19 +18,50 @@
 
 input[type=submit] {
 	align: center;
-	width: 50px;
 	color: white;
-	background-color: dodgerblue;
+	background-color: #729a65;
 	color: white;
 	width: 50%;
 }
+input[type=button] {
+	align: center;
+	color: white;
+	background-color: #729a65;
+	color: white;
+	width:30%;
+}
+
+input[type=text] {
+	align: center;
+	width:60%;
+}
+.table {
+    width:55%;
+	margin:auto;
+    border: 1px solid black;
+ 
+}
+
+
+.table > thead > tr > th, 
+.table > thead > tr > td, 
+.table > tbody > tr > th, 
+.table > tbody > tr > td,
+.table > tfoot > tr > th, 
+.table > tfoot > tr > td {
+    border: 1px solid gray;
+    padding: 0.6rem;
+}
+
+
 </style>
 <script>
 
 	$(function() {
 		$(".addr").click(findAddress);
- 		$("input[type=submit]").prop("disabled", true).css("background-color", "#788784");
-	    $("#idCheck").prop("disabled", true).css("background-color", "#788784");
+ 		$("#registcheck").prop("disabled", true).css("background-color", " #729a65");
+	    $("#idCheck").prop("disabled", true).css("background-color", " #729a65");
+	    $("#email").prop("disabled",false).css("background-color", "#4790b8");
 	});
 	
 	function findAddress() {
@@ -173,9 +204,11 @@ input[type=submit] {
  							email : $("input[name=email]").val(),
 					
  						},
+ 						
  						success:function(resp){
- 							if (resp == "Y") {
- 							}
+ 							
+ 				$("#email").prop("disabled",true).css("background-color", "#729a65");
+ 						 						
  						}
  					});
  				});
@@ -193,7 +226,7 @@ input[type=submit] {
 							success : function(resp) {
 								if (resp == "Y"){
 									window.alert("올바른 인증번호 입니다");
- 									$("input[type=submit]").prop("disabled",false).css("background-color", "#4790b8");
+ 									$("#registcheck").prop("disabled",false).css("background-color", "#4790b8");
 								}
 								else {
 									window.alert("인증번호가 올바르지 않습니다")
@@ -211,16 +244,17 @@ input[type=submit] {
 	<br>
 	<form action="regist" method="post">
 		<div>
-			<table>
+			<table class="table">
 				<tbody>
 
 					<tr>
-						<td>아이디</td>
-						<td><input class="id" type="text" name="id"
-							placeholder="아이디 8~16글자" required><br> <span
-							class="sid"></span></td>
-
-						<td><input type="button" id="idCheck" value="아이디 중복확인"></td>
+						<td rowspan="2">아이디</td>
+						<td ><input class="id" type="text" name="id"
+							placeholder="아이디 8~16글자" required ><br> <span
+							class="sid"></span></td></tr>
+                    
+                     <tr>         
+					<td colspan="2"><input type="button" id="idCheck" value="아이디 중복확인"></td>
 					</tr>
 
 					<tr>
@@ -265,13 +299,17 @@ input[type=submit] {
 					</tr>
 
 					<tr>
-						<td>이메일</td>
+						<td rowspan="2">이메일</td>
 						<td><input type="text" name="email" required> <input
-							type="button" class="email" value="인증하기"> <input
+							type="button" class="email" id="eamil"value="인증하기"> </td>	</tr>
+							
+							
+							<tr>
+							<td colspan="2"><input
 							id="indentity" type="text" name="identity" required
-							style="width: 20%;"> <input type="button" id="indentity"
-							class="verification_check" value="인증번호확인" style="width: 20%;">
-							<div class="emailD"></div></td>
+							> <input type="button" id="indentity"
+							class="verification_check" value="인증번호확인">
+							</td>
 					</tr>
 
 					<tr>

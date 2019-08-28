@@ -1,6 +1,10 @@
 package com.kh17.panda.repository;
 
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -84,6 +88,21 @@ public class MemberDaoImpl implements MemberDao {
 		
 	}
 	
+	//관리자 사용
+	//회원 검색
+	@Override
+	public List<MemberDto> search(String type, String keyword) {
+		Map<String, String> param = new HashMap<>();
+		param.put("type", type);
+		param.put("keyword", keyword);
+		return sqlSession.selectList("member.search", param);
+	}
+
 	
-}
+	
+	
+	}
+	
+	
+
 

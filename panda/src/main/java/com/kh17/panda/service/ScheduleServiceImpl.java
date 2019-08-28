@@ -1,6 +1,5 @@
 package com.kh17.panda.service;
 
-import java.time.LocalTime;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;

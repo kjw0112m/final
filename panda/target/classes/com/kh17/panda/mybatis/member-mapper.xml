@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	이 파일은 SQL 명령만 보관하는 파일
 	따라서 외부에서 접근할 수 있도록 namespace를 지정
  -->
+
 <mapper namespace="member">
 	<!-- 회원등록-->
 	<insert id="regist" parameterType="memberDto">
@@ -30,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete member where id = #{id} 
 	</delete>
 	
-		<!-- 회원 정보 수정-->
+		
 			<select id="get" parameterType="string" resultType="memberDto">
 		select * from member where id= #{id}
 	</select>
@@ -105,6 +106,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		pw_dt = sysdate
 				 where id = #{id}
 	</update>
+	
+	<!-- 관리자 사용 -->
+	
+	<!-- 관리자가 회원 검색하는 기능 -->
+	<select id="search" parameterType="map" resultType="memberDto">
+		select * from member
+			where
+				${type} like '%' || #{keyword} || '%'
+			order by ${type} asc
+	</select>
 	
 </mapper>
 
