@@ -11,41 +11,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				select * from order_view
 		]]>
 		where 1=1
-		<choose>
-			<when test="vo != null">
+		<if test="vo.size() > 0 ">
+			and
+			<foreach collection="vo" separator="and" item="item" open="("
+				close=")">
+				${item.type} like '%' || #{item.keyword} || '%'
+			</foreach>
+		</if>
+		<if test="dto.start_dt != null and dto.end_dt !=null">
+			and
+			order_dt between to_date(#{dto.start_dt},
+			'YYYY-MM-DD') and to_date(#{dto.end_dt}, 'YYYY-MM-DD') + 0.99999
+		</if>
+		<if test="dto.product_name != null">
+			and
+			product_name like '%' || #{dto.product_name} ||
+			'%'
+		</if>
+		<if test="dto.pay_status != null">
+			and
+			pay_status = #{dto.pay_status}
+		</if>
+		<if test="tStatus != null">
 				and
-				<foreach collection="vo" separator="and" item="item"
-					open="(" close=")">
-					${item.type} like '%' || #{item.keyword} || '%'
-				</foreach>
-			</when>
-			<when test="dto.start_dt != null and dto.end_dt !=null">
+			<foreach collection="tStatus" separator="or" item="tStat"
+				open="(" close=")">
+				t_status = #{tStat}
+			</foreach>
+		</if>
+		<if test="csStatus != null">
 				and
-				order_dt between to_date(#{dto.start_dt},
-				'YYYY-MM-DD') and to_date(#{dto.end_dt}, 'YYYY-MM-DD') + 0.99999
-			</when>
-			<when test="dto.product_name != null">
-				and
-				product_name like '%' || #{dto.product_name} ||
-				'%'
-			</when>
-			<when test="dto.status != null">
-				and
-				status = #{dto.status}
-			</when>
-			<when test="dto.cs_status != null">
-				and
-				cs_status = #{dto.cs_status}
-			</when>
-			<when test="dto.member_id != null">
-				and
-				member_id = #{dto.member_id}
-			</when>
-			<when test="dto.seller_id != null">
-				and
-				seller_id = #{dto.seller_id}
-			</when>
-		</choose>
+			<foreach collection="csStatus" separator="or" item="csStat"
+				open="(" close=")">
+				cs_status = #{csStat}
+			</foreach>
+		</if>
+		<if test="dto.member_id != null">
+			and
+			member_id = #{dto.member_id}
+		</if>
+		<if test="dto.seller_id != null">
+			and
+			seller_id = #{dto.seller_id}
+		</if>
 		)O
 		<![CDATA[
 		) where rn >= #{start} and rn <= #{end}
@@ -54,33 +62,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="count" parameterType="map" resultType="int">
 		select count(*) from order_view where 1=1
-		<choose>
-			<when test="vo != null">
+		<if test="vo.size() > 0">
+			and
+			<foreach collection="vo" separator="and" item="item" open="("
+				close=")">
+				${item.type} like '%' || #{item.keyword} || '%'
+			</foreach>
+		</if>
+		<if test="dto.pay_status != null">
+			and
+			pay_status = #{dto.pay_status}
+		</if>
+		<if test="dto.start_dt != null and dto.end_dt !=null">
+			and
+			order_dt between to_date(#{dto.start_dt},
+			'YYYY-MM-DD') and to_date(#{dto.end_dt}, 'YYYY-MM-DD') + 0.99999
+		</if>
+		<if test="dto.product_name != null">
+			and
+			product_name like '%' || #{dto.product_name} ||
+			'%'
+		</if>
+		<if test="tStatus != null">
 				and
-				<foreach collection="vo" separator="and" item="item"
-					open="(" close=")">
-					${item.type} like '%' || #{item.keyword} || '%'
-				</foreach>
-			</when>
-			<when test="dto.start_dt != null and dto.end_dt !=null">
+			<foreach collection="tStatus" separator="or" item="tStat"
+				open="(" close=")">
+				t_status = #{tStat}
+			</foreach>
+		</if>
+		<if test="csStatus != null">
 				and
-				order_dt between to_date(#{dto.start_dt},
-				'YYYY-MM-DD') and to_date(#{dto.end_dt}, 'YYYY-MM-DD') + 0.99999
-			</when>
-			<when test="dto.product_name != null">
-				and
-				product_name like '%' || #{dto.product_name} ||
-				'%'
-			</when>
-			<when test="dto.status != null">
-				and
-				status = #{dto.status}
-			</when>
-			<when test="dto.cs_status != null">
-				and
-				cs_status = #{dto.cs_status}
-			</when>
-		</choose>
+			<foreach collection="csStatus" separator="or" item="csStat"
+				open="(" close=")">
+				cs_status = #{csStat}
+			</foreach>
+		</if>
+		<if test="dto.seller_id != null">
+			and
+			seller_id = #{dto.seller_id}
+		</if>
 	</select>
 
 	<select id="seq" resultType="int">
@@ -127,13 +147,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<update id="cs_status" parameterType="ordersDto">
 		update orders set
-		cs_status = #{cs_status}
+		cs_status
+		= #{cs_status}
 		where team=#{team}
 	</update>
-	
+
 	<update id="status" parameterType="ordersDto">
 		update orders set
-		status = #{status}
+		status =
+		#{status}
 		where team=#{team}
 	</update>
 
@@ -141,8 +163,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update orders set t_invoice =
 		#{t_invoice}, t_id = #{t_id} where team=#{team}
 	</update>
-	
-	<select id="getTeam" parameterType="string" resultType="orderViewDto">
+
+	<select id="getTeam" parameterType="string"
+		resultType="orderViewDto">
 		select * from order_view where team = #{team}
 	</select>
 </mapper>

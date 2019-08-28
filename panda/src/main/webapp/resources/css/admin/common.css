@@ -1,0 +1,648 @@
+@charset "UTF-8";
+
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6,
+	pre, code, form, fieldset, legend, input, textarea, p, blockquote, th,
+	td, img {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	min-width: 1580px;
+	max-width: 1920px;
+	height: 100%;
+	word-spacing: -1px;
+	background: #ecf0f7;
+	font-size: 14px;
+}
+
+div {
+	display: block;
+}
+
+/* ------------------------------------------------------------------기본 설정------------------------------------------------------ */
+#header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 202;
+	height: 60px;
+	box-sizing: border-box;
+	background: black;
+}
+
+#header>.header a {
+	text-decoration: none;
+	color: white;
+}
+
+#header .header {
+	display: flex;
+	height: 60px;
+	align-items: center;
+	max-width: 1920px;
+	min-width: 1024px;
+}
+
+#header h1.logo {
+	width: 220px;
+	height: 60px;
+	margin: 0 auto 0 0;
+	padding: 0 0 0 20px;
+	box-sizing: border-box;
+}
+
+#header .util {
+	margin: 0 15px 0 0;
+}
+
+ul, ol, dl, li {
+	list-style: none;
+}
+
+#header .util li {
+	position: relative;
+	display: inline-block;
+	padding: 20px;
+}
+
+/* ----------------------------------------------------헤더 끝----------------------------------------------------------- */
+#container {
+	position: relative;
+}
+
+#sidebar {
+	position: fixed;
+	z-index: 201;
+	top: 0;
+	left: 0;
+	width: 220px;
+	height: 100%;
+	padding: 80px 0 0;
+	box-sizing: border-box;
+	vertical-align: top;
+	border-right: 1px solid #d3dee4;
+	background: #fff;
+}
+
+#sidebar .snbArea {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+#snb {
+	margin: 0 0 auto;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+#snb>li {
+	position: relative;
+}
+
+#snb>li>ul {
+	margin-bottom: 10px;
+}
+
+#snb>li>a {
+	margin-left: 20px;
+}
+
+#snb>li>ul a {
+	margin-left: 30px;
+}
+
+#snb a {
+	line-height: 50px;
+}
+
+.bc_w {
+	background-color: whitesmoke;
+}
+
+.hide {
+	display: none;
+}
+
+.a_bold {
+	font-weight: bold;
+	color: #5fa5fe;
+}
+
+#sidebar .snbArea .customer {
+	padding: 18px 20px;
+	border-top: 1px solid #eaeeef;
+	background:
+		url(//img.echosting.cafe24.com/ec/mode/influencer/common/bg_snb_customer.png)
+		no-repeat 156px 20px;
+}
+
+#sidebar .snbArea .customer .title {
+	font-size: 12px;
+	color: #2e3039;
+}
+
+#sidebar .snbArea .customer .tel {
+	margin: 7px 0 0;
+	line-height: 24px;
+	font-size: 24px;
+	color: #2e3039;
+	letter-spacing: -0.5px;
+}
+
+#sidebar .snbArea .customer .tel .dot {
+	display: inline-block;
+	margin: -5px 5px 0;
+	vertical-align: top;
+}
+
+/* ----------------------------------------------------사이드바 끝----------------------------------------------------------- */
+#content {
+	width: 1600px;
+	margin: 0 auto;
+}
+
+#content {
+	min-height: 750px;
+	padding: 0 80px 80px;
+	box-sizing: border-box;
+	vertical-align: top;
+}
+
+#wrap {
+	height: 100%;
+	padding: 60px 0 0 220px;
+	box-sizing: border-box;
+}
+
+.head_tit {
+	position: relative;
+	margin: 40px 0 40px;
+}
+
+.optionArea {
+	margin: 0 0 30px;
+	padding: 20px;
+	border-radius: 2px;
+	clear: both;
+	border: 1px solid #ddd;
+	background: #fff;
+	-webkit-box-shadow: 0px 2px 1px 0px rgba(205, 211, 222, 1);
+	-moz-box-shadow: 0px 2px 1px 0px rgba(205, 211, 222, 1);
+	box-shadow: 0px 2px 1px 0px rgba(205, 211, 222, 1);
+}
+
+.mOption table {
+	line-height: 1.5;
+	background-color: #fff;
+}
+
+table {
+	table-layout: fixed;
+	width: 100%;
+	border: 0;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+colgroup {
+	display: table-column-group;
+}
+
+col {
+	display: table-column;
+}
+
+tbody {
+	display: table-row-group;
+	vertical-align: middle;
+	border-color: inherit;
+}
+
+tr {
+	display: table-row;
+	vertical-align: inherit;
+	border-color: inherit;
+}
+
+.mOption th {
+	vertical-align: top;
+	background-color: #f3f3f3;
+}
+
+.mOption th, .mOption td {
+	padding: 9px 9px 7px;
+	border: 1px solid #dedede;
+	text-align: left;
+}
+
+.mOption td {
+	height: 24px;
+}
+
+.btnDate {
+	padding: 5px;
+	min-width: 46px;
+	font-size: 13px;
+	height: 28px;
+	line-height: 26px;
+	color: #2e3039;
+	border: 1px solid #98989b;
+	background-color: #fff;
+}
+
+.fText {
+	height: 32px;
+	line-height: 14px;
+}
+
+.fText.gDate {
+	width: 100px;
+}
+
+.fText, .fTextarea {
+	max-width: 100%;
+	padding: 0 9px 2px;
+	box-sizing: border-box;
+	border: 1px solid #d4d4d4;
+	font-size: 14px;
+	line-height: 26px;
+	color: #686b6d;
+	outline: 0 none;
+	transition: border .2s ease-out;
+}
+
+.fSelect {
+	display: inline;
+	margin-right: 5px;
+	padding: 0 6px;
+	border: 1px solid #d4d4d4;
+	color: #2e3039;
+	font-size: 14px;
+	line-height: 30px;
+	-moz-appearance: none;
+	height: 32px;
+	appearance: none;
+}
+
+.plusbtn, .minusbtn {
+	margin-left: 10px;
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+.gLabel {
+	display: inline-block;
+	margin: 0 28px 0 0;
+}
+
+label.gLabel {
+	outline: 0;
+}
+
+input[type="checkbox"] {
+	position: relative;
+	opacity: 1;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	border: 1px solid #d4d4d4;
+	background: #fff;
+	outline: 0;
+}
+
+input[type="checkbox"]:checked {
+	border: 0;
+	background-image:
+		url(//img.echosting.cafe24.com/ec/mode/influencer/common/bg_checkbox_checked.png);
+	-webkit-transition: .2s ease-out;
+	transition: .2s ease-out;
+}
+
+input[type="radio"]:checked {
+	background-image:
+		url(//img.echosting.cafe24.com/ec/mode/influencer/common/bg_radio_checked.png);
+	-webkit-transition: .2s ease-out;
+	transition: .2s ease-out;
+}
+
+input[type="radio"] {
+	position: relative;
+	opacity: 1;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background:
+		url(//img.echosting.cafe24.com/ec/mode/influencer/common/bg_radio.png)
+		no-repeat 0 0;
+	background-size: 20px 20px;
+}
+
+.gBreak {
+	display: inline-block;
+	margin: 1px 0 0;
+}
+
+.ui-datepicker-trigger {
+	width: 22px;
+	height: 22px;
+	margin-left: 5px;
+	vertical-align: -3px;
+	cursor: pointer;
+}
+
+.bc_g {
+	background: #dedede;
+}
+
+/*datepicker 버튼 롤오버 시 손가락 모양 표시*/
+.ui-datepicker-trigger {
+}
+
+.form_button {
+	position: relative;
+	text-align: center;
+	margin: 20px 0;
+	padding: 0 4px 0 0;
+}
+
+.btnSearch {
+	min-width: 84px;
+	height: 36px;
+	padding: 10px;
+	color: #fff;
+	line-height: 34px;
+	border: 1px solid transparent;
+	background-color: #55a0ff;
+	margin-right: 10px;
+}
+
+.btnSearch.reset {
+	color: #55a0ff;
+	border-color: #55a0ff;
+	background-color: #fff;
+}
+
+/* --------------------------------------------------- 정보 테이블 스타일------------------------------------------------------- */
+.section {
+	margin: 0 0 30px;
+	padding: 30px 20px;
+	border-radius: 2px;
+	border: 1px solid #ddd;
+	background: #fff;
+	-webkit-box-shadow: 0px 2px 1px 0px rgba(205, 211, 222, 1);
+	-moz-box-shadow: 0px 2px 1px 0px rgba(205, 211, 222, 1);
+	box-shadow: 0px 2px 1px 0px rgba(205, 211, 222, 1);
+}
+
+.section .tab {
+	margin: -31px -21px 20px;
+	background: #ecf0f7;
+}
+
+.tab {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: -ms-flex;
+	display: -moz-flex;
+	display: flex;
+	position: relative;
+}
+
+.tab>ul {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: -ms-flex;
+	display: -moz-flex;
+	display: flex;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	-moz-flex: 1;
+	flex: 1;
+	border-left: 1px solid #dadcdd;
+}
+
+.tab>ul>li {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: -ms-flex;
+	display: -moz-flex;
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	-moz-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-ms-align-items: center;
+	align-items: center;
+	min-width: 160px;
+	height: 39px;
+	border-top: 1px solid #dadcdd;
+	border-right: 1px solid #dadcdd;
+	background-color: #f5f7fb;
+}
+
+.tab>ul>li.selected {
+	z-index: 1;
+	height: 40px;
+	background-color: #fff;
+}
+
+.tab>ul>li.selected a {
+	line-height: 40px;
+	color: #55a0ff;
+}
+
+.tab>ul>li>a {
+	display: inline-block;
+	width: 100%;
+	padding: 0 15px;
+	font-size: 14px;
+	line-height: 38px;
+	color: #898989;
+	box-sizing: border-box;
+	text-align: center;
+	text-decoration: none;
+}
+
+.tab>ul>li.selected:before {
+	content: "";
+	display: block;
+	width: 100%;
+	height: 2px;
+	margin: -1px 0;
+	background-color: #55a0ff;
+}
+
+.tab>ul>li.selected:after {
+	content: "";
+	display: block;
+	width: 100%;
+	height: 1px;
+	background-color: #fff;
+}
+
+.tab:after {
+	content: "";
+	position: absolute;
+	top: 40px;
+	left: 0;
+	right: 0;
+	display: block;
+	border-bottom: 1px solid #dadcdd;
+}
+
+.rState {
+	margin: 10px 0;
+	line-height: 20px;
+}
+
+.rState .left {
+	float: left;
+}
+
+.rState .total {
+	float: left;
+	margin: 0 8px 0 0;
+	color: lightskyblue;
+}
+
+.rState .right {
+	float: right;
+}
+
+.rState:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.mBoard.gScroll {
+	position: relative;
+	overflow: auto;
+	border-right: 1px solid #d9dadc;
+	border-left: 1px solid #d9dadc;
+	height: 1%;
+}
+
+.gScroll {
+	overflow: auto;
+}
+
+.mBoard.typeOrder table {
+	border-top: 0;
+}
+
+.mBoard.gScroll table {
+	margin-left: -1px;
+}
+
+.mBoard tbody td {
+	border: 1px solid #dedede;
+}
+
+.mBoard tfoot>tr>th, .mBoard tbody>tr>td {
+	border-top-width: 0;
+}
+
+.mBoard table {
+	border-top: 1px solid #dedede;
+	line-height: 1.5;
+	background-color: #fff;
+}
+
+.mBoard .right {
+	text-align: right;
+}
+
+.mBoard.typeOrder th, .mBoard.typeOrder tbody th[scope*='col'], .mBoard.typeOrder td
+	{
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.mBoard tbody th[scope*='col'] {
+	padding: 8px 5px;
+	text-align: center;
+}
+
+.mBoard.gScroll th, .mBoard.gScroll td {
+	border-right-width: 0;
+}
+
+.mBoard tbody th {
+	border: 1px solid #dedede;
+	text-align: left;
+	word-break: keep-all;
+}
+
+.mBoard tbody td {
+	border: 1px solid #dedede;
+}
+
+.mBoard td {
+	padding: 10px 15px;
+	line-height: 24px;
+	vertical-align: top;
+}
+
+.mBoard th {
+	padding: 11px 15px 10px;
+	vertical-align: top;
+	color: #2e3039;
+	background-color: #f3f3f3;
+}
+
+.mBoard.typeOrder .orderNum {
+	text-align: center;
+}
+
+.mBoard .center {
+	text-align: center;
+}
+
+.w24 {
+	width: 24px;
+}
+
+.w50 {
+	width: 50px;
+}
+
+.w120 {
+	width: 120px;
+}
+
+.w105 {
+	width: 105px;
+}
+
+.w95{
+	width:95px;
+}
+
+.w60 {
+	width: 60px;
+}
+
+.w45 {
+	width: 45px;
+}
+
+.w35 {
+	width: 35px;
+}

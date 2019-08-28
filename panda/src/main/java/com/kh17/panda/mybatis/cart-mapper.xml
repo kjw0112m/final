@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<select id="list" resultType="cartViewDto" parameterType="string">
-		select * from cart_view where member_id = ${member_id}
+		select * from cart_view where member_id = #{member_id}
 	</select>
 	
 	

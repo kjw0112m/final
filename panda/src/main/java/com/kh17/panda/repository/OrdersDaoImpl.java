@@ -25,12 +25,14 @@ public class OrdersDaoImpl implements OrdersDao{
 	}
 
 	@Override
-	public List<OrderViewDto> list(OrderViewDto orderViewDto, List<OrderViewVO> orderViewVO, int start, int end) {
+	public List<OrderViewDto> list(OrderViewDto orderViewDto, List<OrderViewVO> orderViewVO, int start, int end, String[] csStatus, String[] tStatus) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("dto", orderViewDto);
 		map.put("vo", orderViewVO);
 		map.put("start", start);
 		map.put("end", end);
+		map.put("csStatus", csStatus);
+		map.put("tStatus", tStatus);
 		
 		return sqlSession.selectList("order.list", map);
 	}
@@ -60,13 +62,6 @@ public class OrdersDaoImpl implements OrdersDao{
 		sqlSession.update("order.invoice", ordersDto);
 	}
 
-	@Override
-	public int count(OrderViewDto orderViewDto, List<OrderViewVO> orderViewVO) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("dto", orderViewDto);
-		map.put("vo", orderViewVO);
-		return sqlSession.selectOne("order.count", map);
-	}
 
 	@Override
 	public void stat_change(OrdersDto ordersDto) {
@@ -76,5 +71,15 @@ public class OrdersDaoImpl implements OrdersDao{
 	@Override
 	public List<OrderViewDto> getTeam(String team) {
 		return sqlSession.selectList("order.getTeam", team);
+	}
+
+	@Override
+	public int count(OrderViewDto orderViewDto, List<OrderViewVO> search, String[] csStatus, String[] tStatus) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("dto", orderViewDto);
+		map.put("vo",search);
+		map.put("csStatus", csStatus);
+		map.put("tStatus", tStatus);
+		return sqlSession.selectOne("order.count", map);
 	}
 }
