@@ -70,7 +70,7 @@ public class OrdersController {
 		int startBlock = (page - 1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
 
-		int count = ordersDao.count(orderViewDto, null);
+		int count = ordersDao.count(orderViewDto, null, null, null);
 		int pageCount = (count - 1) / pagesize + 1;
 		if (endBlock > pageCount) {
 			endBlock = pageCount;

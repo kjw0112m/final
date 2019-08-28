@@ -1,0 +1,162 @@
+$(function() {
+	// ----------------------------------------------- 검색어 복사 이벤트
+	// ---------------------------------------------------------
+	var subSearch = $("#subSearch").children().clone();
+	var subCount = 1;
+	$(".plus").click(function() {
+		if (subCount < 5) {
+			var clone = subSearch.clone();
+			$("#mainSearch").append(clone);
+			clone.find('select').attr('name', 'search['+subCount+'].type');
+			clone.find('input').attr('name', 'search['+subCount+'].keyword');
+			console.log(clone.find('select').attr('name'));
+			subCount += 1;
+			
+			clone.find(".minus").click(function() {
+				$(this).parent().remove();
+				subCount -= 1;
+			});
+
+		} else {
+			alert("검색어는 최대 5개까지 만들 수 있습니다.");
+		}
+	});
+
+	// ----------------------------------------------- 체크박스 이벤트
+	// ---------------------------------------------------------
+	var tStatus = $("#tStatusCheck").find(".fChk");
+	var csStatus = $("#csStatusCheck").find(".fChk");
+	tStatus.prop("checked", true);
+	tStatus.first().change(function() {
+		if ($("#tStatAll").is(":checked")) {
+			tStatus.prop("checked", true);
+		} else {
+			tStatus.prop("checked", false);
+		}
+	});
+	tStatus.not(tStatus.first()).change(function() {
+		$("#tStatAll").prop("checked", false);
+	});
+	csStatus.first().change(function() {
+		if ($("#csStatAll").is(":checked")) {
+			csStatus.prop("checked", true);
+		} else {
+			csStatus.prop("checked", false);
+		}
+	});
+	csStatus.not("#csStatAll").change(function() {
+		$("#csStatAll").prop("checked", false);
+	});
+
+	// ----------------------------------------------- 달력 이벤트
+	// ---------------------------------------------------------
+	$.datepicker.setDefaults({
+		dateFormat : 'yy-mm-dd',
+		showOtherMonths : true // 빈 공간에 현재월의 앞뒤월의 날짜를 표시
+		,
+		showMonthAfterYear : true // 년도 먼저 나오고, 뒤에 월 표시
+		,
+		changeYear : true // 콤보박스에서 년 선택 가능
+		,
+		changeMonth : true // 콤보박스에서 월 선택 가능
+		,
+		showOn : "button",
+
+		buttonImage : rootContext+"/image/admin/order/cal.png" // 버튼 이미지 경로
+		,
+		buttonImageOnly : true // 기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
+		,
+		buttonText : "선택" // 버튼에 마우스 갖다 댔을 때 표시되는 텍스트
+		,
+		yearSuffix : "년" // 달력의 년도 부분 뒤에 붙는 텍스트
+		,
+		monthNamesShort : [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+				'11', '12' ] // 달력의 월 부분 텍스트
+		,
+		monthNames : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월',
+				'10월', '11월', '12월' ] // 달력의 월 부분 Tooltip 텍스트
+		,
+		dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ] // 달력의 요일 부분 텍스트
+		,
+		dayNames : [ '일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일' ] // 달력의
+																		// 요일 부분
+																		// Tooltip
+																		// 텍스트
+		,
+		minDate : "-1Y" // 최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
+		,
+		maxDate : "0" // 최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
+	});
+
+	$('#startDate').datepicker();
+	$('#endDate').datepicker();
+	$('#startDate').datepicker('setDate', 'today-1M');
+	$('#endDate').datepicker('setDate', 'today');
+
+	// ----------------------------------------------- 날짜 버튼 이벤트
+	// ---------------------------------------------------------
+	var btnDate = $('.btnDate');
+	btnDate.click(function() {
+		var interval = $(this).attr('date-interval');
+		switch (interval) {
+		case '0':
+			$('#startDate').datepicker('setDate', 'today');
+			$('#endDate').datepicker('setDate', 'today');
+			$(this).addClass('bc_g');
+			btnDate.not(this).removeClass('bc_g');
+			break;
+		case '1':
+			$('#startDate').datepicker('setDate', 'today-1D');
+			$('#endDate').datepicker('setDate', 'today');
+			$(this).addClass('bc_g');
+			btnDate.not(this).removeClass('bc_g');
+			break;
+		case '3':
+			$('#startDate').datepicker('setDate', 'today-3D');
+			$('#endDate').datepicker('setDate', 'today');
+			$(this).addClass('bc_g');
+			btnDate.not(this).removeClass('bc_g');
+			break;
+		case '7':
+			$('#startDate').datepicker('setDate', 'today-7D');
+			$('#endDate').datepicker('setDate', 'today');
+			$(this).addClass('bc_g');
+			btnDate.not(this).removeClass('bc_g');
+			break;
+		case '15':
+			$('#startDate').datepicker('setDate', 'today-15D');
+			$('#endDate').datepicker('setDate', 'today');
+			$(this).addClass('bc_g');
+			btnDate.not(this).removeClass('bc_g');
+			break;
+		case '30':
+			$('#startDate').datepicker('setDate', 'today-1M');
+			$('#endDate').datepicker('setDate', 'today');
+			$(this).addClass('bc_g');
+			btnDate.not(this).removeClass('bc_g');
+			break;
+		case '90':
+			$('#startDate').datepicker('setDate', 'today-3M');
+			$('#endDate').datepicker('setDate', 'today');
+			$(this).addClass('bc_g');
+			btnDate.not(this).removeClass('bc_g');
+			break;
+		case '180':
+			$('#startDate').datepicker('setDate', 'today-6M');
+			$('#endDate').datepicker('setDate', 'today');
+			$(this).addClass('bc_g');
+			btnDate.not(this).removeClass('bc_g');
+			break;
+		}
+	});
+	
+	$("#btnSearch").click(function(){
+		$("#orderSearchForm").submit();
+	})
+	
+	$('#btnInit').click(function(){
+		location.reload();
+	})
+	
+	
+});

@@ -41,4 +41,9 @@ public class SellerController {
 		
 		return "redirect:info";
 	}
+	
+	@GetMapping("/login")
+	public String login() {
+		return "seller/login";
+	}
 }

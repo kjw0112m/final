@@ -19,6 +19,7 @@ import com.kh17.panda.repository.CartDao;
 import com.kh17.panda.repository.OrdersDao;
 import com.kh17.panda.repository.ProductDao;
 import com.kh17.panda.vo.OrderViewListVO;
+import com.kh17.panda.vo.OrderViewVO;
 
 @Controller
 @RequestMapping("/seller/orders")
@@ -33,41 +34,55 @@ public class SellerOrderController {
 	@Autowired
 	private CartDao cartDao;
 
-	@GetMapping("/list")
+	@GetMapping("/search")
 	public String list(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
-			Model model, @RequestParam(required = false, defaultValue = "1") int page, HttpSession session, @RequestParam String[] csStatus,
-			@RequestParam String[] tStatus) {
-		int pagesize = 10;
-		int start = pagesize * page - (pagesize - 1);
-		int end = pagesize * page;
-		
-		int blocksize = 10;
-		int startBlock = (page - 1) / blocksize * blocksize + 1;
-		int endBlock = startBlock + (blocksize - 1);
-		
-		int count = ordersDao.count(orderViewDto, orderViewListVO.getSearch());
-		int pageCount = (count - 1) / pagesize + 1;
-		if(endBlock > pageCount) {
-			endBlock = pageCount;
+			Model model, @RequestParam(required = false, defaultValue = "1") int page, HttpSession session,
+			@RequestParam(required = false) String[] csStatus, @RequestParam(required = false) String[] tStatus) {
+		if (orderViewDto.getSeller_id() != null) {
+			int pagesize = 10;
+			int start = pagesize * page - (pagesize - 1);
+			int end = pagesize * page;
+
+			int blocksize = 10;
+			int startBlock = (page - 1) / blocksize * blocksize + 1;
+			int endBlock = startBlock + (blocksize - 1);
+
+			int count = ordersDao.count(orderViewDto, orderViewListVO.getSearch(), csStatus, tStatus);
+			int pageCount = (count - 1) / pagesize + 1;
+			if (endBlock > pageCount) {
+				endBlock = pageCount;
+			}
+
+			model.addAttribute("page", page);
+			model.addAttribute("startBlock", startBlock);
+			model.addAttribute("endBlock", endBlock);
+
+			List<OrderViewVO> search = orderViewListVO.getSearch();
+
+			for (int i = 0; i < search.size(); i++) {
+				if (search.get(i).getKeyword().isEmpty()) {
+					search.remove(i);
+				}
+			}
+
+			List<OrderViewDto> list = ordersDao.list(orderViewDto, search, start, end, csStatus, tStatus);
+			System.out.println(list);
+			model.addAttribute("orderViewDto", list);
+			model.addAttribute("searchCount", count);
+			return "seller/orders/search";
+		} else {
+			model.addAttribute("orderViewDto", null);
+			return "seller/orders/search";
 		}
-		
-		model.addAttribute("page", page);
-		model.addAttribute("startBlock", startBlock);
-		model.addAttribute("endBlock", endBlock);
-		
-		orderViewDto.setSeller_id((String) session.getAttribute("sid"));
-		List<OrderViewDto> list = ordersDao.list(orderViewDto, orderViewListVO.getSearch(), start, end, csStatus, tStatus);
-		model.addAttribute("orderViewDto", list);
-		return "seller/orders/list";
 	}
-	
+
 	@GetMapping("/invoice")
 	public String invoice(@ModelAttribute OrdersDto ordersDto, RedirectAttributes model) {
 		ordersDao.invoice(ordersDto);
 		model.addAttribute("ordersDto", ordersDao.getTeam(ordersDto.getTeam()));
 		return "redirect:content";
 	}
-	
+
 	@GetMapping("/content")
 	public String cotent(@ModelAttribute OrdersDto ordersDto, Model model) {
 		model.addAttribute("ordersDto", ordersDao.getTeam(ordersDto.getTeam()));

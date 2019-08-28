@@ -23,7 +23,7 @@ public interface OrdersDao {
 	
 	void invoice(OrdersDto ordersDto);
 
-	int count(OrderViewDto orderViewDto, List<OrderViewVO> search);
+	int count(OrderViewDto orderViewDto, List<OrderViewVO> search, String[] csStatus, String[] tStatus);
 
 	List<OrderViewDto> getTeam(String team);
 }
