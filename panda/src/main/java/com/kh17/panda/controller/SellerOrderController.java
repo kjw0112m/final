@@ -15,9 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh17.panda.entity.OrderViewDto;
 import com.kh17.panda.entity.OrdersDto;
-import com.kh17.panda.repository.CartDao;
 import com.kh17.panda.repository.OrdersDao;
-import com.kh17.panda.repository.ProductDao;
 import com.kh17.panda.vo.OrderViewListVO;
 import com.kh17.panda.vo.OrderViewVO;
 
@@ -28,11 +26,7 @@ public class SellerOrderController {
 	@Autowired
 	private OrdersDao ordersDao;
 
-	@Autowired
-	private ProductDao productDao;
 
-	@Autowired
-	private CartDao cartDao;
 
 	@GetMapping("/search")
 	public String list(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,

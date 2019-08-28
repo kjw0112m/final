@@ -1,15 +1,25 @@
 package com.kh17.panda.repository;
 
-import java.util.List;
+
 
 import com.kh17.panda.entity.SellerDto;
 
 public interface SellerDao {
-	List<SellerDto> list();
+	
 
-	void regist(SellerDto sellerDto);
+	boolean regist(SellerDto sellerDto);
+	SellerDto idCheck(String id);
+	SellerDto get(String id);
+	void lastlogin(String id);
 
-	void edit(SellerDto sellerDto);
+	void delete(String id);
+	void change(SellerDto sellerDto);
+	boolean findPassword(SellerDto sellerDto);
+	void changePw(SellerDto sellerDto);
+    SellerDto findId(SellerDto sellerDto);
+	SellerDto login(SellerDto sellerDto);
 
-	List<SellerDto> get(String id);
+
+
+
 }

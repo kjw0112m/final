@@ -60,14 +60,15 @@ h1, h2, a {
 	text-align: center;
 }
 
+
 </style>	
 	
 	<%-- 
 	(주의) 테이블과 폼을 같이 사용할 때는 th 안쪽이나 테이블 바깥에 폼구현 
 	--%>
-	
+	<body>
 	<div class="container">
-	<form action="login" method="post"class="needs-validation" novalidate>
+	<form action="login" method="post"class="needs-validation"  novalidate>
 	<fieldset class="fieldset">
 		<h2>로그인</h2>
 	
