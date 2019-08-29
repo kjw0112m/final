@@ -360,6 +360,7 @@ input[type="radio"] {
 	height: 22px;
 	margin-left: 5px;
 	vertical-align: -3px;
+/*datepicker 버튼 롤오버 시 손가락 모양 표시*/
 	cursor: pointer;
 }
 
@@ -367,9 +368,6 @@ input[type="radio"] {
 	background: #dedede;
 }
 
-/*datepicker 버튼 롤오버 시 손가락 모양 표시*/
-.ui-datepicker-trigger {
-}
 
 .form_button {
 	position: relative;
