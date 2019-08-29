@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -26,9 +27,12 @@ public class SellerOrderController {
 	@Autowired
 	private OrdersDao ordersDao;
 
-
-
 	@GetMapping("/search")
+	public String list() {
+		return "seller/orders/search";
+	}
+
+	@PostMapping("/search")
 	public String list(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
 			Model model, @RequestParam(required = false, defaultValue = "1") int page, HttpSession session,
 			@RequestParam(required = false) String[] csStatus, @RequestParam(required = false) String[] tStatus) {
@@ -40,8 +44,15 @@ public class SellerOrderController {
 			int blocksize = 10;
 			int startBlock = (page - 1) / blocksize * blocksize + 1;
 			int endBlock = startBlock + (blocksize - 1);
-
-			int count = ordersDao.count(orderViewDto, orderViewListVO.getSearch(), csStatus, tStatus);
+			
+			List<OrderViewVO> search = orderViewListVO.getSearch();
+			for(int i=0; i< search.size() ; i++) {
+				if(search.get(i).getType()==null) {
+					search.remove(i);
+				}
+			}
+			
+			int count = ordersDao.count(orderViewDto, search, csStatus, tStatus);
 			int pageCount = (count - 1) / pagesize + 1;
 			if (endBlock > pageCount) {
 				endBlock = pageCount;
@@ -51,11 +62,11 @@ public class SellerOrderController {
 			model.addAttribute("startBlock", startBlock);
 			model.addAttribute("endBlock", endBlock);
 
-			List<OrderViewVO> search = orderViewListVO.getSearch();
-
+			
 			for (int i = 0; i < search.size(); i++) {
 				if (search.get(i).getKeyword().isEmpty()) {
 					search.remove(i);
+					i--;
 				}
 			}
 

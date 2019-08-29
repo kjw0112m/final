@@ -1,3 +1,4 @@
+<%@page import="java.util.Enumeration"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -5,11 +6,32 @@
 <jsp:include page="/WEB-INF/views/template/admin/aside.jsp"></jsp:include>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script>
+	var searchType = new Array("${param['search[0].type']}",
+			"${param['search[1].type']}", "${param['search[2].type']}",
+			"${param['search[3].type']}", "${param['search[4].type']}");
 
+	var searchKeyword = new Array("${param['search[0].keyword']}",
+			"${param['search[1].keyword']}", "${param['search[2].keyword']}",
+			"${param['search[3].keyword']}", "${param['search[4].keyword']}");
+	
+	var startDate = "${param.start_dt}";
+	var endDate = "${param.end_dt}";
+	
+	var productName = "${param.product_name}";
+	
+	var tStatus = "${paramValues.tStatus}";
+	
+</script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script
 	src="${pageContext.request.contextPath}/js/admin/order_search.js"></script>
-<form action="search" method="get" id="orderSearchForm">
+<script>
+	$(function() {
+		var data3 = '${paramValues.tStatus}';
+	})
+</script>
+<form action="search" method="post" id="orderSearchForm">
 	<%-- <input type="hidden" name="seller_id" value="${sessionScope.sid }"> --%>
 	<input type="hidden" name="seller_id" value="abc">
 	<div id="content">
@@ -42,11 +64,11 @@
 											<option value="member_id">주문자 아이디</option>
 											<option value="phone">주문자 휴대전화</option>
 											<option value="line2">-----------------</option>
-											<option value="">입금자명</option>
+											<option value="" disabled>입금자명</option>
 											<option value="" disabled>수령자명</option>
 											<option value="" disabled>수령자 휴대전화</option>
 											<option value="" disabled>수령자 일반전화</option>
-											<option value="address">배송지 주소</option>
+											<option value="detail_addr">배송지 주소</option>
 											<option value="" disabled>주문서 추가항목</option>
 											<option value="" disabled>주문자명, 입금자명, 수령자명</option>
 										</select> <input type="text" class="fText searchBox"
@@ -57,15 +79,15 @@
 								<div id="subSearch" style="display: none">
 									<div>
 										<select class="fSelect" style="width: 163px;">
-											<option value="choice" selected="">-검색항목선택-</option>
+											<option value="" selected="">-검색항목선택-</option>
 											<option value="order_id">주문번호</option>
 											<option value="" disabled>품목별 주문번호</option>
 											<option value="t_invoice">운송장번호</option>
-											<option value="line1">-----------------</option>
+											<option value="line1" disabled>-----------------</option>
 											<option value="member_name">주문자명</option>
 											<option value="member_id">주문자 아이디</option>
 											<option value="phone">주문자 휴대전화</option>
-											<option value="line2">-----------------</option>
+											<option value="line2" disabled>-----------------</option>
 											<option value="">입금자명</option>
 											<option value="" disabled>수령자명</option>
 											<option value="" disabled>수령자 휴대전화</option>
@@ -116,7 +138,7 @@
 									<option value="" disabled>상품태그</option>
 									<option value="" disabled>제조사</option>
 									<option value="" disabled>공급사</option>
-							</select> <input type="text" name="order_product_text" class="fText"
+							</select> <input type="text" name="product_name" class="fText"
 								style="width: 490px;" value=""></td>
 						</tr>
 
@@ -124,9 +146,8 @@
 							<th scope="row">주문상태</th>
 							<td colspan="3" id="tStatusCheck"><label class="gLabel"><input
 									type="checkbox" id="tStatAll" class="fChk" checked="checked">
-									전체</label> <label class="gLabel   " style="display: none;"><input
-									type="checkbox" name="tStatus" class="fChk" value="상품준비중">
-									상품준비중</label> <label class="gLabel"><input type="checkbox"
+									전체</label> <!-- 						<label class="gLabel   " style="display: none;"><input type="checkbox" name="" class="fChk" value="상품준비중">상품준비중</label>  -->
+								<label class="gLabel"><input type="checkbox"
 									name="tStatus" class="fChk" value="배송준비중"> 배송준비중</label> <label
 								class="gLabel"><input type="checkbox" name="tStatus"
 									class="fChk" value="배송보류"> 배송보류</label> <label class="gLabel"><input
@@ -166,8 +187,9 @@
 				</table>
 			</div>
 			<div class="form_button">
-				<a href="#none" id="btnSearch" class="btnSearch"><span>검색</span></a>
-				<a href="#none" id="btnInit" class="btnSearch reset"><span>초기화</span></a>
+				<input type="submit" style="display: none"> <a href="#none"
+					id="btnSearch" class="btnSearch"><span>검색</span></a> <a
+					href="search" id="btnInit" class="btnSearch reset"><span>초기화</span></a>
 			</div>
 		</div>
 
@@ -210,7 +232,7 @@
 								<th scope="col" class="w50" style="display: none;">No</th>
 								<th scope="col" class="w120" style="">주문일</th>
 								<th scope="col" class="w105" style="">주문번호</th>
-								<th scope="col" class="w95" style="">주문자</th> 
+								<th scope="col" class="w95" style="">주문자</th>
 								<th scope="col" class="w120" style="">상품명</th>
 								<th scope="col" class="w105" style="display: none;">총
 									상품구매금액</th>

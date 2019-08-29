@@ -9,14 +9,14 @@
 				<ul class="hide">
 					<li class=""><a id="" href="#" class=""> 상품 등록 </a></li>
 					<li class=""><a id="" href="#" class=""> 상품 목록 </a></li>
-					<li class=""><a id="" href="#" class=""> 상품분류 관리 </a></li>
-					<li class=""><a id="" href="#" class=""> 메인진열 관리 </a></li>
+					<li class=""><a id="" href="#" class=""> 카테고리 관리(준비중) </a></li>
+					<li class=""><a id="" href="#" class=""> 메인 관리(준비중) </a></li>
 				</ul></li>
 			<li><a href="#none" class="order"> 주문관리 </a>
 				<ul class="hide">
 					<li class=""><a href="#"> 전체주문목록 </a></li>
-					<li class=""><a href="#"> 배송 관리 </a></li>
-					<li class=""><a href="#"> 취소/교환/반품/환불 </a></li>
+					<li class=""><a href="#"> 배송 관리(준비중) </a></li>
+					<li class=""><a href="#"> 취소/교환/반품/환불(준비중) </a></li>
 				</ul></li>
 			<li><a href="#" class="member"> 고객관리 </a></li>
 			<li><a href="#" class="board"> 게시판관리 </a>
