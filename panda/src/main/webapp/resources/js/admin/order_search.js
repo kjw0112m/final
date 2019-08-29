@@ -80,8 +80,8 @@ $(function() {
 		$("input[name='search[3].keyword']").val(searchKeyword[3]);
 		$("input[name='search[4].keyword']").val(searchKeyword[4]);
 	}
-	
-	if(productName){
+
+	if (productName) {
 		$("input[name='product_name']").val(productName);
 	}
 
@@ -110,11 +110,33 @@ $(function() {
 	csStatus.not("#csStatAll").change(function() {
 		$("#csStatAll").prop("checked", false);
 	});
-	
+
 	// ----------------------------------------------- 조건 유지 이벤트
 	// ---------------------------------------------------------
-	
+	if ((!tStatusAry[4]) && tStatusAry[0]) {
+		tStatus.prop("checked", false);
+	}
+	for (var i = 0; i < tStatusAry.length; i++) {
+		if (tStatusAry[i]) {
+			$("input[value=" + tStatusAry[i] + "]").prop('checked', true);
+		}
+	}
 
+	if (!csStatusAry[3]) {
+		csStatus.prop("checked", false);
+	} else {
+		$("#csStatAll").prop("checked", true);
+	}
+	for (var i = 0; i < csStatusAry.length; i++) {
+		if (csStatusAry[i]) {
+			$("input[value=" + csStatusAry[i] + "]").prop('checked', true);
+		}
+	}
+
+	$("input[name='pay_status']").each(function() {
+		if ($(this).val() == payStatus)
+			$(this).prop('checked', true);
+	});
 	// ----------------------------------------------- 날짜 버튼 이벤트
 	// ---------------------------------------------------------
 	var btnDate = $('.btnDate');
@@ -217,7 +239,7 @@ $(function() {
 		,
 		minDate : "-1Y" // 최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
 		,
-		maxDate : "0" // 최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
+		maxDate : "+1D" // 최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
 	});
 
 	$('#startDate').datepicker();
@@ -233,7 +255,6 @@ $(function() {
 
 	if ($('#endDate').datepicker('setDate', 'today').val() == endDate) {
 		if ($('#startDate').datepicker('setDate', 'today').val() == startDate) {
-			console.log($('.btnDate').eq(0));
 			$('.btnDate').eq(0).trigger('click');
 		} else if ($('#startDate').datepicker('setDate', 'today-1D').val() == startDate) {
 			$('.btnDate').eq(1).trigger('click');
@@ -251,5 +272,4 @@ $(function() {
 			$('.btnDate').eq(7).trigger('click');
 		}
 	}
-
 });

@@ -14,23 +14,25 @@
 	var searchKeyword = new Array("${param['search[0].keyword']}",
 			"${param['search[1].keyword']}", "${param['search[2].keyword']}",
 			"${param['search[3].keyword']}", "${param['search[4].keyword']}");
-	
+
 	var startDate = "${param.start_dt}";
 	var endDate = "${param.end_dt}";
-	
+
 	var productName = "${param.product_name}";
-	
-	var tStatus = "${paramValues.tStatus}";
-	
+
+	var tStatusAry = new Array("${paramValues.tStatus[0]}",
+			"${paramValues.tStatus[1]}", "${paramValues.tStatus[2]}",
+			"${paramValues.tStatus[3]}", "${paramValues.tStatus[4]}");
+
+	var csStatusAry = new Array("${paramValues.csStatus[0]}",
+			"${paramValues.csStatus[1]}", "${paramValues.csStatus[2]}",
+			"${paramValues.csStatus[3]}");
+
+	var payStatus = "${param.pay_status}"
 </script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script
 	src="${pageContext.request.contextPath}/js/admin/order_search.js"></script>
-<script>
-	$(function() {
-		var data3 = '${paramValues.tStatus}';
-	})
-</script>
 <form action="search" method="post" id="orderSearchForm">
 	<%-- <input type="hidden" name="seller_id" value="${sessionScope.sid }"> --%>
 	<input type="hidden" name="seller_id" value="abc">
@@ -174,7 +176,8 @@
 						<tr>
 							<th scope="row">입금/결제상태</th>
 							<td colspan="3"><label class="gLabel"> <input
-									type="radio" class="fChk" checked="checked"> 전체
+									type="radio" name="pay_status" value="" class="fChk"
+									checked="checked"> 전체
 							</label> <label class="gLabel"> <input type="radio"
 									name="pay_status" class="fChk" value="입금전"> 입금전
 							</label> <label class="gLabel"> <input type="radio"
