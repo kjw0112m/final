@@ -247,9 +247,9 @@ public class MemberController {
 
 	@PostMapping("/find_id")
 	public String findId(@ModelAttribute MemberDto memberDto, Model model) {
-			MemberDto mdto = memberDao.findId(memberDto);
-			model.addAttribute("id", memberDto.getId());
+		MemberDto mdto = memberDao.findId(memberDto);
 		if(mdto != null) {
+			model.addAttribute("id", mdto.getId());
 			return "member/find_id_result";
 		}
 		else {

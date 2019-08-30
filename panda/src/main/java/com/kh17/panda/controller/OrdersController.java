@@ -73,7 +73,7 @@ public class OrdersController {
 		int startBlock = (page - 1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
 
-		int count = ordersDao.count(orderViewDto, null);
+		int count = ordersDao.count(orderViewDto, null, null, null);
 		int pageCount = (count - 1) / pagesize + 1;
 		if (endBlock > pageCount) {
 			endBlock = pageCount;
@@ -82,7 +82,7 @@ public class OrdersController {
 		model.addAttribute("page", page);
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
-		List<OrderViewDto> list = ordersDao.list(orderViewDto, null, start, end);
+		List<OrderViewDto> list = ordersDao.list(orderViewDto, null, start, end, null, null);
 		model.addAttribute("orderViewDto", list);
 		return "orders/list";
 	}
@@ -91,10 +91,10 @@ public class OrdersController {
 	public String cancel(@ModelAttribute OrderViewDto orderViewDto, RedirectAttributes model,
 			@RequestParam(required = false, defaultValue = "1") int page) {
 		String cs_status = null;
-		String status = orderViewDto.getStatus();
-		if (status.equals("입금완료") || status.equals("결제완료")) {
+		String pay_status = orderViewDto.getPay_status();
+		if (pay_status.equals("입금완료") || pay_status.equals("결제완료")) {
 			cs_status = "환불";
-		} else if (status.equals("입금전")) {
+		} else if (pay_status.equals("입금전")) {
 			cs_status = "취소";
 		}
 

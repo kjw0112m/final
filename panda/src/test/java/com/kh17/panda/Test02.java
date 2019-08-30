@@ -33,7 +33,7 @@ public class Test02 {
 
 	@Test
 	public void test() {
-		OrderViewDto orderViewDto = OrderViewDto.builder().status("결제완").build();
+		OrderViewDto orderViewDto = OrderViewDto.builder().pay_status("결제완").build();
 		List<OrderViewVO> orderlist = new ArrayList<>();
 		orderlist.add(OrderViewVO.builder().type("product_name").keyword("로").build());
 		orderlist.add(OrderViewVO.builder().keyword("2019").type("order_id").build());
@@ -43,7 +43,7 @@ public class Test02 {
 		System.out.println(orderViewDto);
 		int start = 1;
 		int end = 10;
-		List<OrderViewDto> list = ordersDao.list(orderViewDto, orderlist, start, end);
+		List<OrderViewDto> list = ordersDao.list(orderViewDto, orderlist, start, end, null, null);
 		
 		
 		System.out.println(list);

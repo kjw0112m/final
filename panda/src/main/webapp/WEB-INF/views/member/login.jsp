@@ -48,6 +48,8 @@
 	height: 50px;
 	width: 120px;
 	padding-left: 10px;
+	color: black;
+	text-decoration: none;
 }
 
 .login {
@@ -67,10 +69,6 @@
 	text-align: center;
 }
 
-a {
-	color: black;
-	text-decoration: none;
-}
 
 .table {
 	border: none;

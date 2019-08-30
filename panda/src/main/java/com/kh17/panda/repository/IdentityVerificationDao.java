@@ -10,6 +10,8 @@ public interface IdentityVerificationDao {
 
 	void delete(String identity);
 
+	void clear();
+
 
 
 

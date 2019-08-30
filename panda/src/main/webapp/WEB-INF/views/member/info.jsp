@@ -25,9 +25,13 @@
                         span.innerHTML =
                             "<font color = '#de2195' size = '2'>8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)로 입력해주세요</font>"
 
+
                     }
                 });
         });
+
+
+
 
         $(function () {
             var span = document.querySelector(".cpw");

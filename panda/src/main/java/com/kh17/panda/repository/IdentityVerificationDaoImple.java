@@ -25,7 +25,10 @@ public class IdentityVerificationDaoImple implements IdentityVerificationDao {
 	public void delete(String identity) {
 		sqlSession.delete("Identity_verification.delete",identity);
 	}
-
+	@Override
+	public void clear() {
+		sqlSession.delete("Identity_verification.clear");
+	}
 
 
 }
