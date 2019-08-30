@@ -8,4 +8,6 @@ public interface ProductSellerDao {
 	List<ProductSellerDto> newArrivals();
 	List<ProductSellerDto> sellerList(String seller_id);
 	List<ProductSellerDto> categoryList(int sub_category_id);
+	ProductSellerDto get(int product_id);
+	List<ProductSellerDto> search(String keyword);
 }

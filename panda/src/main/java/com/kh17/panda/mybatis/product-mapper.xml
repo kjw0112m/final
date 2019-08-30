@@ -44,4 +44,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from product where seller_id = #{seller_id} order by regist_dt desc
 	</select>
 	
+	
 </mapper>

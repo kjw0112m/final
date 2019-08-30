@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,7 +21,9 @@ import com.kh17.panda.repository.CategoryDao;
 import com.kh17.panda.repository.CategoryListDao;
 import com.kh17.panda.repository.ProductDao;
 import com.kh17.panda.repository.ProductSellerDao;
+import com.kh17.panda.repository.SizesDao;
 import com.kh17.panda.repository.SubcategoryDao;
+import com.kh17.panda.service.ProductService;
 
 @Controller
 @RequestMapping("/product")
@@ -32,7 +35,9 @@ public class ProductController {
 	@Autowired
 	private ProductDao productDao;
 
-
+	@Autowired
+	private ProductService productService;
+	
 	@Autowired
 	private ProductSellerDao productSellerDao;
 
@@ -41,6 +46,9 @@ public class ProductController {
 
 	@Autowired
 	private CategoryDao categoryDao;
+	
+	@Autowired
+	private SizesDao sizesDao;
 
 	@GetMapping("/newArrivals")
 	public String newArrivals(Model model) {
@@ -75,7 +83,6 @@ public class ProductController {
 		return "product/categoryList";
 	}
 
-
 	@GetMapping("/list")
 	public String list(HttpSession session, Model model) {
 //		String seller_id = (String) session.getAttribute("sid");
@@ -83,6 +90,29 @@ public class ProductController {
 		List<ProductDto> list = productDao.list(seller_id);
 		model.addAttribute("list", list);
 		return "product/list";
+	}
+	
+	@GetMapping("/detail")
+	public String detail(
+			@RequestParam int product_id,
+			Model model
+			) {
+		ProductSellerDto productSellerDto = productSellerDao.get(product_id);
+		model.addAttribute("productSellerDto", productSellerDto);
+		model.addAttribute("list", sizesDao.get(product_id));
+		return "product/detail";
+	}
+	
+	@GetMapping("/search")
+	public String search(
+			@RequestParam(required=false) String keyword,
+			Model model) {
+		if(keyword != null) {	
+		List<ProductSellerDto> list = productSellerDao.search(keyword);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("list", list);
+		}
+		return "product/search";
 	}
 
 }
