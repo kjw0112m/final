@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 이파일은 sql 명령만 보관하는파일  -->
+<!-- 찾아올수 있도록 namespace 지정 -->
+<mapper namespace="Identity_verification">
+	<insert id="insert" parameterType="String">
+		insert into Identity_verification values(
+			verification_no_seq.nextval , #{Identity} , sysdate
+		)
+	</insert>
+	
+	<select id="get" parameterType="String" resultType="IdentityVerificationDto">
+		select * from Identity_verification where Identity= #{Identity}
+	</select>
+	
+	<delete id="delete" parameterType="String">
+		delete Identity_verification where Identity = #{Identity}
+	</delete>
+	
+	<!-- 유효시간(5분)이 지난 인증번호 기록을 모두 삭제 -->
+	<delete id="clear">
+		<![CDATA[
+			delete Identity_verification
+				where verification_when < sysdate - 5 / 24 / 60
+		]]>
+	</delete>
+	
+	
+	
+	
+</mapper>

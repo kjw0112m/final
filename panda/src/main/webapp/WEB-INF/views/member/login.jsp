@@ -1,104 +1,134 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <%--암호화 --%>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
-<script src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
-<script src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
 <%--암호화 --%>
-
-
-<%--디자인 --%>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>    
 <script>
-//비밀번호 암호화
-$(function(){
-	$("form").submit(function(e){
-		e.preventDefault();	
-		
-		var pw = $("input[name=pw]").val();
-		var encPw = CryptoJS.SHA256(pw).toString();
-		
-		$("input[name=pw]").attr("name","");
-		var newInput = $("<input/>").attr("name","pw").val(encPw).attr("type","hidden");
-		
-		$(this).append(newInput);
-		this.submit();
-	});
-});
+	//비밀번호 암호화
+	$(function() {
+		$("form").submit(
+				function(e) {
+					e.preventDefault();
 
-// 디자인
-(function() {
-  'use strict';
-  window.addEventListener('load', function() {
-    // Get the forms we want to add validation styles to
-    var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
-    var validation = Array.prototype.filter.call(forms, function(form) {
-      form.addEventListener('submit', function(event) {
-        if (form.checkValidity() === false) {
-          event.preventDefault();
-          event.stopPropagation();
-        }
-        form.classList.add('was-validated');
-      }, false);
-    });
-  }, false);
-});
+					var pw = $("input[name=pw]").val();
+					var encPw = CryptoJS.SHA256(pw).toString();
+
+					$("input[name=pw]").attr("name", "");
+					var newInput = $("<input/>").attr("name", "pw").val(encPw)
+							.attr("type", "hidden");
+
+					$(this).append(newInput);
+					this.submit();
+				});
+	});
 </script>
 
 <style>
-h1, h2, a {
-	color: black !important;
+.total {
+	margin: auto;
+}
+
+.btn1 {
+	margin-top: 30px;
+	border: none;
+	background-color: black;
+	color: #fff;
+	height: 50px;
+	width: 500px;
+}
+
+.btn2 {
+	height: 50px;
+	width: 120px;
+	padding-left: 10px;
+	color: black;
 	text-decoration: none;
+}
+
+.login {
+	text-align: center;
+	margin: auto;
+	width: 70%;
+	padding: 5px;
+	font-size: 22px;
+	margin-bottom: 50px;
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-conter {
 	text-align: center;
 }
 
-</style>	
-	
-	<%-- 
-	(주의) 테이블과 폼을 같이 사용할 때는 th 안쪽이나 테이블 바깥에 폼구현 
-	--%>
-	
-	<div class="container">
-	<form action="login" method="post"class="needs-validation" novalidate>
-	<fieldset class="fieldset">
-		<h2>로그인</h2>
-	
-		 <div class="form-group">
-      <label for="id">아이디:</label>
-      <input type="text" class="form-control" id="uname" placeholder="id" name="id" value="${cookie.saveId.value}"required>
-      <div class="valid-feedback">Valid.</div>
-      <div class="invalid-feedback">아이디를 입력하세요</div>
-    </div>
-	 <div class="form-group">
-      <label for="pw">비밀번호:</label>
-      <input type="password" class="form-control" id="pw" placeholder="Enter password" name="pw" required>
-      <div class="valid-feedback">Valid.</div>
-      <div class="invalid-feedback">비밀번호를 입력하세요</div>
-    </div>
 
-		<div class="form-group form-check">
-				<label for="remember"class="form-check-label">
-		<input class="form-check-input" type="checkbox" name="remember" ${not empty cookie.saveId?"checked":""}>아이디 저장하기
-		  <div class="valid-feedback">Valid.</div>
-        <div class="invalid-feedback">Check this checkbox to continue.</div>
-</label>
+.table {
+	border: none;
+	margin: auto;
+}
+
+.form-control {
+	margin: auto;
+	width: 500px;
+	height: 50px;
+}
+
+#btn2div {
+	margin-top: 30px;
+	text-align: center;
+	width: 100%;
+}
+</style>
+
+
+
+<div class="total">
+	<form action="login" method="post" class="needs-validation" novalidate>
+		<div class="login">
+			<h4>로그인</h4>
 		</div>
-		<hr><br>
-		<input type="submit" value="로그인" class="btn btn-primary">
-	<h6><a href="find_id">아이디를 찾고싶어요</a></h6>
-	<h6><a href="find_pw">비밀번호를 찾고싶어요</a></h6>
-	</fieldset>
+		<table class="table">
+			<tr>
+				<td><input type="text" class="form-control" id="uname"
+					placeholder="id" name="id" value="${cookie.saveId.value}" required>
+				</td>
+			</tr>
+			<tr>
+				<td><input type="password" class="form-control" id="pw"
+					placeholder="Enter password" name="pw" required></td>
+			</tr>
+			<tr>
+				<td><label for="remember" class="form-check-label"> <input
+						class="form-check-input" type="checkbox" name="remember"
+						${not empty
+                                cookie.saveId?"checked":""}>아이디
+						저장하기
+				</label></td>
+			</tr>
+			</div>
+			</div>
+		</table>
+		<div align="center">
+			<input type="submit" value="LOGIN" class="btn1">
+		</div>
+		<div id="btn2div">
+			<a href="regist" class="btn2">회원가입
+				</button>
+			</a> <a href="member/find_id" class="btn2">아이디찾기</a> <a
+				href="member/find_pw" class="btn2">비밀번호찾기</a>
+		</div>
 	</form>
 </div>
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>    
+</form>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
 
 

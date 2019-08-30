@@ -9,15 +9,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="cart">
 	
 	<insert id="insert" parameterType="cartDto" >
-		insert into cart values(cart_seq.nextval, #{productId}, #{memberId})
+		insert into cart values(cart_seq.nextval, #{product_id}, #{member_id})
 	</insert>
 	
 	<delete id="delete" parameterType="int">
 		delete from cart where id=#{id}
 	</delete>
 	
-	<select id="list" resultType="cartViewDto">
-		select * from cart_view
+	<select id="list" resultType="cartViewDto" parameterType="string">
+		select * from cart_view where member_id = #{member_id}
 	</select>
 	
 	

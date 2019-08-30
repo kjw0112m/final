@@ -17,8 +17,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh17.panda.entity.ProductSubcategoryDto" alias="productSubcategoryDto"/>
 		<typeAlias type="com.kh17.panda.entity.SellerDto" alias="sellerDto"/>
 		<typeAlias type="com.kh17.panda.entity.NoticeDto" alias="noticeDto"/>
+		<typeAlias type="com.kh17.panda.entity.OrderViewDto" alias="orderViewDto"/>
+		<typeAlias type="com.kh17.panda.vo.OrderViewVO" alias="orderViewVO"/>
 		<typeAlias type="com.kh17.panda.entity.ProductSellerDto" alias="productSellerDto"/>
 		<typeAlias type="com.kh17.panda.entity.CategoryListDto" alias="categoryListDto"/>
 		<typeAlias type="com.kh17.panda.entity.CategoryDto" alias="categoryDto"/>
+		<typeAlias type="com.kh17.panda.entity.IdentityVerificationDto" alias="identityVerificationDto"/>
 	</typeAliases>
 </configuration>

@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh17.panda.entity.CertDto;
+import com.kh17.panda.entity.IdentityVerificationDto;
 import com.kh17.panda.entity.MemberDto;
 import com.kh17.panda.repository.CertDao;
+import com.kh17.panda.repository.IdentityVerificationDao;
 import com.kh17.panda.repository.MemberDao;
 import com.kh17.panda.service.EmailService;
 
@@ -245,9 +247,9 @@ public class MemberController {
 
 	@PostMapping("/find_id")
 	public String findId(@ModelAttribute MemberDto memberDto, Model model) {
-			MemberDto mdto = memberDao.findId(memberDto);
-			model.addAttribute("id", memberDto.getId());
+		MemberDto mdto = memberDao.findId(memberDto);
 		if(mdto != null) {
+			model.addAttribute("id", mdto.getId());
 			return "member/find_id_result";
 		}
 		else {
@@ -295,6 +297,38 @@ public class MemberController {
 //		[3] 비밀번호가 다르면 비밀번호 변경 실패 안내
 		else {
 			return "redirect:change_pw?error=1";
+		}
+	}
+	
+	//이메일 본인 인증
+
+	
+	@Autowired
+private IdentityVerificationDao identityVerificationDao;
+	
+
+@GetMapping("/email_cert")
+	public void verification(@RequestParam String email,  HttpServletResponse resp) throws IOException, MessagingException {
+			boolean result = emailService.verification_no(email);
+			if(result) {
+				resp.getWriter().print("Y");
+			}
+			else {
+				resp.getWriter().print("N");
+			}
+		}
+	
+	@GetMapping("/email_cert_check")
+	public void email_verification_check
+	(@RequestParam String identity, HttpServletResponse resp) throws IOException {
+		resp.setContentType("text/plain");
+		IdentityVerificationDto identityVerificationDto = identityVerificationDao.get(identity);
+		if(identityVerificationDto==null) {
+			resp.getWriter().print("N");
+		}
+		else {
+			resp.getWriter().print("Y");
+			identityVerificationDao.delete(identity);
 		}
 	}
 	

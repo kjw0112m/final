@@ -1,5 +1,7 @@
 package com.kh17.panda.repository;
 
+import java.util.List;
+
 import com.kh17.panda.entity.MemberDto;
 
 public interface MemberDao {
@@ -14,5 +16,7 @@ public interface MemberDao {
 	void changePw(MemberDto memberDto);
 	MemberDto findId(MemberDto memberDto);
 	void lastchangepw(String id);
+	List<MemberDto> search(String type, String keyword);
+
 	
 }

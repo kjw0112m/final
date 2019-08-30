@@ -37,7 +37,7 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-
+	
 	@Autowired
 	private ProductSellerDao productSellerDao;
 
@@ -46,7 +46,7 @@ public class ProductController {
 
 	@Autowired
 	private CategoryDao categoryDao;
-
+	
 	@Autowired
 	private SizesDao sizesDao;
 
