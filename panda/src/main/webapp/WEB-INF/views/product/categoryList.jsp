@@ -11,11 +11,11 @@
 <h2>${categoryDto.name}</h2>
 <div>
 	<c:forEach var="categoryListDto" items="${list}">
-	<img src="http://placehold.it/350x350">
+	<a href="detail?product_id=${categoryListDto.product_id}"><img src="http://placehold.it/350x350"></a>
 	<br><br>
 	<a href="sellerList?seller_id=${categoryListDto.seller_id}">${categoryListDto.nickname}</a>
 	<br><br>
-	${categoryListDto.product_name}
+	<a href="detail?product_id=${categoryListDto.product_id}">${categoryListDto.product_name}</a>
 	<br><br>
 	${categoryListDto.price} 원
 	<br><br>
