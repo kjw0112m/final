@@ -28,13 +28,17 @@ public class OrdersController {
 
 	@Autowired
 	private OrdersDao ordersDao;
-
+	
 	@Autowired
 	private ProductDao productDao;
-
+	
 	@Autowired
 	private CartDao cartDao;
-
+	
+	@GetMapping("/view")
+	public String view() {
+		return "orders/view";
+	}
 	@GetMapping("/order")
 	public String order(@RequestParam int product_id, HttpSession session, Model model) {
 		String member_id = (String) session.getAttribute("sid");
