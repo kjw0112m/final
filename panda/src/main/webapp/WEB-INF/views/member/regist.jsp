@@ -1,38 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<%--암호화 --%>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script
 	src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
-<%--암호화 --%>
-
-<style>
-* {
-	text-align: center;
-	margin: auto;
-}
-
-input[type=submit] {
-	align: center;
-	width: 50px;
-	color: white;
-	background-color: dodgerblue;
-	color: white;
-	width: 50%;
-}
-</style>
 <script>
-
 	$(function() {
 		$(".addr").click(findAddress);
- 		$("input[type=submit]").prop("disabled", true).css("background-color", "#788784");
-	    $("#idCheck").prop("disabled", true).css("background-color", "#788784");
+		$("input[type=submit]").prop("disabled", true).css("background-color",
+				"#788784");
+		$("#idCheck").prop("disabled", true).css("background-color", "#788784");
 	});
-	
+
 	function findAddress() {
 		new daum.Postcode({
 			oncomplete : function(data) {
@@ -70,8 +52,6 @@ input[type=submit] {
 
 				}
 
-		
-
 				// 이 코드는 jquery.js 를 먼저 불러온 경우만 사용 가능
 				$("input[name=post_code]").val(data.zonecode);
 				$("input[name=basic_addr]").val(addr);
@@ -79,11 +59,10 @@ input[type=submit] {
 			}
 		}).open();
 	}
-	
-	
+
 	$(function() {
 		$("#idCheck").click(function() {
-				$.ajax({
+			$.ajax({
 				url : "idCheck",
 				data : {
 					id : $("input[name=id]").val()
@@ -104,185 +83,299 @@ input[type=submit] {
 	});
 	// 아이디 형식 검사
 	$(function() {
-		$(".id").on("blur", function() {
-			var regex = /^[a-z0-9A-Z]{8,16}$/;
-			var id = $(this).val();
-			var result = regex.test(id);
-			var span=document.querySelector(".sid");
-			if (result) {
-				span.innerHTML=""
-	    $("#idCheck").prop("disabled", false).css("background-color", "#4790b8");
-			}
-			else {
-		span.innerHTML = "<font color = '#de2195' size = '2'>8~15자의 영문 소문자,대문자, 숫자로 입력해주세요</font>"
-		 $("#idCheck").prop("disabled", true).css("background-color", "#6c9391");
-			}
+		$(".id")
+				.on(
+						"blur",
+						function() {
+							var regex = /^[a-z0-9A-Z]{8,16}$/;
+							var id = $(this).val();
+							var result = regex.test(id);
+							var span = document.querySelector(".sid");
+							if (result) {
+								span.innerHTML = ""
+								$("#idCheck").prop("disabled", false).css(
+										"background-color", "#4790b8");
+							} else {
+								span.innerHTML = "<font color = '#de2195' size = '2'>8~15자의 영문 소문자,대문자, 숫자로 입력해주세요</font>"
+								$("#idCheck").prop("disabled", true).css(
+										"background-color", "#6c9391");
+							}
 
-		});
-//  비밀번호 형식 검사
-		$(".pw").on("blur", function() {
-			var regex = /^[a-zA-Z0-9!@#$\-_]{8,15}$/;
-			var pw = $(this).val();
-			var result = regex.test(pw);
-			var span=document.querySelector(".spw");
-			if (result) {
-				span.innerHTML=""
-			} else {
-		 span.innerHTML = "<font color = '#de2195' size = '2'>8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)로 입력해주세요</font>"
-			}
-		});
+						});
+		//  비밀번호 형식 검사
+		$(".pw")
+				.on(
+						"blur",
+						function() {
+							var regex = /^[a-zA-Z0-9!@#$\-_]{8,15}$/;
+							var pw = $(this).val();
+							var result = regex.test(pw);
+							var span = document.querySelector(".spw");
+							if (result) {
+								span.innerHTML = ""
+							} else {
+								span.innerHTML = "<font color = '#de2195' size = '2'>8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)로 입력해주세요</font>"
+							}
+						});
 		//비밀 번호 확인 검사
 		$(function() {
-		var span=document.querySelector(".cpw");
+			var span = document.querySelector(".cpw");
 			$('#user_pass').keyup(function() {
-				span.innerHTML=""
+				span.innerHTML = ""
 			}); //#user_pass.keyup
 
-			$('#chpass').keyup(function() {
-				if ($('#user_pass').val() != $('#chpass').val()) {
-				 span.innerHTML = "<font color = '#de2195' size = '2'>암호틀림</font>"
-				} else {
-				span.innerHTML = "<font color = '#de2195' size = '2'>암호맞음</font>"
-				}
-			}); //#chpass.keyup
+			$('#chpass')
+					.keyup(
+							function() {
+								if ($('#user_pass').val() != $('#chpass').val()) {
+									span.innerHTML = "<font color = '#de2195' size = '2'>암호틀림</font>"
+								} else {
+									span.innerHTML = "<font color = '#de2195' size = '2'>암호맞음</font>"
+								}
+							}); //#chpass.keyup
 		});
 	});
 
 	// 비밀번호 확인 숨기기
-	$(function(){
-		$("form").submit(function(e){
-			e.preventDefault();	
-			
-			var pw = $("input[name=pw]").val();
-			var encPw = CryptoJS.SHA256(pw).toString();
-			var ck_pw = $("input[name=pw_check]").val();
-			$("input[name=pw]").attr("name","");
-			var newInput1 = $("<input/>").attr("name","pw").val(encPw).attr("type","hidden");
-			$("input[name=pw_check]").attr("name","");
-			$(this).append(newInput1);
-			this.submit();
+	$(function() {
+		$("form").submit(
+				function(e) {
+					e.preventDefault();
+
+					var pw = $("input[name=pw]").val();
+					var encPw = CryptoJS.SHA256(pw).toString();
+					var ck_pw = $("input[name=pw_check]").val();
+					$("input[name=pw]").attr("name", "");
+					var newInput1 = $("<input/>").attr("name", "pw").val(encPw)
+							.attr("type", "hidden");
+					$("input[name=pw_check]").attr("name", "");
+					$(this).append(newInput1);
+					this.submit();
+				});
+	});
+	//이메일 본인 인증
+	$(function() {
+		$(".email").click(function() {
+			$.ajax({
+				url : "email_cert",
+				data : {
+					email : $("input[name=email]").val(),
+
+				},
+				success : function(resp) {
+					if (resp == "Y") {
+					}
+				}
+			});
 		});
 	});
- 		//이메일 본인 인증
- 		$(function(){
- 			$(".email").click(
-				function(){
-					$.ajax({
- 						url : "email_cert",
- 						data : {
- 							email : $("input[name=email]").val(),
-					
- 						},
- 						success:function(resp){
- 							if (resp == "Y") {
- 							}
- 						}
- 					});
- 				});
- 			});
 
- 		$(function() {
- 					$(".verification_check").click(
- 					function() {
-						$.ajax({
-							url : "email_cert_check",
-							data : {
-								identity : $("input[name=identity]").val()
+	$(function() {
+		$(".verification_check").click(
+				function() {
+					$.ajax({
+						url : "email_cert_check",
+						data : {
+							identity : $("input[name=identity]").val()
 						},
 						dataType : "text",
-							success : function(resp) {
-								if (resp == "Y"){
-									window.alert("올바른 인증번호 입니다");
- 									$("input[type=submit]").prop("disabled",false).css("background-color", "#4790b8");
-								}
-								else {
-									window.alert("인증번호가 올바르지 않습니다")
-									$("input[name=identity]").select();
-								}
+						success : function(resp) {
+							if (resp == "Y") {
+								window.alert("올바른 인증번호 입니다");
+								$("input[type=submit]").prop("disabled", false)
+										.css("background-color", "#4790b8");
+							} else {
+								window.alert("인증번호가 올바르지 않습니다")
+								$("input[name=identity]").select();
 							}
-						});
+						}
 					});
+				});
 	});
 </script>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<body>
-	<%-- 회원 가입 페이지의 내용을 구현 --%>
-	<h1>회원 가입</h1>
-	<br>
-	<form action="regist" method="post">
-		<div>
-			<table>
-				<tbody>
+<style>
+.total {
+	margin: 0 auto;
+	max-width: 1260px;
+	padding-top: 58px;
+	padding-bottom: 120px;
+}
 
-					<tr>
-						<td>아이디</td>
-						<td><input class="id" type="text" name="id"
-							placeholder="아이디 8~16글자" required><br> <span
-							class="sid"></span></td>
+.table {
+	border: none;
+	width: 100%;
+	border-width: 2px 0 0;
+	border-style: solid;
+	color: #555;
+	border-collapse: collapse;
+}
 
-						<td><input type="button" id="idCheck" value="아이디 중복확인"></td>
-					</tr>
+.table th, .table td {
+	border-width: 0 0 1px;
+	border-style: solid;
+	border-color: #d0d0d0;
+}
 
-					<tr>
-						<td>비밀번호</td>
-						<td><input class="pw" type="password" name="pw"
-							id="user_pass" placeholder="8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)"
-							required><br> <span class="spw"></span></td>
-					</tr>
-					<tr>
-						<td>비밀번호 확인</td>
-						<td><input type="password" id="chpass" name="pw_check"
-							placeholder="비밀번호 확인" required><br> <span
-							class="cpw"></span></td>
-					</tr>
+.a {
+	font-size: 13px;
+	padding: 0 0 0 20px;
+	text-align: left;
+	font-weight: 400;
+	width: 10%;
+}
 
-					<tr>
-						<td>이름</td>
-						<td><input type="text" name="name" placeholder="이름" required></td>
-					</tr>
+.b {
+	min-height: 40px;
+	padding: 16px 20px;
+}
+
+.iText {
+	width: 280px;
+	height: 44px;
+	padding: 0 39px 0 15px;
+	min-width: 280px;
+	font-size: 14px;
+	margin-top: 5px;
+	border: 1px #eee solid;
+}
+
+button {
+	width: 150px;
+	height: 45px;
+	font-size: 14px;
+	margin-top: 5px;
+	border: 1px #bbb solid;
+	background-color: white !important;
+	text-align: center;
+	color: black;
+	font-weight: 600;
+}
+
+.birth-text {
+	width: 500px
+}
+
+.birth-text input {
+	height: 37px;
+	width: 80px;
+	padding: 0 15px 0 15px;
+	text-align: center;
+	border: none;
+}
+
+.birth-div {
+	width: auto;
+	display: inline-block;
+	height: 40px;
+	border: 1px #eee solid;
+}
+
+#registcheck {
+	margin-top: 30px;
+	margin-left: 40%;
+	border: none;
+	background-color: black !important;
+	color: #fff;
+	height: 60px;
+	width: 220px;
+}
+</style>
+</head>
+
+	<div class="total">
+            <h1>회원 가입</h1>
+            <br>
+            <form action="regist" method="post">
+                <div>
+                    <table class="table">
+                        <tbody>
+
+                            <tr>
+                                <td class="a">아이디</td>
+                                <td class="b"><input
+								class="id iText" type="text" name="id" placeholder="아이디 8~16글자"
+								required>
+                                        <button id="idCheck">중복확인</button><br><span
+								class="sid"></span></td>
+                                        
+                            </tr>
+
+                            <tr>
+                                <td class="a">비밀번호</td>
+                                <td class="b"><input
+								class="pw iText" type="password" name="pw" id="user_pass"
+								placeholder="8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)" required><br> <span
+								class="spw"></span></td>
+                            </tr>
+                            <tr>
+                                <td class="a">비밀번호 확인</td>
+                                <td class="b"><input class="iText"
+								type="password" id="chpass" name="pw_check"
+								placeholder="비밀번호 확인" required><br>
+                                    <span class="cpw"></span></td>
+                            </tr>
+
+                            <tr>
+                                <td class="a">이름</td>
+                                <td class="b"><input class="iText"
+								type="text" name="name" placeholder="이름" required></td>
+                            </tr>
 
 
-					<tr>
-						<td>핸드폰번호</td>
-						<td><input type="text" name="phone" placeholder="전화번호(- 제외)"></td>
-					</tr>
+                            <tr>
+                                <td class="a">핸드폰번호</td>
+                                <td class="b"><input type="text"
+								name="phone" placeholder="전화번호(- 제외)" class="iText"></td>
+                            </tr>
 
-					<tr>
-						<td>주소</td>
-						<td><div>
+                            <tr>
+                                <td class="a">주소</td>
+                                <td class="b">
+                                    <div>
+                                        <input type="text"
+										name="post_code" placeholder="우편번호" readonly class="iText">
+                                        <button class="addr">우편번호 찾기</button>
+									<br>
+                                        <input type="text"
+										name="basic_addr" placeholder="주소" readonly class="iText">
+                                        <input type="text"
+										name="detail_addr" placeholder="상세주소" class="iText">
 
-								<input class="addr" type="button" value="우편번호 찾기"> <input
-									type="text" name="post_code" placeholder="우편번호" readonly><br>
-								<input type="text" name="basic_addr" placeholder="주소" readonly>
-								<input type="text" name="detail_addr" placeholder="상세주소">
+                                    </div>
+                                </td>
+                            </tr>
 
-							</div></td>
-					</tr>
+                            <tr>
+                                    <td class="a">생년월일</td>
+                                    <td class="b birth-text">
+                                        <div class="birth-div">
+                                            <input type="text"
+										name="birth" value maxlength="4" placeholder="YYYY" required> <span>/</span> <input
+										type="text" name="birth" value maxlength="2" placeholder="MM"
+										required> <span>/</span> <input type="text"
+										name="birth" value maxlength="2" placeholder="DD" required>
+                                            </div>
+                                    </td>
+                            </tr>
 
-					<tr>
-						<td>생일</td>
-						<td><input type="date" name="birth" required></td>
-					</tr>
+                            <tr>
+                                <td class="a">이메일</td>
+                                <td class="b"><input type="text"
+								name="email" required class="iText"> <button
+									class="email">인증하기</button><br> <input
+								id="indentity" type="text" name="identity" required
+								style="width: 20%" class="iText"> <button id="indentity"
+									class="verification_check">인증번호확인</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                                            
+                        <input id="registcheck" type="submit"value="가입하기">
+                </div>
+            </form>
+    
+</body>
+    </div>
 
-					<tr>
-						<td>이메일</td>
-						<td><input type="text" name="email" required> <input
-							type="button" class="email" value="인증하기"> <input
-							id="indentity" type="text" name="identity" required
-							style="width: 20%;"> <input type="button" id="indentity"
-							class="verification_check" value="인증번호확인" style="width: 20%;">
-							<div class="emailD"></div></td>
-					</tr>
-
-					<tr>
-						<td colspan="3">
-							<input id="registcheck" type="submit" value="가입하기">
-						</td>
-					</tr>
-
-					<tr>
-				</tbody>
-			</table>
-		</div>
-	</form>
-	<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+</html><jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

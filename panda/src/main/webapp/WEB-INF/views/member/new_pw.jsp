@@ -38,20 +38,114 @@
 		</script>
 
 
-<h1>비밀번호 변경</h1>
-<form class="form" action="new_pw" method="post">
-	<%-- hidden은 사용자에게 표시되지 않으면서 전송이 가능 --%>
-	<input type="hidden" name="id" value="${id}">
-	<table>
-	         <tr>
-						<td>새로운 비밀번호</td>
-						<td><input class="pw" type="password" name="pw"
-							placeholder="8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)" required><br>
-                       <span class="spw"></span></td>
-					</tr>
-									</table>
-					<input type="submit" value="변경하기">
-</form>
+    <style>
+        .total {
+            margin: auto;
+        }
+
+        #btn1 {
+            margin-top: 30px;
+            border: none;
+            background-color: black;
+            color: white;
+            height: 50px;
+            width: 300px;
+            font-size: 17px;
+        }
+
+        .new_pw2 {
+            text-align: center;
+            margin: auto;
+            padding: 5px;
+            font-size: 30px;
+            margin-bottom: 50px;
+            margin-top: 50px;
+        }
+
+        a {
+            color: black;
+            text-decoration: none;
+        }
+
+        .table {
+            border: none;
+            margin: auto;
+            width: 50%;
+            border: none;
+            color: #555;
+            border-collapse: collapse;
+        }
+
+        .table th {
+            padding-bottom: 10px;
+            border-bottom: 2px solid #555;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .pw {
+            width: 100%;
+            height: 44px;
+            min-width: 280px;
+            font-size: 14px;
+            margin-top: 5px;
+            border: 1px #eee solid;
+        }
+
+        .form-control {
+            margin: auto;
+            width: 500px;
+            height: 50px;
+        }
+
+        .a {
+            font-size: 13px;
+            padding: 0 0 0 20px;
+            text-align: right;
+            font-weight: 400;
+            width: 30%;
+        }
+
+        .b {
+            min-height: 40px;
+            padding: 16px 20px;
+        }
+
+        #btn2div {
+            margin-top: 30px;
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="total">
+            <h4 class="new_pw2">비밀번호 변경</h4>
+            <form class="form" action="new_pw" method="post">
+            <%-- hidden은 사용자에게 표시되지 않으면서 전송이 가능 --%>
+            <input type="hidden" name="id" value="${id}">
+                <table class="table">
+                    <tr>
+                        <th class="a"></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td class="a">새로운 비밀번호</td>
+                        <td class="b"><input class="pw" type="password" name="pw"
+							placeholder="  8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)" required class="form-control"><br>
+                       <span class="spw"></span>
+                        </td>class="form-control"
+                    </tr>
+                </table>
+            </form>
+            <div id="btn2div">
+                    <input type="submit" value="변경하기" id="btn1">
+            </div>
+        </form>
+    </div>
+
+</body>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 

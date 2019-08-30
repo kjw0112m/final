@@ -21,7 +21,7 @@
                         $(".all-chk").prop("checked", false);
                     }
                 })
-            });
+            })
             oncomplete: function (data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
@@ -69,24 +69,17 @@
         }).open();
     }
 </script>
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>order</title>
     <style>
         * {
             box-sizing: border-box;
         }
-
+        
         .table_st {
             border-width: 2px 0 0;
             border-style: solid;
             text-align: center;
-            margin: 10px;
-            width: 900px;
-            height: 287;
+            margin: auto;
+            width: 70%;
         }
 
         .text-left {
@@ -113,28 +106,18 @@
             height: 140px;
         }
 
-        #span {
-            margin-top: 50px;
-            margin-bottom: 50px;
-            text-align: center;
-            font-size: 16px;
-        }
-
-        /* .total{
-	float: left;
-	width: 50%;
-	padding-top: 80px;
-	margin-bottom: 50px;
+        #top{
+        margin-top: 150px;
+        text-align: center;
+        font-size: 16px;
+        line-height: 24px;
+        color: black;
     }
-    .total::after {
-	content: '';
-	display: block;
-	clear: both;
-    } */
+
         .a {
-            width: 10%;
+            width: 15%;
             padding: 10px;
-            font-size: 10px;
+            font-size: 15px;
         }
 
         .b {
@@ -153,8 +136,8 @@
         .table_new {
             border-width: 2px 0 0;
             border-style: solid;
-            margin: 20px;
-            width: 900px;
+            margin: auto;
+            width: 70%;
             height: 300;
         }
 
@@ -181,9 +164,10 @@
         }
 
         .box {
+            margin: auto;
             float: left;
-            width: 50%;
             padding: 30px;
+            margin-left: 10px;
             text-align: center;
         }
 
@@ -194,19 +178,40 @@
         }
 
         .clearfix {
-            margin-left: 30%;
-            margin-right: 30%;
+        margin-left: 40%;
         }
-        h4{
-            margin-left: 30px;
+
+        a {
+        text-decoration: none;
+        color: black;
         }
+        .btn-find{
+        margin-top: 30px;
+        border: none;
+        background-color: black;
+        color: #fff;
+        height: 30px;
+        width: 90px;
+        }
+        .top-table {
+        text-align: left;
+        margin: auto;
+        width: 70%;
+        border: 3px none;
+        padding: 5px;
+        color: #555;
+        font-size: 22px;
+        }
+
     </style>
 </head>
 
 <body>
-    <!-- <div class="total"> -->
-    <div id="span"><span>01 쇼핑백 > </span><span style="font-weight: bold">02 주문결제</span><span> > 03 주문완료</span></div>
-    <h4>상품 정보</h4>
+    <div class="total">
+    <div id="top"><span>01 쇼핑백 > </span><span style="font-weight: bold">02 주문결제</span><span> > 03 주문완료</span></div>
+    <div class="top-table">
+            <h4>상품정보</h4>
+    </div>
     <table class="table_st">
         <thead>
             <tr>
@@ -233,11 +238,9 @@
             </c:forEach>
         </tbody>
     </table>
-    <!-- <div class="box-price">
-                        <h4>계산할래</h4>
-                </div> -->
-    <!-- </div> -->
-    <h4>주문하시는 분</h4>
+    <div class="top-table">
+        <h4>주문하시는 분</h4>
+    </div>
     <table class="table_new">
         <tbody>
             <tr>
@@ -264,14 +267,16 @@
             </tr>
         </tbody>
     </table>
-
+    <div class="top-table">
     <h4>받으시는 분</h4>
+    </div>
     <table class="table_new">
         <tbody>
+
             <tr>
                 <th class="a">배송지 선택</th>
-                <td><input class="c" type="radio"><span style="font-size: 10px">&nbsp주문자 정보와 동일</span>
-                    <input class="c" type="radio"><span style="font-size: 10px">&nbsp새로입력</span>
+                <td><input class="c" type="radio"><span style="font-size: 15px">&nbsp주문자 정보와 동일</span>
+                    <input class="c" type="radio"><span style="font-size: 15px">&nbsp새로입력</span>
                 </td>
             </tr>
             <tr>
@@ -298,15 +303,21 @@
             </tr>
         </tbody>
     </table>
-
+    <div class="top-table">
     <h4>결제 정보</h4>
+    </div>
     <div class="clearfix">
         <div class="box" style="border:#bbb solid 1px">
-            <p>카카오 결제</p>
+            <a href="#" class="kakaopay">
+                <p>카카오 결제</p>
+            </a>
         </div>
         <div class="box" style="border:#ccc solid 1px">
-            <p>무통장입금</p>
+            <a href="#" class="pay">
+                <p>무통장입금</p>
+            </a>
         </div>
+    </div>
     </div>
 </body>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include> 

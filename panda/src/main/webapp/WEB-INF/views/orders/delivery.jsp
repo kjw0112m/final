@@ -1,11 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>주문배송조회</title>
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(function () {
+            var target = $(".product, .order, .member, .promotion, .stat, .board");
+            target.click(function () {
+                $(this).next().toggle();
+                $(this).parent().toggleClass("bc_w");
+                target.not($(this)).next().hide();
+                target.not($(this)).parent().removeClass("bc_w");
+            });
+
+            target.next().find("a").click(function () {
+                $(this).addClass("a_bold");
+                target.next().find("a").not($(this)).removeClass("a_bold");
+                console.log(this);
+            });
+
+
             $.datepicker.setDefaults({
                 dateFormat: 'yy-mm-dd',
                 showOtherMonths: true // 빈 공간에 현재월의 앞뒤월의 날짜를 표시
@@ -185,6 +205,21 @@
         text-align: center;
     }
 
+    .a>th {
+        height: 50px;
+        border-top: 3px solid black;
+    }
+
+    .c>td {
+        height: 50px;
+        width: 33.33%;
+        border-bottom: 3px solid black;
+    }
+
+    h4 {
+        font-size: 30px;
+    }
+
     .img {
         width: 140px;
         height: 140px;
@@ -194,6 +229,7 @@
         border-collapse: collapse;
         width: 1128px;
         height: 222px;
+
         text-align: center;
     }
 
@@ -221,9 +257,14 @@
     .table3 {
         border: 1px solid #bbb;
         width: 1128px;
+        height: 222px;
         text-align: center;
         margin-top: 50px;
         margin-bottom: 50px;
+    }
+
+    .a2 {
+        width: 100%;
     }
 
     .total {
@@ -236,17 +277,9 @@
         text-decoration: none;
     }
 
-    h4 {
-        font-size: 30px;
-    }
-
     #p {
         font-size: 25px;
         margin: 20px;
-    }
-
-    #middle {
-        margin-top: 50px;
     }
 </style>
 
@@ -334,7 +367,36 @@
     </div>
 
     <div class="total">
-        <p id="p">취소/교환/반품</p>
+
+        <!-- <table class="table1">
+            <thead>
+                <tr class="a">
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tr class="b">
+                <td>
+                    <h4>${}FAMILY</h4>
+                    <p>회원 등급</p>
+                </td>
+                <td id="td-b">
+                    <h4>${}1</h4>
+                    <p>사용가능 쿠폰</p>
+                </td>
+                <td>
+                    <h4>${}0</h4>
+                    <p>사용가능 마일리지</p>
+                </td>
+            </tr>
+            <tr class="c">
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table> -->
+        <p id="p">주문 배송 조회</p>
         <table class="table1">
             <tr>
                 <td><span class="gBreak"> <input type="text" id="startDate" name="start_dt" class="fText gDate"
@@ -343,11 +405,11 @@
                 </td>
             </tr>
         </table>
-        <div id="middle">
+        <div style="margin-top: 50px">
             <span style="font-size: 15px">${orderview.order_dt}</span>
-            <span style="color: #bbb">  |  </span>
+            <span style="color: #bbb">&nbsp&nbsp|&nbsp&nbsp</span>
             <span style="font-size: 15px">주문번호 2019082664883377</span>
-            <span style="color: #bbb">  |  </span>
+            <span style="color: #bbb">&nbsp&nbsp|&nbsp&nbsp</span>
             <span style="font-size: 15px">주문 상품 1개</span>
         </div>
         <form action="">
@@ -389,14 +451,15 @@
             </table>
         </form>
         <table class="table3">
-            <tr class="a2">
-                <td><img src="취소교환반품절차1.png"></td>
-            </tr>
             <tr>
-                <td><img src="취소교환반품절차.png"></td>
+                <td><img src="주문설명.png" class="a2"></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
         </table>
 
     </div>
 </body>
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
