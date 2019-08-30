@@ -14,7 +14,7 @@
 				</ul></li>
 			<li><a href="#none" class="order"> 주문관리 </a>
 				<ul class="hide">
-					<li class=""><a href="#"> 전체주문목록 </a></li>
+					<li class=""><a href="${pageContext.request.contextPath }/seller/orders/search"> 전체주문목록 </a></li>
 					<li class=""><a href="#"> 배송 관리(준비중) </a></li>
 					<li class=""><a href="#"> 취소/교환/반품/환불(준비중) </a></li>
 				</ul></li>

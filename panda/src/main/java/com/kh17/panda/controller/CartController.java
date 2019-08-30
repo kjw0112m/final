@@ -2,6 +2,7 @@ package com.kh17.panda.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +35,10 @@ public class CartController {
 	}
 	
 	@GetMapping("/delete")
-	public String delete(@RequestParam int[] id) {
+	public void delete(@RequestParam int[] id, HttpServletResponse resp) {
 		for(int no : id) {
 			cartDao.delete(no);
 		}
-		return "redirect:view";
 	}
 	
 	@GetMapping("/view")
