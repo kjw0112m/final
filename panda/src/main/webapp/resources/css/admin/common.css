@@ -644,3 +644,22 @@ input[type="radio"] {
 .w35 {
 	width: 35px;
 }
+
+.paginate {
+    margin: 25px 0 0;
+    text-align: center;
+}
+
+.paginate ol, .paginate li {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 16px;
+    line-height: 16px;
+    padding: 0 1px;
+}
+
+.active_page {
+	font-weight: bold;
+	color: #55a0ff;
+}
+

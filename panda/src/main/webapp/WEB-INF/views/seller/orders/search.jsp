@@ -29,6 +29,13 @@
 			"${paramValues.csStatus[3]}");
 
 	var payStatus = "${param.pay_status}"
+
+	var page = "${page}";
+	var startBlock = "${startBlock}";
+	var endBlock = "${endBlock}";
+	console.log(page)
+	console.log(startBlock)
+	console.log(endBlock)
 </script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script
@@ -282,6 +289,36 @@
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
+				</div>
+				<input name="page" type="hidden">
+				<div class="paginate">
+					<ol>
+						<c:if test="${(not (page eq 1))&& not empty page && page>=11}">
+							<li><a href="#" class="page_block">&lt;&lt;</a></li>
+						</c:if>
+						<c:if test="${not (page eq 1) && not empty page}">
+							<li><a href="#" class="page_block">&lt;</a></li>
+						</c:if>
+						<!--페이지 출력 -->
+						<c:forEach var="i" begin="${startBlock}" end="${endBlock}">
+							<c:choose>
+								<c:when test="${page == i}">
+									<li class="active_page">${i}</li>
+								</c:when>
+								<c:otherwise>
+									<c:if test="${i>0}">
+										<li><a href="#" class="page_move">${i}</a></li>
+									</c:if>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${not (page eq pageCount)}">
+							<li><a href="#" class="page_block">&gt;</a></li>
+						</c:if>
+						<c:if test="${(not (page eq pageCount)) && pageCount>=10}">
+							<li><a href="#" class="page_block">&gt;&gt;</a></li>
+						</c:if>
+					</ol>
 				</div>
 			</div>
 		</div>

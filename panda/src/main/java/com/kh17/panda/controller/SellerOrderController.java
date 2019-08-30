@@ -46,6 +46,13 @@ public class SellerOrderController {
 			int endBlock = startBlock + (blocksize - 1);
 			
 			List<OrderViewVO> search = orderViewListVO.getSearch();
+			for (int i = 0; i < search.size(); i++) {
+				if (search.get(i).getKeyword().isEmpty()) {
+					search.remove(i);
+					i--;
+				}
+			}
+			
 			for(int i=0; i< search.size() ; i++) {
 				if(search.get(i).getType()==null) {
 					search.remove(i);
@@ -57,18 +64,11 @@ public class SellerOrderController {
 			if (endBlock > pageCount) {
 				endBlock = pageCount;
 			}
-
 			model.addAttribute("page", page);
 			model.addAttribute("startBlock", startBlock);
 			model.addAttribute("endBlock", endBlock);
-
+			model.addAttribute("pageCount", pageCount);
 			
-			for (int i = 0; i < search.size(); i++) {
-				if (search.get(i).getKeyword().isEmpty()) {
-					search.remove(i);
-					i--;
-				}
-			}
 
 			List<OrderViewDto> list = ordersDao.list(orderViewDto, search, start, end, csStatus, tStatus);
 			System.out.println(list);
