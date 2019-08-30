@@ -78,6 +78,8 @@ public class MemberController {
 		else {
 			resp.getWriter().print("N");
 		}
+			
+		
 	}
 	
 	
@@ -269,10 +271,9 @@ public class MemberController {
 	
 	
 	@PostMapping("/change_pw")
-	public void change_pw(HttpSession session, @ModelAttribute MemberDto memberDto, 
-			Model model, @RequestParam String new_pw, HttpServletResponse resp) throws IOException {
-		resp.setContentType("text/plain");
-		
+	public String change_pw(HttpSession session, @ModelAttribute MemberDto memberDto, 
+			Model model, @RequestParam String new_pw) {
+	
 		memberDto.setId((String) session.getAttribute("sid"));				
 
 		//		기존 비밀번호와 새로운 비밀번호가 들어옴
@@ -283,32 +284,19 @@ public class MemberController {
 		
 			//기존 비밀번호와 입력 비밀번호를 비교하여 확인
 		boolean result = BCrypt.checkpw(memberDto.getPw(),check.getPw());
-		System.out.println(result);
+ 
 		if(result) {
 //		[2] 비밀번호가 맞으면 새로운 비밀번호로 변경
 			memberDto.setId((String) session.getAttribute("sid"));
-			resp.getWriter().print("Y");
 			memberDto.setPw(newpw);
+			
 			memberDao.changePw(memberDto);
 			memberDao.lastchangepw(memberDto.getId());
+			return "member/change_pw_result";
 		}
 //		[3] 비밀번호가 다르면 비밀번호 변경 실패 안내
 		else {
-			resp.getWriter().print("N");
-		}
-	}
-	
-	
-	// email 중복 검사
-	@GetMapping("/emailCheck")
-	public void emailCheck(@RequestParam String email, HttpServletResponse resp) throws IOException  {
-		resp.setContentType("text/plain");
-		MemberDto mdto = memberDao.emailCheck(email);
-		if(mdto==null) {
-			resp.getWriter().print("Y");
-		}
-		else {
-			resp.getWriter().print("N");
+			return "redirect:change_pw?error=1";
 		}
 	}
 	
