@@ -13,7 +13,7 @@
 	<input type="submit" value="검색">
 </form>
 
-<hr>
+<hr> 
 
 <c:choose>
 	<c:when test="${list.isEmpty()}">
