@@ -22,7 +22,6 @@
 				<nav id="main_nav" class="main_nav">
 					<ul class="menu">
 						<li class="dis_f ai_c"><a href="${pageContext.request.contextPath}/product/newArrivals">NEW</a></li>
-						<li class="dis_f ai_c"><a href="/sellers">SELLERS</a></li>
 						<li class="dis_f ai_c c_w" id="tops"><a href="${pageContext.request.contextPath}/product/categoryList?category_id=1">TOPS</a>
 							<ul class="menus" id="topsmenu">
 								<strong class="tit">TOPS</strong>
@@ -67,7 +66,7 @@
 						</c:otherwise>
 					</c:choose>
 					
-						<a href="#" class=""><img src="${pageContext.request.contextPath}/image/search.PNG"></a> <a href="${pageContext.request.contextPath}/cart/view"
+						<a href="${pageContext.request.contextPath}/product/search" class=""><img src="${pageContext.request.contextPath}/image/search.PNG"></a> <a href="${pageContext.request.contextPath}/cart/view"
 
 						class=""><img src="${pageContext.request.contextPath}/image/cart.PNG"></a> <a href="#" class=""><img
 						src="${pageContext.request.contextPath}/image/contact.PNG"></a>

@@ -29,4 +29,14 @@ public class ProductSellerDaoImpl implements ProductSellerDao{
 		return sqlSession.selectList("productSeller.categoryList", sub_category_id);
 	}
 
+	@Override
+	public ProductSellerDto get(int product_id) {
+		return sqlSession.selectOne("productSeller.get", product_id);
+	}
+
+	@Override
+	public List<ProductSellerDto> search(String keyword) {
+		return sqlSession.selectList("productSeller.search", keyword);
+	}
+
 }
