@@ -72,15 +72,16 @@ public class MemberDaoImpl implements MemberDao {
 		MemberDto result = sqlSession.selectOne("member.findpw", memberDto);
 		return result != null;
 	}
+	//아이디 찾기
+		@Override
+		public MemberDto findId(MemberDto memberDto) {
+			return sqlSession.selectOne("member.findId", memberDto);
+		}
+		
 	//비밀번호 바꾸기
 	@Override
 	public void changePw(MemberDto memberDto) {
 		sqlSession.update("member.changePw", memberDto);
-	}
-	//아이디 찾기
-	@Override
-	public MemberDto findId(MemberDto memberDto) {
-		return sqlSession.selectOne("member.findId", memberDto);
 	}
 	@Override
 	public void lastchangepw(String id) {
@@ -97,11 +98,21 @@ public class MemberDaoImpl implements MemberDao {
 		param.put("keyword", keyword);
 		return sqlSession.selectList("member.search", param);
 	}
+	// 아이디 중복검사
+		@Override
+		public MemberDto emailCheck(String email) {
+			return sqlSession.selectOne("member.emailCheck", email);
+		}
+		
+		
+		
+		
+	}
 
 	
 	
 	
-	}
+
 	
 	
 
