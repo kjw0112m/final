@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>PANDA Admin</title>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/admin/common.css">
 <script>
@@ -16,7 +16,7 @@
 		<div id="header">
 			<div class="header">
 				<h1 class="logo">
-					<a href="#"> <span>PANDA</span>
+					<a href="${pageContext.request.contextPath }/seller/"> <span>PANDA</span>
 					</a>
 				</h1>
 				<ul class="util" id="gnb">

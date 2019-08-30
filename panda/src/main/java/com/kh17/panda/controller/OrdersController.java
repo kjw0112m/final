@@ -40,7 +40,7 @@ public class OrdersController {
 		return "orders/view";
 	}
 	@GetMapping("/order")
-	public String order(@RequestParam int product_id, HttpSession session, Model model) {
+	public String order(@RequestParam(required = false) int product_id,@RequestParam(required = false) String[] sizes, HttpSession session, Model model) {
 		String member_id = (String) session.getAttribute("sid");
 
 		if (product_id > 0) {
@@ -48,7 +48,7 @@ public class OrdersController {
 			model.addAttribute("productDto", productDto);
 		} else {
 			List<CartViewDto> list = cartDao.list(member_id);
-			model.addAttribute("cList", list);
+			model.addAttribute("cartList", list);
 		}
 
 		return "orders/order";
