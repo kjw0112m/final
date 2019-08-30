@@ -7,7 +7,71 @@
     <script src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
     <script src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
     <script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
+
+       
+
+
     <script>
+  //주소
+
+$(function () {
+    $(".addr").click(findAddress);
+    $("input[name=btn]").prop("disabled", true);
+});
+
+function findAddress() {
+    new daum.Postcode({
+        oncomplete: function (data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var addr = ''; // 주소 변수
+            var extraAddr = ''; // 참고항목 변수
+
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                addr = data.roadAddress;
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                addr = data.jibunAddress;
+            }
+
+            // 사용자가 선택
+            // 				한 주소가 도로명 타입일때 참고항목을 조합한다.
+            if (data.userSelectedType === 'R') {
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                    extraAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if (data.buildingName !== '' && data.apartment === 'Y') {
+                    extraAddr += (extraAddr !== '' ? ', ' +
+                        data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if (extraAddr !== '') {
+                    extraAddr = ' (' + extraAddr + ')';
+                }
+                // 조합된 참고항목을 해당 필드에 넣는다.
+
+            }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            // document.querySelector('input[name=postcode]').value = data.zonecode;
+            // document.querySelector("input[name=basicaddr]").value = addr;
+            // 커서를 상세주소 필드로 이동한다.
+            // document.querySelector("input[name=detailaddr]").focus();
+
+            // 이 코드는 jquery.js 를 먼저 불러온 경우만 사용 가능
+            $("input[name=post_code]").val(data.zonecode);
+            $("input[name=basic_addr]").val(addr);
+            $("input[name=detail_addr]").focus();
+        }
+    }).open();
+}
+    
+    
         //비밀번호 검사 후 형식에 안맞을시 보조메세지 출력	
         $(function () {
             $("input[name=new_pw]").blur(
@@ -21,10 +85,11 @@
 
                     if (result) {
                         span.innerHTML = ""
+                        	 $("input[name=btn]").prop("disabled", true)
                     } else {
                         span.innerHTML =
-                            "<font color = '#de2195' size = '2'>8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)로 입력해주세요</font>"
-
+                             "<font color = '#de2195' size = '2'>8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)로 입력해주세요</font>"
+                     $("input[name=btn]").prop("disabled", true)
 
                     }
                 });
@@ -32,7 +97,7 @@
 
 
 
-
+//새로운 비밀번호 확인
         $(function () {
             var span = document.querySelector(".cpw");
             $('#new_pw').keyup(function () {
@@ -50,82 +115,47 @@
                 }
             }); //#chpass.keyup
         });
-        $(function () {
-            $("form").submit(function (e) {
-                e.preventDefault();
-                var pw = $("input[name=origin_pw]").val();
-                var encPw = CryptoJS.SHA256(pw).toString();
-                var ck_pw = $("input[name=pw_check]").val();
-                var encNPW = CryptoJS.SHA256(ck_pw).toString();
+        
+        //비번 암호화,변경
+     	$(function(){
+		$("#btn1").click(function() {
+						    var pw = $("input[name=origin_pw]").val();
+			                var encPw = CryptoJS.SHA256(pw).toString();
+			                var ck_pw = $("input[name=pw_check]").val();
+			                var encNPW = CryptoJS.SHA256(ck_pw).toString();
+			                $("input[name=origin_pw]").attr("name", "");
+			                $("input[name=new_pw]").attr("name", "");
+			                var newInput1 = $("<input/>").attr("name", "new_pw").val(encNPW).attr("type", "hidden");
+			                var newInput2 = $("<input/>").attr("name", "pw").val(encPw).attr("type", "hidden");
+			                $("input[name=pw_check]").attr("name", "");
+			                $(this).append(newInput1);
+			                $(this).append(newInput2);
 
-                $("input[name=origin_pw]").attr("name", "");
-                $("input[name=new_pw]").attr("name", "");
-                var newInput2 = $("<input/>").attr("name", "pw").val(encPw).attr("type", "hidden");
-                var newInput1 = $("<input/>").attr("name", "new_pw").val(encNPW).attr("type", "hidden");
-                $("input[name=pw_check]").attr("name", "");
-                $(this).append(newInput1);
-                $(this).append(newInput2);
+		
+			    $.ajax({
+				url : "change_pw",
+				type : "POST",
+				data : {
+					new_pw : $("input[name=new_pw]").val(),
+					pw : encPw
+				},
+				dataType : "text",
+				success : function(resp) {
+					if (resp == "N") {
+						window.alert("비밀번호가 틀렸습니다");
 
-                this.submit();
-            });
+					}
+					else {
+						window.alert("비밀번호를 변경했습니다")
+					}
+				}
+			});
+		});
+     	});
 
-
-        });
-        $(function () {
-            $(".addr").click(findAddress);
-        });
-
-        function findAddress() {
-            new daum.Postcode({
-                oncomplete: function (data) {
-                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                    var addr = ''; // 주소 변수
-                    var extraAddr = ''; // 참고항목 변수
-
-                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                        addr = data.roadAddress;
-                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                        addr = data.jibunAddress;
-                    }
-
-                    // 사용자가 선택
-                    // 				한 주소가 도로명 타입일때 참고항목을 조합한다.
-                    if (data.userSelectedType === 'R') {
-                        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                        if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-                            extraAddr += data.bname;
-                        }
-                        // 건물명이 있고, 공동주택일 경우 추가한다.
-                        if (data.buildingName !== '' && data.apartment === 'Y') {
-                            extraAddr += (extraAddr !== '' ? ', ' +
-                                data.buildingName : data.buildingName);
-                        }
-                        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                        if (extraAddr !== '') {
-                            extraAddr = ' (' + extraAddr + ')';
-                        }
-                        // 조합된 참고항목을 해당 필드에 넣는다.
-
-                    }
-
-                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                    // document.querySelector('input[name=postcode]').value = data.zonecode;
-                    // document.querySelector("input[name=basicaddr]").value = addr;
-                    // 커서를 상세주소 필드로 이동한다.
-                    // document.querySelector("input[name=detailaddr]").focus();
-
-                    // 이 코드는 jquery.js 를 먼저 불러온 경우만 사용 가능
-                    $("input[name=post_code]").val(data.zonecode);
-                    $("input[name=basic_addr]").val(addr);
-                    $("input[name=detail_addr]").focus();
-                }
-            }).open();
-        }
+        
+        
+     
     </script>
     <style>
         .gBreak {
@@ -412,6 +442,7 @@
         <h1>${mdto.name}님의정보</h1>
         <form action="change" method="post">
         <br>
+       
         <table class="table">
 
             <tr>
@@ -424,11 +455,10 @@
                     <span class="span">현재 비밀번호</span><input type="password" name="origin_pw" id="pw" required
                         class="iText"><br>
                     <span class="span">신규 비밀번호</span><input type="password" class="iText" name="new_pw" id="new_pw"
-                        pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$" required><br>
-                    <span class="spw"></span>
+                        pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$" required><span class="spw"></span><br>
                     <span class="span">비밀번호 확인</span><input type="password" id="chpass" name="pw_check"
-                        placeholder="비밀번호 확인" required class="iText">
-                    <input class="btn btn-danger btn-block " id="btn1" type="submit" value="비밀번호 변경" name="btn">
+                        placeholder="비밀번호 확인" required class="iText"><span class="cpw"></span>
+                    <input class="btn btn-danger btn-block " id="btn1" type="button" value="비밀번호 변경" name="btn">
                 </td>
             </tr>
             <tr>
@@ -441,11 +471,11 @@
             </tr>
             <tr>
                 <td class="a">전화번호</td>
-                <td class="b">${mdto.phone}</td>
+                <td class="b"><input type="text" name="phone" value="${mdto.phone}" class="iText"></td>
             </tr>
             <tr>
                 <td class="a">이메일</td>
-                <td class="b">${mdto.email}</td>
+                <td class="b"><input type="text" name="email" value="${mdto.email}" class="iText"></td>
             </tr>
 
             <tr>
@@ -460,30 +490,29 @@
                 </td>
             </tr>
             <tr>
-                <td class="a">가입일</th>
+                <td class="a">가입일</td>
                 <td class="b">${mdto.regist_dt}</td>
             </tr>
             <tr>
-                <td class="a">마지막 로그인 시간</th>
+                <td class="a">마지막 로그인 시간</td>
                 <td class="b">${mdto.login_dt}</td>
             </tr>
             <tr>
-                <td class="a">마지막 비밀번호 변경</th>
+                <td class="a">마지막 비밀번호 변경</td>
                 <td class="b">${mdto.pw_dt}</td>
             </tr>
             </tbody>
         </table>
+       
         <div id="btn2div">
             <input type="button" value="취소" class="input">
             <input type="submit" value="저장" class="input">
         </div>
-    </div>
 </form>
-
+</div>
 </body>
 
 </html>
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
 
 
