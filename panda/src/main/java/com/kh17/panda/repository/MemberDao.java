@@ -17,6 +17,6 @@ public interface MemberDao {
 	MemberDto findId(MemberDto memberDto);
 	void lastchangepw(String id);
 	List<MemberDto> search(String type, String keyword);
-	MemberDto emailCheck(String email);
+
 	
 }

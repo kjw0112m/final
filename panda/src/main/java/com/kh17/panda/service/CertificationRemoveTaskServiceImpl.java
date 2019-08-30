@@ -16,6 +16,7 @@ public class CertificationRemoveTaskServiceImpl implements CertificationRemoveTa
 	@Autowired
 	private CertDao certDao;
 	
+	private IdentityVerificationDao identityVerificationDao;
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -26,17 +27,7 @@ public class CertificationRemoveTaskServiceImpl implements CertificationRemoveTa
 		certDao.clear();
 		logger.info("인증번호 초기화 작업이 수행되었습니다");
 	}
-    
-	
-	@Autowired
-	private IdentityVerificationDao identityVerificationDao;
-	
-    @Override
-	@Scheduled(cron = "0 30 * * * *")
-	public void identity () {
-		identityVerificationDao.clear();
-		logger.info("본인 인증번호 초기화 작업이 수행되었습니다");
-	}
+
 
 
 }
