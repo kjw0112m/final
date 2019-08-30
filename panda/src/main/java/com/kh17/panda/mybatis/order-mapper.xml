@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			product_name like '%' || #{dto.product_name} ||
 			'%'
 		</if>
-		<if test="dto.pay_status != null">
+		<if test="dto.pay_status != null and !dto.pay_status.isEmpty()">
 			and
 			pay_status = #{dto.pay_status}
 		</if>
@@ -142,7 +142,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<delete id="delete">
 		delete orders where order_dt between
-		sysdate-(INTERVAL '1' YEAR) and sysdate-(INTERVAL '1' MINUTE)
+		sysdate-(INTERVAL '2' YEAR) and sysdate-(INTERVAL '1' YEAR)-(INTERVAL '1' MINUTE)
 	</delete>
 
 	<update id="cs_status" parameterType="ordersDto">
