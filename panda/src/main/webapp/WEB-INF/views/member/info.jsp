@@ -373,7 +373,7 @@ function findAddress() {
                         <a id="a" href="#none" class="order">
                             주문 관리
                         </a>
-                        <ul class="hide">
+                        <ul class="hide" >
                             <li class="">
                                 <a id="a" href="#">
                                     주문 배송 조회
@@ -391,18 +391,19 @@ function findAddress() {
                             회원 혜택
                         </a>
                     </li>
+                    
                     <li>
-                        <a id="a" href="#" class="board">
+                        <a href="${pageContext.request.contextPath }/member/info"class="board" id="a">
                             정보 관리
                         </a>
-                        <ul class="hide">
+                        <ul >
                             <li class="">
-                                <a id="a" href="#">
+                                <a  href="#" id="a">
                                     회원정보 수정
                                 </a>
                             </li>
                             <li class="">
-                                <a id="a" href="#">
+                                <a  href="${pageContext.request.contextPath }/member/delete" id="a">
                                     회원 탈퇴
                                 </a>
                             </li>
