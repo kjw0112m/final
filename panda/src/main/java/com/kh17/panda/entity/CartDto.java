@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class CartDto {
-	private String member_id;
-	private int id,product_id;
+	private String member_id, sizes;
+	private int id,product_id, quantity;
 }

@@ -44,10 +44,7 @@ public class CartDaoImpl implements CartDao{
 	@Override
 	public List<CartViewDto> list(int[] id) {
 		Map<String, Object> map = new HashMap<>();
-		for(int i : id) {
-			System.out.println(i);
-		}
-		map.put("array", id);
+		map.put("id", id);
 		return sqlSession.selectList("cart.order", map);
 	}
 	
