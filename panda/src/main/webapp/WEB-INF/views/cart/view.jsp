@@ -298,7 +298,7 @@ a {
 							<div class="product_price">
 							<fmt:formatNumber value="${c.product_price}" pattern="#,###.##"/>
 							</div>
-							<div>${c.sizes_sizes}</div></td>
+							<div>${c.sizes}</div></td>
 						<td class="text-center w150">
 							<button type="button" class="minus_btn">-</button> <input
 							type="text" name="quantity" value="${c.quantity}"

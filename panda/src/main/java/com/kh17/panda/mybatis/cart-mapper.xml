@@ -26,8 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 	<select id="order" resultType="cartViewDto" parameterType="map">
 		select * from cart_view where cart_id in
-		<foreach collection="array" separator="," open="(" close=")">
-			#{array}
+		<foreach collection="id" separator="," open="(" close=")" item="cart_id">
+			#{cart_id}
 		</foreach>
 	</select>
 </mapper>
