@@ -20,6 +20,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from cart_view where member_id = #{member_id}
 	</select>
 	
-	
+	<update id="quantity" parameterType="map">
+		update cart set quantity=#{quantity} where id=#{id}
+	</update>
 		
+	<select id="order" resultType="cartViewDto" parameterType="map">
+		select * from cart_view where cart_id in
+		<foreach collection="array" separator="," open="(" close=")">
+			#{array}
+		</foreach>
+	</select>
 </mapper>
