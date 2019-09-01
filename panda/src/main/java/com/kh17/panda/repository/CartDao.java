@@ -11,5 +11,8 @@ public interface CartDao {
 	void delete(int id);
 
 	List<CartViewDto> list(String member_id);
+	
+	void quantity(int id, int quantity);
 
+	List<CartViewDto> list(int[] id);
 }

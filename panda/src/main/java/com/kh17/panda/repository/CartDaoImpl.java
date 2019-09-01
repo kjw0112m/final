@@ -1,6 +1,8 @@
 package com.kh17.panda.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,24 @@ public class CartDaoImpl implements CartDao{
 	@Override
 	public List<CartViewDto> list(String member_id) {
 		return sqlSession.selectList("cart.list",member_id);
+	}
+
+	@Override
+	public void quantity(int id, int quantity) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("id", id);
+		map.put("quantity", quantity);
+		sqlSession.update("cart.quantity", map);
+	}
+
+	@Override
+	public List<CartViewDto> list(int[] id) {
+		Map<String, Object> map = new HashMap<>();
+		for(int i : id) {
+			System.out.println(i);
+		}
+		map.put("array", id);
+		return sqlSession.selectList("cart.order", map);
 	}
 	
 }
