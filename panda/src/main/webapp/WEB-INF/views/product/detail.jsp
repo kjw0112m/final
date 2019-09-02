@@ -125,7 +125,8 @@
 </head>
 <body>
 	<div class="spec">
-		<img src="http://placehold.it/350x350.png?text=Main+Image"> <br>
+		<!-- 	<img src="http://placehold.it/350x350.png?text=Main+Image"> <br> -->
+		<img src="${pageContext.request.contextPath}/product/main?id=${productSellerDto.product_id}"><br>
 		<br> ${productSellerDto.nickname} <br> <br>
 		${productSellerDto.product_name} <br> <br>
 		<span class="price">${productSellerDto.price}</span> <br> <br>
@@ -146,7 +147,8 @@
 	</form>
 	<br>
 	<br>
-	<img src="http://placehold.it/350x1000.png?text=Detail+Image">
+	<!-- 	<img src="http://placehold.it/350x1000.png?text=Detail+Image"> -->
+	<img src="${pageContext.request.contextPath}/product/details?id=${productSellerDto.product_id}">
 	<br>
 	<br>
 	<div class="template" style="display: none">

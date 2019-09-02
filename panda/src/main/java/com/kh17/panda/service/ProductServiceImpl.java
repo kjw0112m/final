@@ -1,6 +1,10 @@
 package com.kh17.panda.service;
 
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +26,7 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Override
 	@Transactional
-	public int regist(ProductVO vo) {
+	public int regist(ProductVO vo) throws IllegalStateException, IOException {
 		int id = productDao.getSequenceNumber();
 		ProductDto productDto = ProductDto.builder()
 														.id(id)
@@ -36,6 +40,12 @@ public class ProductServiceImpl implements ProductService{
 														.build();
 		
 		productDao.insert(productDto);
+		
+		File f1 = new File("D:/upload/kh17/product", productDto.getName() + "-main." + FilenameUtils.getExtension(vo.getMain().getOriginalFilename()));
+		vo.getMain().transferTo(f1);
+		
+		File f2 = new File("D:/upload/kh17/product", productDto.getName() + "-details." + FilenameUtils.getExtension(vo.getMain().getOriginalFilename()));
+		vo.getDetails().transferTo(f2);
 		
 		//vo에 들어있는 sizes를 분해
 		for(int i = 0; i < vo.getSizes().size(); i++) {

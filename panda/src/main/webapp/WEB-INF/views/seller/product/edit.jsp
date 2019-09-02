@@ -49,9 +49,9 @@
 	<br><br>
 </c:forEach>
 <br><br>
-<input type="file" name="main" accept="image/*">
+<input type="file" name="main" accept="image/gif, image/jpeg, image/png">
 <br><br>
-<input type="file" name="details" accept="image/*">
+<input type="file" name="details" accept="image/gif, image/jpeg, image/png">
 <br><br>
 판매 여부
 <input type="radio" name="sale_yn" value="y" ${productDto.sale_yn eq 'y'?'checked':''}> Y

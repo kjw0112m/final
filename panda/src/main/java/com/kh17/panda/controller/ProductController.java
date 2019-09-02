@@ -1,14 +1,20 @@
 package com.kh17.panda.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -115,4 +121,49 @@ public class ProductController {
 		return "product/search";
 	}
 
+	@GetMapping("/main")
+	public ResponseEntity<ByteArrayResource> getMain(@RequestParam int id) throws IOException {
+		
+		ProductDto productDto = productDao.get(id);
+		String filename = productDto.getName() + "-main";
+		
+		File file = new File("D:/upload/kh17/product", filename);
+		
+		byte[] data = FileUtils.readFileToByteArray(file);
+		ByteArrayResource res = new ByteArrayResource(data);
+		
+		MediaType type;
+		String extension = FilenameUtils.getExtension(file.getName());
+		
+		if(extension.equals("png")) type = MediaType.IMAGE_PNG;
+		else if(extension.equals("jpeg")) type = MediaType.IMAGE_JPEG;
+		else type = MediaType.IMAGE_GIF;
+				
+		return ResponseEntity.ok()
+													.contentType(type)
+													.body(res);
+	}
+	
+	@GetMapping("/details")
+	public ResponseEntity<ByteArrayResource> getDetails(@RequestParam int id) throws IOException {
+		
+		ProductDto productDto = productDao.get(id);
+		String filename = productDto.getName() + "-details";
+		
+		File file = new File("D:/upload/kh17/product", filename);
+		
+		byte[] data = FileUtils.readFileToByteArray(file);
+		ByteArrayResource res = new ByteArrayResource(data);
+		
+		MediaType type;
+		String extension = FilenameUtils.getExtension(file.getName());
+		
+		if(extension.equals("png")) type = MediaType.IMAGE_PNG;
+		else if(extension.equals("jpeg")) type = MediaType.IMAGE_JPEG;
+		else type = MediaType.IMAGE_GIF;
+				
+		return ResponseEntity.ok()
+													.contentType(type)
+													.body(res);
+	}
 }
