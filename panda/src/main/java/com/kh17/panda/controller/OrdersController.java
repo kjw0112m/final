@@ -28,26 +28,27 @@ public class OrdersController {
 
 	@Autowired
 	private OrdersDao ordersDao;
-	
+
 	@Autowired
 	private ProductDao productDao;
-	
+
 	@Autowired
 	private CartDao cartDao;
-	
+
 	@GetMapping("/view")
 	public String view() {
 		return "orders/view";
 	}
-	@GetMapping("/order")
-	public String order(@RequestParam(required = false) int product_id,@RequestParam(required = false) String[] sizes, HttpSession session, Model model) {
-		String member_id = (String) session.getAttribute("sid");
 
+	@GetMapping("/order")
+	public String order(@RequestParam(required = false, defaultValue = "0") int product_id, @RequestParam(required = false) String[] sizes,
+			@RequestParam(required = false) int[] id, HttpSession session, Model model) {
+		String member_id = (String) session.getAttribute("sid");
 		if (product_id > 0) {
 			ProductDto productDto = productDao.get(product_id);
 			model.addAttribute("productDto", productDto);
 		} else {
-			List<CartViewDto> list = cartDao.list(member_id);
+			List<CartViewDto> list = cartDao.list(id);
 			model.addAttribute("cartList", list);
 		}
 
