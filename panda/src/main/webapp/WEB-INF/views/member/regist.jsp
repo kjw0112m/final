@@ -12,9 +12,13 @@
     <script>
         $(function () {
         	$(".addr").click(findAddress);
-     		
+     		$("#registcheck").prop("disabled", true);
+    	    $("#idCheck").prop("disabled", true);
+    	    $("#email").prop("disabled",true);
+    	    $("#emailCheck").prop("disabled", true);
+     	    $("#chidentity").prop("disabled", true);
         });
-
+//주소 찾기
         function findAddress() {
             new daum.Postcode({
                 oncomplete: function (data) {
@@ -51,9 +55,6 @@
                         // 조합된 참고항목을 해당 필드에 넣는다.
 
                     }
-
-
-
                     // 이 코드는 jquery.js 를 먼저 불러온 경우만 사용 가능
                     $("input[name=post_code]").val(data.zonecode);
                     $("input[name=basic_addr]").val(addr);
@@ -62,13 +63,7 @@
             }).open();
         }
 
-        $(function () {
-      		$("#registcheck").prop("disabled", true);
-    	    $("#idCheck").prop("disabled", true);
-    	    $("#email").prop("disabled",true);
-    	    $("#emailCheck").prop("disabled", true);
-     	    $("#chidentity").prop("disabled", true);
-        });
+  //아이디 중복 확인
         $(function () {
             $("#idCheck").click(function () {
                 $.ajax({
@@ -90,6 +85,8 @@
                 });
             });
         });
+  
+  
         // 아이디 형식 검사
         $(function () {
             $(".id").on("blur", function () {
@@ -107,6 +104,8 @@
                 }
 
             });
+            
+            
             //  비밀번호 형식 검사
             $(".pw").on("blur", function () {
                 var regex = /^[a-zA-Z0-9!@#$\-_]{8,15}$/;
@@ -120,6 +119,8 @@
                         "<font color = '#de2195' size = '2'>8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)로 입력해주세요</font>"
                 }
             });
+            
+            
             //비밀 번호 확인 검사
             $(function () {
                 var span = document.querySelector(".cpw");
@@ -137,7 +138,8 @@
             });
         });
 
-        // 비밀번호 확인 숨기기
+        
+        //  화면전송때 비밀번호숨기기
         $(function () {
             $("form").submit(function (e) {
                 e.preventDefault();
@@ -152,6 +154,8 @@
                 this.submit();
             });
         });
+        
+        
      // email 형식 검사
     	$(function() {
     		$("#putemail").on("keyup", function() {
@@ -170,6 +174,8 @@
 
     		});
     	});
+     
+     
     	//이메일 중복확인
     	$(function() {
     		$("#emailCheck").click(function() {
@@ -195,6 +201,9 @@
     			});
     		});
     	});
+    	
+    	
+    	
         //이메일 본인 인증
         $(function () {
             $("#email").click(
@@ -214,7 +223,8 @@
                     });
                 });
         });
-
+        
+//이메일로 인번호 보내기
         $(function () {
             $(".verification_check").click(
                 function () {
@@ -367,8 +377,9 @@
                                 <td class="a">주소</td>
                                 <td class="b">
                                     <div>
+                                    <button class="addr">우편번호 찾기</button>
                                         <input type="text" name="post_code" placeholder="우편번호" readonly class="iText">
-                                        <button class="addr">우편번호 찾기</button><br>
+                                        <br>
                                         <input type="text" name="basic_addr" placeholder="주소" readonly class="iText">
                                         <input type="text" name="detail_addr" placeholder="상세주소" class="iText">
 
@@ -394,25 +405,21 @@
                                 <td class="b">
                                 <input type="text" name="email" id="putemail" required class="iText">
                                 
-                                <button class="email" id="emailCheck" >아이디 중복확인</button>
+                                <button class="email" id="emailCheck" type="button">이메일 중복확인</button>
 						         <span class="chemail"></span> 
 						      
-						      <button class="email" id="email" >인증하기</button> <br>
+						      <button class="email" id="email" type="button">인증하기</button> <br>
                                
                                <input class="iText" id="identity" type="text" name="identity" required style="width: 20%" > 
-                                <button id="chidentity" class="verification_check">인증번호확인</button>
+                                <button id="chidentity" type="button" class="verification_check">인증번호확인</button>
                                 </td>
                             </tr>
                         </tbody>
-                    </table>
                                             
-                        <input id="registcheck" type="submit" value="가입하기">
+                    </table>
+                    
                 </div>
+                        <input id="registcheck" type="submit" value="가입하기">
             </form>
     </div>
-    </body>
-
-</html>
-</html><jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-
-
+  <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

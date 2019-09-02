@@ -24,7 +24,7 @@ public class CertificationRemoveTaskServiceImpl implements CertificationRemoveTa
 	@Scheduled(cron = "0 0 * * * *")
 	public void run() {
 		certDao.clear();
-		logger.info("인증번호 초기화 작업이 수행되었습니다");
+		logger.info("비밀번호찾기 인증번호 초기화 작업이 수행되었습니다");
 	}
     
 	
@@ -32,10 +32,10 @@ public class CertificationRemoveTaskServiceImpl implements CertificationRemoveTa
 	private IdentityVerificationDao identityVerificationDao;
 	
     @Override
-	@Scheduled(cron = "0 30 * * * *")
+	@Scheduled(cron = "0 5 * * * *")
 	public void identity () {
 		identityVerificationDao.clear();
-		logger.info("본인 인증번호 초기화 작업이 수행되었습니다");
+		logger.info("이메일 본인 인증번호 초기화 작업이 수행되었습니다");
 	}
 
 

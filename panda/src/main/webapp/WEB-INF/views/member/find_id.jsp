@@ -20,7 +20,7 @@
             font-size: 17px;
         }
 
-        .find_pw {
+        .find_id {
             text-align: center;
             margin: auto;
             padding: 5px;
@@ -29,7 +29,7 @@
             margin-top: 100px;
         }
 
-        .find_pw2 {
+        .find_id2 {
             text-align: center;
             margin: auto;
             padding: 5px;
@@ -99,14 +99,12 @@
     <div class="total">
 
         <c:if test="${not empty param.error}">
-            <h4 class="find_pw">
+            <h4 class="find_id">
                 입력하신 정보에 해당하는 회원이 존재하지 않습니다
             </h4>
         </c:if>
 
-        <form action="find_pw" method="post">
-
-            <h4 class="find_pw2">아이디 찾기</h4>
+            <h4 class="find_id2">아이디 찾기</h4>
             <form action="find_id" method="post">
 
                 <table class="table">
@@ -127,12 +125,11 @@
                         <td class="b"><input type="text" name="phone" placeholder="  전화번호" required class="form-control"></td>
                     </tr>
                 </table>
-            </form>
                 <div id="btn2div">
                         <input type="submit" value="아이디찾기" id="btn1">
                 </div>
-                
             </form>
+                
         </div>
         
     </body>

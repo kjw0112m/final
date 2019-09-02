@@ -292,7 +292,7 @@ function findAddress() {
             padding: 0 0 0 20px;
             text-align: left;
             font-weight: 400;
-            width: 10%;
+            width: 13%;
         }
 
         .b {
@@ -370,10 +370,10 @@ function findAddress() {
                         </a>
                     </li>
                     <li>
-                        <a id="a" href="#none" class="order">
+                        <a id="a" href="${pageContext.request.contextPath}/orders/order" class="order">
                             주문 관리
                         </a>
-                        <ul class="hide" >
+                        <ul class="hide">
                             <li class="">
                                 <a id="a" href="#">
                                     주문 배송 조회
@@ -391,19 +391,18 @@ function findAddress() {
                             회원 혜택
                         </a>
                     </li>
-                    
                     <li>
-                        <a href="${pageContext.request.contextPath }/member/info"class="board" id="a">
+                        <a id="a" href="#" class="board">
                             정보 관리
                         </a>
-                        <ul >
+                        <ul class="hide">
                             <li class="">
-                                <a  href="#" id="a">
+                                <a id="a" href="#">
                                     회원정보 수정
                                 </a>
                             </li>
                             <li class="">
-                                <a  href="${pageContext.request.contextPath }/member/delete" id="a">
+                                <a id="a" href="#">
                                     회원 탈퇴
                                 </a>
                             </li>
@@ -440,7 +439,7 @@ function findAddress() {
         </div>
     </div>
     <div class="total">
-        <h1>${mdto.name}님의정보</h1>
+        <h1>${mdto.name}회원 님의정보,정보수정</h1>
         <form action="change" method="post">
         <br>
        
@@ -451,14 +450,13 @@ function findAddress() {
                 <td class="b">${mdto.id}</td>
             </tr>
             <tr>
-                <td class="a">비밀번호</td>
+                <td class="a">비밀번호(수정가능)</td>
                 <td class="b">
-                    <span class="span">현재 비밀번호</span><input type="password" name="origin_pw" id="pw" required
-                        class="iText"><br>
+                    <span class="span">현재 비밀번호</span><input type="password" name="origin_pw" id="pw" class="iText"><br>
                     <span class="span">신규 비밀번호</span><input type="password" class="iText" name="new_pw" id="new_pw"
-                        pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$" required><span class="spw"></span><br>
+                        pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$" ><span class="spw"></span><br>
                     <span class="span">비밀번호 확인</span><input type="password" id="chpass" name="pw_check"
-                        placeholder="비밀번호 확인" required class="iText"><span class="cpw"></span>
+                        placeholder="비밀번호 확인"  class="iText"><span class="cpw"></span>
                     <input class="btn btn-danger btn-block " id="btn1" type="button" value="비밀번호 변경" name="btn">
                 </td>
             </tr>
@@ -471,16 +469,16 @@ function findAddress() {
                 <td class="b">${mdto.birth}</td>
             </tr>
             <tr>
-                <td class="a">전화번호</td>
+                <td class="a">전화번호(수정가능)</td>
                 <td class="b"><input type="text" name="phone" value="${mdto.phone}" class="iText"></td>
             </tr>
             <tr>
-                <td class="a">이메일</td>
+                <td class="a">이메일(수정가능)</td>
                 <td class="b"><input type="text" name="email" value="${mdto.email}" class="iText"></td>
             </tr>
 
             <tr>
-                <td class="a">주소</td>
+                <td class="a">주소(수정가능)</td>
                 <td class="b">
                     <div>
                         <input type="text" name="post_code" value="${mdto.post_code}" class="iText">
