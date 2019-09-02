@@ -21,7 +21,7 @@ import com.kh17.panda.repository.MemberDao;
 public class AdminController {
 
 	@Autowired
-	private MemberDao mDao;
+	private MemberDao memberDao;
 	
 	//회원 검색 기능
 	@GetMapping("/search")
@@ -31,7 +31,7 @@ public class AdminController {
 				Model model
 			) {
 		if(type != null && keyword != null) {
-			List<MemberDto> list =mDao.search(type, keyword);
+			List<MemberDto> list =memberDao.search(type, keyword);
 			model.addAttribute("list", list);
 		}
 		return "seller/member/search";
@@ -40,7 +40,7 @@ public class AdminController {
 //	상세 정보 보기
 	@GetMapping("/info")
 	public String info(@RequestParam String id, Model model) {
-		model.addAttribute("mdto", mDao.get(id));
+		model.addAttribute("mdto",memberDao.get(id));
 		return "seller/member/info";
 	}
 	
@@ -53,22 +53,25 @@ public class AdminController {
 			@RequestParam String keyword,
 			Model model
 			) {
-		mDao.delete(id);
+		memberDao.delete(id);
 		model.addAttribute("type", type);
 		model.addAttribute("keyword", keyword);
 		return "redirect:search";
 	}
 	
 	//회원 정보 변경
-	@GetMapping("/edit")
-	public String edit(@RequestParam String id, Model model) {
-		model.addAttribute("mdto", mDao.get(id));
-		return "seller/member/edit";
+	@GetMapping("/change")
+	public String edit(@RequestParam String id, 
+			Model model) {
+		model.addAttribute("mdto",memberDao.get(id));
+		return "seller/member/info";
 	}
 	
-	@PostMapping("/edit")
-	public String edit(@ModelAttribute MemberDto memberDto, Model model) {
-		mDao.change(memberDto);
+	@PostMapping("/change")
+	public String edit(@RequestParam String id,@ModelAttribute MemberDto memberDto,Model model) {
+		model.addAttribute("mdto",memberDao.get(id));
+		
+		memberDao.change(memberDto);
 		model.addAttribute("id", memberDto.getId());
 		return "redirect:info";
 	}

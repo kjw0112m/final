@@ -56,7 +56,6 @@ public class SellerProductController {
 			Model model) {
 //		vo.setSeller_id((String) session.getAttribute("sid"));
 		vo.setSeller_id("abc");
-		
 		return "seller/product/regist_result";
 	}
 	

@@ -74,7 +74,9 @@ public class GmailService implements EmailService{
 			helper.setFrom("PanDa");
 			helper.setTo(email);
 			helper.setSubject("인증번호 메일 입니다.");
-			helper.setText("귀하의 인증번호는 "+no+" 입니다");
+			helper.setText("<h3>판다몰 본인 인증 번호 입니다. <br><br>"
+					+ "인증번호를 확인 하시고 회원가입절차를 끝내 주세요<br><br>"
+					+ "귀하의 인증번호는</h3><h1><font color=blue> "+no+"</font></h1> <h3>입니다</h3>", true);
 			
 			sender.send(mail);
 			return true;

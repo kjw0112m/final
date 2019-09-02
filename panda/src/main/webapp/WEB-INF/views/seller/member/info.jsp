@@ -71,91 +71,6 @@ function findAddress() {
     }).open();
 }
     
-    
-        //비밀번호 검사 후 형식에 안맞을시 보조메세지 출력	
-        $(function () {
-            $("input[name=new_pw]").blur(
-                function checkPw() {
-                    var m_pw = document.querySelector("#new_pw").value;
-                    var regex = /^[a-zA-Z0-9!@#$\-_]{8,15}$/;
-
-                    var result = regex.test(m_pw);
-
-                    var span = document.querySelector(".spw");
-
-                    if (result) {
-                        span.innerHTML = ""
-                        	 $("input[name=btn]").prop("disabled", true)
-                    } else {
-                        span.innerHTML =
-                             "<font color = '#de2195' size = '2'>8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)로 입력해주세요</font>"
-                     $("input[name=btn]").prop("disabled", true)
-
-                    }
-                });
-        });
-
-
-
-//새로운 비밀번호 확인
-        $(function () {
-            var span = document.querySelector(".cpw");
-            $('#new_pw').keyup(function () {
-                span.innerHTML = ""
-            }); //#user_pass.keyup
-
-            $('#chpass').keyup(function () {
-                if ($('#new_pw').val() != $('#chpass').val()) {
-                    span.innerHTML = "<font color = '#de2195' size = '2'>암호틀림</font>"
-                    $("input[name=btn]").prop("disabled", true)
-
-                } else {
-                    span.innerHTML = "<font color = '#de2195' size = '2'>암호맞음</font>"
-                    $("input[name=btn]").prop("disabled", false)
-                }
-            }); //#chpass.keyup
-        });
-        
-        //비번 암호화,변경
-     	$(function(){
-		$("#btn1").click(function() {
-						    var pw = $("input[name=origin_pw]").val();
-			                var encPw = CryptoJS.SHA256(pw).toString();
-			                var ck_pw = $("input[name=pw_check]").val();
-			                var encNPW = CryptoJS.SHA256(ck_pw).toString();
-			                $("input[name=origin_pw]").attr("name", "");
-			                $("input[name=new_pw]").attr("name", "");
-			                var newInput1 = $("<input/>").attr("name", "new_pw").val(encNPW).attr("type", "hidden");
-			                var newInput2 = $("<input/>").attr("name", "pw").val(encPw).attr("type", "hidden");
-			                $("input[name=pw_check]").attr("name", "");
-			                $(this).append(newInput1);
-			                $(this).append(newInput2);
-
-		
-			    $.ajax({
-				url : "change_pw",
-				type : "POST",
-				data : {
-					new_pw : $("input[name=new_pw]").val(),
-					pw : encPw
-				},
-				dataType : "text",
-				success : function(resp) {
-					if (resp == "N") {
-						window.alert("비밀번호가 틀렸습니다");
-
-					}
-					else {
-						window.alert("비밀번호를 변경했습니다")
-					}
-				}
-			});
-		});
-     	});
-
-        
-        
-     
     </script>
     <style>
         .gBreak {
@@ -357,109 +272,18 @@ function findAddress() {
 </head>
 
 <body>
-    <div id="container">
-        <div id="sidebar">
-            <div class="snbArea">
-                <ul id="snb">
-                    <li>
-                        <h4>MY PAGE</h4>
-                    </li>
-                    <li>
-                        <a id="a" href="#none" class="product">
-                            좋아요
-                        </a>
-                    </li>
-                    <li>
-                        <a id="a" href="${pageContext.request.contextPath}/orders/order" class="order">
-                            주문 관리
-                        </a>
-                        <ul class="hide">
-                            <li class="">
-                                <a id="a" href="#">
-                                    주문 배송 조회
-                                </a>
-                            </li>
-                            <li class="">
-                                <a id="a" href="#">
-                                    취소/교환/반품/환불
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a id="a" href="#" class="member">
-                            회원 혜택
-                        </a>
-                    </li>
-                    <li>
-                        <a id="a" href="#" class="board">
-                            정보 관리
-                        </a>
-                        <ul class="">
-                            <li class="">
-                                <a id="a" href="info">
-                                    회원정보 수정
-                                </a>
-                            </li>
-                            <li class="">
-                                <a id="a" href="delete">
-                                    회원 탈퇴
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a id="a" href="#" class="promotion">
-                            문의내역
-                        </a>
-                        <ul class="hide">
-                            <li class="">
-                                <a id="a" href="#">
-                                    통합 문의
-                                </a>
-                            </li>
-                            <li class="">
-                                <a id="a" href="#">
-                                    상품 문의
-                                </a>
-                            </li>
-                            <li class="">
-                                <a id="a" href="#">
-                                    1:1 문의
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="customer">
-                    <strong class="title">고객센터 <span class="info">(평일 9~18시)</span></strong>
-                    <div class="tel">8080<span class="dot">.</span>8080</div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="total">
-        <h1>${mdto.name}회원 님의정보,정보수정</h1>
         <form action="change" method="post">
+        <h1>${mdto.name} 님의정보,정보수정</h1>
         <br>
+        
        
         <table class="table">
-
             <tr>
                 <td class="a">아이디</td>
-                <td class="b">${mdto.id}</td>
+                <td class="b"><input type="text" name="id" value="${mdto.id}" readonly></td>
             </tr>
-            <tr>
-                <td class="a">비밀번호(수정가능)</td>
-                <td class="b">
-                    <span class="span">현재 비밀번호</span><input type="password" name="origin_pw" id="pw" class="iText"><br>
-                    <span class="span">신규 비밀번호</span><input type="password" class="iText" name="new_pw" id="new_pw"
-                        pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$" ><span class="spw"></span><br>
-                    <span class="span">비밀번호 확인</span><input type="password" id="chpass" name="pw_check"
-                        placeholder="비밀번호 확인"  class="iText"><span class="cpw"></span>
-                    <input class="btn btn-danger btn-block " id="btn1" type="button" value="비밀번호 변경" name="btn">
-                </td>
-            </tr>
+            
             <tr>
                 <td class="a">이름</td>
                 <td class="b">${mdto.name}</td>
