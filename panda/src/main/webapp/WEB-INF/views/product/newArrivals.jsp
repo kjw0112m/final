@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>New Arrivals</title>
+<title>신상순</title>
 </head>
 <body>
 <div>
