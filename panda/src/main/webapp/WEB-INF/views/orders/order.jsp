@@ -13,23 +13,28 @@
 			return str.replace(/[^\d]+/g, '');
 		}
 		$(".btn-addr").click(findAddress);
-		
-		$('#same_info').change(function(){
-			if($(this).is(':checked')){
-				$('.phone').eq(3).val($('.phone').eq(0).val());
-				$('.phone').eq(4).val($('.phone').eq(1).val());
-				$('.phone').eq(5).val($('.phone').eq(2).val());
-				
-				$('.name').eq(1).val($('.name').eq(0).val());
-				
-				$("input[name=zip_code]").eq(1).val($("input[name=zip_code]").eq(0).val());
-				$("input[name=basic_addr]").eq(1).val($("input[name=basic_addr]").eq(0).val());
-				$("input[name=detail_addr]").eq(1).val($("input[name=detail_addr]").eq(0).val());
-			};
-		});
-		
-		$('#new_info').change(function(){
-			if($(this).is(':checked')){
+
+		$('#same_info').change(
+				function() {
+					if ($(this).is(':checked')) {
+						$('.phone').eq(3).val($('.phone').eq(0).val());
+						$('.phone').eq(4).val($('.phone').eq(1).val());
+						$('.phone').eq(5).val($('.phone').eq(2).val());
+
+						$('.name').eq(1).val($('.name').eq(0).val());
+
+						$("input[name=zip_code]").eq(1).val(
+								$("input[name=zip_code]").eq(0).val());
+						$("input[name=basic_addr]").eq(1).val(
+								$("input[name=basic_addr]").eq(0).val());
+						$("input[name=detail_addr]").eq(1).val(
+								$("input[name=detail_addr]").eq(0).val());
+					}
+					;
+				});
+
+		$('#new_info').change(function() {
+			if ($(this).is(':checked')) {
 				$('#new_body').find('input[type=text]').val('');
 			}
 		});
@@ -71,12 +76,19 @@
 	box-sizing: border-box;
 }
 
+.total {
+	min-width: 1180px !important;
+	max-width: 1260px;
+	padding: 0 50px;
+	margin: 0 auto;
+}
+
 .table_st {
 	border-width: 2px 0 0;
 	border-style: solid;
 	text-align: center;
 	margin: auto;
-	width: 70%;
+	width: 100%;
 }
 
 .text-left {
@@ -93,7 +105,7 @@
 	border-color: #d0d0d0;
 }
 
-table {
+.intotal table {
 	border-collapse: collapse;
 }
 
@@ -104,6 +116,7 @@ table {
 
 #top {
 	margin-top: 150px;
+	width: 100%;
 	text-align: center;
 	font-size: 16px;
 	line-height: 24px;
@@ -111,7 +124,7 @@ table {
 }
 
 .a {
-	width: 15%;
+	width: 20%;
 	padding: 10px;
 	font-size: 15px;
 }
@@ -133,7 +146,7 @@ table {
 	border-width: 2px 0 0;
 	border-style: solid;
 	margin: auto;
-	width: 70%;
+	width: 100%;
 	height: 300;
 }
 
@@ -164,16 +177,19 @@ table {
 	padding: 30px;
 	margin-left: 10px;
 	text-align: center;
+	width: 150px;
+	height: 150px;
+}
+
+.clearfix {
+	margin-left: 40%;
+	float: left;
 }
 
 .clearfix::after {
 	content: "";
 	clear: both;
 	display: table;
-}
-
-.clearfix {
-	margin-left: 40%;
 }
 
 a {
@@ -190,14 +206,77 @@ a {
 	width: 90px;
 }
 
+.intotal {
+	float: left;
+	width: 80%;
+	margin-bottom: 100px;
+}
+
+.intotal::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+
 .top-table {
+	float: left;
 	text-align: left;
 	margin: auto;
-	width: 70%;
+	width: 80%;
 	border: 3px none;
 	padding: 5px;
 	color: #555;
 	font-size: 22px;
+}
+
+.orderbox {
+	float: right;
+	border: none;
+	width: 320px;
+	position: fixed;
+	top: 250px;
+	right: 200px;
+}
+
+.dl {
+	border: 2px solid black;
+	padding: 30px 30px 28px;
+}
+
+.order-dt {
+	float: left;
+	width: 90px;
+}
+
+.order-dd {
+	width: 166px;
+	text-align: right;
+	font-size: 18px;
+}
+
+.order-dt, .order-ul {
+	font-size: 14px;
+	color: #555;
+}
+
+.order-ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+#orderprice {
+	margin-top: 23px;
+}
+
+.orderbutton {
+	width: 100%;
+	height: 60px;
+	padding: 2px 60px 0;
+	font-size: 16px;
+	line-height: 20px;
+	border: 2px solid black;
+	background-color: black;
+	color: white;
 }
 
 .w150 {
@@ -207,26 +286,76 @@ a {
 </head>
 
 <body>
+
+	<div id="top">
+		<span>01 쇼핑백 > </span><span style="font-weight: bold">02 주문결제</span><span>
+			> 03 주문완료</span>
+	</div>
+	<div class="orderbox">
+		<h4 style="font-size: 22px">
+			결제 금액 / 총
+			<c:choose>
+				<c:when test="${not empty cartList}">${orderCount}</c:when>
+				<c:otherwise>1</c:otherwise>
+			</c:choose>
+			개
+		</h4>
+		<dl class="dl">
+			<dt class="order-dt">주문금액</dt>
+			<dd class="order-dd">${totalPrice}</dd>
+			<dt class="order-dt">배송비</dt>
+			<dd class="order-dd">0</dd>
+			<div id="orderprice">
+				<dt class="order-dt">총 결제금액</dt>
+				<dd class="order-dd">${totalPrice}</dd>
+			</div>
+		</dl>
+		<ul class="order-ul">
+			<li><span> <input type="checkbox" name="agree1" id=""
+					required> <label for="" class="order-li"> 주문 상품 정보에
+						동의(필수) </label>
+			</span></li>
+			<li><span> <input type="checkbox" name="agree2" id=""
+					required> <label for="" class="order-li">결제대행 서비스
+						이용을 위한 개인정보 제3자 제공 및 위탁 동의(필수)</label>
+			</span></li>
+		</ul>
+		<a href="#"><button class="orderbutton">주문하기</button></a>
+	</div>
 	<div class="total">
-		<div id="top">
-			<span>01 쇼핑백 > </span><span style="font-weight: bold">02 주문결제</span><span>
-				> 03 주문완료</span>
-		</div>
-		<div class="top-table">
-			<h4>상품정보</h4>
-		</div>
-		<table class="table_st">
-			<thead>
-				<tr>
-					<td></td>
-					<td>상품정보</td>
-					<td class="w150">주문금액</td>
-				</tr>
-			</thead>
-			<tbody>
-				<c:choose>
-					<c:when test="${cartList != null}">
-						<c:forEach var="c" items="${cartList}">
+		<div class="intotal">
+			<div class="top-table">
+				<h4>상품정보</h4>
+			</div>
+			<table class="table_st">
+				<thead>
+					<tr>
+						<td></td>
+						<td>상품정보</td>
+						<td class="w150">주문금액</td>
+					</tr>
+				</thead>
+				<tbody>
+					<c:choose>
+						<c:when test="${cartList != null}">
+							<c:forEach var="c" items="${cartList}">
+								<tr>
+									<td class="imggg"><a href="#" class="img"> <img
+											src="http://placehold.it/100"></a></td>
+									<td class="text-left"><a href="#"><span>${c.product_seller_id}</span></a>
+										<a href="#"><span>${c.product_name}</span></a>
+										<div>
+											<fmt:formatNumber value="${c.product_price}"
+												pattern="#,###.##" />
+										</div>
+										<div>${c.sizes}</div>
+										<div>수량: ${c.quantity} 개</div></td>
+									<td class="text-center w150"><fmt:formatNumber
+											value="${c.product_price * c.quantity}" pattern="#,###.##" /></td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
 							<tr>
 								<td class="imggg"><a href="#" class="img"> <img
 										src="http://placehold.it/100"></a></td>
@@ -238,112 +367,96 @@ a {
 									</div>
 									<div>${c.sizes}</div>
 									<div>수량: ${c.quantity} 개</div></td>
-								<td class="text-center w150"><fmt:formatNumber
-										value="${c.product_price * c.quantity}" pattern="#,###.##" /></td>
+								<td class="text-center w150"></td>
 							</tr>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<tr>
-							<td class="imggg"><a href="#" class="img"> <img
-									src="http://placehold.it/100"></a></td>
-							<td class="text-left"><a href="#"><span>${c.product_seller_id}</span></a>
-								<a href="#"><span>${c.product_name}</span></a>
-								<div>
-									<fmt:formatNumber value="${c.product_price}" pattern="#,###.##" />
-								</div>
-								<div>${c.sizes}</div>
-								<div>수량: ${c.quantity} 개</div></td>
-							<td class="text-center w150"></td>
-						</tr>
-					</c:otherwise>
-				</c:choose>
-			</tbody>
-		</table>
-		<div class="top-table">
-			<h4>주문하시는 분</h4>
-		</div>
-		<table class="table_new">
-			<tbody id="old_body">
-				<tr>
-					<th class="a">이름</th>
-					<td><input class="b name" type="text" value="${memberDto.name}"></td>
-				</tr>
-				<tr>
-					<th class="a">전화번호</th>
-					<td><c:set var="phone" value="${memberDto.phone }" /> <span><input
-							type="text" value="${fn:substring(phone, 0,3)}" maxlength="3"
-							required class="phone"></span> <span><input type="text"
-							value="${fn:substring(phone, 3,7)}" maxlength="4" required
-							class="phone"></span> <span><input type="text"
-							value="${fn:substring(phone, 7,11)}" maxlength="4" required
-							class="phone"></span></td>
-				</tr>
-				<tr>
-					<th class="a">배송주소</th>
-					<td>
-						<div>
-							<input type="text" name="zip_code" readonly class="b"
-								value="${memberDto.post_code}"> <input type="button"
-								value="주소 찾기" required class="btn-find btn-addr"><br>
-							<input type="text" name="basic_addr" readonly class="b"
-								value="${memberDto.basic_addr}"> <input type="text"
-								name="detail_addr" class="b" value="${memberDto.detail_addr}">
-						</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="top-table">
-			<h4>받으시는 분</h4>
-		</div>
-		<table class="table_new">
-			<tbody id="new_body">
-				<tr>
-					<th class="a">배송지 선택</th>
-					<td><input class="c" type="radio" name="select_info"
-						id="same_info"><span style="font-size: 15px">&nbsp주문자
-							정보와 동일</span> <input class="c" id="new_info" name="select_info"
-						type="radio"><span style="font-size: 15px">&nbsp새로입력</span>
-					</td>
-				</tr>
-				<tr>
-					<th class="a">이름</th>
-					<td><input class="b name" type="text"></td>
-				</tr>
-				<tr>
-					<th class="a">전화번호</th>
-					<td><span><input type="text" value maxlength="3"
-							required class="phone"></span> <span><input type="text"
-							value maxlength="4" required class="phone"></span> <span><input
-							type="text" value maxlength="4" required class="phone"></span></td>
-				</tr>
-				<tr>
-					<th class="a">배송주소</th>
-					<td>
-						<div>
-							<input type="text" name="zip_code" readonly class="b"> <input
-								type="button" value="주소 찾기" required class="btn-find btn-addr"><br>
-							<input type="text" name="basic_addr" readonly class="b">
-							<input type="text" name="detail_addr" class="b">
-						</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="top-table">
-			<h4>결제 정보</h4>
-		</div>
-		<div class="clearfix">
-			<div class="box" style="border: #bbb solid 1px">
-				<a href="#" class="kakaopay">
-					<p>카카오 결제</p>
-				</a>
+						</c:otherwise>
+					</c:choose>
+				</tbody>
+			</table>
+			<div class="top-table">
+				<h4>주문하시는 분</h4>
 			</div>
-			<div class="box" style="border: #ccc solid 1px">
-				<a href="#" class="pay">
+			<table class="table_new">
+				<tbody id="old_body">
+					<tr>
+						<th class="a">이름</th>
+						<td><input class="b name" type="text"
+							value="${memberDto.name}"></td>
+					</tr>
+					<tr>
+						<th class="a">전화번호</th>
+						<td><c:set var="phone" value="${memberDto.phone }" /> <span><input
+								type="text" value="${fn:substring(phone, 0,3)}" maxlength="3"
+								required class="phone"></span> <span><input type="text"
+								value="${fn:substring(phone, 3,7)}" maxlength="4" required
+								class="phone"></span> <span><input type="text"
+								value="${fn:substring(phone, 7,11)}" maxlength="4" required
+								class="phone"></span></td>
+					</tr>
+					<tr>
+						<th class="a">배송주소</th>
+						<td>
+							<div>
+								<input type="text" name="zip_code" readonly class="b"
+									value="${memberDto.post_code}"> <input type="button"
+									value="주소 찾기" required class="btn-find btn-addr"><br>
+								<input type="text" name="basic_addr" readonly class="b"
+									value="${memberDto.basic_addr}"> <input type="text"
+									name="detail_addr" class="b" value="${memberDto.detail_addr}">
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="top-table">
+				<h4>받으시는 분</h4>
+			</div>
+			<table class="table_new">
+				<tbody id="new_body">
+					<tr>
+						<th class="a">배송지 선택</th>
+						<td><input class="c" type="radio" name="select_info"
+							id="same_info"><span style="font-size: 15px">&nbsp주문자
+								정보와 동일</span> <input class="c" id="new_info" name="select_info"
+							type="radio"><span style="font-size: 15px">&nbsp새로입력</span>
+						</td>
+					</tr>
+					<tr>
+						<th class="a">이름</th>
+						<td><input class="b name" type="text"></td>
+					</tr>
+					<tr>
+						<th class="a">전화번호</th>
+						<td><span><input type="text" value maxlength="3"
+								required class="phone"></span> <span><input type="text"
+								value maxlength="4" required class="phone"></span> <span><input
+								type="text" value maxlength="4" required class="phone"></span></td>
+					</tr>
+					<tr>
+						<th class="a">배송주소</th>
+						<td>
+							<div>
+								<input type="text" name="zip_code" readonly class="b"> <input
+									type="button" value="주소 찾기" required class="btn-find btn-addr"><br>
+								<input type="text" name="basic_addr" readonly class="b">
+								<input type="text" name="detail_addr" class="b">
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="top-table">
+				<h4>결제 정보</h4>
+			</div>
+			<div class="clearfix">
+				<label for="kakao_pay" class="kakaopay box"
+					style="border: #bbb solid 1px">
+					<p>카카오 결제</p> <input type="radio" id="kakao_pay" name="pay_type"
+					value="카카오페이">
+				</label> 
+				<label class="pay box" style="border: #bbb solid 1px">
 					<p>무통장입금</p>
-				</a>
+				</label>
 			</div>
 		</div>
 	</div>

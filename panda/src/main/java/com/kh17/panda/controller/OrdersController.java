@@ -54,6 +54,7 @@ public class OrdersController {
 		} else {
 			List<CartViewDto> list = cartDao.list(id);
 			model.addAttribute("cartList", list);
+			model.addAttribute("orderCount", list.size());
 		}
 		model.addAttribute("memberDto", memberDao.get(member_id));
 		model.addAttribute("totalPrice", totalPrice);
