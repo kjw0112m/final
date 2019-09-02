@@ -19,6 +19,7 @@ import com.kh17.panda.entity.OrderViewDto;
 import com.kh17.panda.entity.OrdersDto;
 import com.kh17.panda.entity.ProductDto;
 import com.kh17.panda.repository.CartDao;
+import com.kh17.panda.repository.MemberDao;
 import com.kh17.panda.repository.OrdersDao;
 import com.kh17.panda.repository.ProductDao;
 
@@ -34,6 +35,9 @@ public class OrdersController {
 
 	@Autowired
 	private CartDao cartDao;
+	
+	@Autowired
+	private MemberDao memberDao;
 
 	@GetMapping("/view")
 	public String view() {
@@ -42,7 +46,7 @@ public class OrdersController {
 
 	@GetMapping("/order")
 	public String order(@RequestParam(required = false, defaultValue = "0") int product_id, @RequestParam(required = false) String[] sizes,
-			@RequestParam(required = false) int[] id, HttpSession session, Model model) {
+			@RequestParam(required = false) int[] id, @RequestParam String totalPrice, HttpSession session, Model model) {
 		String member_id = (String) session.getAttribute("sid");
 		if (product_id > 0) {
 			ProductDto productDto = productDao.get(product_id);
@@ -50,8 +54,10 @@ public class OrdersController {
 		} else {
 			List<CartViewDto> list = cartDao.list(id);
 			model.addAttribute("cartList", list);
+			model.addAttribute("orderCount", list.size());
 		}
-
+		model.addAttribute("memberDto", memberDao.get(member_id));
+		model.addAttribute("totalPrice", totalPrice);
 		return "orders/order";
 	}
 
