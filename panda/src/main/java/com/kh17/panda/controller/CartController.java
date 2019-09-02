@@ -48,7 +48,6 @@ public class CartController {
 		String member_id = (String) session.getAttribute("sid");
 		List<CartViewDto> list = cartDao.list(member_id); 
 		model.addAttribute("cList",list);
-		
 		return "cart/view"; 
 	}
 	
