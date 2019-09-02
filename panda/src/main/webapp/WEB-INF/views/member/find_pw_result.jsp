@@ -40,7 +40,7 @@
         }
 
         .total {
-            margin-top: 250px;
+            margin-top: 50px;
         }
 
         .a {
@@ -69,6 +69,7 @@
                
                 <td>
                     <h4>작성하신 주소로 이메일이 발송되었습니다</h4>
+                    <h4>이메일을 확인하세요</h4>
                 </td>
 
             </tr>
@@ -79,9 +80,7 @@
             </tr>
         </table>
     </div>
-</body>
 
-</html>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
 

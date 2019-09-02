@@ -117,7 +117,7 @@
 </table>
 <div id="btn2div">
     <input class="btn btn-danger btn-block " id="btn1"
-    type="submit" value="비밀번호 변경" name="btn">
+    type="submit" value="비밀번호 찾기" name="btn">
 </div>
 
 </form>

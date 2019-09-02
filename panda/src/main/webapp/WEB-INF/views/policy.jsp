@@ -1,50 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
- 
-
-<script>
-	//프로그램 시작시 체크박스에 이벤트 설정
-	//      체크되면 버튼 비활성화 해제
-	//      체크 풀리면 버튼 비활성화 설정
-	$(function() {
-		$("input[type=checkbox]").change(function() {
-			//[1] 체크상태 파악
-			var check = $(this).prop("checked");
-			//[2] 체크 여부에 따른 버튼 비활성화 처리
-			// - 체크(true) ---> 비활성화(false)
-			// - 체크(false) ---> 비활성화(true)
-			if (check) {
-				$("button").prop("disabled", false);
-			} else {
-				$("button").prop("disabled", true);
-			}
-		});
-
-		// 버튼을 누르면 특정 페이지로 이동
-		$("button").click(function() {
-			// 자바스크립트라면..
-			// location.href ="http://www.google.com";
-
-			// jQuery라면
-			$(location).attr("href", "regist");
-		});
-	});
-	
-</script>
-<style>
-* {
-	text-align: center;
+    pageEncoding="UTF-8"%>
+    <style>
+       * {
+       text-align:center;
 	margin: auto;
-}
-</style>
-
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>   
+} 
+    </style>
+    
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <body>
-
-
-	<br>
-	<h1>이용약관</h1>
+<h1>이용약관</h1>
 	<br>
 	<textarea rows="30" cols="100" readonly>전자상거래(인터넷사이버몰) 표준약관
 
@@ -296,15 +261,7 @@
 
   ② “몰”과 이용자 간에 제기된 전자상거래 소송에는 한국법을 적용합니다.
 
-
-
 </textarea>
-	<form action="regist" method="get"
-		onsubmit="return checkCheckBox(this)">
-
-		<br> <input type="checkbox" value="0" name="agree"> 동의합니다
-		<button disabled class="btn btn-primary">다음 단계로 이동</button>
 
 
-	</form>
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>    
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -135,14 +135,15 @@
                         <td class="b"><input class="pw" type="password" name="pw"
 							placeholder="  8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)" required class="form-control"><br>
                        <span class="spw"></span>
-                        </td>class="form-control"
+                        </td>
+   
                     </tr>
                 </table>
-            </form>
             <div id="btn2div">
                     <input type="submit" value="변경하기" id="btn1">
             </div>
-        </form>
+            </form>
+      
     </div>
 
 </body>

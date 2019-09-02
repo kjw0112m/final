@@ -87,5 +87,5 @@
             <a href="${pageContext.request.contextPath}" class="a">HOME</a>
         </div>
     </div>
-</body>
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -38,7 +38,7 @@
         }
 
         .total {
-            margin-top: 150px;
+            margin-top: 50px;
         }
 
         .a {

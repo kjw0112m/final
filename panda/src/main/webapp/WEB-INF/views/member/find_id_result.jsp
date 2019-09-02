@@ -3,13 +3,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%
-	Enumeration<String> en = request.getAttributeNames();
-	while(en.hasMoreElements())
-		System.out.println(en.nextElement());
-%>
 
-${requestScope.test}
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     <style>
@@ -22,7 +16,7 @@ ${requestScope.test}
             width: 1128px;
             height: 222px;
             text-align: center;
-            margin: auto;
+            margin: top;
         }
 
         .a>th {
@@ -48,7 +42,7 @@ ${requestScope.test}
         }
 
         .total {
-            margin-top: 250px;
+            margin-top: 50px;
         }
 
         .a {
@@ -76,13 +70,13 @@ ${requestScope.test}
             <tr class="b">
                
                 <td>
-                    <h4>작성하신 주소로 이메일이 발송되었습니다</h4>
+                    <h4>회원님의 아이디는 [ ${id} ]입니다</h4>
                 </td>
 
             </tr>
             <tr class="c">
-                <td></td>
-                <td></td>
+                <td><a	href="find_pw" class="btn2">비밀번호찾기</a><br>
+                <a	href="login" class="btn2">로그인 </a></td>
                 <td></td>
             </tr>
         </table>
