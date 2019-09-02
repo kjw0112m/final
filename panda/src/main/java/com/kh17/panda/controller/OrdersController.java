@@ -22,6 +22,7 @@ import com.kh17.panda.repository.CartDao;
 import com.kh17.panda.repository.MemberDao;
 import com.kh17.panda.repository.OrdersDao;
 import com.kh17.panda.repository.ProductDao;
+import com.kh17.panda.vo.OrderAddressVO;
 
 @Controller
 @RequestMapping("/orders")
@@ -35,7 +36,7 @@ public class OrdersController {
 
 	@Autowired
 	private CartDao cartDao;
-	
+
 	@Autowired
 	private MemberDao memberDao;
 
@@ -45,8 +46,9 @@ public class OrdersController {
 	}
 
 	@GetMapping("/order")
-	public String order(@RequestParam(required = false, defaultValue = "0") int product_id, @RequestParam(required = false) String[] sizes,
-			@RequestParam(required = false) int[] id, @RequestParam String totalPrice, HttpSession session, Model model) {
+	public String order(@RequestParam(required = false, defaultValue = "0") int product_id,
+			@RequestParam(required = false) String[] sizes, @RequestParam(required = false) int[] id,
+			@RequestParam String totalPrice, HttpSession session, Model model) {
 		String member_id = (String) session.getAttribute("sid");
 		if (product_id > 0) {
 			ProductDto productDto = productDao.get(product_id);
@@ -62,7 +64,8 @@ public class OrdersController {
 	}
 
 	@PostMapping("/order")
-	public String order(@ModelAttribute OrdersDto ordersDto, Model model) {
+	public String order(@ModelAttribute OrdersDto ordersDto, @RequestParam(required = false) int[] c_id, @ModelAttribute OrderAddressVO orderAddressVO,
+			@RequestParam(required = false) String[] re_phones, @RequestParam int total_amount, Model model) {
 		ordersDto.setId(ordersDao.seq());
 		ordersDao.insert(ordersDto);
 
