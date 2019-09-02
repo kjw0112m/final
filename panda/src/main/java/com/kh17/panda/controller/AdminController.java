@@ -15,7 +15,7 @@ import com.kh17.panda.entity.MemberDto;
 import com.kh17.panda.repository.MemberDao;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/seller/member")
 public class AdminController {
 
 	@Autowired
@@ -32,14 +32,14 @@ public class AdminController {
 			List<MemberDto> list =mDao.search(type, keyword);
 			model.addAttribute("list", list);
 		}
-		return "admin/search";
+		return "seller/member/search";
 	}
 	
 //	상세 정보 보기
 	@GetMapping("/info")
 	public String info(@RequestParam String id, Model model) {
 		model.addAttribute("mdto", mDao.get(id));
-		return "admin/info";
+		return "seller/member/info";
 	}
 	
 //	회원 탈퇴
@@ -59,7 +59,7 @@ public class AdminController {
 	@GetMapping("/edit")
 	public String edit(@RequestParam String id, Model model) {
 		model.addAttribute("mdto", mDao.get(id));
-		return "admin/edit";
+		return "seller/member/edit";
 	}
 	
 	@PostMapping("/edit")

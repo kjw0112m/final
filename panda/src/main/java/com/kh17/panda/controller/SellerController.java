@@ -33,6 +33,11 @@ public class SellerController {
 	@Autowired
 	private SellerDao sellerDao;
 	
+	@RequestMapping("/")
+	public String main() {
+		return "seller/main";
+	}
+	
 	@GetMapping("/regist")
 	public String regist() {
 		return "seller/regist";

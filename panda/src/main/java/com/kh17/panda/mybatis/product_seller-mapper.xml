@@ -16,4 +16,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from product_seller where sub_category_id = #{sub_category_id} order by regist_dt desc
 	</select>
 
+	<select id="get" parameterType="int" resultType="productSellerDto">
+		select * from product_seller where product_id = #{product_id}
+	</select>
+	
+	<select id="search" parameterType="String" resultType="productSellerDto">
+		select * from product_seller
+			where
+				product_name || nickname like '%' || #{keyword} || '%'
+			order by
+				regist_dt desc
+	</select>
+
 </mapper>
