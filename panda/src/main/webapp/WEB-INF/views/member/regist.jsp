@@ -1,20 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<%--암호화 --%>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script
 	src="${pageContext.request.contextPath}/js/cryptojs/components/core-min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<%--암호화 --%>
 <script>
 	$(function() {
 		$(".addr").click(findAddress);
-		$("input[type=submit]").prop("disabled", true).css("background-color",
-				"#788784");
-		$("#idCheck").prop("disabled", true).css("background-color", "#788784");
+		$("#registcheck").prop("disabled", true);
+		$("#idCheck").prop("disabled", true);
+		$("#email").prop("disabled", true);
+		$("#emailCheck").prop("disabled", true);
+		$("#chidentity").prop("disabled", true);
 	});
-
+	//주소 찾기
 	function findAddress() {
 		new daum.Postcode({
 			oncomplete : function(data) {
@@ -51,7 +55,6 @@
 					// 조합된 참고항목을 해당 필드에 넣는다.
 
 				}
-
 				// 이 코드는 jquery.js 를 먼저 불러온 경우만 사용 가능
 				$("input[name=post_code]").val(data.zonecode);
 				$("input[name=basic_addr]").val(addr);
@@ -60,6 +63,7 @@
 		}).open();
 	}
 
+	//아이디 중복 확인
 	$(function() {
 		$("#idCheck").click(function() {
 			$.ajax({
@@ -81,6 +85,7 @@
 			});
 		});
 	});
+
 	// 아이디 형식 검사
 	$(function() {
 		$(".id")
@@ -102,6 +107,7 @@
 							}
 
 						});
+
 		//  비밀번호 형식 검사
 		$(".pw")
 				.on(
@@ -117,6 +123,7 @@
 								span.innerHTML = "<font color = '#de2195' size = '2'>8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)로 입력해주세요</font>"
 							}
 						});
+
 		//비밀 번호 확인 검사
 		$(function() {
 			var span = document.querySelector(".cpw");
@@ -136,7 +143,7 @@
 		});
 	});
 
-	// 비밀번호 확인 숨기기
+	//  화면전송때 비밀번호숨기기
 	$(function() {
 		$("form").submit(
 				function(e) {
@@ -153,9 +160,57 @@
 					this.submit();
 				});
 	});
+
+	// email 형식 검사
+	$(function() {
+		$("#putemail")
+				.on(
+						"keyup",
+						function() {
+							var regex = /^[a-z0-9A-Z]{1,30}@[a-zA-Z0-9.]{2,30}$/;
+							var email = $(this).val();
+							var result = regex.test(email);
+							var span = document.querySelector(".chemail");
+							if (result) {
+								span.innerHTML = ""
+								$("#emailCheck").prop("disabled", false);
+							} else {
+								span.innerHTML = "<font color = '#de2195' size = '2'>이메일 형식에 맞춰서 입력하세요</font>"
+								$("#emailCheck").prop("disabled", true);
+							}
+
+						});
+	});
+
+	//이메일 중복확인
+	$(function() {
+		$("#emailCheck").click(function() {
+			$.ajax({
+				url : "emailCheck",
+				data : {
+					email : $("input[name=email]").val()
+				},
+				dataType : "text",
+				success : function(resp) {
+					if (resp == "N") {
+						window.alert("이미 사용중인 email 입니다");
+						$("input[name=email]").select();
+						$("#email").prop("disabled", true);
+					}
+					//중복검사해서 사용할 수 있는 email이면 인증버튼 활성화
+					else {
+						window.alert("사용 가능한 email 입니다")
+						$("#email").prop("disabled", false);
+						$("#emailCheck").prop("disabled", true);
+					}
+				}
+			});
+		});
+	});
+
 	//이메일 본인 인증
 	$(function() {
-		$(".email").click(function() {
+		$("#email").click(function() {
 			$.ajax({
 				url : "email_cert",
 				data : {
@@ -164,33 +219,34 @@
 				},
 				success : function(resp) {
 					if (resp == "Y") {
+						$("#email").prop("disabled", true);
+						$("#chidentity").prop("disabled", false);
 					}
 				}
 			});
 		});
 	});
 
+	//이메일로 인번호 보내기
 	$(function() {
-		$(".verification_check").click(
-				function() {
-					$.ajax({
-						url : "email_cert_check",
-						data : {
-							identity : $("input[name=identity]").val()
-						},
-						dataType : "text",
-						success : function(resp) {
-							if (resp == "Y") {
-								window.alert("올바른 인증번호 입니다");
-								$("input[type=submit]").prop("disabled", false)
-										.css("background-color", "#4790b8");
-							} else {
-								window.alert("인증번호가 올바르지 않습니다")
-								$("input[name=identity]").select();
-							}
-						}
-					});
-				});
+		$(".verification_check").click(function() {
+			$.ajax({
+				url : "email_cert_check",
+				data : {
+					identity : $("input[name=identity]").val()
+				},
+				dataType : "text",
+				success : function(resp) {
+					if (resp == "Y") {
+						window.alert("올바른 인증번호 입니다");
+						$("input[type=submit]").prop("disabled", false);
+					} else {
+						window.alert("인증번호가 올바르지 않습니다")
+						$("input[name=identity]").select();
+					}
+				}
+			});
+		});
 	});
 </script>
 <style>
@@ -296,7 +352,9 @@ button {
 							<td class="a">아이디</td>
 							<td class="b"><input class="id iText" type="text" name="id"
 								placeholder="아이디 8~16글자" required>
-								<button id="idCheck">중복확인</button> <br> <span class="sid"></span></td>
+								<button id="idCheck" type="button">중복확인</button>
+								<br>
+							<span class="sid"></span></td>
 
 						</tr>
 
@@ -331,12 +389,12 @@ button {
 							<td class="a">주소</td>
 							<td class="b">
 								<div>
-									<input type="text" name="post_code" placeholder="우편번호" readonly
-										class="iText">
 									<button class="addr" type="button">우편번호 찾기</button>
-									<br> <input type="text" name="basic_addr" placeholder="주소"
-										readonly class="iText"> <input type="text"
-										name="detail_addr" placeholder="상세주소" class="iText">
+									<input type="text" name="post_code" placeholder="우편번호" readonly
+										class="iText"> <br> <input type="text"
+										name="basic_addr" placeholder="주소" readonly class="iText">
+									<input type="text" name="detail_addr" placeholder="상세주소"
+										class="iText">
 
 								</div>
 							</td>
@@ -346,35 +404,36 @@ button {
 							<td class="a">생년월일</td>
 							<td class="b birth-text">
 								<div class="birth-div">
-									<input type="text" name="birth" value maxlength="4"
+									<input type="text" name="birth" maxlength="4"
 										placeholder="YYYY" required> <span>/</span> <input
-										type="text" name="birth" value maxlength="2" placeholder="MM"
+										type="text" name="birth" maxlength="2" placeholder="MM"
 										required> <span>/</span> <input type="text"
-										name="birth" value maxlength="2" placeholder="DD" required>
+										name="birth" maxlength="2" placeholder="DD" required>
 								</div>
 							</td>
 						</tr>
 
 						<tr>
 							<td class="a">이메일</td>
-							<td class="b"><input type="text" name="email" required
-								class="iText">
-								<button class="email" type="button">인증하기</button> <br> <input
-								id="indentity" type="text" name="identity" required
-								style="width: 20%" class="iText">
-								<button id="indentity" class="verification_check" type="button">인증번호확인</button>
+							<td class="b"><input type="text" name="email" id="putemail"
+								required class="iText">
+
+								<button class="email" id="emailCheck" type="button">이메일
+									중복확인</button> <span class="chemail"></span>
+
+								<button class="email" id="email" type="button">인증하기</button> <br>
+
+								<input class="iText" id="identity" type="text" name="identity"
+								required style="width: 20%">
+								<button id="chidentity" type="button" class="verification_check">인증번호확인</button>
 							</td>
 						</tr>
 					</tbody>
+
 				</table>
 
-				<input id="registcheck" type="submit" value="가입하기">
 			</div>
+			<input id="registcheck" type="submit" value="가입하기">
 		</form>
-</body>
-</div>
-
-</html>
-</html><jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-
-
+	</div>
+	<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -2,6 +2,8 @@ package com.kh17.panda.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,6 +58,8 @@ public class AdminController {
 		model.addAttribute("keyword", keyword);
 		return "redirect:search";
 	}
+	
+	//회원 정보 변경
 	@GetMapping("/edit")
 	public String edit(@RequestParam String id, Model model) {
 		model.addAttribute("mdto", mDao.get(id));
@@ -65,7 +69,6 @@ public class AdminController {
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute MemberDto memberDto, Model model) {
 		mDao.change(memberDto);
-//		return "redirect:info?email="+memberDto.getEmail();
 		model.addAttribute("id", memberDto.getId());
 		return "redirect:info";
 	}

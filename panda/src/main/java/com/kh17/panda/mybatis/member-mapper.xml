@@ -78,6 +78,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 	</select>
 	
+	
+	
 	<!-- 비밀 번호 바꾸기 -->
 	<update id="changePw" parameterType="memberDto">
 		update member
@@ -117,6 +119,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			order by ${type} asc
 	</select>
 	
+	
+			<!-- 회원 아이디 중복 확인-->
+	<select id="emailCheck" parameterType="string" resultType="memberDto">
+		select * from member where email = #{email}
+	</select>
 </mapper>
 
 
