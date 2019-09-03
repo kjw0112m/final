@@ -1,4 +1,4 @@
-package com.kh17.panda.controller.vo;
+package com.kh17.panda.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
