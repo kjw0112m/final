@@ -267,7 +267,9 @@ function findAddress() {
             width: 150px;
             font-size: 15px;           
         }
-
+         #center{
+         text-align: center;
+         }
     </style>
 </head>
 
@@ -324,13 +326,18 @@ function findAddress() {
                 <td class="a">마지막 비밀번호 변경</td>
                 <td class="b">${mdto.pw_dt}</td>
             </tr>
+            <tr>
+               <td class="a"></td>
+               <td class="b" id="center"><h3><a href="search">[회원 목록 으로 돌아 가기]  </a></h3></td>
+            </tr>
             </tbody>
         </table>
+         
+            <div id="btn2div">
+				<input type="button" value="취소" class="input"> <input
+					type="submit" value="저장" class="input">
+			</div>
        
-        <div id="btn2div">
-            <input type="button" value="취소" class="input">
-            <input type="submit" value="저장" class="input">
-        </div>
 </form>
 </div>
 </body>
