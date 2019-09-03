@@ -26,4 +26,6 @@ public interface OrdersDao {
 	int count(OrderViewDto orderViewDto, List<OrderViewVO> search, String[] csStatus, String[] tStatus);
 
 	List<OrderViewDto> getTeam(String team);
+	
+	String getOrderId(int id);
 }

@@ -78,8 +78,8 @@ h4 {
 		<tr class="b">
 			<td></td>
 			<td>
-				<h4>결제 오류 발생</h4>
-				<p>다시한번 결제를 진행하십시오</p>
+				<h4>주문이 완료되었습니다.</h4>
+				<p>주문정보 및 배송정보는 마이페이지에서 확인할 수 있습니다.</p>
 			</td>
 			<td></td>
 		</tr>
@@ -90,7 +90,8 @@ h4 {
 		</tr>
 	</table>
 	<div id="btn2div">
-		<a href="#"><button class="btn">장바구니</button></a>
+		<a href="#"><button class="btn">홈으로 가기</button></a>
+		<a href="#"><button class="btn">마이페이지</button></a>
 	</div>
 </div>
 
