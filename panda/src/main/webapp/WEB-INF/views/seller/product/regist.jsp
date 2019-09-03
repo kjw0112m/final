@@ -59,11 +59,11 @@
 <input type="number" value="0">
 
 <br><br>
-대표이미지(.gif, .jpeg, .png만 등록 가능합니다)
-<input type="file" name="main" accept=".gif, .jpeg, .png">
+대표이미지(.gif, .jpeg, .jpg, .png만 등록 가능합니다)
+<input type="file" name="main" accept=".gif, .jpeg, .jpg, .png">
 <br><br>
-상세이미지(.gif, .jpeg, .png만 등록 가능합니다)
-<input type="file" name="details" accept=".gif, .jpeg, .png">
+상세이미지(.gif, .jpeg, .jpg, .png만 등록 가능합니다)
+<input type="file" name="details" accept=".gif, .jpeg, .jpg, .png">
 <br><br>
 <input type="hidden" name="sale_yn" value="n">
 <input type="hidden" name="hit_yn" value="n">

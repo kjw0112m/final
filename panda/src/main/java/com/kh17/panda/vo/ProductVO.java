@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
 public class ProductVO {
-	int id, sub_category_id, price;
+	int id, sub_category_id, price, mainfile, detailfile;
 	String seller_id, name, sale_yn, hit_yn, display_yn;
 	MultipartFile main, details;
 	List<String> sizes;

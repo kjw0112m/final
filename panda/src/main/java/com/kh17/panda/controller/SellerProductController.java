@@ -84,7 +84,7 @@ public class SellerProductController {
 	public String edit(
 			@ModelAttribute ProductVO vo,
 			RedirectAttributes model,
-			HttpSession session) {
+			HttpSession session) throws IllegalStateException, IOException {
 		productService.edit(vo);
 		
 		model.addAttribute("id", (String) session.getAttribute("sid"));

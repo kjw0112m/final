@@ -36,7 +36,8 @@
 <input type="hidden" name="id" value="${productDto.id}">
 상품 카테고리 : ${subcategory}
 <br><br>
-상품명 : ${productDto.name}
+상품명 <input type="text" name="name" placeholder="${productDto.name}"
+			value="${productDto.name}" >
 <br><br>
 판매가 <input type="number" name="price" placeholder="가격" required
 			value="${productDto.price}">원
@@ -49,9 +50,17 @@
 	<br><br>
 </c:forEach>
 <br><br>
-<input type="file" name="main" accept="image/gif, image/jpeg, image/png">
+<input type="file" name="main" accept=".gif, .jpeg, .jpg, .png">
+	<c:if test="${productDto.mainfile != null}">
+		<img src="${pageContext.request.contextPath}/product/image?id=${productDto.mainfile}" width="100" height="100">
+		<input type="hidden" name="mainfile" value="${productDto.mainfile}">
+	</c:if>
 <br><br>
-<input type="file" name="details" accept="image/gif, image/jpeg, image/png">
+<input type="file" name="details" accept=".gif, .jpeg, .jpg, .png">
+	<c:if test="${productDto.detailfile != null}">
+		<img src="${pageContext.request.contextPath}/product/image?id=${productDto.detailfile}" width="100" height="200">
+		<input type="hidden" name="detailfile" value="${productDto.detailfile}">
+	</c:if>
 <br><br>
 판매 여부
 <input type="radio" name="sale_yn" value="y" ${productDto.sale_yn eq 'y'?'checked':''}> Y

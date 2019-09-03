@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,11 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh17.panda.entity.CategoryDto;
 import com.kh17.panda.entity.CategoryListDto;
+import com.kh17.panda.entity.FilesDto;
 import com.kh17.panda.entity.ProductDto;
 import com.kh17.panda.entity.ProductSellerDto;
 import com.kh17.panda.entity.SubcategoryDto;
 import com.kh17.panda.repository.CategoryDao;
 import com.kh17.panda.repository.CategoryListDao;
+import com.kh17.panda.repository.FilesDao;
 import com.kh17.panda.repository.ProductDao;
 import com.kh17.panda.repository.ProductSellerDao;
 import com.kh17.panda.repository.SizesDao;
@@ -55,6 +58,9 @@ public class ProductController {
 	
 	@Autowired
 	private SizesDao sizesDao;
+	
+	@Autowired
+	private FilesDao filesDao;
 
 	@GetMapping("/newArrivals")
 	public String newArrivals(Model model) {
@@ -121,49 +127,65 @@ public class ProductController {
 		return "product/search";
 	}
 
-	@GetMapping("/main")
-	public ResponseEntity<ByteArrayResource> getMain(@RequestParam int id) throws IOException {
+	@GetMapping("/image")
+	public ResponseEntity<ByteArrayResource> getImage(@RequestParam int id) throws IOException {
+		FilesDto filesDto = filesDao.get(id);
 		
-		ProductDto productDto = productDao.get(id);
-		String filename = productDto.getName() + "-main";
-		
-		File file = new File("D:/upload/kh17/product", filename);
+		File file = new File("D:/upload/kh17/product", filesDto.getSavename());
 		
 		byte[] data = FileUtils.readFileToByteArray(file);
 		ByteArrayResource res = new ByteArrayResource(data);
-		
-		MediaType type;
-		String extension = FilenameUtils.getExtension(file.getName());
-		
-		if(extension.equals("png")) type = MediaType.IMAGE_PNG;
-		else if(extension.equals("jpeg")) type = MediaType.IMAGE_JPEG;
-		else type = MediaType.IMAGE_GIF;
 				
 		return ResponseEntity.ok()
-													.contentType(type)
+													//.contentType(filesDto.getType())
+													.header(HttpHeaders.CONTENT_TYPE, filesDto.getType())
 													.body(res);
 	}
 	
-	@GetMapping("/details")
-	public ResponseEntity<ByteArrayResource> getDetails(@RequestParam int id) throws IOException {
-		
-		ProductDto productDto = productDao.get(id);
-		String filename = productDto.getName() + "-details";
-		
-		File file = new File("D:/upload/kh17/product", filename);
-		
-		byte[] data = FileUtils.readFileToByteArray(file);
-		ByteArrayResource res = new ByteArrayResource(data);
-		
-		MediaType type;
-		String extension = FilenameUtils.getExtension(file.getName());
-		
-		if(extension.equals("png")) type = MediaType.IMAGE_PNG;
-		else if(extension.equals("jpeg")) type = MediaType.IMAGE_JPEG;
-		else type = MediaType.IMAGE_GIF;
-				
-		return ResponseEntity.ok()
-													.contentType(type)
-													.body(res);
-	}
+//	@GetMapping("/main")
+//	public ResponseEntity<ByteArrayResource> getMain(@RequestParam int id) throws IOException {
+//		
+//		ProductDto productDto = productDao.get(id);
+//		String filename = productDto.getName() + "-main";
+//		
+//		File file = new File("D:/upload/kh17/product", filename);
+//		
+//		byte[] data = FileUtils.readFileToByteArray(file);
+//		ByteArrayResource res = new ByteArrayResource(data);
+//		
+//		MediaType type;
+//		String extension = FilenameUtils.getExtension(file.getName());
+//		
+//		if(extension.equals("png")) type = MediaType.IMAGE_PNG;
+//		else if(extension.equals("jpeg")) type = MediaType.IMAGE_JPEG;
+//		else type = MediaType.IMAGE_GIF;
+//				
+//		return ResponseEntity.ok()
+//													.contentType(type)
+//													.body(res);
+//	}
+//	
+//	@GetMapping("/details")
+//	public ResponseEntity<ByteArrayResource> getDetails(@RequestParam int id) throws IOException {
+//		
+//		ProductDto productDto = productDao.get(id);
+//		String filename = productDto.getName() + "-details";
+//		
+//		File file = new File("D:/upload/kh17/product", filename);
+//		
+//		byte[] data = FileUtils.readFileToByteArray(file);
+//		ByteArrayResource res = new ByteArrayResource(data);
+//		
+//		MediaType type;
+//		String extension = FilenameUtils.getExtension(file.getName());
+//		
+//		if(extension.equals("png")) type = MediaType.IMAGE_PNG;
+//		else if(extension.equals("jpeg")) type = MediaType.IMAGE_JPEG;
+//		else type = MediaType.IMAGE_GIF;
+//				
+//		return ResponseEntity.ok()
+//													.contentType(type)
+//													.body(res);
+//	}
+	
 }
