@@ -35,7 +35,15 @@
 				this.submit();
 			});
 		});
-		</script>
+			</script>
+
+    <script type="text/javascript">
+		window.history.forward();
+		function noBack() {
+			window.history.forward();
+		}
+         </script>
+
 
 
     <style>
@@ -118,6 +126,8 @@
         }
     </style>
 </head>
+
+
 
 <body>
     <div class="total">

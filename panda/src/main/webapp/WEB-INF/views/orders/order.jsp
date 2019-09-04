@@ -12,6 +12,7 @@
 			str = String(str);
 			return str.replace(/[^\d]+/g, '');
 		}
+
 		$(".btn-addr").click(findAddress);
 
 		$('#same_info').change(
@@ -23,12 +24,12 @@
 
 						$('.name').eq(1).val($('.name').eq(0).val());
 
-						$("input[name=zip_code]").eq(1).val(
-								$("input[name=zip_code]").eq(0).val());
-						$("input[name=basic_addr]").eq(1).val(
-								$("input[name=basic_addr]").eq(0).val());
-						$("input[name=detail_addr]").eq(1).val(
-								$("input[name=detail_addr]").eq(0).val());
+						$("input[id=post_code]").eq(1).val(
+								$("input[id=post_code]").eq(0).val());
+						$("input[id=basic_addr]").eq(1).val(
+								$("input[id=basic_addr]").eq(0).val());
+						$("input[id=detail_addr]").eq(1).val(
+								$("input[id=detail_addr]").eq(0).val());
 					}
 					;
 				});
@@ -38,6 +39,30 @@
 				$('#new_body').find('input[type=text]').val('');
 			}
 		});
+
+		$("form")
+				.submit(
+						function(e) {
+							e.preventDefault();
+							if ($(this).attr('standby')) {
+								var total_amount = $('input[name=total_amount]')
+										.val();
+								$('input[name=total_amount]').val(
+										uncomma(total_amount));
+								if ($('input[name=pay_type]:checked').val() == '카카오페이') {
+									$(this)
+											.attr('action',
+													'${pageContext.request.contextPath}/pay/kakao/confirm');
+
+									window
+											.open("", "kakaopay",
+													"width=730,height=520,left=50, top=50");
+									this.target = 'kakaopay';
+								}
+							}
+							this.submit();
+						});
+
 	});
 	function findAddress() {
 		var thiz = $(this);
@@ -64,9 +89,9 @@
 						extraAddr = ' (' + extraAddr + ')';
 					}
 				}
-				thiz.parent().find("input[name=zip_code]").val(data.zonecode);
-				thiz.parent().find("input[name=basic_addr]").val(addr);
-				thiz.parent().find("input[name=detail_addr]").focus();
+				thiz.parent().find("input[id=post_code]").val(data.zonecode);
+				thiz.parent().find("input[id=basic_addr]").val(addr);
+				thiz.parent().find("input[id=detail_addr]").focus();
 			}
 		}).open();
 	}
@@ -291,174 +316,194 @@ a {
 		<span>01 쇼핑백 > </span><span style="font-weight: bold">02 주문결제</span><span>
 			> 03 주문완료</span>
 	</div>
-	<div class="orderbox">
-		<h4 style="font-size: 22px">
-			결제 금액 / 총
-			<c:choose>
-				<c:when test="${not empty cartList}">${orderCount}</c:when>
-				<c:otherwise>1</c:otherwise>
-			</c:choose>
-			개
-		</h4>
-		<dl class="dl">
-			<dt class="order-dt">주문금액</dt>
-			<dd class="order-dd">${totalPrice}</dd>
-			<dt class="order-dt">배송비</dt>
-			<dd class="order-dd">0</dd>
-			<div id="orderprice">
-				<dt class="order-dt">총 결제금액</dt>
+	<form action="" method="post" standby="true">
+		<div class="orderbox">
+			<h4 style="font-size: 22px">
+				결제 금액 / 총
+				<c:choose>
+					<c:when test="${not empty cartList}">
+					${orderCount}
+					<input name="quantity" type="hidden" value="${orderCount}">
+					</c:when>
+					<c:otherwise>
+					1
+					<input name="quantity" type="hidden" value="1">
+					</c:otherwise>
+				</c:choose>
+				개
+			</h4>
+			<dl class="dl">
+				<dt class="order-dt">주문금액</dt>
 				<dd class="order-dd">${totalPrice}</dd>
-			</div>
-		</dl>
-		<ul class="order-ul">
-			<li><span> <input type="checkbox" name="agree1" id=""
-					required> <label for="" class="order-li"> 주문 상품 정보에
-						동의(필수) </label>
-			</span></li>
-			<li><span> <input type="checkbox" name="agree2" id=""
-					required> <label for="" class="order-li">결제대행 서비스
-						이용을 위한 개인정보 제3자 제공 및 위탁 동의(필수)</label>
-			</span></li>
-		</ul>
-		<a href="#"><button class="orderbutton">주문하기</button></a>
-	</div>
-	<div class="total">
-		<div class="intotal">
-			<div class="top-table">
-				<h4>상품정보</h4>
-			</div>
-			<table class="table_st">
-				<thead>
-					<tr>
-						<td></td>
-						<td>상품정보</td>
-						<td class="w150">주문금액</td>
-					</tr>
-				</thead>
-				<tbody>
-					<c:choose>
-						<c:when test="${cartList != null}">
-							<c:forEach var="c" items="${cartList}">
+				<dt class="order-dt">배송비</dt>
+				<dd class="order-dd">0</dd>
+				<div id="orderprice">
+					<dt class="order-dt">총 결제금액</dt>
+					<dd class="order-dd">${totalPrice}</dd>
+					<input type="hidden" name="total_amount" value="${totalPrice}">
+				</div>
+			</dl>
+			<ul class="order-ul">
+				<li><span> <input type="checkbox" name="agree1" id=""
+						required> <label for="" class="order-li"> 주문 상품
+							정보에 동의(필수) </label>
+				</span></li>
+				<li><span> <input type="checkbox" name="agree2" id=""
+						required> <label for="" class="order-li">결제대행 서비스
+							이용을 위한 개인정보 제3자 제공 및 위탁 동의(필수)</label>
+				</span></li>
+			</ul>
+			<a href="#"><button class="orderbutton">주문하기</button></a>
+		</div>
+		<div class="total">
+			<div class="intotal">
+				<div class="top-table">
+					<h4>상품정보</h4>
+				</div>
+				<table class="table_st">
+					<thead>
+						<tr>
+							<td></td>
+							<td>상품정보</td>
+							<td class="w150">주문금액</td>
+						</tr>
+					</thead>
+					<tbody>
+						<c:choose>
+							<c:when test="${cartList != null}">
+								<c:forEach var="c" items="${cartList}">
+									<input name="c_id" type="hidden" value="${c.cart_id }">
+									<input name="item_name" type="hidden"
+										value="${c.product_name }">
+									<tr>
+										<td class="imggg"><a href="#" class="img"> <img
+												src="http://placehold.it/100"></a></td>
+										<td class="text-left"><a href="#"><span>${c.product_seller_id}</span></a>
+											<a href="#"><span>${c.product_name}</span></a>
+											<div>
+												<fmt:formatNumber value="${c.product_price}"
+													pattern="#,###.##" />
+											</div>
+											<div>${c.sizes}</div>
+											<div>수량: ${c.quantity} 개</div></td>
+										<td class="text-center w150"><fmt:formatNumber
+												value="${c.product_price * c.quantity}" pattern="#,###.##" /></td>
+									</tr>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
 								<tr>
 									<td class="imggg"><a href="#" class="img"> <img
 											src="http://placehold.it/100"></a></td>
-									<td class="text-left"><a href="#"><span>${c.product_seller_id}</span></a>
-										<a href="#"><span>${c.product_name}</span></a>
+									<td class="text-left"><a href="#"><span>${productDto.seller_id}</span></a>
+										<a href="#"><span>${productDto.name}</span></a>
 										<div>
-											<fmt:formatNumber value="${c.product_price}"
+											<input type="hidden" name="total_price"
+												value="${productDto.price * quantity}">
+											<fmt:formatNumber value="${productDto.price}"
 												pattern="#,###.##" />
 										</div>
-										<div>${c.sizes}</div>
-										<div>수량: ${c.quantity} 개</div></td>
+										<div>${sizes}</div>
+										<div>수량: ${quantity} 개</div></td>
 									<td class="text-center w150"><fmt:formatNumber
-											value="${c.product_price * c.quantity}" pattern="#,###.##" /></td>
+											value="${productDto.price * quantity}" pattern="#,###.##" />
+									</td>
 								</tr>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<tr>
-								<td class="imggg"><a href="#" class="img"> <img
-										src="http://placehold.it/100"></a></td>
-								<td class="text-left"><a href="#"><span>${c.product_seller_id}</span></a>
-									<a href="#"><span>${c.product_name}</span></a>
-									<div>
-										<fmt:formatNumber value="${c.product_price}"
-											pattern="#,###.##" />
-									</div>
-									<div>${c.sizes}</div>
-									<div>수량: ${c.quantity} 개</div></td>
-								<td class="text-center w150"></td>
-							</tr>
-						</c:otherwise>
-					</c:choose>
-				</tbody>
-			</table>
-			<div class="top-table">
-				<h4>주문하시는 분</h4>
-			</div>
-			<table class="table_new">
-				<tbody id="old_body">
-					<tr>
-						<th class="a">이름</th>
-						<td><input class="b name" type="text"
-							value="${memberDto.name}"></td>
-					</tr>
-					<tr>
-						<th class="a">전화번호</th>
-						<td><c:set var="phone" value="${memberDto.phone }" /> <span><input
-								type="text" value="${fn:substring(phone, 0,3)}" maxlength="3"
-								required class="phone"></span> <span><input type="text"
-								value="${fn:substring(phone, 3,7)}" maxlength="4" required
-								class="phone"></span> <span><input type="text"
-								value="${fn:substring(phone, 7,11)}" maxlength="4" required
-								class="phone"></span></td>
-					</tr>
-					<tr>
-						<th class="a">배송주소</th>
-						<td>
-							<div>
-								<input type="text" name="zip_code" readonly class="b"
-									value="${memberDto.post_code}"> <input type="button"
-									value="주소 찾기" required class="btn-find btn-addr"><br>
-								<input type="text" name="basic_addr" readonly class="b"
-									value="${memberDto.basic_addr}"> <input type="text"
-									name="detail_addr" class="b" value="${memberDto.detail_addr}">
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="top-table">
-				<h4>받으시는 분</h4>
-			</div>
-			<table class="table_new">
-				<tbody id="new_body">
-					<tr>
-						<th class="a">배송지 선택</th>
-						<td><input class="c" type="radio" name="select_info"
-							id="same_info"><span style="font-size: 15px">&nbsp주문자
-								정보와 동일</span> <input class="c" id="new_info" name="select_info"
-							type="radio"><span style="font-size: 15px">&nbsp새로입력</span>
-						</td>
-					</tr>
-					<tr>
-						<th class="a">이름</th>
-						<td><input class="b name" type="text"></td>
-					</tr>
-					<tr>
-						<th class="a">전화번호</th>
-						<td><span><input type="text" value maxlength="3"
-								required class="phone"></span> <span><input type="text"
-								value maxlength="4" required class="phone"></span> <span><input
-								type="text" value maxlength="4" required class="phone"></span></td>
-					</tr>
-					<tr>
-						<th class="a">배송주소</th>
-						<td>
-							<div>
-								<input type="text" name="zip_code" readonly class="b"> <input
-									type="button" value="주소 찾기" required class="btn-find btn-addr"><br>
-								<input type="text" name="basic_addr" readonly class="b">
-								<input type="text" name="detail_addr" class="b">
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="top-table">
-				<h4>결제 정보</h4>
-			</div>
-			<div class="clearfix">
-				<label for="kakao_pay" class="kakaopay box"
-					style="border: #bbb solid 1px">
-					<p>카카오 결제</p> <input type="radio" id="kakao_pay" name="pay_type"
-					value="카카오페이">
-				</label> 
-				<label class="pay box" style="border: #bbb solid 1px">
-					<p>무통장입금</p>
-				</label>
+							</c:otherwise>
+						</c:choose>
+					</tbody>
+				</table>
+				<div class="top-table">
+					<h4>주문하시는 분</h4>
+				</div>
+				<table class="table_new">
+					<tbody id="old_body">
+						<tr>
+							<th class="a">이름</th>
+							<td><input class="b name" type="text"
+								value="${memberDto.name}"></td>
+						</tr>
+						<tr>
+							<th class="a">전화번호</th>
+							<td><c:set var="phone" value="${memberDto.phone }" /> <span><input
+									type="text" value="${fn:substring(phone, 0,3)}" maxlength="3"
+									required class="phone"></span> <span><input type="text"
+									value="${fn:substring(phone, 3,7)}" maxlength="4" required
+									class="phone"></span> <span><input type="text"
+									value="${fn:substring(phone, 7,11)}" maxlength="4" required
+									class="phone"></span></td>
+						</tr>
+						<tr>
+							<th class="a">배송주소</th>
+							<td>
+								<div>
+									<input type="text" id="post_code" readonly class="b"
+										value="${memberDto.post_code}"> <input type="button"
+										value="주소 찾기" required class="btn-find btn-addr"><br>
+									<input type="text" id="basic_addr" readonly class="b"
+										value="${memberDto.basic_addr}"> <input type="text"
+										id="detail_addr" class="b" value="${memberDto.detail_addr}">
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="top-table">
+					<h4>받으시는 분</h4>
+				</div>
+				<table class="table_new">
+					<tbody id="new_body">
+						<tr>
+							<th class="a">배송지 선택</th>
+							<td><input class="c" type="radio" name="select_info"
+								id="same_info"><span style="font-size: 15px">&nbsp주문자
+									정보와 동일</span> <input class="c" id="new_info" name="select_info"
+								type="radio"><span style="font-size: 15px">&nbsp새로입력</span>
+							</td>
+						</tr>
+						<tr>
+							<th class="a">이름</th>
+							<td><input class="b name" type="text" name="re_name"></td>
+						</tr>
+						<tr>
+							<th class="a">전화번호</th>
+							<td><span><input type="text" value maxlength="3"
+									name="re_phones" required class="phone"></span> <span><input
+									type="text" name="re_phones" value maxlength="4" required
+									class="phone"></span> <span><input name="re_phones"
+									type="text" value maxlength="4" required class="phone"></span></td>
+						</tr>
+						<tr>
+							<th class="a">배송주소</th>
+							<td>
+								<div>
+									<input type="text" name="post_code" id="post_code" readonly
+										class="b"> <input type="button" value="주소 찾기" required
+										class="btn-find btn-addr"><br> <input type="text"
+										name="basic_addr" id="basic_addr" readonly class="b">
+									<input type="text" name="detail_addr" id="detail_addr"
+										class="b">
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="top-table">
+					<h4>결제 정보</h4>
+				</div>
+				<div class="clearfix">
+					<label for="kakao_pay" class="kakaopay box"
+						style="border: #bbb solid 1px">
+						<p>카카오 결제</p> <input type="radio" id="kakao_pay" name="pay_type"
+						value="카카오페이">
+					</label> <label for="deposit" class="pay box"
+						style="border: #bbb solid 1px">
+						<p>무통장입금</p> <input type="radio" id="deposit" name="pay_type"
+						value="무통장입금">
+					</label>
+				</div>
 			</div>
 		</div>
-	</div>
+	</form>
 </body>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
