@@ -46,6 +46,7 @@ public class SellerOrderController {
 			int endBlock = startBlock + (blocksize - 1);
 			
 			List<OrderViewVO> search = orderViewListVO.getSearch();
+			
 			for (int i = 0; i < search.size(); i++) {
 				if (search.get(i).getKeyword().isEmpty()) {
 					search.remove(i);
@@ -71,7 +72,6 @@ public class SellerOrderController {
 			
 
 			List<OrderViewDto> list = ordersDao.list(orderViewDto, search, start, end, csStatus, tStatus);
-			System.out.println(list);
 			model.addAttribute("orderViewDto", list);
 			model.addAttribute("searchCount", count);
 			return "seller/orders/search";
