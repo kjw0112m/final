@@ -6,12 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh17.panda.entity.ProductDto;
 import com.kh17.panda.entity.ProductSubcategoryDto;
+import com.kh17.panda.repository.FilesDao;
 import com.kh17.panda.repository.ProductDao;
 import com.kh17.panda.repository.ProductSubcategoryDao;
 import com.kh17.panda.repository.SizesDao;
@@ -49,6 +45,9 @@ public class SellerProductController {
 	
 	@Autowired
 	private ProductSubcategoryDao productSubcategoryDao;
+	
+	@Autowired
+	private FilesDao filesDao;
 	
 	@GetMapping("/regist")
 	public String regist(Model model) {
@@ -96,11 +95,26 @@ public class SellerProductController {
 	public String delete(@RequestParam int[] product_id) {
 		
 		for(int id : product_id) {
+			ProductDto productDto = productDao.get(id);
+			int main = productDto.getMainfile();
+			int detail = productDto.getDetailfile();
+			
+			//상품 삭제
 			productDao.delete(id);
+			
+			//메인 이미지 삭제(물리+DB)
+			String mainsv = filesDao.getSaveName(main);
+			File file1 = new File("D:/upload/kh17/product", mainsv);
+			file1.delete();
+			filesDao.delete(main);
+			//상세 이미지 삭제(물리+DB)
+			String detailsv = filesDao.getSaveName(detail);
+			File file2 = new File("D:/upload/kh17/product", detailsv);
+			file2.delete();
+			filesDao.delete(detail);
 		}
 		return "redirect:list";
 	}
-	
 	
 	@GetMapping("/list")
 	public String list(HttpSession session,
@@ -109,7 +123,7 @@ public class SellerProductController {
 		String seller_id = "abc";
 		List<ProductSubcategoryDto> list = productSubcategoryDao.list(seller_id);
 		model.addAttribute("list", list);
-		return "product/list";
+		return "seller/product/list";
 	}
 	
 }
