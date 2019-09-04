@@ -12,6 +12,7 @@
 			str = String(str);
 			return str.replace(/[^\d]+/g, '');
 		}
+
 		$(".btn-addr").click(findAddress);
 
 		$('#same_info').change(
@@ -23,12 +24,12 @@
 
 						$('.name').eq(1).val($('.name').eq(0).val());
 
-						$("input[name=post_code]").eq(1).val(
-								$("input[name=post_code]").eq(0).val());
-						$("input[name=basic_addr]").eq(1).val(
-								$("input[name=basic_addr]").eq(0).val());
-						$("input[name=detail_addr]").eq(1).val(
-								$("input[name=detail_addr]").eq(0).val());
+						$("input[id=post_code]").eq(1).val(
+								$("input[id=post_code]").eq(0).val());
+						$("input[id=basic_addr]").eq(1).val(
+								$("input[id=basic_addr]").eq(0).val());
+						$("input[id=detail_addr]").eq(1).val(
+								$("input[id=detail_addr]").eq(0).val());
 					}
 					;
 				});
@@ -43,17 +44,25 @@
 				.submit(
 						function(e) {
 							e.preventDefault();
-							var total_amount = $('input[name=total_amount]').val();
-							$('input[name=total_amount]').val(uncomma(total_amount));
-							if ($('input[name=pay_type]:checked').val() == '카카오페이') {
-								$(this)
-										.attr('action',
-												'${pageContext.request.contextPath}/pay/kakao/confirm');
+							if ($(this).attr('standby')) {
+								var total_amount = $('input[name=total_amount]')
+										.val();
+								$('input[name=total_amount]').val(
+										uncomma(total_amount));
+								if ($('input[name=pay_type]:checked').val() == '카카오페이') {
+									$(this)
+											.attr('action',
+													'${pageContext.request.contextPath}/pay/kakao/confirm');
+
+									window
+											.open("", "kakaopay",
+													"width=730,height=520,left=50, top=50");
+									this.target = 'kakaopay';
+								}
 							}
-						 	window.open( "", "kakaopay", "width=730,height=520,left=50, top=50" );
-							this.target = 'kakaopay';
 							this.submit();
 						});
+
 	});
 	function findAddress() {
 		var thiz = $(this);
@@ -80,9 +89,9 @@
 						extraAddr = ' (' + extraAddr + ')';
 					}
 				}
-				thiz.parent().find("input[name=post_code]").val(data.zonecode);
-				thiz.parent().find("input[name=basic_addr]").val(addr);
-				thiz.parent().find("input[name=detail_addr]").focus();
+				thiz.parent().find("input[id=post_code]").val(data.zonecode);
+				thiz.parent().find("input[id=basic_addr]").val(addr);
+				thiz.parent().find("input[id=detail_addr]").focus();
 			}
 		}).open();
 	}
@@ -307,7 +316,7 @@ a {
 		<span>01 쇼핑백 > </span><span style="font-weight: bold">02 주문결제</span><span>
 			> 03 주문완료</span>
 	</div>
-	<form action="" method="post">
+	<form action="" method="post" standby="true">
 		<div class="orderbox">
 			<h4 style="font-size: 22px">
 				결제 금액 / 총
@@ -389,6 +398,8 @@ a {
 									<td class="text-left"><a href="#"><span>${productDto.seller_id}</span></a>
 										<a href="#"><span>${productDto.name}</span></a>
 										<div>
+											<input type="hidden" name="total_price"
+												value="${productDto.price * quantity}">
 											<fmt:formatNumber value="${productDto.price}"
 												pattern="#,###.##" />
 										</div>
@@ -426,12 +437,12 @@ a {
 							<th class="a">배송주소</th>
 							<td>
 								<div>
-									<input type="text" name="post_code" readonly class="b"
+									<input type="text" id="post_code" readonly class="b"
 										value="${memberDto.post_code}"> <input type="button"
 										value="주소 찾기" required class="btn-find btn-addr"><br>
-									<input type="text" name="basic_addr" readonly class="b"
+									<input type="text" id="basic_addr" readonly class="b"
 										value="${memberDto.basic_addr}"> <input type="text"
-										name="detail_addr" class="b" value="${memberDto.detail_addr}">
+										id="detail_addr" class="b" value="${memberDto.detail_addr}">
 								</div>
 							</td>
 						</tr>
@@ -466,11 +477,12 @@ a {
 							<th class="a">배송주소</th>
 							<td>
 								<div>
-									<input type="text" name="post_code" readonly class="b">
-									<input type="button" value="주소 찾기" required
+									<input type="text" name="post_code" id="post_code" readonly
+										class="b"> <input type="button" value="주소 찾기" required
 										class="btn-find btn-addr"><br> <input type="text"
-										name="basic_addr" readonly class="b"> <input
-										type="text" name="detail_addr" class="b">
+										name="basic_addr" id="basic_addr" readonly class="b">
+									<input type="text" name="detail_addr" id="detail_addr"
+										class="b">
 								</div>
 							</td>
 						</tr>

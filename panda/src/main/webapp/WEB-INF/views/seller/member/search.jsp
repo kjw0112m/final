@@ -64,22 +64,7 @@
 					<li class="selected"><a href="search" id="">회원 목록</a></li>
 				</ul>
 			</div>
-			<div id="tabNumber" class="tabCont">
-				<div class="rState">
-					<div class="left"></div>
-					<div class="right">
-						<select name="rows" class="fSelect" init_rows="10">
-							<option value="10" selected="">10개씩보기</option>
-							<option value="20">20개씩보기</option>
-							<option value="30">30개씩보기</option>
-							<option value="50">50개씩보기</option>
-							<option value="100">100개씩보기</option>
-							<option value="200">200개씩보기</option>
-							<option value="300">300개씩보기</option>
-							<option value="500">500개씩보기</option>
-						</select>
-					</div>
-				</div>
+			
 				<div id="searchResultList"
 					class="mBoard typeOrder gScroll gCellSingle">
 					<table border="1" summary="" class="thead">
@@ -113,8 +98,7 @@
 									<td class="w120 left" style="">${mdto.phone}</td>
 									<td class="w120" style="">${mdto.email}</td>
 									<td td class="w120" style="">
-										<!-- 상세보기 --> <a href="info?id=${mdto.id}"> [상세보기] 
-									</a> <!-- 수정 --> <a href="edit?id=${mdto.id}"> [수정]
+										<!-- 상세보기 --> <a href="info?id=${mdto.id}"> [상세보기&수정]&nbsp;&nbsp;&nbsp;&nbsp;  
 									</a> <!-- 탈퇴 --> <a
 										href="delete?id=${mdto.id}&type=${param.type}&keyword=${param.keyword}">
 											[탈퇴]
@@ -160,8 +144,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</form>
 
+</form>
 </body>
 </html>

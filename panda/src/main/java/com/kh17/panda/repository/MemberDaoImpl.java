@@ -89,21 +89,37 @@ public class MemberDaoImpl implements MemberDao {
 		
 	}
 	
+	// 아이디 중복검사
+	@Override
+	public MemberDto emailCheck(String email) {
+		return sqlSession.selectOne("member.emailCheck", email);
+	}
+	
 	//관리자 사용
 	//회원 검색
 	@Override
-	public List<MemberDto> search(String type, String keyword) {
-		Map<String, String> param = new HashMap<>();
-		param.put("type", type);
-		param.put("keyword", keyword);
+	public List<MemberDto> search(String type, String keyword,int start, int end) {
+		Map<String, Object> param = new HashMap<>();
+		//검색일 때 검색어를 mybatis에 전달
+		if(type != null && keyword != null) {
+			param.put("type", type.replace("+", "||"));
+			param.put("keyword", keyword);
+		}
+		param.put("start", start);
+		param.put("end", end);
+				
 		return sqlSession.selectList("member.search", param);
 	}
-	// 아이디 중복검사
-		@Override
-		public MemberDto emailCheck(String email) {
-			return sqlSession.selectOne("member.emailCheck", email);
+
+	@Override
+	public int count(String type, String keyword) {
+		Map<String, String> param = new HashMap<>();
+		if(type != null && keyword != null) {
+			param.put("type", type.replace("+", "||"));
+			param.put("keyword", keyword);
 		}
-		
+		return sqlSession.selectOne("member.count", param);
+	}
 		
 		
 		

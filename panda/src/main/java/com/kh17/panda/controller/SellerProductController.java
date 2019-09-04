@@ -57,7 +57,6 @@ public class SellerProductController {
 //		vo.setSeller_id((String) session.getAttribute("sid"));
 		int id = productService.regist(vo);
 		vo.setSeller_id("abc");
-		
 		return "seller/product/regist_result";
 	}
 	

@@ -36,7 +36,7 @@ public class SellerOrderController {
 	public String list(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
 			Model model, @RequestParam(required = false, defaultValue = "1") int page, HttpSession session,
 			@RequestParam(required = false) String[] csStatus, @RequestParam(required = false) String[] tStatus) {
-		if (orderViewDto.getSeller_id() != null) {
+		if (session.getAttribute("sid") != null) {
 			int pagesize = 10;
 			int start = pagesize * page - (pagesize - 1);
 			int end = pagesize * page;
