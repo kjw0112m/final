@@ -43,7 +43,7 @@
         }
 
         .total {
-            margin-top: 250px;
+            margin-top: 50px;
         }
 
         .a {
@@ -88,9 +88,9 @@
             </tr>
         </table>
         <div class="btndiv">
-            <a href="login" >LOGIN</a>
-            <a href="find_id" >아이디 찾으러 가실래요?</a>
-            <a href="find_pw" >비밀번호 찾으러 가실래요?</a>
+            <a href="login" >LOGIN</a><br>
+            <a href="find_id" >아이디 찾으러 가실래요?</a><br>
+            <a href="find_pw" >비밀번호 찾으러 가실래요?</a><br>
             <a href="${pageContext.request.contextPath}">HOME</a>
         </div>
     </div>

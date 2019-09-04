@@ -110,21 +110,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insert" parameterType="ordersDto">
 		insert into orders values(
 		to_char(sysdate,
-		'YYYYMMDDHH24MISS')||#{id},
+		'YYYYMMDDHH24MISS') || ${id},
 		#{id},
-		#{product_id}, #{member_id}, #{t_id},
+		#{product_id}, #{member_id}, 
+		null,
 		#{quantity}, sysdate,
 		#{pay_type},
-		#{total_price}, #{discount_price}, #{status}, null, null
+		#{total_price}, 0, #{pay_status}, null, null,
+		null,
 		<choose>
 			<when test="team == null">
-				to_char(sysdate,'YYYYMMDDHH24MISS')||#{order_id},
+				to_char(sysdate,'YYYYMMDDHH24MISS')||${id},
 			</when>
 			<otherwise>
 				#{team},
 			</otherwise>
 		</choose>
-		#{sizes}
+		#{sizes},
+		#{re_name},
+		#{re_addr},
+		#{re_phone}
 		)
 	</insert>
 
@@ -167,6 +172,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getTeam" parameterType="string"
 		resultType="orderViewDto">
 		select * from order_view where team = #{team}
+	</select>
+	
+	<select id="getOrderId" parameterType="int" resultType="string">
+		select order_id from orders where to_char(order_dt, 'YYYYMMDD') = TO_CHAR(SYSDATE, 'YYYYMMDD') and id=#{id}	
 	</select>
 </mapper>
 

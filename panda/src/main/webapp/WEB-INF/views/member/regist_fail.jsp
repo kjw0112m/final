@@ -37,7 +37,7 @@
         }
 
         .total {
-            margin-top: 150px;
+            margin-top: 50px;
         }
 
         .a {
@@ -82,11 +82,11 @@
             </tr>
         </table>
         <div class="btndiv">
-            <a href="login" class="a">가입 실패</a>
+            <a href="login" class="a">로그인 하러 가기</a>
             <a href="regist" class="a">다시 가입하러 가기</a>
             <a href="${pageContext.request.contextPath}" class="a">HOME</a>
         </div>
     </div>
-</body> 
+ 
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>    

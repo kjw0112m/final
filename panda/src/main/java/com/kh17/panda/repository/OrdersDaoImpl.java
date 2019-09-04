@@ -39,6 +39,7 @@ public class OrdersDaoImpl implements OrdersDao{
 
 	@Override
 	public void insert(OrdersDto ordersDto) {
+		System.out.println(ordersDto);
 		sqlSession.insert("order.insert", ordersDto);
 	}
 
@@ -81,5 +82,10 @@ public class OrdersDaoImpl implements OrdersDao{
 		map.put("csStatus", csStatus);
 		map.put("tStatus", tStatus);
 		return sqlSession.selectOne("order.count", map);
+	}
+
+	@Override
+	public String getOrderId(int id) {
+		return sqlSession.selectOne("order.getOrderId", id);
 	}
 }

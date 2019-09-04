@@ -89,7 +89,9 @@ $(function() {
 	// ---------------------------------------------------------
 	var tStatus = $("#tStatusCheck").find(".fChk");
 	var csStatus = $("#csStatusCheck").find(".fChk");
-	tStatus.prop("checked", true);
+	if (!page) {
+		tStatus.prop("checked", true);
+	}
 	tStatus.first().change(function() {
 		if ($("#tStatAll").is(":checked")) {
 			tStatus.prop("checked", true);
@@ -97,8 +99,18 @@ $(function() {
 			tStatus.prop("checked", false);
 		}
 	});
+
 	tStatus.not(tStatus.first()).change(function() {
 		$("#tStatAll").prop("checked", false);
+		var check = 0;
+		$(tStatus.not(tStatus.first())).each(function() {
+			if ($(this).is(':checked')) {
+				check++;
+			}
+		});
+		if (check == 5) {
+			$("#tStatAll").prop("checked", true);
+		}
 	});
 	csStatus.first().change(function() {
 		if ($("#csStatAll").is(":checked")) {
@@ -109,24 +121,27 @@ $(function() {
 	});
 	csStatus.not("#csStatAll").change(function() {
 		$("#csStatAll").prop("checked", false);
+		var check = 0;
+		$(csStatus.not('#csStatAll')).each(function() {
+			if ($(this).is(':checked')) {
+				check++;
+			}
+		});
+		if (check == 4) {
+			$("#csStatAll").prop("checked", true);
+		}
 	});
 
 	// ----------------------------------------------- 조건 유지 이벤트
 	// ---------------------------------------------------------
-	if ((!tStatusAry[4]) && tStatusAry[0]) {
-		tStatus.prop("checked", false);
-	}
+
 	for (var i = 0; i < tStatusAry.length; i++) {
 		if (tStatusAry[i]) {
 			$("input[value=" + tStatusAry[i] + "]").prop('checked', true);
+		} else {
 		}
 	}
 
-	if (!csStatusAry[3]) {
-		csStatus.prop("checked", false);
-	} else {
-		$("#csStatAll").prop("checked", true);
-	}
 	for (var i = 0; i < csStatusAry.length; i++) {
 		if (csStatusAry[i]) {
 			$("input[value=" + csStatusAry[i] + "]").prop('checked', true);
@@ -137,6 +152,27 @@ $(function() {
 		if ($(this).val() == payStatus)
 			$(this).prop('checked', true);
 	});
+
+	// 전체 체크박스 외에 모든 박스가 체크되있으면 전체 체크박스도 체크( 단, 조건 유지 이벤트 다음 실행)
+	var tcheck = 0;
+	$(tStatus.not(tStatus.first())).each(function() {
+		if ($(this).is(':checked')) {
+			tcheck++;
+		}
+	});
+	if (tcheck == 5) {
+		$("#tStatAll").prop("checked", true);
+	}
+	var cscheck = 0;
+	$(csStatus.not('#csStatAll')).each(function() {
+		if ($(this).is(':checked')) {
+			cscheck++;
+		}
+	});
+	if (cscheck == 4) {
+		$("#csStatAll").prop("checked", true);
+	}
+
 	// ----------------------------------------------- 날짜 버튼 이벤트
 	// ---------------------------------------------------------
 	var btnDate = $('.btnDate');
@@ -276,7 +312,7 @@ $(function() {
 	// 이동 함수
 	function move(no) {
 		$("input[name=page]").val(no);
-		console.log(no);
+
 		$("form").submit();
 	}
 
@@ -287,7 +323,6 @@ $(function() {
 
 	$(".page_block").click(function() {
 		var p = $(this).text();
-		console.log(p);
 		switch (p) {
 		case '<':
 			move(parseInt(page) - 1);
@@ -303,4 +338,5 @@ $(function() {
 			break;
 		}
 	});
+
 });

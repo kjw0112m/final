@@ -63,8 +63,9 @@ public class SellerProductController {
 			Model model) throws IllegalStateException, IOException {
 //		vo.setSeller_id((String) session.getAttribute("sid"));
 		vo.setSeller_id("abc");
+		//id를 반환해서 사용할지 말지 결정
 		int id = productService.regist(vo);
-		
+
 		return "seller/product/regist_result";
 	}
 	

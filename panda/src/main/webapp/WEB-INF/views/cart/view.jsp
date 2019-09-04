@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <style>
@@ -88,7 +89,7 @@ table {
 	width: 100px;
 }
 
-#span1 {
+.span1 {
 	font-size: 20px;
 	color: black;
 	width: 100%;
@@ -125,11 +126,16 @@ a {
 	font-size: 15px;
 }
 
+.quantity_text {
+	background: white;
+	border: solid 1px black;
+}
+
 .w150 {
 	width: 150px;
 }
 
-#plus_btn, #minus_btn {
+.plus_btn, .minus_btn {
 	background: #000000;
 	color: #fff;
 	border: none;
@@ -143,6 +149,11 @@ a {
 </style>
 <script>
 	$(function() {
+		function uncomma(str) {
+			str = String(str);
+			return str.replace(/[^\d]+/g, '');
+		}
+
 		var id = [];
 		$('.btn-de').click(function() {
 			$('.cart_no').each(function() {
@@ -164,30 +175,114 @@ a {
 			});
 		});
 
+		function total() {
+			var total_price = 0;
+			$('.c_price').each(function() {
+				var price = 0;
+				if ($(this).parent().find("input[name='id']").prop('checked'))
+					price = parseInt(uncomma($(this).text()));
+				total_price += price;
+			});
+			$('#total_price').text('');
+			$('#total_price').append(' ').append(total_price.toLocaleString());
+
+			var t_price = parseInt(uncomma($('#t_price').text()));
+			var point = parseInt(uncomma($('#point').text()));
+			var cal_price = total_price + t_price - point;
+			$('#cal_price').text('');
+			$('#cal_price').append(' ').append(cal_price.toLocaleString());
+			$("input[name=totalPrice]").val(cal_price.toLocaleString());
+			
+		}
+		$("#all_check").prop("checked", true);
+		$("input[name='id']").each(function(){
+			$(this).prop("checked", true);
+		});
 		$("#all_check").change(function() {
 			if ($(this).is(":checked")) {
 				$(".sub_check").prop("checked", true);
 			} else {
 				$(".sub_check").prop("checked", false);
 			}
+				total();
 		});
 
 		$(".sub_check").change(function() {
 			if (!$(this).is(":checked")) {
 				$("#all_check").prop("checked", false);
 			}
+			total();
 		});
 
-		$("#plus_btn").click(function() {
-			var num = $(this).prev().val();
-			if (num < 51)
-				$(this).prev().val(parseInt(num) + 1);
-		});
-		$("#minus_btn").click(function() {
-			var num = $(this).next().val();
-			if (num > 1)
-				$(this).next().val(parseInt(num) - 1);
-		});
+		$('.product_price').each(
+				function() {
+					var price = parseInt(uncomma($(this).text()));
+					var quantity = $(this).parent().parent().find(
+							"input[name='quantity']").val();
+					price = price * quantity
+					$(this).parent().parent().find(".c_price").text('');
+					$(this).parent().parent().find(".c_price").append(
+							price.toLocaleString());
+				});
+		total();
+
+		$(".plus_btn").click(
+				function() {
+					var num = $(this).prev().val();
+					var price = uncomma($(this).parent().prev().find(
+							'.product_price').text());
+					if (num < 51)
+						num = parseInt(num) + 1;
+					$(this).prev().val(num);
+					price = price * num;
+					$(this).parent().next().text('');
+					$(this).parent().next().text(price.toLocaleString());
+					total();
+
+					var id = $(this).parent().parent().find("input[name='id']")
+							.val();
+					$.ajax({
+						url : "quantity",
+						type : "POST",
+						dataType : "text",
+						data : {
+							id : id,
+							quantity : num
+						}
+					});
+				});
+		$(".minus_btn")
+				.click(
+						function() {
+							var num = $(this).next().val();
+							var price = parseInt(uncomma($(this).parent()
+									.next().text()))
+									/ parseInt(num);
+							if (num > 1)
+								num = parseInt(num) - 1
+							$(this).next().val(num);
+							price = price * num;
+							$(this).parent().next().text('');
+							$(this).parent().next().append(
+									price.toLocaleString());
+							total();
+
+							var id = $(this).parent().parent().find(
+									"input[name='id']").val();
+							$.ajax({
+								url : "quantity",
+								type : "POST",
+								dataType : "text",
+								data : {
+									id : id,
+									quantity : num
+								}
+							});
+						});
+
+		$("#buy_btn").click(function() {
+			$('form').submit();
+		})
 	});
 </script>
 <div class="total">
@@ -199,14 +294,13 @@ a {
 	<div class="top-table">
 		<h4>쇼핑백</h4>
 	</div>
-	<form action="order" method="post">
-		<input type="hidden" name=""> <input type="hidden" name="">
-		<input type="hidden" name=""> <input type="hidden" name="">
-		<input type="hidden" name=""> <input type="hidden" name="">
+	<form action="${pageContext.request.contextPath}/orders/order"
+		method="get">
+		<input name="totalPrice" type="hidden">
 		<table class="table_st">
 			<thead>
 				<tr>
-					<th><input type="checkbox" name="id" id="all_check"></th>
+					<th><input type="checkbox" id="all_check"></th>
 					<th></th>
 					<th>상품정보</th>
 					<th class="w150">수량</th>
@@ -223,15 +317,17 @@ a {
 								src="http://placehold.it/140"></a></td>
 						<td class="text-left product_info"><a href="#"><div>${c.product_seller_id}</div></a>
 							<a href="#"><div>${c.product_name}</div></a>
-							<div>${c.product_price}</div>
-							<div>${c.sizes_sizes}</div></td>
+							<div class="product_price">
+								<fmt:formatNumber value="${c.product_price}" pattern="#,###.##" />
+							</div>
+							<div>${c.sizes}</div></td>
 						<td class="text-center w150">
-							<button type="button" id="minus_btn">-</button> <input
+							<button type="button" class="minus_btn">-</button> <input
 							type="text" name="quantity" value="${c.quantity}"
-							class="quantity_text">
-							<button type="button" id="plus_btn">+</button>
+							class="quantity_text" disabled="disabled">
+							<button type="button" class="plus_btn">+</button>
 						</td>
-						<td class="text-center">${c.product_price}원</td>
+						<td class="text-center c_price"></td>
 						<td class="text-center">0</td>
 					</tr>
 				</c:forEach>
@@ -242,15 +338,17 @@ a {
 		</div>
 		<table class="table2">
 			<tr class="b2">
-				<td><span id="span1">상품합계 ${c.product_price}</span><span
-					id="span2"> + </span><span id="span1">배송비 0</span> <span id="span2">
-						- </span> <span id="span1">마일리지 사용 0</span> <span id="span2"> = </span><span
-					id="span1">합계 100,000</span></td>
+				<td>상품합계<span class="span1" id="total_price"></span><span
+					class="span2"> + 배송비 </span><span class="span1" id="t_price">0</span>
+					<span class="span2"> - 적립금 사용 </span> <span class="span1"
+					id="point">0</span> <span class="span2"> = </span><span
+					class="span1" id="cal_price"></span></td>
 			</tr>
 		</table>
 		<div class="box-price">
-			<a href="#"><button class="btn">쇼핑계속하기</button></a> <a href="#"><button
-					class="btn">구매하기</button></a>
+			<a href="${pageContext.request.contextPath}/panda/"><button
+					class="btn">쇼핑계속하기</button></a> <a href="#"><button class="btn"
+					id="buy_btn">구매하기</button></a>
 		</div>
 	</form>
 </div>
