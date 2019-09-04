@@ -17,4 +17,6 @@ public class ProductDto {
 	private String sale_yn;//n
 	private String hit_yn;//n
 	private String display_yn;//n
+	private int mainfile;
+	private int detailfile;
 }
