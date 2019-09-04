@@ -15,10 +15,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="edit" parameterType="sizesDto">
 		update sizes
 			set
-				sizes = #{sizes},
 				quantity = #{quantity}
 			where
-				product_id = #{product_id}	
+				product_id = #{product_id}
+				and
+				sizes = #{sizes}	
 	</update>
 
 </mapper>
