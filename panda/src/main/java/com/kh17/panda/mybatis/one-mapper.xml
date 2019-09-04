@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	이 파일은 SQL 명령만 보관하는 파일
+	따라서 외부에서 접근할 수 있도록 namespace를 지정
+ -->
+<mapper namespace="one">
+
+	<select id="count" parameterType="map" resultType="int">
+		select count(*) from contact
+			<if test="type != null and keyword != null">
+			where ${type} like '%' || #{keyword} || '%'
+			</if>
+	</select>
+	
+	<select id="list" parameterType="map" resultType="oneDto">
+		<!-- 부등호 등 태그 형식에서 사용 불가한 글자를 허용하는 지역 생성 -->
+		<![CDATA[
+		select ID
+		,TITLE
+		,CONTENT
+		,TO_CHAR(updatedate,'YYYY/MM/DD') AS updatedate
+		,memberid
+		,product
+		,state
+		,rn
+		 from(
+			select rownum rn, A.* from (
+				select * from contact
+		]]>
+				<if test="type != null and keyword != null">
+				where
+					${type} like '%' || #{keyword} || '%'
+				</if>
+		<![CDATA[
+				order by updatedate desc
+			)A
+		) where rn >= #{start} and rn <= #{end}
+		]]>
+	</select>
+	
+	<insert id="insertOne" parameterType="oneDto">
+		insert into contact values(
+			contact_seq.nextval, #{memberid}, #{title}, #{content}, sysdate, #{product},'N',null,null,null
+		)
+	</insert>
+	
+	<update id="updateOne" parameterType="oneDto">
+		update contact set 
+			memberid = #{memberid},
+			title = #{title},
+			content = #{content},
+			updatedate = sysdate,
+			product =  #{product}
+		where id = #{id}
+	</update>
+	
+	<update id="updateComment" parameterType="oneDto">
+		update contact set 
+			onecomment = #{onecomment},
+			onecommentdate = sysdate,
+			onecommentuser = #{onecommentuser},
+			state = #{state}
+		where id = #{id}
+	</update>
+	
+	<delete id="delOne" parameterType="oneDto">
+		delete contact where id = #{id}
+	</delete>
+	
+	<select id="selectOne" parameterType="map" resultType="oneDto">
+		select * from contact where id = #{id}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
