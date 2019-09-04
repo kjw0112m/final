@@ -1,10 +1,17 @@
 package com.kh17.panda.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,10 +60,12 @@ public class SellerProductController {
 	public String regist(@ModelAttribute ProductVO vo,
 			HttpSession session,
 			MultipartRequest mRequest,
-			Model model) {
+			Model model) throws IllegalStateException, IOException {
 //		vo.setSeller_id((String) session.getAttribute("sid"));
-		int id = productService.regist(vo);
 		vo.setSeller_id("abc");
+		//id를 반환해서 사용할지 말지 결정
+		int id = productService.regist(vo);
+
 		return "seller/product/regist_result";
 	}
 	
@@ -76,7 +85,7 @@ public class SellerProductController {
 	public String edit(
 			@ModelAttribute ProductVO vo,
 			RedirectAttributes model,
-			HttpSession session) {
+			HttpSession session) throws IllegalStateException, IOException {
 		productService.edit(vo);
 		
 		model.addAttribute("id", (String) session.getAttribute("sid"));
@@ -102,8 +111,5 @@ public class SellerProductController {
 		model.addAttribute("list", list);
 		return "product/list";
 	}
-	
-	
-	
 	
 }

@@ -12,12 +12,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into product(
 			id, seller_id, sub_category_id,
 			name, price,
-			sale_yn, hit_yn, display_yn
+			sale_yn, hit_yn, display_yn,
+			mainfile, detailfile
 		)
 		values(
 			#{id}, #{seller_id}, #{sub_category_id},
 			#{name}, #{price},
-			#{sale_yn}, #{hit_yn}, #{display_yn}
+			#{sale_yn}, #{hit_yn}, #{display_yn},
+			#{mainfile}, #{detailfile}
 		)
 	</insert>
 
@@ -28,10 +30,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="edit" parameterType="productDto">
 		update product
 			set
+				name = #{name},
 				price = #{price},
 				sale_yn = #{sale_yn},
 				hit_yn = #{hit_yn},
-				display_yn = #{display_yn}
+				display_yn = #{display_yn},
+				mainfile = #{mainfile},
+				detailfile = #{detailfile}
 			where
 				id = #{id}	
 	</update>
