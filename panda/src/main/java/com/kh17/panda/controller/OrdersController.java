@@ -40,9 +40,9 @@ public class OrdersController {
 	@Autowired
 	private MemberDao memberDao;
 
-	@GetMapping("/view")
-	public String view() {
-		return "orders/view";
+	@GetMapping("/result")
+	public String result() {
+		return "orders/result";
 	}
 
 	@GetMapping("/order")
@@ -64,17 +64,66 @@ public class OrdersController {
 	}
 
 	@PostMapping("/order")
-	public String order(@ModelAttribute OrdersDto ordersDto, @RequestParam(required = false) int[] c_id, @ModelAttribute OrderAddressVO orderAddressVO,
-			@RequestParam(required = false) String[] re_phones, @RequestParam int total_amount, Model model) {
-		ordersDto.setId(ordersDao.seq());
-		ordersDao.insert(ordersDto);
+	public String order(@ModelAttribute OrdersDto ordersDto, @RequestParam(required = false) int[] c_id,
+			@ModelAttribute OrderAddressVO orderAddressVO, @RequestParam(required = false) String[] re_phones,
+			Model model, HttpSession session) {
+		StringBuffer re_phone = new StringBuffer();
+		for (String s : re_phones) {
+			re_phone.append(s);
+		}
 
-		return "orders/order_result";
+		// 기본 DTO 설정
+		ordersDto.setMember_id((String) session.getAttribute("sid"));
+		if (ordersDto.getPay_type().equals("카카오페이"))
+			ordersDto.setPay_status("결제완료");
+		else if (ordersDto.getPay_type().equals("무통장입금"))
+			ordersDto.setPay_status("입금전");
+		ordersDto.setRe_phone(re_phone.toString());
+		ordersDto.setRe_addr("[" + orderAddressVO.getPost_code() + "]" + orderAddressVO.getBasic_addr()
+				+ orderAddressVO.getDetail_addr());
+
+//		장바구니에서 주문할 경우
+		if (c_id.length > 0) {
+			List<CartViewDto> list = cartDao.list(c_id);
+			int count = 0;
+			String team = null;
+
+			for (CartViewDto cartViewDto : list) {
+				ordersDto.setId(ordersDao.seq());
+				ordersDto.setQuantity(cartViewDto.getQuantity());
+				ordersDto.setTotal_price(cartViewDto.getQuantity() * cartViewDto.getProduct_price());
+				ordersDto.setSizes(cartViewDto.getSizes());
+				ordersDto.setProduct_id(cartViewDto.getProduct_id());
+				
+				if (count > 0) {
+					ordersDto.setTeam(team);
+				}
+				
+				ordersDao.insert(ordersDto);
+				if (count == 0) {
+					team = ordersDao.getOrderId(ordersDto.getId());
+				}
+				count++;
+			}
+		} 
+//		상품 상세화면에서 단일 주문할 경우
+		else {
+			ordersDto.setId(ordersDao.seq());
+			ordersDto.setRe_phone(re_phone.toString());
+			ordersDto.setRe_addr("[" + orderAddressVO.getPost_code() + "]" + orderAddressVO.getBasic_addr()
+					+ orderAddressVO.getDetail_addr());
+			ordersDao.insert(ordersDto);
+		}
+
+		return "orders/result";
 	}
 
 	@GetMapping("/list")
 	public String list(@ModelAttribute OrderViewDto orderViewDto, Model model,
-			@RequestParam(required = false, defaultValue = "1") int page) {
+			@RequestParam(required = false, defaultValue = "1") int page, HttpSession session) {
+		
+		String member_id = (String) session.getAttribute("sid");
+		orderViewDto.setMember_id(member_id);
 		int pagesize = 10;
 		int start = pagesize * page - (pagesize - 1);
 		int end = pagesize * page;
@@ -83,7 +132,7 @@ public class OrdersController {
 		int startBlock = (page - 1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
 
-		int count = ordersDao.count(orderViewDto, null, null, null);
+		int count = ordersDao.count(orderViewDto);
 		int pageCount = (count - 1) / pagesize + 1;
 		if (endBlock > pageCount) {
 			endBlock = pageCount;
@@ -92,8 +141,12 @@ public class OrdersController {
 		model.addAttribute("page", page);
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
-		List<OrderViewDto> list = ordersDao.list(orderViewDto, null, start, end, null, null);
-		model.addAttribute("orderViewDto", list);
+		model.addAttribute("pageCount", pageCount);
+		
+		List<OrderViewDto> list = ordersDao.list(orderViewDto, start, end);
+		System.out.println(list);
+		model.addAttribute("orderViewList", list);
+		model.addAttribute("searchCount", count);
 		return "orders/list";
 	}
 

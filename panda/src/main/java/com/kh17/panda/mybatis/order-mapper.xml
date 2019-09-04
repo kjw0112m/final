@@ -21,7 +21,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="dto.start_dt != null and dto.end_dt !=null">
 			and
 			order_dt between to_date(#{dto.start_dt},
-			'YYYY-MM-DD') and to_date(#{dto.end_dt}, 'YYYY-MM-DD') + 0.99999
+			'YYYY-MM-DD')
+			and to_date(#{dto.end_dt}, 'YYYY-MM-DD') + 0.99999
 		</if>
 		<if test="dto.product_name != null">
 			and
@@ -33,14 +34,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			pay_status = #{dto.pay_status}
 		</if>
 		<if test="tStatus != null">
-				and
+			and
 			<foreach collection="tStatus" separator="or" item="tStat"
 				open="(" close=")">
 				t_status = #{tStat}
 			</foreach>
 		</if>
 		<if test="csStatus != null">
-				and
+			and
 			<foreach collection="csStatus" separator="or" item="csStat"
 				open="(" close=")">
 				cs_status = #{csStat}
@@ -76,7 +77,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="dto.start_dt != null and dto.end_dt !=null">
 			and
 			order_dt between to_date(#{dto.start_dt},
-			'YYYY-MM-DD') and to_date(#{dto.end_dt}, 'YYYY-MM-DD') + 0.99999
+			'YYYY-MM-DD')
+			and to_date(#{dto.end_dt}, 'YYYY-MM-DD') + 0.99999
 		</if>
 		<if test="dto.product_name != null">
 			and
@@ -84,14 +86,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			'%'
 		</if>
 		<if test="tStatus != null">
-				and
+			and
 			<foreach collection="tStatus" separator="or" item="tStat"
 				open="(" close=")">
 				t_status = #{tStat}
 			</foreach>
 		</if>
 		<if test="csStatus != null">
-				and
+			and
 			<foreach collection="csStatus" separator="or" item="csStat"
 				open="(" close=")">
 				cs_status = #{csStat}
@@ -110,21 +112,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insert" parameterType="ordersDto">
 		insert into orders values(
 		to_char(sysdate,
-		'YYYYMMDDHH24MISS')||#{id},
+		'YYYYMMDDHH24MISS') ||
+		${id},
 		#{id},
-		#{product_id}, #{member_id}, #{t_id},
+		#{product_id}, #{member_id},
+		null,
 		#{quantity}, sysdate,
 		#{pay_type},
-		#{total_price}, #{discount_price}, #{status}, null, null
+		#{total_price}, 0, #{pay_status},
+		null, null,
+		null,
 		<choose>
 			<when test="team == null">
-				to_char(sysdate,'YYYYMMDDHH24MISS')||#{order_id},
+				to_char(sysdate,'YYYYMMDDHH24MISS')||${id},
 			</when>
 			<otherwise>
 				#{team},
 			</otherwise>
 		</choose>
-		#{sizes}
+		#{sizes},
+		#{re_name},
+		#{re_addr},
+		#{re_phone}
 		)
 	</insert>
 
@@ -142,7 +151,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<delete id="delete">
 		delete orders where order_dt between
-		sysdate-(INTERVAL '2' YEAR) and sysdate-(INTERVAL '1' YEAR)-(INTERVAL '1' MINUTE)
+		sysdate-(INTERVAL '2' YEAR) and sysdate-(INTERVAL '1' YEAR)-(INTERVAL
+		'1' MINUTE)
 	</delete>
 
 	<update id="cs_status" parameterType="ordersDto">
@@ -168,6 +178,56 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultType="orderViewDto">
 		select * from order_view where team = #{team}
 	</select>
+
+	<select id="getOrderId" parameterType="int" resultType="string">
+		select
+		order_id from orders where to_char(order_dt, 'YYYYMMDD') =
+		TO_CHAR(SYSDATE, 'YYYYMMDD') and id=#{id}
+	</select>
+
+	<select id="countUser" resultType="int"
+		parameterType="orderViewDto">
+		select count(*) from order_view where member_id =
+		#{member_id}
+	</select>
+
+	<select id="myOrder" resultMap="orderListVO"
+		parameterType="map">
+		select * from ( 
+		<![CDATA[ 
+		select rownum rn, O.* from( select distinct team, order_dt from order_view 
+		]]>
+		where member_id=#{dto.member_id}
+		<if test="dto.start_dt != null and dto.end_dt !=null"> and
+			order_dt between to_date(#{dto.start_dt}, 'YYYY-MM-DD') and
+			to_date(#{dto.end_dt},
+			'YYYY-MM-DD') + 0.99999
+		</if>
+		)O 
+		<![CDATA[ 
+		) where rn >= #{start} and rn <= #{end} 
+		]]>
+	</select>
+
+
+
+	<resultMap type="orderListVO" id="orderListVO">
+		<result column="team" property="team" />
+		<collection property="list" column="team"
+			javaType="java.util.ArrayList" ofType="orderViewDto"
+			select="myOrderTeam"></collection>
+	</resultMap>
+
+<!-- 	<select id="myOrder" parameterType="string" resultMap="orderListVO"> -->
+<!-- 		select -->
+<!-- 		distinct team from order_view where member_id=#{member_id} order by team asc -->
+<!-- 	</select> -->
+
+	<select id="myOrderTeam" resultType="orderViewDto">
+		select * from order_view where
+		team = #{team}
+	</select>
+
 </mapper>
 
 

@@ -1,5 +1,7 @@
 package com.kh17.panda.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh17.panda.entity.ProductDto;
 import com.kh17.panda.entity.ProductSubcategoryDto;
+import com.kh17.panda.repository.FilesDao;
 import com.kh17.panda.repository.ProductDao;
 import com.kh17.panda.repository.ProductSubcategoryDao;
 import com.kh17.panda.repository.SizesDao;
@@ -43,6 +46,9 @@ public class SellerProductController {
 	@Autowired
 	private ProductSubcategoryDao productSubcategoryDao;
 	
+	@Autowired
+	private FilesDao filesDao;
+	
 	@GetMapping("/regist")
 	public String regist(Model model) {
 		model.addAttribute("list", subcategoryDao.list());
@@ -53,11 +59,12 @@ public class SellerProductController {
 	public String regist(@ModelAttribute ProductVO vo,
 			HttpSession session,
 			MultipartRequest mRequest,
-			Model model) {
+			Model model) throws IllegalStateException, IOException {
 //		vo.setSeller_id((String) session.getAttribute("sid"));
-		int id = productService.regist(vo);
 		vo.setSeller_id("abc");
-		
+		//id를 반환해서 사용할지 말지 결정
+		int id = productService.regist(vo);
+
 		return "seller/product/regist_result";
 	}
 	
@@ -77,7 +84,7 @@ public class SellerProductController {
 	public String edit(
 			@ModelAttribute ProductVO vo,
 			RedirectAttributes model,
-			HttpSession session) {
+			HttpSession session) throws IllegalStateException, IOException {
 		productService.edit(vo);
 		
 		model.addAttribute("id", (String) session.getAttribute("sid"));
@@ -88,11 +95,26 @@ public class SellerProductController {
 	public String delete(@RequestParam int[] product_id) {
 		
 		for(int id : product_id) {
+			ProductDto productDto = productDao.get(id);
+			int main = productDto.getMainfile();
+			int detail = productDto.getDetailfile();
+			
+			//상품 삭제
 			productDao.delete(id);
+			
+			//메인 이미지 삭제(물리+DB)
+			String mainsv = filesDao.getSaveName(main);
+			File file1 = new File("D:/upload/kh17/product", mainsv);
+			file1.delete();
+			filesDao.delete(main);
+			//상세 이미지 삭제(물리+DB)
+			String detailsv = filesDao.getSaveName(detail);
+			File file2 = new File("D:/upload/kh17/product", detailsv);
+			file2.delete();
+			filesDao.delete(detail);
 		}
 		return "redirect:list";
 	}
-	
 	
 	@GetMapping("/list")
 	public String list(HttpSession session,
@@ -101,10 +123,7 @@ public class SellerProductController {
 		String seller_id = "abc";
 		List<ProductSubcategoryDto> list = productSubcategoryDao.list(seller_id);
 		model.addAttribute("list", list);
-		return "product/list";
+		return "seller/product/list";
 	}
-	
-	
-	
 	
 }

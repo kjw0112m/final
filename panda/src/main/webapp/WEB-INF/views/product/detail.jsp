@@ -125,13 +125,12 @@
 </head>
 <body>
 	<div class="spec">
-		<img src="http://placehold.it/350x350.png?text=Main+Image"> <br>
+		<img src="${pageContext.request.contextPath}/product/image?id=${productSellerDto.mainfile}"><br>
 		<br> ${productSellerDto.nickname} <br> <br>
 		${productSellerDto.product_name} <br> <br>
 		<span class="price">${productSellerDto.price}</span> <br> <br>
 	</div>
-	<!-- 	<form action="../cart/view" method="post"> -->
-	<form>
+	<form action="../cart/add" method="post">
 		<input type="hidden" name="product_id" value="${productSellerDto.product_id}">
 		<select id="sizes">
 			<option value=""  selected="selected" disabled="disabled">사이즈 선택</option>
@@ -146,7 +145,7 @@
 	</form>
 	<br>
 	<br>
-	<img src="http://placehold.it/350x1000.png?text=Detail+Image">
+	<img src="${pageContext.request.contextPath}/product/image?id=${productSellerDto.detailfile}">
 	<br>
 	<br>
 	<div class="template" style="display: none">
