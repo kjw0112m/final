@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	이 파일은 SQL 명령만 보관하는 파일
+	따라서 외부에서 접근할 수 있도록 namespace를 지정
+ -->
+<mapper namespace="review">
+
+	<insert id="insertReviewComment" parameterType="reviewDto">
+		insert into review values(
+			review_seq.nextval, #{ordersid}, #{title}, #{content}, sysdate, #{starcnt}, #{createuser}
+		)
+	</insert>
+	
+	<select id="listReviewComment" parameterType="reviewDto" resultType="reviewDto">
+		SELECT * FROM
+		review
+		WHERE 1=1
+		<if test="ordersid != null">	
+			AND ordersid = #{ordersid}
+		</if>
+	</select>
+	
+	<update id="updateComment" parameterType="reviewDto">
+		update review set 
+			content = #{content},
+			starcnt = #{starcnt},
+			createuser = #{createuser},
+			registdt = sysdate
+		where id = #{id}
+	</update>
+	
+	<delete id="delComment" parameterType="reviewDto">
+		delete review where id = #{id}
+	</delete>
+	
+	<select id="getstartotalcnt" parameterType="reviewDto" resultType="reviewDto">
+		SELECT trunc(sum(starcnt)/count(*),1) as startotalcnt FROM review
+		where
+		1=1
+		<if test="ordersid != null">
+		and ordersid = #{ordersid}
+		</if>
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
