@@ -160,12 +160,17 @@
 								window.alert("비밀번호가 틀렸습니다");
 
 							} else {
+								$("#pw").val('');	
+								$("#new_pw").val('');
+								$("#chpass").val('');
 								window.alert("비밀번호를 변경했습니다")
 							}
 						}
 					});
 				});
 	});
+
+  
 </script>
 <style>
 .gBreak {
@@ -363,7 +368,7 @@ ul, li {
 	font-size: 15px;
 }
 
-.h4{
+.h4 {
 	font-size: 30px;
 	font-weight: 700px;
 	margin: 20px;
@@ -372,16 +377,17 @@ ul, li {
 </head>
 
 <body>
+
 	<div id="container">
 		<div id="sidebar">
 			<div class="snbArea">
 				<ul id="snb">
 					<li>
-						<h4 class="h4">MY PAGE</h4>
+						<h4>MY PAGE</h4>
 					</li>
 					<li><a id="a" href="#none" class="product"> 좋아요 </a></li>
 					<li><a id="a"
-						href="#"
+						href="${pageContext.request.contextPath}/orders/order"
 						class="order"> 주문 관리 </a>
 						<ul class="hide">
 							<li class=""><a id="a" href="#"> 주문 배송 조회 </a></li>
@@ -389,9 +395,9 @@ ul, li {
 						</ul></li>
 					<li><a id="a" href="#" class="member"> 회원 혜택 </a></li>
 					<li><a id="a" href="#" class="board"> 정보 관리 </a>
-						<ul class="hide">
-							<li class=""><a id="a" href="#"> 회원정보 수정 </a></li>
-							<li class=""><a id="a" href="#"> 회원 탈퇴 </a></li>
+						<ul class="">
+							<li class=""><a id="a" href="info"> 회원정보 수정 </a></li>
+							<li class=""><a id="a" href="delete"> 회원 탈퇴 </a></li>
 						</ul></li>
 					<li><a id="a" href="#" class="promotion"> 문의내역 </a>
 						<ul class="hide">
@@ -417,6 +423,8 @@ ul, li {
 
 			<table class="table">
 
+
+
 				<tr>
 					<td class="a">아이디</td>
 					<td class="b">${mdto.id}</td>
@@ -424,7 +432,7 @@ ul, li {
 				<tr>
 					<td class="a">비밀번호(수정가능)</td>
 					<td class="b"><span class="span">현재 비밀번호</span><input
-						type="password" name="origin_pw" id="pw" class="iText"><br>
+						type="password" name="origin_pw" id="pw" class="iText" ><br>
 						<span class="span">신규 비밀번호</span><input type="password"
 						class="iText" name="new_pw" id="new_pw"
 						pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$"><span class="spw"></span><br>
