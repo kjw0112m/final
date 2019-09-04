@@ -23,6 +23,7 @@ import com.kh17.panda.repository.MemberDao;
 import com.kh17.panda.repository.OrdersDao;
 import com.kh17.panda.repository.ProductDao;
 import com.kh17.panda.vo.OrderAddressVO;
+import com.kh17.panda.vo.OrderListVO;
 
 @Controller
 @RequestMapping("/orders")
@@ -124,7 +125,7 @@ public class OrdersController {
 		
 		String member_id = (String) session.getAttribute("sid");
 		orderViewDto.setMember_id(member_id);
-		int pagesize = 10;
+		int pagesize = 5;
 		int start = pagesize * page - (pagesize - 1);
 		int end = pagesize * page;
 
@@ -143,10 +144,8 @@ public class OrdersController {
 		model.addAttribute("endBlock", endBlock);
 		model.addAttribute("pageCount", pageCount);
 		
-		List<OrderViewDto> list = ordersDao.list(orderViewDto, start, end);
-		System.out.println(list);
-		model.addAttribute("orderViewList", list);
-		model.addAttribute("searchCount", count);
+		List<OrderListVO> list = ordersDao.list(orderViewDto, start, end);
+		model.addAttribute("myOrder", list);
 		return "orders/list";
 	}
 

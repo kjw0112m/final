@@ -33,14 +33,12 @@
 	var page = "${page}";
 	var startBlock = "${startBlock}";
 	var endBlock = "${endBlock}";
-
+	
 </script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script
 	src="${pageContext.request.contextPath}/js/admin/order_search.js"></script>
 <form action="search" method="post" id="orderSearchForm">
-	<%-- <input type="hidden" name="seller_id" value="${sessionScope.sid }"> --%>
-	<!-- 	<input type="hidden" name="seller_id" value="abc"> -->
 	<div id="content">
 		<div class="head_tit">
 			<h1>전체주문목록</h1>

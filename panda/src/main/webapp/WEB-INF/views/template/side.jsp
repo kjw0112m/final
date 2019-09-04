@@ -26,13 +26,6 @@
 							<li class=""><a id="a" href="#"> 상품 문의 </a></li>
 							<li class=""><a id="a" href="#"> 1:1 문의 </a></li>
 						</ul></li>
-				</ul>
-				<div class="customer">
-					<strong class="title">고객센터 <span class="info">(평일
-							9~18시)</span></strong>
-					<div class="tel">
-						8080<span class="dot">.</span>8080
-					</div>
-				</div>
+				</ul> 
 			</div>
 		</div>

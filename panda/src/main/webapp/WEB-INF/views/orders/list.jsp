@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <title>주문배송조회</title>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
@@ -77,6 +78,39 @@
 			$(this).addClass("a_bold");
 			target.next().find("a").not($(this)).removeClass("a_bold");
 			console.log(this);
+		});
+
+		var page = "${page}";
+		var startBlock = "${startBlock}";
+		var endBlock = "${endBlock}";
+
+		function move(no) {
+			$("input[name=page]").val(no);
+
+			$("form").submit();
+		}
+
+		$(".page_move").click(function() {
+			var p = $(this).text();
+			move(p);
+		});
+
+		$(".page_block").click(function() {
+			var p = $(this).text();
+			switch (p) {
+			case '<':
+				move(parseInt(page) - 1);
+				break;
+			case '<<':
+				move(parseInt(startBlock) - 1);
+				break;
+			case '>':
+				move(parseInt(page) + 1);
+				break;
+			case '>>':
+				move(parseInt(endBlock) + 1);
+				break;
+			}
 		});
 	});
 </script>
@@ -222,7 +256,8 @@ h4 {
 
 .table2 {
 	border-collapse: collapse;
-	width: 100%; height : 222px;
+	width: 100%;
+	height: 222px;
 	text-align: center;
 	height: 222px;
 }
@@ -232,8 +267,10 @@ h4 {
 }
 
 .a1>th {
-	visibility: hidden; height : 30px; border-bottom : 1px solid #bbb;
-	text-align : right;
+	visibility: hidden;
+	height: 30px;
+	border-bottom: 1px solid #bbb;
+	text-align: right;
 	font-size: 15px;
 	text-align: right;
 	border-bottom: 1px solid #bbb;
@@ -318,6 +355,24 @@ dd, dl, h1, h2, h3, h4, h5, input, p, pre {
 	line-height: 20px;
 	height: 18px;
 }
+
+.paginate {
+	margin: 25px 0 0;
+	text-align: center;
+}
+
+.paginate ol, .paginate li {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 16px;
+	line-height: 16px;
+	padding: 0 1px;
+}
+
+.active_page {
+	font-weight: bold;
+	color: #55a0ff;
+}
 </style>
 
 <body>
@@ -328,6 +383,7 @@ dd, dl, h1, h2, h3, h4, h5, input, p, pre {
 	<div class="total">
 		<p id="p">주문 배송 조회</p>
 		<form action="">
+			<input name="page" type="hidden">
 			<table class="table1">
 				<tr>
 					<td><span class="gBreak"> <input type="text"
@@ -339,46 +395,83 @@ dd, dl, h1, h2, h3, h4, h5, input, p, pre {
 		</form>
 		<section class="myorder_list">
 			<ul class="my_orders">
-				<c:forEach var="orderViewDto" items="${orderViewList}">
+				<c:forEach var="myOrder" items="${myOrder}">
 					<li>
 						<dl class="order_info dis_f tc_3">
 							<dt>주문일</dt>
-							<dd class="eng">${orderViewDto.getDate() }</dd>
+							<dd class="eng">${myOrder.getDate() }</dd>
 							<dt>주문번호</dt>
-							<dd class="eng">${orderViewDto.team}</dd>
+							<dd class="eng">${myOrder.team}</dd>
 							<dt>주문상품</dt>
-							<dd class="on_w">${searchCount}개</dd>
-						</dl>
-						<table class="table2">
-							<thead>
-								<tr class="a1">
-									<th>상품정보</th>
-									<th>주문 금액</th>
-									<th>상태</th>
-									<th><a href="/mypage/order/detail/2019090455545554"
-										class="go_detail">상세 내역</a></th>
-								</tr>
-							</thead>
-							<tr class="b1">
-								<td class="img"><a href="#"> <img
-										src="http://placehold.it/140"></a></td>
-								<td id="td-d"><a href="#">
-										<div>${orderViewDto.seller_id}</div>
-								</a> <a href="#">
-										<div>${orderViewDto.product_name}</div>
-								</a>
-									<div>${orderViewDto.price}</div>
-									<div>${orderViewDto.sizes}</div>
-									<div>${orderViewDto.quantity}개</div> 
+							<dd class="on_w">${myOrder.getCount()}개</dd>
+						</dl> <c:forEach var="orderViewDto" items="${myOrder.list}">
+							<table class="table2">
+								<thead>
+									<tr class="a1">
+										<th>상품정보</th>
+										<th>주문 금액</th>
+										<th>상태</th>
+										<th><a href="#" class="go_detail">상세 내역</a></th>
+									</tr>
+								</thead>
+								<tr class="b1">
+									<td class="img"><a href="#"> <img
+											src="http://placehold.it/140"></a></td>
+									<td id="td-d"><a href="#">
+											<div>${orderViewDto.seller_id}</div>
+									</a> <a href="#">
+											<div>${orderViewDto.product_name}</div>
+									</a>
+										<div>
+											<fmt:formatNumber value="${orderViewDto.price}"
+												pattern="#,###.##" />
+										</div>
+										<div>${orderViewDto.sizes}</div>
+										<div>${orderViewDto.quantity}개</div></td>
+									<td class="text-center"><fmt:formatNumber
+											value="${orderViewDto.total_price}" pattern="#,###.##" /></td>
+									<td>${orderViewDto.pay_status }
+										<p>
+											<a href="#">[취소]</a>
+										</p>
 									</td>
-								<td class="text-center">${orderViewDto.total_price}</td>
-								<td>입금전</td>
-							</tr>
-						</table>
+								</tr>
+							</table>
+						</c:forEach>
 					</li>
 				</c:forEach>
 			</ul>
 		</section>
+
+		<div class="paginate">
+			<ol>
+				<c:if test="${(not (page eq 1))&& not empty page && page>=6}">
+					<li><a href="#" class="page_block">&lt;&lt;</a></li>
+				</c:if>
+				<c:if test="${not (page eq 1) && not empty page}">
+					<li><a href="#" class="page_block">&lt;</a></li>
+				</c:if>
+				<!--페이지 출력 -->
+				<c:forEach var="i" begin="${startBlock}" end="${endBlock}">
+					<c:choose>
+						<c:when test="${page == i}">
+							<li class="active_page">${i}</li>
+						</c:when>
+						<c:otherwise>
+							<c:if test="${i>0}">
+								<li><a href="#" class="page_move">${i}</a></li>
+							</c:if>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				<c:if test="${not (page eq pageCount)}">
+					<li><a href="#" class="page_block">&gt;</a></li>
+				</c:if>
+				<c:if test="${(not (page eq pageCount)) && pageCount>=5}">
+					<li><a href="#" class="page_block">&gt;&gt;</a></li>
+				</c:if>
+			</ol>
+		</div>
 		<!-- 		<table class="table3"> -->
 		<!-- 			<tr> -->
 		<!-- 			주문설명.png -->

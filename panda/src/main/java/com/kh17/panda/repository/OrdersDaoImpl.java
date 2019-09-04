@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh17.panda.entity.OrderViewDto;
 import com.kh17.panda.entity.OrdersDto;
+import com.kh17.panda.vo.OrderListVO;
 import com.kh17.panda.vo.OrderViewVO;
 
 @Repository
@@ -39,13 +40,13 @@ public class OrdersDaoImpl implements OrdersDao {
 	}
 	
 	@Override
-	public List<OrderViewDto> list(OrderViewDto orderViewDto, int start, int end) {
+	public List<OrderListVO> list(OrderViewDto orderViewDto, int start, int end) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("dto", orderViewDto);
 		map.put("start", start);
 		map.put("end", end);
 		
-		return sqlSession.selectList("order.list", map);
+		return sqlSession.selectList("order.myOrder", map);
 	}
 
 	@Override
