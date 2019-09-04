@@ -93,12 +93,15 @@ public class SellerProductController {
 	
 	@GetMapping("/delete")
 	public String delete(@RequestParam int[] product_id) {
+		
 		for(int id : product_id) {
 			ProductDto productDto = productDao.get(id);
 			int main = productDto.getMainfile();
 			int detail = productDto.getDetailfile();
+			
 			//상품 삭제
 			productDao.delete(id);
+			
 			//메인 이미지 삭제(물리+DB)
 			String mainsv = filesDao.getSaveName(main);
 			File file1 = new File("D:/upload/kh17/product", mainsv);
