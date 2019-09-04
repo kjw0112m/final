@@ -28,4 +28,8 @@ public interface OrdersDao {
 	List<OrderViewDto> getTeam(String team);
 	
 	String getOrderId(int id);
+
+	int count(OrderViewDto orderViewDto);
+
+	List<OrderViewDto> list(OrderViewDto orderViewDto, int start, int end);
 }

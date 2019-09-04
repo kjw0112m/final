@@ -13,8 +13,8 @@ import com.kh17.panda.entity.OrdersDto;
 import com.kh17.panda.vo.OrderViewVO;
 
 @Repository
-public class OrdersDaoImpl implements OrdersDao{
-	
+public class OrdersDaoImpl implements OrdersDao {
+
 	@Autowired
 	private SqlSession sqlSession;
 
@@ -25,7 +25,8 @@ public class OrdersDaoImpl implements OrdersDao{
 	}
 
 	@Override
-	public List<OrderViewDto> list(OrderViewDto orderViewDto, List<OrderViewVO> orderViewVO, int start, int end, String[] csStatus, String[] tStatus) {
+	public List<OrderViewDto> list(OrderViewDto orderViewDto, List<OrderViewVO> orderViewVO, int start, int end,
+			String[] csStatus, String[] tStatus) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("dto", orderViewDto);
 		map.put("vo", orderViewVO);
@@ -33,6 +34,16 @@ public class OrdersDaoImpl implements OrdersDao{
 		map.put("end", end);
 		map.put("csStatus", csStatus);
 		map.put("tStatus", tStatus);
+
+		return sqlSession.selectList("order.list", map);
+	}
+	
+	@Override
+	public List<OrderViewDto> list(OrderViewDto orderViewDto, int start, int end) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("dto", orderViewDto);
+		map.put("start", start);
+		map.put("end", end);
 		
 		return sqlSession.selectList("order.list", map);
 	}
@@ -52,7 +63,7 @@ public class OrdersDaoImpl implements OrdersDao{
 	public void cancel(OrdersDto ordersDto) {
 		sqlSession.delete("order.cs_status", ordersDto);
 	}
-	
+
 	@Override
 	public void delete() {
 		sqlSession.delete("order.delete");
@@ -62,7 +73,6 @@ public class OrdersDaoImpl implements OrdersDao{
 	public void invoice(OrdersDto ordersDto) {
 		sqlSession.update("order.invoice", ordersDto);
 	}
-
 
 	@Override
 	public void stat_change(OrdersDto ordersDto) {
@@ -78,10 +88,15 @@ public class OrdersDaoImpl implements OrdersDao{
 	public int count(OrderViewDto orderViewDto, List<OrderViewVO> search, String[] csStatus, String[] tStatus) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("dto", orderViewDto);
-		map.put("vo",search);
+		map.put("vo", search);
 		map.put("csStatus", csStatus);
 		map.put("tStatus", tStatus);
 		return sqlSession.selectOne("order.count", map);
+	}
+	
+	@Override
+	public int count(OrderViewDto orderViewDto) {
+		return sqlSession.selectOne("order.countUser", orderViewDto);
 	}
 
 	@Override

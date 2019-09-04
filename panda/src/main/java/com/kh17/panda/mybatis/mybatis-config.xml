@@ -23,5 +23,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh17.panda.entity.CategoryListDto" alias="categoryListDto"/>
 		<typeAlias type="com.kh17.panda.entity.CategoryDto" alias="categoryDto"/>
 		<typeAlias type="com.kh17.panda.entity.IdentityVerificationDto" alias="identityVerificationDto"/>
+		
+		<typeAlias type="com.kh17.panda.vo.OrderListVO" alias="orderListVO"/>
 	</typeAliases>
 </configuration>

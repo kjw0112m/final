@@ -44,11 +44,6 @@ public class OrdersController {
 	public String result() {
 		return "orders/result";
 	}
-	
-	@GetMapping("/view")
-	public String view() {
-		return "orders/view";
-	}
 
 	@GetMapping("/order")
 	public String order(@RequestParam(required = false, defaultValue = "0") int product_id,
@@ -125,7 +120,10 @@ public class OrdersController {
 
 	@GetMapping("/list")
 	public String list(@ModelAttribute OrderViewDto orderViewDto, Model model,
-			@RequestParam(required = false, defaultValue = "1") int page) {
+			@RequestParam(required = false, defaultValue = "1") int page, HttpSession session) {
+		
+		String member_id = (String) session.getAttribute("sid");
+		orderViewDto.setMember_id(member_id);
 		int pagesize = 10;
 		int start = pagesize * page - (pagesize - 1);
 		int end = pagesize * page;
@@ -134,7 +132,7 @@ public class OrdersController {
 		int startBlock = (page - 1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
 
-		int count = ordersDao.count(orderViewDto, null, null, null);
+		int count = ordersDao.count(orderViewDto);
 		int pageCount = (count - 1) / pagesize + 1;
 		if (endBlock > pageCount) {
 			endBlock = pageCount;
@@ -143,8 +141,12 @@ public class OrdersController {
 		model.addAttribute("page", page);
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
-		List<OrderViewDto> list = ordersDao.list(orderViewDto, null, start, end, null, null);
-		model.addAttribute("orderViewDto", list);
+		model.addAttribute("pageCount", pageCount);
+		
+		List<OrderViewDto> list = ordersDao.list(orderViewDto, start, end);
+		System.out.println(list);
+		model.addAttribute("orderViewList", list);
+		model.addAttribute("searchCount", count);
 		return "orders/list";
 	}
 
