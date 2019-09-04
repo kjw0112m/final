@@ -130,6 +130,9 @@ public class ProductServiceImpl implements ProductService{
 			filesDao.insert(filesDto);	
 			productDto.setMainfile(main_id);
 		}
+		else {
+			productDto.setMainfile(vo.getMainfile());
+		}
 		
 		//상세 이미지 신규 파일이 있다면 (안 비어있다면)
 		if(!vo.getDetails().isEmpty()) {
@@ -158,19 +161,27 @@ public class ProductServiceImpl implements ProductService{
 			filesDao.insert(filesDto);
 			productDto.setDetailfile(details_id);
 		}
+		else {
+			productDto.setDetailfile(vo.getDetailfile());
+		}
 		
-		System.out.println(vo.getMainfile());
-		System.out.println(vo.getDetailfile());
-		 			productDto = ProductDto.builder()
-														.id(vo.getId())
-														.name(vo.getName())
-														.price(vo.getPrice())
-														.sale_yn(vo.getSale_yn())
-														.hit_yn(vo.getHit_yn())
-														.display_yn(vo.getDisplay_yn())
-//														.mainfile(main_id)
-//														.detailfile(details_id)
-														.build();
+		productDto.setId(vo.getId());
+		productDto.setName(vo.getName());
+		productDto.setPrice(vo.getPrice());
+		productDto.setSale_yn(vo.getSale_yn());
+		productDto.setHit_yn(vo.getHit_yn());
+		productDto.setDisplay_yn(vo.getDisplay_yn());
+		
+//		 			productDto = ProductDto.builder()
+//														.id(vo.getId())
+//														.name(vo.getName())
+//														.price(vo.getPrice())
+//														.sale_yn(vo.getSale_yn())
+//														.hit_yn(vo.getHit_yn())
+//														.display_yn(vo.getDisplay_yn())
+//														.mainfile(vo.getMainfile())
+//														.detailfile(vo.getDetailfile())
+//														.build();
 
 		productDao.edit(productDto);
 

@@ -130,8 +130,7 @@
 		${productSellerDto.product_name} <br> <br>
 		<span class="price">${productSellerDto.price}</span> <br> <br>
 	</div>
-	<!-- 	<form action="../cart/view" method="post"> -->
-	<form>
+	<form action="../cart/add" method="post">
 		<input type="hidden" name="product_id" value="${productSellerDto.product_id}">
 		<select id="sizes">
 			<option value=""  selected="selected" disabled="disabled">사이즈 선택</option>
