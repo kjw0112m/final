@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and
 			seller_id = #{dto.seller_id}
 		</if>
-		)O
+		order by order_dt desc)O
 		<![CDATA[
 		) where rn >= #{start} and rn <= #{end}
 		]]>
@@ -210,7 +210,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)O)
 		<if test="start!=null and end!=null">
 		<![CDATA[ 
-		where rn >= #{start} and rn <= #{end} 
+		where rn >= #{start} and rn <= #{end}
 		]]>
 		</if>
 	</select>
@@ -224,7 +224,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="myOrderTeam" resultType="orderViewDto">
 		select * from order_view where
-		team = #{team}
+		team = #{team} order by order_dt desc
 	</select>
 	
 	<select id="myOrderCount" resultType="int" parameterType="orderViewDto">
