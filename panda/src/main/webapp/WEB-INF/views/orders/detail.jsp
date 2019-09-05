@@ -3,29 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
+
 <style>
 ul, li {
 	list-style: none;
 }
 
-<<<<<<< HEAD
 #container {
 	position: relative;
 }
-=======
-            target.next().find("a").click(function () {
-                $(this).addClass("a_bold");
-                target.next().find("a").not($(this)).removeClass("a_bold");
-                console.log(this);
-            });
-        });
-    </script>
-   <style>
-        ul,
-        li {
-            list-style: none;
-        }
->>>>>>> branch 'master' of https://github.com/kjw0112m/final
 
 .table1 {
 	border-collapse: collapse;
@@ -39,12 +25,6 @@ h4 {
 	font-size: 30px;
 	font-weight: 700px;
 	margin: 20px;
-}
-
-#h3 {
-	font-size: 20px;
-	font-weight: 700px;
-	margin-top: 100px;
 }
 
 #span1 {
@@ -108,10 +88,10 @@ h4 {
 
 .table3 {
 	border-collapse: collapse;
-	margin-bottom: 50px;
 	width: 100%;
 	text-align: left;
 	background-color: #f7f7f7;;
+	height: 200px;
 }
 
 .a3>th>p {
@@ -121,7 +101,6 @@ h4 {
 
 .b3>td>p {
 	border-left: 30px solid #f7f7f7;
-	width: 50%;
 	font-size: 15px;
 }
 
@@ -129,27 +108,27 @@ h4 {
 	border-right: 2px solid white;
 }
 
-<<<<<<< HEAD
 .b3>td {
 	border-right: 2px solid white;
 }
-=======
-        .h4 {
-            font-size: 30px;
-            font-weight: 700px;
-            margin: 20px;
-        }
-        #h3 {
-            font-size: 20px;
-            font-weight: 700px;
-            margin-top: 100px;
-        }
-        #span1{
-            font-size: 50px;
-            margin: 20px; 
-            color: #bbb;
-        }
->>>>>>> branch 'master' of https://github.com/kjw0112m/final
+
+.h4 {
+	font-size: 30px;
+	font-weight: 700px;
+	margin: 20px;
+}
+
+#h3 {
+	font-size: 20px;
+	font-weight: 700px;
+	margin-top: 100px;
+}
+
+#span1 {
+	font-size: 50px;
+	margin: 20px;
+	color: #bbb;
+}
 
 .btn1 {
 	margin-top: 30px;
@@ -171,7 +150,7 @@ h4 {
 }
 
 .btndiv {
-	margin-left: 550px;
+	margin-left: 660px;
 	margin-bottom: 50px;
 }
 
@@ -182,6 +161,10 @@ a {
 
 .myorder_list {
 	width: 100%;
+}
+
+.my_orders {
+	padding: 0;
 }
 
 .my_orders .go_detail {
@@ -217,93 +200,6 @@ a {
 dd, dt {
 	margin-right: 15px !important;
 	margin-left: 0;
-}
-<body>
-    <div id="container">
-        <div id="sidebar">
-            <div class="snbArea">
-                <ul id="snb">
-                    <li>
-                        <h4 class="h4">MY PAGE</h4>
-                    </li>
-                    <li>
-                        <a id="a" href="#none" class="product">
-                            좋아요
-                        </a>
-                    </li>
-                    <li>
-                        <a id="a" href="#none" class="order">
-                            주문 관리
-                        </a>
-                        <ul class="hide">
-                            <li class="">
-                                <a id="a" href="#">
-                                    주문 배송 조회
-                                </a>
-                            </li>
-                            <li class="">
-                                <a id="a" href="#">
-                                    취소/교환/반품/환불
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a id="a" href="#" class="member">
-                            회원 혜택
-                        </a>
-                    </li>
-                    <li>
-                        <a id="a" href="#" class="board">
-                            정보 관리
-                        </a>
-                        <ul class="hide">
-                            <li class="">
-                                <a id="a" href="#">
-                                    회원정보 수정
-                                </a>
-                            </li>
-                            <li class="">
-                                <a id="a" href="#">
-                                    회원 탈퇴
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a id="a" href="#" class="promotion">
-                            문의내역
-                        </a>
-                        <ul class="hide">
-                            <li class="">
-                                <a id="a" href="#">
-                                    통합 문의
-                                </a>
-                            </li>
-                            <li class="">
-                                <a id="a" href="#">
-                                    상품 문의
-                                </a>
-                            </li>
-                            <li class="">
-                                <a id="a" href="#">
-                                    1:1 문의
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="customer">
-                    <strong class="title">고객센터 <span class="info">(평일 9~18시)</span></strong>
-                    <div class="tel">8080<span class="dot">.</span>8080</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="total">
-
-dd, dl {
-	margin: 0;
 }
 
 dt {
@@ -404,7 +300,9 @@ dt {
 				<td><h3>0</h3>
 					<p>적립금 사용</p></td>
 				<td><sapn id="span1">=</sapn></td>
-				<td><h3><fmt:formatNumber value="${price}" pattern="#,###.##" /></h3>
+				<td><h3>
+						<fmt:formatNumber value="${price}" pattern="#,###.##" />
+					</h3>
 					<p>총 결제 금액</p></td>
 			</tr>
 		</table>
@@ -416,20 +314,19 @@ dt {
 				<th><p>받으시는 분</p></th>
 			</tr>
 			<tr class="b3">
-				<td><p>이름 김지원</p>
-					<p>휴대전화 123-1234-1234</p>
-					<p>주소 (303030)인천시</p>
+				<td><p>이름: ${orderViewDto.get(0).member_name}</p>
+					<p>연락처: ${orderViewDto.get(0).phone }</p>
+					<p>주소: ${orderViewDto.get(0).getAddr()}</p></td>
+				<td><p>이름: ${orderViewDto.get(0).re_name}</p>
+					<p>연락처: ${orderViewDto.get(0).re_phone }</p>
 					</p>
-				<td><p>이름 김지원</p>
-					<p>휴대전화 123-1234-1234</p>
-					<p>주소 (303030)인천시</p>
-					</p>
+					<p>주소: ${orderViewDto.get(0).re_addr}</p></td>
 		</table>
 	</div>
 
 	<div class="btndiv">
-		<a href="#"><button class="btn1">1:1문의</button></a> <a href="#"><button
-				class="btn2">전체취소</button></a> <a href="#"><button class="btn2">목록</button></a>
+		<a href="${pageContext.request.contextPath}/one/one_List"><button class="btn1">1:1문의</button></a> <a href="cancel"><button
+				class="btn2">전체취소</button></a> <a href="${pageContext.request.contextPath}/orders/list"><button class="btn2">목록</button></a>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
