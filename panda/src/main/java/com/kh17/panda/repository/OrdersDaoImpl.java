@@ -97,7 +97,7 @@ public class OrdersDaoImpl implements OrdersDao {
 	
 	@Override
 	public int count(OrderViewDto orderViewDto) {
-		return sqlSession.selectOne("order.countUser", orderViewDto);
+		return sqlSession.selectOne("order.myOrderCount", orderViewDto);
 	}
 
 	@Override

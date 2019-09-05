@@ -209,8 +209,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 	</select>
 
-
-
 	<resultMap type="orderListVO" id="orderListVO">
 		<result column="team" property="team" />
 		<collection property="list" column="team"
@@ -218,14 +216,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select="myOrderTeam"></collection>
 	</resultMap>
 
-<!-- 	<select id="myOrder" parameterType="string" resultMap="orderListVO"> -->
-<!-- 		select -->
-<!-- 		distinct team from order_view where member_id=#{member_id} order by team asc -->
-<!-- 	</select> -->
-
 	<select id="myOrderTeam" resultType="orderViewDto">
 		select * from order_view where
 		team = #{team}
+	</select>
+	
+	<select id="myOrderCount" resultType="int" parameterType="orderViewDto">
+		select count(distinct team) from order_view where member_id=#{member_id} 
+		<if test="start_dt != null and end_dt !=null"> and
+			order_dt between to_date(#{start_dt}, 'YYYY-MM-DD') and
+			to_date(#{end_dt},
+			'YYYY-MM-DD') + 0.99999
+		</if>
 	</select>
 
 </mapper>

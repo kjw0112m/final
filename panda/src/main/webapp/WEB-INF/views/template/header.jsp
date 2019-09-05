@@ -10,6 +10,10 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/footer.css">
 <title>PANDA 판다</title>
+
+<script>
+	var rootContext = "${pageContext.request.contextPath}";
+</script>
 </head>
 <body>
 	<div></div>

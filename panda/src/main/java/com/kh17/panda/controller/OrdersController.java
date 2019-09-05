@@ -132,20 +132,21 @@ public class OrdersController {
 		int blocksize = 10;
 		int startBlock = (page - 1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
+		
 
 		int count = ordersDao.count(orderViewDto);
 		int pageCount = (count - 1) / pagesize + 1;
 		if (endBlock > pageCount) {
 			endBlock = pageCount;
 		}
-
+		
+		List<OrderListVO> list = ordersDao.list(orderViewDto, start, end);
 		model.addAttribute("page", page);
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
 		model.addAttribute("pageCount", pageCount);
-		
-		List<OrderListVO> list = ordersDao.list(orderViewDto, start, end);
 		model.addAttribute("myOrder", list);
+		
 		return "orders/list";
 	}
 
