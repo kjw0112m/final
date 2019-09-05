@@ -86,8 +86,24 @@ public class ProductController {
 		return "product/subcategoryList";
 	}
 
-	@GetMapping("/categoryList")
-	public String categorylist(@RequestParam int category_id, Model model) {
+	@GetMapping("/tops")
+	public String topsList(@RequestParam int category_id, Model model) {
+		CategoryDto categoryDto = categoryDao.get(category_id);
+		List<CategoryListDto> list = categoryListDao.list(category_id);
+		model.addAttribute("list", list);
+		model.addAttribute("categoryDto", categoryDto);
+		return "product/categoryList";
+	}
+	@GetMapping("/bottoms")
+	public String bottomsList(@RequestParam int category_id, Model model) {
+		CategoryDto categoryDto = categoryDao.get(category_id);
+		List<CategoryListDto> list = categoryListDao.list(category_id);
+		model.addAttribute("list", list);
+		model.addAttribute("categoryDto", categoryDto);
+		return "product/categoryList";
+	}
+	@GetMapping("/acc")
+	public String accList(@RequestParam int category_id, Model model) {
 		CategoryDto categoryDto = categoryDao.get(category_id);
 		List<CategoryListDto> list = categoryListDao.list(category_id);
 		model.addAttribute("list", list);
