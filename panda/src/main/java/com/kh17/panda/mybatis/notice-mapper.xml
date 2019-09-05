@@ -67,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insertComment" parameterType="noticeDto">
 		insert into comments values(
-			comments_seq.nextval, #{commentcontent}, sysdate, '관리자', #{id}
+			comments_seq.nextval, #{commentcontent}, sysdate, #{createUser}, #{id}
 		)
 	</insert>
 	

@@ -23,6 +23,7 @@ import com.kh17.panda.repository.MemberDao;
 import com.kh17.panda.repository.OrdersDao;
 import com.kh17.panda.repository.ProductDao;
 import com.kh17.panda.vo.OrderAddressVO;
+import com.kh17.panda.vo.OrderListVO;
 
 @Controller
 @RequestMapping("/orders")
@@ -43,11 +44,6 @@ public class OrdersController {
 	@GetMapping("/result")
 	public String result() {
 		return "orders/result";
-	}
-	
-	@GetMapping("/view")
-	public String view() {
-		return "orders/view";
 	}
 
 	@GetMapping("/order")
@@ -125,26 +121,32 @@ public class OrdersController {
 
 	@GetMapping("/list")
 	public String list(@ModelAttribute OrderViewDto orderViewDto, Model model,
-			@RequestParam(required = false, defaultValue = "1") int page) {
-		int pagesize = 10;
+			@RequestParam(required = false, defaultValue = "1") int page, HttpSession session) {
+		
+		String member_id = (String) session.getAttribute("sid");
+		orderViewDto.setMember_id(member_id);
+		int pagesize = 5;
 		int start = pagesize * page - (pagesize - 1);
 		int end = pagesize * page;
 
 		int blocksize = 10;
 		int startBlock = (page - 1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
+		
 
-		int count = ordersDao.count(orderViewDto, null, null, null);
+		int count = ordersDao.count(orderViewDto);
 		int pageCount = (count - 1) / pagesize + 1;
 		if (endBlock > pageCount) {
 			endBlock = pageCount;
 		}
-
+		
+		List<OrderListVO> list = ordersDao.list(orderViewDto, start, end);
 		model.addAttribute("page", page);
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
-		List<OrderViewDto> list = ordersDao.list(orderViewDto, null, start, end, null, null);
-		model.addAttribute("orderViewDto", list);
+		model.addAttribute("pageCount", pageCount);
+		model.addAttribute("myOrder", list);
+		
 		return "orders/list";
 	}
 
