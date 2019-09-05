@@ -199,7 +199,7 @@
 
     .table1 {
         border-collapse: collapse;
-        width: 1128px;
+        width: 100%;
         height: 150px;
         border: 1px solid #bbb;
         text-align: center;
@@ -227,9 +227,8 @@
 
     .table2 {
         border-collapse: collapse;
-        width: 1128px;
+        width: 100%;
         height: 222px;
-
         text-align: center;
     }
 
@@ -256,7 +255,7 @@
 
     .table3 {
         border: 1px solid #bbb;
-        width: 1128px;
+        width: 100%;
         height: 222px;
         text-align: center;
         margin-top: 50px;
@@ -270,6 +269,7 @@
     .total {
         margin-top: 200px;
         margin-left: 270px;
+        width: 1563px;
     }
 
     a {
@@ -288,8 +288,8 @@
         <div id="sidebar">
             <div class="snbArea">
                 <ul id="snb">
-                    <li>
-                        <h4>MY PAGE</h4>
+                     <li>
+                        <h4 class="h4">MY PAGE</h4>
                     </li>
                     <li>
                         <a id="a" href="#none" class="product">

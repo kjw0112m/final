@@ -5,7 +5,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="categoryList">
 	
 	<select id="list" parameterType="int" resultType="categoryListDto">
-		select * from category_list where category_id = #{category_id} order by product_regist_dt desc
+		select * from (
+			<![CDATA[
+			select rownum rn, C.* from(
+				select * from category_list where category_id = #{category_id} order by product_regist_dt desc
+			]]>
+				) C 
+		<![CDATA[
+		) where rn > = 1 and rn<=10
+		]]>
 	</select>
 
 </mapper>
