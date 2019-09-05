@@ -113,21 +113,17 @@
 						저장하기
 				</label></td>
 			</tr>
-			</div>
-			</div>
 		</table>
 		<div align="center">
 			<input type="submit" value="LOGIN" class="btn1">
 		</div>
 		<div id="btn2div">
 			<a href="regist" class="btn2">회원가입
-				</button>
-			</a> <a href="member/find_id" class="btn2">아이디찾기</a> <a
-				href="member/find_pw" class="btn2">비밀번호찾기</a>
+			</a> <a href="find_id" class="btn2">아이디찾기</a> <a
+				href="find_pw" class="btn2">비밀번호찾기</a>
 		</div>
 	</form>
-</div>
-</form>
+	</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
 

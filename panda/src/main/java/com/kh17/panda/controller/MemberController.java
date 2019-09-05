@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -78,8 +79,6 @@ public class MemberController {
 		else {
 			resp.getWriter().print("N");
 		}
-			
-		
 	}
 	
 	
@@ -228,7 +227,16 @@ public class MemberController {
 	
 //	목표 : 변경 처리 수행
 	@PostMapping("/new_pw")
-	public String newPassword(@ModelAttribute MemberDto memberDto) {
+	public String newPassword(@ModelAttribute MemberDto memberDto,
+			HttpServletRequest request,
+			HttpServletResponse response) {
+//		이 페이지를 뒤로가기에서 배제하기 위한 response 헤더 설정
+		response.setHeader("Cache-Control", "no-store");
+		response.setHeader("Pragma", "no-cache");
+		response.setDateHeader("Expires", 0);
+		if(request.getProtocol().contentEquals("HTTP/1.1"))
+			response.setHeader("Cache-Control", "no-cache");
+		
 //		비밀번호 암호화 처리(bcrypt)
 		String origin = memberDto.getPw();
 		String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
@@ -271,9 +279,10 @@ public class MemberController {
 	
 	
 	@PostMapping("/change_pw")
-	public String change_pw(HttpSession session, @ModelAttribute MemberDto memberDto, 
-			Model model, @RequestParam String new_pw) {
-	
+	public void change_pw(HttpSession session, @ModelAttribute MemberDto memberDto, 
+			Model model, @RequestParam String new_pw, HttpServletResponse resp) throws IOException {
+		resp.setContentType("text/plain");
+		
 		memberDto.setId((String) session.getAttribute("sid"));				
 
 		//		기존 비밀번호와 새로운 비밀번호가 들어옴
@@ -284,19 +293,32 @@ public class MemberController {
 		
 			//기존 비밀번호와 입력 비밀번호를 비교하여 확인
 		boolean result = BCrypt.checkpw(memberDto.getPw(),check.getPw());
- 
+		System.out.println(result);
 		if(result) {
 //		[2] 비밀번호가 맞으면 새로운 비밀번호로 변경
 			memberDto.setId((String) session.getAttribute("sid"));
+			resp.getWriter().print("Y");
 			memberDto.setPw(newpw);
-			
 			memberDao.changePw(memberDto);
 			memberDao.lastchangepw(memberDto.getId());
-			return "member/change_pw_result";
 		}
 //		[3] 비밀번호가 다르면 비밀번호 변경 실패 안내
 		else {
-			return "redirect:change_pw?error=1";
+			resp.getWriter().print("N");
+		}
+	}
+	
+	
+	// email 중복 검사
+	@GetMapping("/emailCheck")
+	public void emailCheck(@RequestParam String email, HttpServletResponse resp) throws IOException  {
+		resp.setContentType("text/plain");
+		MemberDto mdto = memberDao.emailCheck(email);
+		if(mdto==null) {
+			resp.getWriter().print("Y");
+		}
+		else {
+			resp.getWriter().print("N");
 		}
 	}
 	

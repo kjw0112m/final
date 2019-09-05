@@ -19,8 +19,6 @@
 			} else {
 				$("button").prop("disabled", true);
 			}
-
-			// $("button").prop("disabled", !$(this).prop("checked"));
 		});
 
 		// 버튼을 누르면 특정 페이지로 이동
@@ -32,6 +30,7 @@
 			$(location).attr("href", "regist");
 		});
 	});
+	
 </script>
 <style>
 * {

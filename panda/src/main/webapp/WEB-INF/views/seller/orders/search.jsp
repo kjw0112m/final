@@ -33,16 +33,12 @@
 	var page = "${page}";
 	var startBlock = "${startBlock}";
 	var endBlock = "${endBlock}";
-	console.log(page)
-	console.log(startBlock)
-	console.log(endBlock)
+	
 </script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script
 	src="${pageContext.request.contextPath}/js/admin/order_search.js"></script>
 <form action="search" method="post" id="orderSearchForm">
-	<%-- <input type="hidden" name="seller_id" value="${sessionScope.sid }"> --%>
-	<input type="hidden" name="seller_id" value="abc">
 	<div id="content">
 		<div class="head_tit">
 			<h1>전체주문목록</h1>
@@ -154,8 +150,7 @@
 						<tr>
 							<th scope="row">주문상태</th>
 							<td colspan="3" id="tStatusCheck"><label class="gLabel"><input
-									type="checkbox" id="tStatAll" class="fChk" checked="checked">
-									전체</label> <!-- 						<label class="gLabel   " style="display: none;"><input type="checkbox" name="" class="fChk" value="상품준비중">상품준비중</label>  -->
+									type="checkbox" id="tStatAll" class="fChk"> 전체</label> <!-- 						<label class="gLabel   " style="display: none;"><input type="checkbox" name="" class="fChk" value="상품준비중">상품준비중</label>  -->
 								<label class="gLabel"><input type="checkbox"
 									name="tStatus" class="fChk" value="배송준비중"> 배송준비중</label> <label
 								class="gLabel"><input type="checkbox" name="tStatus"
@@ -324,7 +319,7 @@
 		</div>
 	</div>
 </form>
-</div>
-</div>
+
+
 </body>
 </html>

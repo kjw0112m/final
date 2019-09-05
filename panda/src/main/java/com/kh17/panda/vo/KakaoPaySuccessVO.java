@@ -16,7 +16,8 @@ public class KakaoPaySuccessVO {
 	private String payment_method_type;//결제 수단
 	private String item_name;//상품명
 	private int quantity;//상품 수량
-	private KakaoPayAmount amount;//수량 상세 정보
+	private KakaoPaySuccessCardInfo card_info;//결제 상세 정보(카드일 경우)
+	private KakaoPaySuccessAmount amount;//수량 상세 정보
 	private String created_at;//결제 준비 요청 시각
 	private String approved_at;//결제 승인 시각
 }

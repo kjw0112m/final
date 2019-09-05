@@ -58,14 +58,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				id = #{id}
 	</update>
 	
-	
-	 <!--테스트 -->
-	<select id="test" resultType="memberDto">
-		select 
-			detail_addr
-			from member	
-	</select>
-	
 		<!-- 비밀번호 찾기 기능 -->
 	<select id="findpw" parameterType="memberDto" resultType="memberDto">
 		select * from member
@@ -77,6 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				phone=#{phone}
 		
 	</select>
+	
 	
 	<!-- 비밀 번호 바꾸기 -->
 	<update id="changePw" parameterType="memberDto">
@@ -107,14 +100,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				 where id = #{id}
 	</update>
 	
+			<!-- 회원 이메일 중복 확인-->
+	<select id="emailCheck" parameterType="string" resultType="memberDto">
+		select * from member where email = #{email}
+	</select>
+
 	<!-- 관리자 사용 -->
 	
 	<!-- 관리자가 회원 검색하는 기능 -->
 	<select id="search" parameterType="map" resultType="memberDto">
-		select * from member
-			where
-				${type} like '%' || #{keyword} || '%'
-			order by ${type} asc
+	<![CDATA[
+		select * from(
+			select rownum rn, A.* from (
+				select * from member
+		]]>
+				<if test="type != null and keyword != null">
+				where
+					${type} like '%' || #{keyword} || '%'
+				</if>
+		<![CDATA[
+		
+				order  by id desc
+			)A
+		) where rn >= #{start} and rn <= #{end}
+		]]>
+	</select>
+	
+		<select id="count" parameterType="map" resultType="int">
+		select count(*) from member
+			<if test="type != null and keyword != null">
+			where ${type} like '%' || #{keyword} || '%'
+			</if>
 	</select>
 	
 </mapper>

@@ -35,7 +35,15 @@
 				this.submit();
 			});
 		});
-		</script>
+			</script>
+
+    <script type="text/javascript">
+		window.history.forward();
+		function noBack() {
+			window.history.forward();
+		}
+         </script>
+
 
 
     <style>
@@ -119,6 +127,8 @@
     </style>
 </head>
 
+
+
 <body>
     <div class="total">
             <h4 class="new_pw2">비밀번호 변경</h4>
@@ -135,14 +145,15 @@
                         <td class="b"><input class="pw" type="password" name="pw"
 							placeholder="  8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)" required class="form-control"><br>
                        <span class="spw"></span>
-                        </td>class="form-control"
+                        </td>
+   
                     </tr>
                 </table>
-            </form>
             <div id="btn2div">
                     <input type="submit" value="변경하기" id="btn1">
             </div>
-        </form>
+            </form>
+      
     </div>
 
 </body>

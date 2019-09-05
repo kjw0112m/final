@@ -36,7 +36,7 @@ public class SellerOrderController {
 	public String list(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
 			Model model, @RequestParam(required = false, defaultValue = "1") int page, HttpSession session,
 			@RequestParam(required = false) String[] csStatus, @RequestParam(required = false) String[] tStatus) {
-		if (orderViewDto.getSeller_id() != null) {
+		if (session.getAttribute("sid") != null) {
 			int pagesize = 10;
 			int start = pagesize * page - (pagesize - 1);
 			int end = pagesize * page;
@@ -46,6 +46,7 @@ public class SellerOrderController {
 			int endBlock = startBlock + (blocksize - 1);
 			
 			List<OrderViewVO> search = orderViewListVO.getSearch();
+			
 			for (int i = 0; i < search.size(); i++) {
 				if (search.get(i).getKeyword().isEmpty()) {
 					search.remove(i);
@@ -71,7 +72,6 @@ public class SellerOrderController {
 			
 
 			List<OrderViewDto> list = ordersDao.list(orderViewDto, search, start, end, csStatus, tStatus);
-			System.out.println(list);
 			model.addAttribute("orderViewDto", list);
 			model.addAttribute("searchCount", count);
 			return "seller/orders/search";

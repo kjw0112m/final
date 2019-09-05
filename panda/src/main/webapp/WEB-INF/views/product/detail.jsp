@@ -225,8 +225,7 @@
 	}
 </style>
 </head>
-
-	<div class="total">
+		<div class="total">
 		<div class="textcontent">
 			<div class="spec">
 				<img src="productimg1.png"><br>
