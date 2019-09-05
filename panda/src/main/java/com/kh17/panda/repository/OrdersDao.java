@@ -33,4 +33,6 @@ public interface OrdersDao {
 	int count(OrderViewDto orderViewDto);
 
 	List<OrderListVO> list(OrderViewDto orderViewDto, int start, int end);
+
+	List<OrderViewDto> list(String team);
 }
