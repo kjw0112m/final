@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,7 +22,6 @@ import com.kh17.panda.repository.ProductDao;
 import com.kh17.panda.repository.ProductSellerDao;
 import com.kh17.panda.repository.SizesDao;
 import com.kh17.panda.repository.SubcategoryDao;
-import com.kh17.panda.service.ProductService;
 
 @Controller
 @RequestMapping("/product")
@@ -35,8 +33,6 @@ public class ProductController {
 	@Autowired
 	private ProductDao productDao;
 
-	@Autowired
-	private ProductService productService;
 	
 	@Autowired
 	private ProductSellerDao productSellerDao;

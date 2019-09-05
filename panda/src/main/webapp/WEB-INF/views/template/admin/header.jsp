@@ -20,9 +20,9 @@
 					</a>
 				</h1>
 				<ul class="util" id="gnb">
-					<li class="shop"><a href="#">쇼핑몰 바로가기</a></li>
-					<li class="info"><a href="#">내 정보</a></li>
-					<li class="logout"><a href="#">로그아웃</a></li>
+					<li class="shop"><a href="${pageContext.request.contextPath }/">쇼핑몰 바로가기</a></li>
+					<li class="info"><a href="${pageContext.request.contextPath }/seller/info">내 정보</a></li>
+					<li class="logout"><a href="${pageContext.request.contextPath }/seller/logout">로그아웃</a></li>
 				</ul>
 			</div>
 		</div>

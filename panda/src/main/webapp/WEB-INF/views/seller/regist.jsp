@@ -152,8 +152,8 @@ input[type=text] {
  			
 	
 </script>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<body>
+<jsp:include page="/WEB-INF/views/template/admin/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/aside.jsp"></jsp:include><body>
 	<%-- 회원 가입 페이지의 내용을 구현 --%>
 	<h1>판매자 가입</h1>
 	<br>
@@ -218,4 +218,3 @@ input[type=text] {
 			</table>
 		</div>
 	</form>
-	<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

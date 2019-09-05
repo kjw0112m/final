@@ -7,8 +7,8 @@
 }
 
 </style>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
+<jsp:include page="/WEB-INF/views/template/admin/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/aside.jsp"></jsp:include>
 <h1>${sdto.name}님의정보</h1>
 <br>
 <table border="1" width="400">
@@ -57,7 +57,6 @@
 	<a href="delete">회원 탈퇴</a>
 </h3>
 
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 
 
 

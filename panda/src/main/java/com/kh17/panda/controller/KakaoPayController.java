@@ -36,7 +36,8 @@ public class KakaoPayController {
 		}
 
 		session.setAttribute("total_amount", total_amount);
-
+		
+//		서버에서 다른 서버를 호출하려면 RestTemplate이 필요
 		RestTemplate template = new RestTemplate();
 
 		HttpHeaders headers = new HttpHeaders();

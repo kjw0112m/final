@@ -16,7 +16,8 @@
 	margin: auto;
 }
 </style>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/aside.jsp"></jsp:include>
 
 <h1>${sdto.name} 회원님의 정보</h1><br>
 <form action="change" method="post">
@@ -56,6 +57,6 @@
 </table>
 
 </form>
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
-
+</body>
+</html>
 

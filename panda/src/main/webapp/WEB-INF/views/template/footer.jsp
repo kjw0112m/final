@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<footer>
+
     <footer class="site_footer layout_full lc_d">
         <div class="inner miw1180 clear">
             <div class="left"><a href="#" class="tel tc_3">8080-8080</a>
@@ -12,13 +12,13 @@
             <div class="right">
                 <ul class="inlink tc_3 dis_f jc_e">
                     <li><a href="https://forms.gle/oCB8JX98smpNjJCS8" target="_blank" style="color: rgb(255, 78, 37) !important;">판매자문의</a></li>
-                    <li><a href="/policy">이용약관</a></li>
-                    <li><a href="/privacypolicy">개인정보 처리방침</a></li>
+                    <li><a href="${pageContext.request.contextPath }/policy">이용약관</a></li>
+                    <li><a href="#">개인정보 처리방침</a></li>
                 </ul>
             </div>
         </div>
     </footer>
-</footer>
+
 </body>
 
 </html>
