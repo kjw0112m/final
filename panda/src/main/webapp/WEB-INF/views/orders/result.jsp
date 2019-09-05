@@ -61,7 +61,9 @@ h4 {
 	width: 100%;
 }
 </style>
-
+<script src="https:/code.jquery.com/jquery-latest.js"></script>
+<script>
+</script>
 <div class="total">
 	<div id="top">
 		<span>01 쇼핑백</span><span> > 02 주문결제</span><span
@@ -90,8 +92,8 @@ h4 {
 		</tr>
 	</table>
 	<div id="btn2div">
-		<a href="#"><button class="btn">홈으로 가기</button></a>
-		<a href="${pageContext.request.contextPath}/member/info"><button class="btn">마이페이지</button></a>
+		<a href="#"><button class="btn">홈으로 가기</button></a> <a href="#"><button
+				class="btn">마이페이지</button></a>
 	</div>
 </div>
 

@@ -26,7 +26,7 @@
 			console.log(this);
 		});
 	});
-
+	
 	//주소
 	$(function() {
 		$(".addr").click(findAddress);
@@ -379,7 +379,7 @@ ul, li {
 <body>
 
 	<div id="container">
-		<div id="sidebar">
+			<div id="sidebar">
 			<div class="snbArea">
 				<ul id="snb">
 					<li>

@@ -66,9 +66,9 @@
 						</c:otherwise>
 					</c:choose>
 					
-						<a href="${pageContext.request.contextPath}/product/search" class=""><img src="${pageContext.request.contextPath}/image/main/search.PNG"></a> <a href="${pageContext.request.contextPath }/cart/view"
-						class=""><img src="${pageContext.request.contextPath}/image/main/cart.PNG"></a> <a href="#" class=""><img
-						src="${pageContext.request.contextPath}/image/main/contact.PNG"></a>
+						<a href="${pageContext.request.contextPath}/product/search" class=""><img src="${pageContext.request.contextPath}/image/main/search.PNG"></a>
+						 <a href="${pageContext.request.contextPath }/cart/view"class=""><img src="${pageContext.request.contextPath}/image/main/cart.PNG"></a> 
+						 <a href="#" class=""><imgsrc="${pageContext.request.contextPath}/image/main/contact.PNG"></a>
 				</div>
 			</div>
 		</header>

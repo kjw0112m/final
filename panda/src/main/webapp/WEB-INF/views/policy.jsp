@@ -5,17 +5,13 @@
        text-align:center;
 	margin: auto;
 } 
-.text{
-font-size:1.3rem;
-background-color: #bffff4;
-}
     </style>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <body>
-<h1>판다몰 이용약관</h1>
+<h1>이용약관</h1>
 	<br>
-	<textarea class="text"rows="30" cols="100" readonly>전자상거래(인터넷사이버몰) 표준약관
+	<textarea rows="30" cols="100" readonly>전자상거래(인터넷사이버몰) 표준약관
 
 
 

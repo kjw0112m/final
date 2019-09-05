@@ -12,9 +12,11 @@
 <!-- 공지사항 시작 -->
 
 
-<a  href="#">공지사항<i id=gi></i></a>
+<a  href="${pageContext.request.contextPath}/notice/noticeList">공지사항<i id=gi></i></a>
 &&&
-<a  href="#">1:1 문의 <i id=gi></i></a>
+<a  href="${pageContext.request.contextPath}/one/oneList">1:1 문의 <i id=gi></i></a>
+&&&
+<a  href="${pageContext.request.contextPath}/review/reviewComment">상품후기 <i id=gi></i></a>
 
 <form class="form" action="list.do" method="get">
 <div style="margin-left: 800px; border: 0px;">
@@ -87,15 +89,17 @@
 			</tr>
 		</c:forEach>
 	</tbody>
-	<tfoot>
-			<tr>
-				<td colspan="8" align="right">
-				<%-- <c:if test="${grade eq '관리자' }"> --%>
-					<a href="${pageContext.request.contextPath}/notice/noticeEdit">글쓰기</a>
-				<%-- </c:if> --%>
-				</td>
-			</tr>
-	</tfoot>
+	<c:if test="${sessionScope.sid.toString().startsWith('!')}">
+		<tfoot>
+				<tr>
+					<td colspan="8" align="right">
+					<%-- <c:if test="${grade eq '관리자' }"> --%>
+						<a href="${pageContext.request.contextPath}/notice/noticeEdit">글쓰기</a>
+					<%-- </c:if> --%>
+					</td>
+				</tr>
+		</tfoot>
+	</c:if>
 </table>
 
 <!-- 네비게이션 + 검색창 -->
@@ -110,13 +114,14 @@
 
 <ul class="navigator1">
 	<%-- 이전 구간 링크 --%>
-	<c:if test="${not p.isFirstBlock()}">
-	<li><a href="${pageContext.request.contextPath}/notice/noticeList?${p.getPrevBlock()}">&lt;&lt;</a></li>
+	<%-- <c:if test="시작페이지가 1이 아니면"> --%>
+	<c:if test="${not (page eq 1)}"> <!-- 1과 같으면 숨겨라  -->
+<li><a href="noticeList?page=${startBlock}">&lt;&lt;</a></li>
 	</c:if>
 	
-	<%-- 이전 페이지 링크(pno - 1) --%>
-	<c:if test="${not p.isFirstPage()}">
-	<li><a href="${pageContext.request.contextPath}/notice/noticeList?${p.getPrevPage()}">&lt;</a></li>
+	<%-- <c:if test="현재페이지가 1이 아니면"> --%>
+	<c:if test="${not (page eq 1)}">
+	<li><a href="noticeList?page=${page - 1}">&lt;</a></li>
 	</c:if>
 	
 	<%-- 페이지 출력 --%>
@@ -132,14 +137,16 @@
 	</c:forEach>
 	
 	<%-- 다음 페이지 링크(pno + 1) --%>
-	<c:if test="${not p.isLastPage()}">
-		<li><a href="${pageContext.request.contextPath}/notice/noticeList?${p.getNextPage()}">&gt;</a></li>
-	</c:if>
+	<%-- <c:if test="${아닌 현재페이지 == 전체페이지 수}"> --%>
+	  <c:if test="${not (page eq pageCount)}"> 
+		<li><a href="noticeList?page=${page + 1}">&gt;</a></li>
+	  </c:if>  
+	 <%-- <p> ${pageCount }   전체페이지 test 찍어보기 </p> --%>
 	
 	<%-- 다음 구간 --%>
-	<c:if test="${not p.isLastBlock()}">
-		<li><a href="${pageContext.request.contextPath}/notice/noticeList?${p.getNextBlock()}">&gt;&gt;</a></li>
-	</c:if>
+	<c:if test="${not (page eq pageCount)}">
+		<li><a href="noticeList?page=${endBlock }">&gt;&gt;</a></li>
+	</c:if> 
 </ul>
 <!-- 공지사항 끝 -->
 
