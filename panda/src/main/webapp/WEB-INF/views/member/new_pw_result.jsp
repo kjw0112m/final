@@ -2,6 +2,10 @@
     pageEncoding="UTF-8"%>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
+
+
+
 <style>
         * {
             box-sizing: border-box;
@@ -58,6 +62,7 @@
         }
     </style>
 </head>
+
 
 <body>
     <div class="total">

@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh17.panda.entity.OrdersDto" alias="ordersDto"/>
 		<typeAlias type="com.kh17.panda.entity.ProductDto" alias="productDto"/>
 		<typeAlias type="com.kh17.panda.entity.SubcategoryDto" alias="subcategoryDto"/>
+		<typeAlias type="com.kh17.panda.vo.OrderListVO" alias="orderListVO"/>
 		<typeAlias type="com.kh17.panda.entity.SizesDto" alias="sizesDto"/>
 		<typeAlias type="com.kh17.panda.entity.NoticeDto" alias="noticeDto"/>
 		<typeAlias type="com.kh17.panda.entity.ProductSubcategoryDto" alias="productSubcategoryDto"/>
@@ -19,6 +20,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh17.panda.entity.NoticeDto" alias="noticeDto"/>
 		<typeAlias type="com.kh17.panda.entity.OrderViewDto" alias="orderViewDto"/>
 		<typeAlias type="com.kh17.panda.vo.OrderViewVO" alias="orderViewVO"/>
+		<typeAlias type="com.kh17.panda.vo.OrderListVO" alias="orderListVO"/>
 		<typeAlias type="com.kh17.panda.entity.ProductSellerDto" alias="productSellerDto"/>
 		<typeAlias type="com.kh17.panda.entity.CategoryListDto" alias="categoryListDto"/>
 		<typeAlias type="com.kh17.panda.entity.CategoryDto" alias="categoryDto"/>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +24,7 @@ import com.kh17.panda.repository.MemberDao;
 import com.kh17.panda.repository.OrdersDao;
 import com.kh17.panda.repository.ProductDao;
 import com.kh17.panda.vo.OrderAddressVO;
+import com.kh17.panda.vo.OrderListVO;
 
 @Controller
 @RequestMapping("/orders")
@@ -43,11 +45,6 @@ public class OrdersController {
 	@GetMapping("/result")
 	public String result() {
 		return "orders/result";
-	}
-	
-	@GetMapping("/view")
-	public String view() {
-		return "orders/view";
 	}
 
 	@GetMapping("/order")
@@ -99,18 +96,18 @@ public class OrdersController {
 				ordersDto.setTotal_price(cartViewDto.getQuantity() * cartViewDto.getProduct_price());
 				ordersDto.setSizes(cartViewDto.getSizes());
 				ordersDto.setProduct_id(cartViewDto.getProduct_id());
-				
+
 				if (count > 0) {
 					ordersDto.setTeam(team);
 				}
-				
+
 				ordersDao.insert(ordersDto);
 				if (count == 0) {
 					team = ordersDao.getOrderId(ordersDto.getId());
 				}
 				count++;
 			}
-		} 
+		}
 //		상품 상세화면에서 단일 주문할 경우
 		else {
 			ordersDto.setId(ordersDao.seq());
@@ -125,8 +122,11 @@ public class OrdersController {
 
 	@GetMapping("/list")
 	public String list(@ModelAttribute OrderViewDto orderViewDto, Model model,
-			@RequestParam(required = false, defaultValue = "1") int page) {
-		int pagesize = 10;
+			@RequestParam(required = false, defaultValue = "1") int page, HttpSession session) {
+
+		String member_id = (String) session.getAttribute("sid");
+		orderViewDto.setMember_id(member_id);
+		int pagesize = 5;
 		int start = pagesize * page - (pagesize - 1);
 		int end = pagesize * page;
 
@@ -134,18 +134,37 @@ public class OrdersController {
 		int startBlock = (page - 1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
 
-		int count = ordersDao.count(orderViewDto, null, null, null);
+		int count = ordersDao.count(orderViewDto);
 		int pageCount = (count - 1) / pagesize + 1;
 		if (endBlock > pageCount) {
 			endBlock = pageCount;
 		}
 
+		List<OrderListVO> list = ordersDao.list(orderViewDto, start, end);
 		model.addAttribute("page", page);
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
-		List<OrderViewDto> list = ordersDao.list(orderViewDto, null, start, end, null, null);
-		model.addAttribute("orderViewDto", list);
+		model.addAttribute("pageCount", pageCount);
+		model.addAttribute("myOrder", list);
+
 		return "orders/list";
+	}
+
+	@GetMapping("/detail/{team}")
+	public String detail(@PathVariable String team, Model model, HttpSession session) {
+		String id = (String) session.getAttribute("sid");
+
+		if (id != null) {
+			List<OrderViewDto> list = ordersDao.list(team);
+			int price = 0;
+			for(OrderViewDto dto : list) {
+				price+=dto.getTotal_price();
+			}
+			
+			model.addAttribute("price", price);
+			model.addAttribute("orderViewDto", list);
+		}
+		return "orders/detail";
 	}
 
 	@GetMapping("/cancel")

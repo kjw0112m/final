@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 public class ProductDto {
 	private int id;
 	private String seller_id;
-	private int sub_category_id;//후드티
-	private String name;//삐삐
-	private int price;//55000
+	private int sub_category_id;
+	private String name;
+	private int price;
 	private int dis_rate;
 	private String regist_dt;
 	private String sale_yn;//n

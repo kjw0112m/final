@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh17.panda.entity.OrderViewDto;
 import com.kh17.panda.entity.OrdersDto;
+import com.kh17.panda.vo.OrderListVO;
 import com.kh17.panda.vo.OrderViewVO;
 
 public interface OrdersDao {
@@ -28,4 +29,10 @@ public interface OrdersDao {
 	List<OrderViewDto> getTeam(String team);
 	
 	String getOrderId(int id);
+
+	int count(OrderViewDto orderViewDto);
+
+	List<OrderListVO> list(OrderViewDto orderViewDto, int start, int end);
+
+	List<OrderViewDto> list(String team);
 }
