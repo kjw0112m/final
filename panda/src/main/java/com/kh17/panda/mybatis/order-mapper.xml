@@ -203,10 +203,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			to_date(#{dto.end_dt},
 			'YYYY-MM-DD') + 0.99999
 		</if>
-		)O 
+		<if test="team != null">
+			and
+			team = {team}
+		</if>
+		)O)
+		<if test="start!=null and end!=null">
 		<![CDATA[ 
-		) where rn >= #{start} and rn <= #{end} 
+		where rn >= #{start} and rn <= #{end} 
 		]]>
+		</if>
 	</select>
 
 	<resultMap type="orderListVO" id="orderListVO">
@@ -229,7 +235,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			'YYYY-MM-DD') + 0.99999
 		</if>
 	</select>
-
+	
+	<select id="getDetail" parameterType="string" resultType="orderViewDto">
+		select * from order_view where team = #{team}
+	</select>
 </mapper>
 
 

@@ -104,4 +104,9 @@ public class OrdersDaoImpl implements OrdersDao {
 	public String getOrderId(int id) {
 		return sqlSession.selectOne("order.getOrderId", id);
 	}
+
+	@Override
+	public List<OrderViewDto> list(String team) {
+		return sqlSession.selectList("order.getDetail", team);
+	}
 }

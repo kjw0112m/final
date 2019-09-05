@@ -5,7 +5,8 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <title>주문배송조회</title>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 	$(function() {
@@ -117,7 +118,7 @@ ul, li {
 	list-style: none;
 }
 
-.total ul, li { 
+.total ul, li {
 	padding: 0;
 	margin: 0;
 }
@@ -188,6 +189,7 @@ ul, li {
 
 #td-d {
 	text-align: left;
+	width: 600px;
 }
 
 .table3 {
@@ -204,8 +206,8 @@ ul, li {
 }
 
 .total {
-	margin-left: 350px; 
-	width: 1200px; 
+	margin-left: 350px;
+	width: 1200px;
 }
 
 a {
@@ -251,9 +253,9 @@ dd, dl, h1, h2, h3, h4, h5, input, p, pre {
 	top: 0;
 	padding-right: 40px;
 	border-width: 0;
-	font-size: 13px;
 	line-height: 20px;
-	height: 18px;
+	color: #ff4e25 !important;
+	font-weight: bold;
 }
 
 .paginate {
@@ -318,6 +320,11 @@ dd, dl, h1, h2, h3, h4, h5, input, p, pre {
 	box-sizing: border-box;
 	font-size: 14px;
 }
+
+dt {
+	font-weight: bold;
+}
+
 </style>
 
 <body>
@@ -345,60 +352,64 @@ dd, dl, h1, h2, h3, h4, h5, input, p, pre {
 		<section class="myorder_list">
 			<ul class="my_orders">
 				<c:forEach var="myOrder" items="${myOrder}">
-					<li>
+					<li><a href="detail/${myOrder.team}" class="go_detail">상세
+							내역</a>
 						<dl class="order_info dis_f tc_3">
 							<dt>주문일</dt>
-							<dd class="eng">${myOrder.getDate() }</dd>
+							<dd class="eng">${myOrder.getDate()}</dd>
 							<dt>주문번호</dt>
 							<dd class="eng">${myOrder.team}</dd>
 							<dt>주문상품</dt>
 							<dd class="on_w">${myOrder.getCount()}개</dd>
-						</dl> <c:forEach var="orderViewDto" items="${myOrder.list}">
-							<table class="table2">
-								<thead>
-									<tr class="a1">
-										<th>상품정보</th>
-										<th>주문 금액</th>
-										<th>상태</th>
-										<th><a href="#" class="go_detail">상세 내역</a></th>
-									</tr>
-								</thead>
-								<tr class="b1">
-									<td class="img"><a href="#"> <img
-											src="http://placehold.it/140"></a></td>
-									<td id="td-d"><a href="#">
-											<div>${orderViewDto.seller_id}</div>
-									</a> <a href="#">
-											<div>${orderViewDto.product_name}</div>
-									</a>
-										<div>
-											<fmt:formatNumber value="${orderViewDto.price}"
-												pattern="#,###.##" />
-										</div>
-										<div>${orderViewDto.sizes}</div>
-										<div>${orderViewDto.quantity}개</div></td>
-									<td class="text-center"><fmt:formatNumber
-											value="${orderViewDto.total_price}" pattern="#,###.##" /></td>
-									<td>${orderViewDto.pay_status }
-										<p>
-											<c:choose>
-												<c:when
-													test="${orderViewDto.t_status=='배송중' or orderViewDto.t_status == '배송완료'}">
-													<a href="#">[교환 및 환불]</a>
-													<c:if test="${orderViewDto.t_status=='배송중'}">
-														<a href="#">[배송조회]</a>
-													</c:if>
-												</c:when>
-												<c:otherwise>
-													<a href="#">[취소]</a>
-												</c:otherwise>
-											</c:choose>
-										</p>
-									</td>
+						</dl>
+						<table class="table2">
+							<thead>
+								<tr class="a1">
+									<th>상품정보</th>
+									<th>주문 금액</th>
+									<th>상태</th>
+									<th></th>
 								</tr>
-							</table>
-						</c:forEach>
-					</li>
+							</thead>
+							<tbody>
+								<c:forEach var="orderViewDto" items="${myOrder.list}">
+									<tr class="b1">
+										<td class="img"><a href="#"> <img
+												src="http://placehold.it/140"></a></td>
+										<td id="td-d"><a href="#">
+												<div>${orderViewDto.seller_id}</div>
+										</a> <a href="#">
+												<div>${orderViewDto.product_name}</div>
+										</a>
+											<div>
+												<fmt:formatNumber value="${orderViewDto.price}"
+													pattern="#,###.##" />
+											</div>
+											<div>${orderViewDto.sizes}</div>
+											<div>${orderViewDto.quantity}개</div></td>
+										<td class="text-center"><fmt:formatNumber
+												value="${orderViewDto.total_price}" pattern="#,###.##" /></td>
+										<td>${orderViewDto.pay_status }
+											<p>
+												<c:choose>
+													<c:when
+														test="${orderViewDto.t_status=='배송중' or orderViewDto.t_status == '배송완료'}">
+														<a href="#">[교환 및 환불]</a>
+														<c:if test="${orderViewDto.t_status=='배송중'}">
+															<a href="#">[배송조회]</a>
+														</c:if>
+													</c:when>
+													<c:otherwise>
+														<a href="#">[취소]</a>
+													</c:otherwise>
+												</c:choose>
+											</p>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+				</li>
 				</c:forEach>
 			</ul>
 		</section>
