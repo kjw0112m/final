@@ -176,7 +176,7 @@
 								window.alert("비밀번호가 틀렸습니다");
 
 							} else {
-								$("#pw").val('');
+								$("#pw").val('');	
 								$("#new_pw").val('');
 								$("#chpass").val('');
 								window.alert("비밀번호를 변경했습니다")
@@ -185,6 +185,8 @@
 					});
 				});
 	});
+
+  
 </script>
 <style>
 .gBreak {
@@ -212,13 +214,45 @@ ul, li {
 	position: relative;
 }
 
+
 .bc_w {
 	background-color: whitesmoke;
+}
+
+.hide {
+	display: none;
 }
 
 .a_bold {
 	font-weight: bold;
 	color: #5fa5fe;
+}
+
+#sidebar .snbArea .customer {
+	padding: 18px 20px;
+	border-top: 1px solid #eaeeef;
+	background:
+		url(//img.echosting.cafe24.com/ec/mode/influencer/common/bg_snb_customer.png)
+		no-repeat 156px 20px;
+}
+
+#sidebar .snbArea .customer .title {
+	font-size: 12px;
+	color: #2e3039;
+}
+
+#sidebar .snbArea .customer .tel {
+	margin: 7px 0 0;
+	line-height: 24px;
+	font-size: 24px;
+	color: #2e3039;
+	letter-spacing: -0.5px;
+}
+
+#sidebar .snbArea .customer .tel .dot {
+	display: inline-block;
+	margin: -5px 5px 0;
+	vertical-align: top;
 }
 
 .total {
@@ -405,7 +439,7 @@ ul, li {
 </style>
 <body>
 	<div id="container">
-		<jsp:include page="/WEB-INF/views/template/side.jsp"></jsp:include>
+			<jsp:include page="/WEB-INF/views/template/side.jsp"></jsp:include>
 	</div>
 	<div class="total">
 		<h1>${mdto.name}회원님의정보</h1>
@@ -413,6 +447,7 @@ ul, li {
 			<br>
 
 			<table class="table">
+
 
 
 				<tr>

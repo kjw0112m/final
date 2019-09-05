@@ -74,7 +74,7 @@
 						class=""><img src="${pageContext.request.contextPath}/image/main/cart.PNG"></a> 
 						<a href="${pageContext.request.contextPath}/notice/noticeList" class="">						
 						<img src="${pageContext.request.contextPath}/image/main/contact.PNG"></a>
-				</div>
+			</div>
 			</div>
 		</header>
 	</div>
