@@ -5,25 +5,10 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <title>주문배송조회</title>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 	$(function() {
-		var target = $(".product, .order, .member, .promotion, .stat, .board");
-		target.click(function() {
-			$(this).next().toggle();
-			$(this).parent().toggleClass("bc_w");
-			target.not($(this)).next().hide();
-			target.not($(this)).parent().removeClass("bc_w");
-		});
-
-		target.next().find("a").click(function() {
-			$(this).addClass("a_bold");
-			target.next().find("a").not($(this)).removeClass("a_bold");
-			console.log(this);
-		});
-
 		$.datepicker.setDefaults({
 			dateFormat : 'yy-mm-dd',
 			showOtherMonths : true // 빈 공간에 현재월의 앞뒤월의 날짜를 표시
@@ -34,9 +19,9 @@
 			,
 			changeMonth : true // 콤보박스에서 월 선택 가능
 			,
-			showOn : "button",
+			showOn : "both",
 
-			buttonImage : "cal.png" // 버튼 이미지 경로
+			buttonImage : rootContext + "/image/admin/order/cal.png" // 버튼 이미지 경로
 			,
 			buttonImageOnly : true // 기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
 			,
@@ -66,19 +51,6 @@
 		$('#endDate').datepicker();
 		$('#startDate').datepicker('setDate', 'today-1M');
 		$('#endDate').datepicker('setDate', 'today');
-		var target = $(".product, .order, .member, .promotion, .stat, .board");
-		target.click(function() {
-			$(this).next().toggle();
-			$(this).parent().toggleClass("bc_w");
-			target.not($(this)).next().hide();
-			target.not($(this)).parent().removeClass("bc_w");
-		});
-
-		target.next().find("a").click(function() {
-			$(this).addClass("a_bold");
-			target.next().find("a").not($(this)).removeClass("a_bold");
-			console.log(this);
-		});
 
 		var page = "${page}";
 		var startBlock = "${startBlock}";
@@ -112,6 +84,15 @@
 				break;
 			}
 		});
+
+		var startDate = '${param.start_dt}';
+		var endDate = '${param.end_dt}';
+		console.log(startDate);
+		if (startDate && endDate) {
+			console.log('실행');
+			$('#startDate').datepicker('setDate', startDate);
+			$('#endDate').datepicker('setDate', endDate);
+		}
 	});
 </script>
 <style>
@@ -136,90 +117,13 @@ ul, li {
 	list-style: none;
 }
 
+.total ul, li { 
+	padding: 0;
+	margin: 0;
+}
+
 #container {
 	position: relative;
-}
-
-#sidebar {
-	position: fixed;
-	z-index: 201;
-	top: 0;
-	left: 0;
-	width: 220px;
-	height: 100%;
-	margin-left: 30px;
-	padding: 150px 0 0;
-	box-sizing: border-box;
-	vertical-align: top;
-}
-
-#sidebar .snbArea {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-}
-
-#snb {
-	margin: 0 0 auto;
-	padding: 0;
-}
-
-#a {
-	text-decoration: none;
-	color: black;
-	line-height: 50px;
-}
-
-#snb>li {
-	position: relative;
-}
-
-#snb>li>ul {
-	margin-bottom: 10px;
-}
-
-#snb>li>a {
-	margin-left: 15px;
-}
-
-.bc_w {
-	background-color: whitesmoke;
-}
-
-.hide {
-	display: none;
-}
-
-.a_bold {
-	font-weight: bold;
-	color: #5fa5fe;
-}
-
-#sidebar .snbArea .customer {
-	padding: 18px 20px;
-	border-top: 1px solid #eaeeef;
-	background:
-		url(//img.echosting.cafe24.com/ec/mode/influencer/common/bg_snb_customer.png)
-		no-repeat 156px 20px;
-}
-
-#sidebar .snbArea .customer .title {
-	font-size: 12px;
-	color: #2e3039;
-}
-
-#sidebar .snbArea .customer .tel {
-	margin: 7px 0 0;
-	line-height: 24px;
-	font-size: 24px;
-	color: #2e3039;
-	letter-spacing: -0.5px;
-}
-
-#sidebar .snbArea .customer .tel .dot {
-	display: inline-block;
-	margin: -5px 5px 0;
-	vertical-align: top;
 }
 
 * {
@@ -243,10 +147,6 @@ ul, li {
 	height: 50px;
 	width: 33.33%;
 	border-bottom: 3px solid black;
-}
-
-h4 {
-	font-size: 30px;
 }
 
 .img {
@@ -304,8 +204,8 @@ h4 {
 }
 
 .total {
-	margin-top: 200px;
-	margin-left: 270px;
+	margin-left: 350px; 
+	width: 1200px; 
 }
 
 a {
@@ -373,6 +273,51 @@ dd, dl, h1, h2, h3, h4, h5, input, p, pre {
 	font-weight: bold;
 	color: #55a0ff;
 }
+
+.fText {
+	height: 24px;
+	font-size: 20px;
+	width: 130px;
+	text-align: center;
+}
+
+.fText[readonly] {
+	outline: 0;
+	border: 0;
+}
+
+.f25 {
+	font-size: 30px;
+}
+
+.btn_search {
+	width: 147px;
+	margin-left: 27px;
+	background-color: white;
+	border: 1px solid black;
+}
+
+.large[class*=btn_] {
+	height: 60px;
+	padding: 2px 60px 0;
+	font-size: 16px;
+	line-height: 20px;
+}
+
+.fix[class*=btn_] {
+	width: 100px;
+	padding: 0 !important;
+}
+
+[class*=btn_] {
+	min-width: 76px;
+	padding: 0 26px;
+	height: 40px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	font-size: 14px;
+}
 </style>
 
 <body>
@@ -387,9 +332,13 @@ dd, dl, h1, h2, h3, h4, h5, input, p, pre {
 			<table class="table1">
 				<tr>
 					<td><span class="gBreak"> <input type="text"
-							id="startDate" name="start_dt" class="fText gDate" value="">
-							~ <input type="text" id="endDate" name="end_dt"
-							class="fText gDate" readonly="readOnly"></span></td>
+							id="startDate" name="start_dt" class="fText gDate" value=""
+							readonly="readonly"> <span class="f25">-</span> <input
+							type="text" id="endDate" name="end_dt" class="fText gDate"
+							readonly="readonly">
+					</span>
+						<button type="submit" class="btn_search large fix on_w">조회</button>
+					</td>
 				</tr>
 			</table>
 		</form>
@@ -432,7 +381,18 @@ dd, dl, h1, h2, h3, h4, h5, input, p, pre {
 											value="${orderViewDto.total_price}" pattern="#,###.##" /></td>
 									<td>${orderViewDto.pay_status }
 										<p>
-											<a href="#">[취소]</a>
+											<c:choose>
+												<c:when
+													test="${orderViewDto.t_status=='배송중' or orderViewDto.t_status == '배송완료'}">
+													<a href="#">[교환 및 환불]</a>
+													<c:if test="${orderViewDto.t_status=='배송중'}">
+														<a href="#">[배송조회]</a>
+													</c:if>
+												</c:when>
+												<c:otherwise>
+													<a href="#">[취소]</a>
+												</c:otherwise>
+											</c:choose>
 										</p>
 									</td>
 								</tr>
@@ -472,16 +432,6 @@ dd, dl, h1, h2, h3, h4, h5, input, p, pre {
 				</c:if>
 			</ol>
 		</div>
-		<!-- 		<table class="table3"> -->
-		<!-- 			<tr> -->
-		<!-- 			주문설명.png -->
-		<!-- 				<td><img src="" class="a2"></td> -->
-		<!-- 				<td></td> -->
-		<!-- 				<td></td> -->
-		<!-- 				<td></td> -->
-		<!-- 			</tr> -->
-		<!-- 		</table> -->
-
 	</div>
 </body>
 

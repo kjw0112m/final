@@ -11,22 +11,6 @@
 <script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
 
 <script>
-	$(function() {
-		var target = $(".product, .order, .member, .promotion, .stat, .board");
-		target.click(function() {
-			$(this).next().toggle();
-			$(this).parent().toggleClass("bc_w");
-			target.not($(this)).next().hide();
-			target.not($(this)).parent().removeClass("bc_w");
-		});
-
-		target.next().find("a").click(function() {
-			$(this).addClass("a_bold");
-			target.next().find("a").not($(this)).removeClass("a_bold");
-			console.log(this);
-		});
-	});
-
 	//주소
 	$(function() {
 		$(".addr").click(findAddress);
@@ -160,7 +144,7 @@
 								window.alert("비밀번호가 틀렸습니다");
 
 							} else {
-								$("#pw").val('');	
+								$("#pw").val('');
 								$("#new_pw").val('');
 								$("#chpass").val('');
 								window.alert("비밀번호를 변경했습니다")
@@ -169,8 +153,6 @@
 					});
 				});
 	});
-
-  
 </script>
 <style>
 .gBreak {
@@ -198,86 +180,14 @@ ul, li {
 	position: relative;
 }
 
-#sidebar {
-	position: fixed;
-	z-index: 201;
-	top: 0;
-	left: 0;
-	width: 220px;
-	height: 100%;
-	margin-left: 30px;
-	padding: 150px 0 0;
-	box-sizing: border-box;
-	vertical-align: top;
-}
-
-#sidebar .snbArea {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-}
-
-#snb {
-	margin: 0 0 auto;
-	padding: 0;
-}
-
-#a {
-	text-decoration: none;
-	color: black;
-	line-height: 50px;
-}
-
-#snb>li {
-	position: relative;
-}
-
-#snb>li>ul {
-	margin-bottom: 10px;
-}
-
-#snb>li>a {
-	margin-left: 15px;
-}
 
 .bc_w {
 	background-color: whitesmoke;
 }
 
-.hide {
-	display: none;
-}
-
 .a_bold {
 	font-weight: bold;
 	color: #5fa5fe;
-}
-
-#sidebar .snbArea .customer {
-	padding: 18px 20px;
-	border-top: 1px solid #eaeeef;
-	background:
-		url(//img.echosting.cafe24.com/ec/mode/influencer/common/bg_snb_customer.png)
-		no-repeat 156px 20px;
-}
-
-#sidebar .snbArea .customer .title {
-	font-size: 12px;
-	color: #2e3039;
-}
-
-#sidebar .snbArea .customer .tel {
-	margin: 7px 0 0;
-	line-height: 24px;
-	font-size: 24px;
-	color: #2e3039;
-	letter-spacing: -0.5px;
-}
-
-#sidebar .snbArea .customer .tel .dot {
-	display: inline-block;
-	margin: -5px 5px 0;
-	vertical-align: top;
 }
 
 .total {
@@ -377,7 +287,6 @@ ul, li {
 </head>
 
 <body>
-
 	<div id="container">
 		<jsp:include page="/WEB-INF/views/template/side.jsp"></jsp:include>
 	</div>
@@ -389,7 +298,6 @@ ul, li {
 			<table class="table">
 
 
-
 				<tr>
 					<td class="a">아이디</td>
 					<td class="b">${mdto.id}</td>
@@ -397,7 +305,7 @@ ul, li {
 				<tr>
 					<td class="a">비밀번호(수정가능)</td>
 					<td class="b"><span class="span">현재 비밀번호</span><input
-						type="password" name="origin_pw" id="pw" class="iText" ><br>
+						type="password" name="origin_pw" id="pw" class="iText"><br>
 						<span class="span">신규 비밀번호</span><input type="password"
 						class="iText" name="new_pw" id="new_pw"
 						pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$"><span class="spw"></span><br>
@@ -459,17 +367,4 @@ ul, li {
 			</div>
 		</form>
 	</div>
-</body>
-
-</html>
-
-
-
-
-
-
-
-
-
-
-
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
