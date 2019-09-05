@@ -23,7 +23,7 @@
             });
         });
     </script>
-    <style>
+   <style>
         ul,
         li {
             list-style: none;
@@ -123,7 +123,7 @@
             text-align: center;
         }
 
-        h4 {
+        .h4 {
             font-size: 30px;
             font-weight: 700px;
             margin: 20px;
@@ -249,7 +249,7 @@
             <div class="snbArea">
                 <ul id="snb">
                     <li>
-                        <h4>MY PAGE</h4>
+                        <h4 class="h4">MY PAGE</h4>
                     </li>
                     <li>
                         <a id="a" href="#none" class="product">

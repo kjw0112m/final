@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -9,8 +8,28 @@
 <script
 	src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
 <script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
-
 <script>
+         $(function () {
+            var target = $(".product, .order, .member, .promotion, .stat, .board");
+            target.click(function () {
+                $(this).next().toggle();
+                $(this).parent().toggleClass("bc_w");
+                target.not($(this)).next().hide();
+                target.not($(this)).parent().removeClass("bc_w");
+            });
+
+            target.next().find("a").click(function () {
+                $(this).addClass("a_bold");
+                target.next().find("a").not($(this)).removeClass("a_bold");
+                console.log(this);
+            });
+        });
+        //비밀번호 검사 후 형식에 안맞을시 보조메세지 출력	
+        $(function () {
+            $("input[name=new_pw]").blur(
+                function checkPw() {
+                    var m_pw = document.querySelector("#new_pw").value;
+                    var regex = /^[a-zA-Z0-9!@#$\-_]{8,15}$/;
 	//주소
 	$(function() {
 		$(".addr").click(findAddress);
@@ -26,7 +45,9 @@
 				// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
 				var addr = ''; // 주소 변수
 				var extraAddr = ''; // 참고항목 변수
-
+                    }
+                });
+        });
 				//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
 				if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
 					addr = data.roadAddress;
@@ -52,7 +73,6 @@
 						extraAddr = ' (' + extraAddr + ')';
 					}
 					// 조합된 참고항목을 해당 필드에 넣는다.
-
 				}
 
 				// 우편번호와 주소 정보를 해당 필드에 넣는다.
@@ -60,7 +80,19 @@
 				// document.querySelector("input[name=basicaddr]").value = addr;
 				// 커서를 상세주소 필드로 이동한다.
 				// document.querySelector("input[name=detailaddr]").focus();
-
+                } else {
+                    span.innerHTML = "<font color = '#de2195' size = '2'>암호맞음</font>"
+                    $("input[name=btn]").prop("disabled", false)
+                }
+            }); //#chpass.keyup
+        });
+        $(function () {  
+            $("form").submit(function (e) {
+                e.preventDefault();
+                var pw = $("input[name=origin_pw]").val();
+                var encPw = CryptoJS.SHA256(pw).toString();
+                var ck_pw = $("input[name=pw_check]").val();
+                var encNPW = CryptoJS.SHA256(ck_pw).toString();
 				// 이 코드는 jquery.js 를 먼저 불러온 경우만 사용 가능
 				$("input[name=post_code]").val(data.zonecode);
 				$("input[name=basic_addr]").val(addr);
@@ -180,7 +212,6 @@ ul, li {
 	position: relative;
 }
 
-
 .bc_w {
 	background-color: whitesmoke;
 }
@@ -278,20 +309,106 @@ ul, li {
 	font-size: 15px;
 }
 
+.total {
+	margin: 0 auto;
+	max-width: 70%;
+	padding-top: 58px;
+	padding-bottom: 120px;
+}
+
+.table {
+	border: none;
+	width: 100%;
+	border-width: 2px 0 0;
+	border-style: solid;
+	color: #555;
+	border-collapse: collapse;
+}
+
+.table th, .table td {
+	border-width: 0 0 1px;
+	border-style: solid;
+	border-color: #d0d0d0;
+}
+
+.a {
+	font-size: 13px;
+	padding: 0 0 0 20px;
+	text-align: left;
+	font-weight: 400;
+	width: 10%;
+}
+
+.b {
+	min-height: 40px;
+	padding: 16px 20px;
+}
+
+.iText {
+	width: 280px;
+	height: 44px;
+	padding: 0 39px 0 15px;
+	min-width: 280px;
+	font-size: 14px;
+	margin-top: 5px;
+	margin-left: 10px;
+	border: 1px #eee solid;
+}
+
+#btn2div {
+	margin-top: 30px;
+	text-align: center;
+	width: 100%;
+}
+
+.btn2 {
+	height: 50px;
+	width: 120px;
+	padding-left: 30px;
+	text-decoration: none;
+	color: #555;
+	font-weight: 600;
+}
+
+.span {
+	font-size: 13px;
+	text-align: left;
+	font-weight: 400;
+}
+
+#btn1 {
+	border: 1px solid;
+	border-color: silver;
+	background-color: white;
+	color: black;
+	height: 44px;
+	width: 150px;
+	font-size: 13px;
+	margin-left: 10px;
+}
+
+.input {
+	border: 1px solid;
+	background-color: black;
+	color: white;
+	padding: 2px 60px 0;
+	height: 50px;
+	width: 150px;
+	font-size: 15px;
+}
+
 .h4 {
 	font-size: 30px;
 	font-weight: 700px;
 	margin: 20px;
 }
 </style>
-</head>
-
 <body>
 	<div id="container">
 		<jsp:include page="/WEB-INF/views/template/side.jsp"></jsp:include>
 	</div>
 	<div class="total">
-		<h1>${mdto.name}회원님의정보,정보수정</h1>
+		<h1>${mdto.name}회원님의정보</h1>
 		<form action="change" method="post">
 			<br>
 
@@ -332,7 +449,6 @@ ul, li {
 					<td class="b"><input type="text" name="email"
 						value="${mdto.email}" class="iText"></td>
 				</tr>
-
 				<tr>
 					<td class="a">주소(수정가능)</td>
 					<td class="b">
@@ -367,4 +483,4 @@ ul, li {
 			</div>
 		</form>
 	</div>
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
