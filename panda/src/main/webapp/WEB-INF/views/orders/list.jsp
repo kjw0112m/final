@@ -324,7 +324,6 @@ dd, dl, h1, h2, h3, h4, h5, input, p, pre {
 dt {
 	font-weight: bold;
 }
-
 </style>
 
 <body>
@@ -389,27 +388,33 @@ dt {
 											<div>${orderViewDto.quantity}개</div></td>
 										<td class="text-center"><fmt:formatNumber
 												value="${orderViewDto.total_price}" pattern="#,###.##" /></td>
-										<td>${orderViewDto.pay_status }
-											<p>
-												<c:choose>
-													<c:when
-														test="${orderViewDto.t_status=='배송중' or orderViewDto.t_status == '배송완료'}">
-														<a href="#">[교환 및 환불]</a>
-														<c:if test="${orderViewDto.t_status=='배송중'}">
-															<a href="#">[배송조회]</a>
-														</c:if>
-													</c:when>
-													<c:otherwise>
-														<a href="#">[취소]</a>
-													</c:otherwise>
-												</c:choose>
-											</p>
-										</td>
+										<td><c:choose>
+												<c:when test="${orderViewDto.cs_status eq null}">
+										${orderViewDto.pay_status }
+										</c:when>
+												<c:otherwise>
+										${orderViewDto.cs_status }
+										</c:otherwise>
+											</c:choose> <c:if test="${orderViewDto.cs_status eq null}">
+												<p>
+													<c:choose>
+														<c:when
+															test="${orderViewDto.t_status=='배송중' or orderViewDto.t_status == '배송완료'}">
+															<a href="#">[교환 및 환불]</a>
+															<c:if test="${orderViewDto.t_status=='배송중'}">
+																<a href="#">[배송조회]</a>
+															</c:if>
+														</c:when>
+														<c:otherwise>
+															<a href="${pageContext.request.contextPath}/orders/cancel/team">[취소]</a>
+														</c:otherwise>
+													</c:choose>
+												</p>
+											</c:if></td>
 									</tr>
 								</c:forEach>
 							</tbody>
-						</table>
-				</li>
+						</table></li>
 				</c:forEach>
 			</ul>
 		</section>
@@ -438,7 +443,7 @@ dt {
 				<c:if test="${not (page eq pageCount)}">
 					<li><a href="#" class="page_block">&gt;</a></li>
 				</c:if>
-				<c:if test="${(not (page eq pageCount)) && pageCount>=5}">
+				<c:if test="${(not (page eq pageCount)) && pageCount>5}">
 					<li><a href="#" class="page_block">&gt;&gt;</a></li>
 				</c:if>
 			</ol>
