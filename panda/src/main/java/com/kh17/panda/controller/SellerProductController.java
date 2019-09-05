@@ -96,33 +96,106 @@ public class SellerProductController {
 		
 		for(int id : product_id) {
 			ProductDto productDto = productDao.get(id);
-			int main = productDto.getMainfile();
-			int detail = productDto.getDetailfile();
+			int main = 0;
+			int detail = 0;
+			if(productDto.getMainfile() != 0) {
+				main = productDto.getMainfile();				
+			}
+			if(productDto.getDetailfile() != 0) {
+				detail = productDto.getDetailfile();				
+			}
 			
 			//상품 삭제
 			productDao.delete(id);
 			
-			//메인 이미지 삭제(물리+DB)
-			String mainsv = filesDao.getSaveName(main);
-			File file1 = new File("D:/upload/kh17/product", mainsv);
-			file1.delete();
-			filesDao.delete(main);
-			//상세 이미지 삭제(물리+DB)
-			String detailsv = filesDao.getSaveName(detail);
-			File file2 = new File("D:/upload/kh17/product", detailsv);
-			file2.delete();
-			filesDao.delete(detail);
+			if(main != 0) {
+				//메인 이미지 삭제(물리+DB)
+				String mainsv = filesDao.getSaveName(main);
+				File file1 = new File("D:/upload/kh17/product", mainsv);
+				file1.delete();
+				filesDao.delete(main);
+			}
+			if(detail != 0) {
+				//상세 이미지 삭제(물리+DB)
+				String detailsv = filesDao.getSaveName(detail);
+				File file2 = new File("D:/upload/kh17/product", detailsv);
+				file2.delete();
+				filesDao.delete(detail);				
+			}
 		}
 		return "redirect:list";
 	}
 	
 	@GetMapping("/list")
-	public String list(HttpSession session,
+	public String list1(
+			HttpSession session,
+			@RequestParam (required = false, defaultValue = "1") int page,
 			Model model) {
 //		String seller_id = (String) session.getAttribute("sid");
 		String seller_id = "abc";
-		List<ProductSubcategoryDto> list = productSubcategoryDao.list(seller_id);
+		
+		int pagesize = 10;
+		int start = 1;
+		int end = 10;
+
+		int blocksize = 10;
+		int startBlock = (page - 1) / blocksize * blocksize + 1;
+		int endBlock = startBlock + (blocksize - 1);
+
+		int count = productSubcategoryDao.count(null, null);
+		int pageCount = (count - 1) / pagesize + 1;
+		if (endBlock > pageCount) {
+			endBlock = pageCount;
+		}
+		
+		model.addAttribute("page", page);
+		model.addAttribute("startBlock", startBlock);
+		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
+		
+		List<ProductSubcategoryDto> list = productSubcategoryDao.list(seller_id, start, end);
 		model.addAttribute("list", list);
+		return "seller/product/list";
+	}
+	
+	@PostMapping("/list")
+	public String list2(
+			HttpSession session,
+			@RequestParam (required = false) String type,
+			@RequestParam (required = false) String keyword,
+			@RequestParam (required = false, defaultValue = "1") int page,
+			Model model
+			) {
+//		String seller_id = (String) session.getAttribute("sid");
+		String seller_id = "abc";
+		
+		int pagesize = 10;
+		int start = pagesize * page - (pagesize - 1);
+		int end = pagesize * page;
+
+		int blocksize = 10;
+		int startBlock = (page - 1) / blocksize * blocksize + 1;
+		int endBlock = startBlock + (blocksize - 1);
+
+		int count = productSubcategoryDao.count(type, keyword);
+		int pageCount = (count - 1) / pagesize + 1;
+		if (endBlock > pageCount) {
+			endBlock = pageCount;
+		}
+		
+		model.addAttribute("page", page);
+		model.addAttribute("startBlock", startBlock);
+		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
+		
+		if(type != null && keyword != null) {
+			List<ProductSubcategoryDto> list = productSubcategoryDao.search(type, keyword, start, end, seller_id);
+			model.addAttribute("list", list);
+		}
+		else {
+			List<ProductSubcategoryDto> list = productSubcategoryDao.list(seller_id, start, end);
+			model.addAttribute("list", list);
+		}
 		return "seller/product/list";
 	}
 	
