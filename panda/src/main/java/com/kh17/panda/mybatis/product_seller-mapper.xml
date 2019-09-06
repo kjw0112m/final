@@ -17,12 +17,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>	
 	</select>
 
-	<select id="sellerList" parameterType="String" resultType="productSellerDto">
-		select * from product_seller where seller_id = #{seller_id} order by regist_dt desc
+	<select id="sellerList" parameterType="map" resultType="productSellerDto">
+		<![CDATA[
+		select * from(
+			select rownum rn, A.* from (
+				select * from product_seller where seller_id = #{seller_id} order by regist_dt desc
+		]]>
+		<![CDATA[
+			)A
+		) where rn >= #{start} and rn <= #{end}
+		]]>	
 	</select>
 	
-	<select id="categoryList" parameterType="int" resultType="productSellerDto">
-		select * from product_seller where sub_category_id = #{sub_category_id} order by regist_dt desc
+	<select id="categoryList" parameterType="map" resultType="productSellerDto">
+		<![CDATA[
+		select * from (
+			select rownum rn, A.* from(
+				select * from product_seller where sub_category_id = #{sub_category_id} order by regist_dt desc
+			]]>
+				)A 
+		<![CDATA[
+		) where rn > = #{start} and rn <= #{end}
+		]]>
 	</select>
 
 	<select id="get" parameterType="int" resultType="productSellerDto">
@@ -39,6 +55,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="count" resultType="int">
 		select count(*) from product_seller
+	</select>
+	
+	<select id="count2" parameterType="int" resultType="int">
+		select count(*) from product_seller where sub_category_id = #{sub_category_id}
+	</select>
+
+	<select id="count3" parameterType="String" resultType="int">
+		select count(*) from product_seller where seller_id = #{seller_id}
 	</select>
 
 </mapper>

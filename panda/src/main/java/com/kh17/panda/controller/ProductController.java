@@ -90,24 +90,66 @@ public class ProductController {
 	}
 
 	@GetMapping("/sellerList")
-	public String sellers(@RequestParam String seller_id, Model model) {
-		List<ProductSellerDto> list = productSellerDao.sellerList(seller_id);
+	public String sellers(
+			@RequestParam (required = false, defaultValue = "1") int page,
+			@RequestParam String seller_id,
+			Model model) {
+		
+		int pagesize = 8;
+		int start = pagesize * page - (pagesize - 1);
+		int end = pagesize * page;
+
+		int blocksize = 10;
+		int startBlock = (page - 1) / blocksize * blocksize + 1;
+		int endBlock = startBlock + (blocksize - 1);
+
+		int count = productSellerDao.count(seller_id);
+		int pageCount = (count - 1) / pagesize + 1;
+		if (endBlock > pageCount) {
+			endBlock = pageCount;
+		}
+				
+		List<ProductSellerDto> list = productSellerDao.sellerList(seller_id, start, end);
 		model.addAttribute("list", list);
 		model.addAttribute("seller_id", seller_id);
+		model.addAttribute("page", page);
+		model.addAttribute("startBlock", startBlock);
+		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
 		return "product/sellerList";
 	}
 
 	@GetMapping("/subcategoryList")
 	public String subcategorylist(
+			@RequestParam (required = false, defaultValue = "1") int page,
 			@RequestParam int sub_category_id,
 			Model model) {
+		
+		int pagesize = 10;
+		int start = pagesize * page - (pagesize - 1);
+		int end = pagesize * page;
+
+		int blocksize = 10;
+		int startBlock = (page - 1) / blocksize * blocksize + 1;
+		int endBlock = startBlock + (blocksize - 1);
+
+		int count = productSellerDao.count(sub_category_id);
+		int pageCount = (count - 1) / pagesize + 1;
+		if (endBlock > pageCount) {
+			endBlock = pageCount;
+		}
+		
 		SubcategoryDto subcategoryDto = subcategoryDao.getDto(sub_category_id);
-		List<ProductSellerDto> list = productSellerDao.categoryList(sub_category_id);
+		List<ProductSellerDto> list = productSellerDao.categoryList(sub_category_id, start, end);
 		int category_id = subcategoryDao.getCg(sub_category_id);
 		List<SubcategoryDto> sclist = subcategoryDao.list(category_id);
 		model.addAttribute("list", list);
 		model.addAttribute("sclist", sclist);
 		model.addAttribute("subcategoryDto", subcategoryDto);
+		model.addAttribute("page", page);
+		model.addAttribute("startBlock", startBlock);
+		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
 		return "product/subcategoryList";
 	}
 
