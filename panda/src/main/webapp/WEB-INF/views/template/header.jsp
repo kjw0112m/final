@@ -26,7 +26,7 @@
 				<nav id="main_nav" class="main_nav">
 					<ul class="menu">
 						<li class="dis_f ai_c"><a href="${pageContext.request.contextPath}/product/newArrivals">NEW</a></li>
-						<li class="dis_f ai_c c_w" id="tops"><a href="${pageContext.request.contextPath}/product/tops?category_id=1">TOPS</a>
+						<li class="dis_f ai_c c_w" id="tops"><a href="${pageContext.request.contextPath}/product/tops">TOPS</a>
 							<ul class="menus" id="topsmenu">
 								<strong class="tit">TOPS</strong>
 								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=1">원피스</a></li>
@@ -36,7 +36,7 @@
 								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=5">후드티</a></li>
 								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=6">아우터</a></li>
 							</ul></li>
-						<li class="dis_f ai_c c_w" id="bottoms"><a href="${pageContext.request.contextPath}/product/bottoms?category_id=2">BOTTOMS</a>
+						<li class="dis_f ai_c c_w" id="bottoms"><a href="${pageContext.request.contextPath}/product/bottoms">BOTTOMS</a>
 							<ul id="bottomsmenu" class="menus">
 								<strong class="tit">BOTTOMS</strong>
 								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=7">슬랙스</a></li>
@@ -45,7 +45,7 @@
 								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=10">반바지</a></li>
 								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=11">면바지</a></li>
 							</ul></li>
-						<li class="dis_f ai_c c_w" id="acc"><a href="${pageContext.request.contextPath}/product/acc?category_id=3">ACC</a>
+						<li class="dis_f ai_c c_w" id="acc"><a href="${pageContext.request.contextPath}/product/acc">ACC</a>
 							<ul id="accmenu" class="menus">
 								<strong class="tit">ACC</strong>
 								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=12">목걸이</a></li>

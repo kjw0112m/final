@@ -4,8 +4,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="productSeller">
 
-	<select id="newArrivals" resultType="productSellerDto">
-		select * from product_seller order by regist_dt desc
+	<select id="newArrivals" parameterType="map" resultType="productSellerDto">
+		<![CDATA[
+		select * from(
+			select rownum rn, A.* from (
+				select * from product_seller
+		]]>
+		<![CDATA[
+				order by regist_dt desc
+			)A
+		) where rn >= #{start} and rn <= #{end}
+		]]>	
 	</select>
 
 	<select id="sellerList" parameterType="String" resultType="productSellerDto">
@@ -26,6 +35,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				product_name || nickname like '%' || #{keyword} || '%'
 			order by
 				regist_dt desc
+	</select>
+	
+	<select id="count" resultType="int">
+		select count(*) from product_seller
 	</select>
 
 </mapper>

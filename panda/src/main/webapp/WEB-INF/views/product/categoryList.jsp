@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
 <script src="https://code.jquery.com/jquery-latest.js"></script>
@@ -120,6 +121,24 @@
 #snb {
 	padding: 0px;
 }
+
+.paginate {
+	margin: 25px 0 0;
+	text-align: center;
+}
+
+.paginate ol, .paginate li {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 16px;
+	line-height: 16px;
+	padding: 0 1px;
+}
+
+.active_page {
+	font-weight: bold;
+	color: #55a0ff;
+}
 </style>
 <%-- <h2>${categoryDto.name}</h2> --%>
 <!-- <div> -->
@@ -159,14 +178,17 @@
 		<div class="snbArea">
 			<ul id="snb">
 				<li class="detail">
-					<h2 id="clothing">CLOTHING</h2>
+					<h2 id="clothing">${categoryDto.name}</h2>
 					<ul>
-						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=1"> 원피스 </a></li>
-						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=2"> 티샤스 </a></li>
-						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=3"> 샤츠 </a></li>
-						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=4"> 맨투맨 </a></li>
-						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=5"> 후드티 </a></li>
-						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=6"> 아우터 </a></li>
+						<c:forEach var="sclist"  items="${sclist}">
+							<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=${sclist.id}">${sclist.name}</a></li>
+						</c:forEach>
+<%-- 						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=1"> 원피스 </a></li> --%>
+<%-- 						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=2"> 티샤스 </a></li> --%>
+<%-- 						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=3"> 샤츠 </a></li> --%>
+<%-- 						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=4"> 맨투맨 </a></li> --%>
+<%-- 						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=5"> 후드티 </a></li> --%>
+<%-- 						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=6"> 아우터 </a></li> --%>
 					</ul>
 				</li>
 			</ul>
@@ -178,16 +200,49 @@
 		<c:forEach var="categoryListDto" items="${list}">
 			<li>
 				<div class="order-img">
-					<a href="detail?product_id=${categoryListDto.product_id}"><img src="http://placehold.it/300x300"></a>
+					<a href="detail?product_id=${categoryListDto.product_id}"><img src="${pageContext.request.contextPath}/product/image?id=${categoryListDto.mainfile}"></a>
 				</div>
 				<div class="li-bottom">
 					<a href="sellerList?seller_id=${categoryListDto.seller_id}">${categoryListDto.nickname}</a><br><br>
 					<a href="detail?product_id=${categoryListDto.product_id}">${categoryListDto.product_name}</a>
 					<br>
-					<strong>${categoryListDto.price}</strong>
+					<strong>
+						<fmt:formatNumber value="${categoryListDto.price}"
+							pattern="#,###.##"/>
+						</strong>
 				</div>
 			</li>
 		</c:forEach>
 	</ul>
+</div>
+<input name="page" type="hidden">
+<div class="paginate">
+	<ol>
+	<c:if test="${(not (page eq 1))&& not empty page && page>=11}">
+		<li><a href="${address}?page=${startBlock-1}" class="page_block">&lt;&lt;</a></li>
+	</c:if>
+	<c:if test="${not (page eq 1) && not empty page}">
+		<li><a href="${address}?page=${page-1}" class="page_block">&lt;</a></li>
+	</c:if>
+	<!--페이지 출력 -->
+	<c:forEach var="i" begin="${startBlock}" end="${endBlock}">
+		<c:choose>
+		<c:when test="${page == i}">
+			<li class="active_page">${i}</li>
+		</c:when>
+		<c:otherwise>
+			<c:if test="${i>0}">
+				<li><a href="${address}?page=${i}" class="page_move">${i}</a></li>
+			</c:if>
+		</c:otherwise>
+		</c:choose>
+	</c:forEach>
+	<c:if test="${not (page eq pageCount)}">
+		<li><a href="${address}?page=${page+1}" class="page_block">&gt;</a></li>
+	</c:if>
+	<c:if test="${(not (page eq pageCount)) && pageCount>=10}">
+		<li><a href="${address}?page=${endBlock+1}" class="page_block">&gt;&gt;</a></li>
+	</c:if>
+	</ol>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

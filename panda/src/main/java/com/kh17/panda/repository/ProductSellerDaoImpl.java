@@ -1,6 +1,8 @@
 package com.kh17.panda.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,11 @@ public class ProductSellerDaoImpl implements ProductSellerDao{
 	SqlSession sqlSession;
 	
 	@Override
-	public List<ProductSellerDto> newArrivals() {
-		return sqlSession.selectList("productSeller.newArrivals");
+	public List<ProductSellerDto> newArrivals(int start, int end) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("start", start);
+		map.put("end", end);
+		return sqlSession.selectList("productSeller.newArrivals", map);
 	}
 
 	@Override
@@ -37,6 +42,11 @@ public class ProductSellerDaoImpl implements ProductSellerDao{
 	@Override
 	public List<ProductSellerDto> search(String keyword) {
 		return sqlSession.selectList("productSeller.search", keyword);
+	}
+
+	@Override
+	public int count() {
+		return sqlSession.selectOne("productSeller.count");
 	}
 
 }
