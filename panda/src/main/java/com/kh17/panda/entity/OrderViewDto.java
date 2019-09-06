@@ -19,6 +19,10 @@ public class OrderViewDto {
 		return order_dt.substring(0, 10);
 	}
 	
+	public String getTime() {
+		return order_dt.substring(0, 19);
+	}
+	
 	public String getAddr() {
 		return "["+post_code+"]"+basic_addr+" "+detail_addr;
 	}

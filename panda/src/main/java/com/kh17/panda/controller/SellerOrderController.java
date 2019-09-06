@@ -16,7 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh17.panda.entity.OrderViewDto;
 import com.kh17.panda.entity.OrdersDto;
+import com.kh17.panda.entity.TransportDto;
 import com.kh17.panda.repository.OrdersDao;
+import com.kh17.panda.repository.TransportDao;
+import com.kh17.panda.vo.OrderListVO;
 import com.kh17.panda.vo.OrderViewListVO;
 import com.kh17.panda.vo.OrderViewVO;
 
@@ -26,6 +29,9 @@ public class SellerOrderController {
 
 	@Autowired
 	private OrdersDao ordersDao;
+	
+	@Autowired
+	private TransportDao transportDao;
 
 	@GetMapping("/search")
 	public String list() {
@@ -44,22 +50,22 @@ public class SellerOrderController {
 			int blocksize = 10;
 			int startBlock = (page - 1) / blocksize * blocksize + 1;
 			int endBlock = startBlock + (blocksize - 1);
-			
+
 			List<OrderViewVO> search = orderViewListVO.getSearch();
-			
+
 			for (int i = 0; i < search.size(); i++) {
 				if (search.get(i).getKeyword().isEmpty()) {
 					search.remove(i);
 					i--;
 				}
 			}
-			
-			for(int i=0; i< search.size() ; i++) {
-				if(search.get(i).getType()==null) {
+
+			for (int i = 0; i < search.size(); i++) {
+				if (search.get(i).getType() == null) {
 					search.remove(i);
 				}
 			}
-			
+
 			int count = ordersDao.count(orderViewDto, search, csStatus, tStatus);
 			int pageCount = (count - 1) / pagesize + 1;
 			if (endBlock > pageCount) {
@@ -69,7 +75,6 @@ public class SellerOrderController {
 			model.addAttribute("startBlock", startBlock);
 			model.addAttribute("endBlock", endBlock);
 			model.addAttribute("pageCount", pageCount);
-			
 
 			List<OrderViewDto> list = ordersDao.list(orderViewDto, search, start, end, csStatus, tStatus);
 			model.addAttribute("orderViewDto", list);
@@ -78,6 +83,69 @@ public class SellerOrderController {
 		} else {
 			model.addAttribute("orderViewDto", null);
 			return "seller/orders/search";
+		}
+	}
+
+	@GetMapping("/delivery")
+	public String delivery() {
+
+		return "seller/orders/delivery";
+	}
+
+	@PostMapping("/delivery")
+	public String delivery(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
+			Model model, @RequestParam(required = false, defaultValue = "1") int page, HttpSession session,
+			@RequestParam(required = false) String[] tStatus) {
+		String seller_id = (String) session.getAttribute("sid");
+		
+		if (seller_id != null) {
+			int pagesize = 10;
+			int start = pagesize * page - (pagesize - 1);
+			int end = pagesize * page;
+
+			int blocksize = 10;
+			int startBlock = (page - 1) / blocksize * blocksize + 1;
+			int endBlock = startBlock + (blocksize - 1);
+			
+			List<OrderViewVO> search = orderViewListVO.getSearch();
+
+			for (int i = 0; i < search.size(); i++) {
+				if (search.get(i).getKeyword().isEmpty()) {
+					search.remove(i);
+					i--;
+				}
+			}
+
+			for (int i = 0; i < search.size(); i++) {
+				if (search.get(i).getType() == null) {
+					search.remove(i);
+				}
+			}
+			
+//			orderViewDto.setSeller_id("abc");
+			int count = ordersDao.count(orderViewDto, search, tStatus);
+			int pageCount = (count - 1) / pagesize + 1;
+			if (endBlock > pageCount) {
+				endBlock = pageCount;
+			}
+			
+			model.addAttribute("page", page);
+			model.addAttribute("startBlock", startBlock);
+			model.addAttribute("endBlock", endBlock);
+			model.addAttribute("pageCount", pageCount);
+
+			List<OrderListVO> list = ordersDao.list(orderViewDto, search, start, end, tStatus);
+			model.addAttribute("orderListVO", list);
+			model.addAttribute("searchCount", count);
+			
+			List<TransportDto> tList = transportDao.list();
+			
+			model.addAttribute("transportDto", tList);
+			
+			return "seller/orders/delivery";
+		} else {
+			model.addAttribute("orderViewDto", null);
+			return "seller/orders/delivery";
 		}
 	}
 

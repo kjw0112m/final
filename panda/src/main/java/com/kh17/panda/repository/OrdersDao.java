@@ -25,6 +25,8 @@ public interface OrdersDao {
 	void invoice(OrdersDto ordersDto);
 
 	int count(OrderViewDto orderViewDto, List<OrderViewVO> search, String[] csStatus, String[] tStatus);
+	
+	int count(OrderViewDto orderViewDto, List<OrderViewVO> search, String[] tStatus);
 
 	List<OrderViewDto> getTeam(String team);
 	
@@ -35,4 +37,6 @@ public interface OrdersDao {
 	List<OrderListVO> list(OrderViewDto orderViewDto, int start, int end);
 
 	List<OrderViewDto> list(String team);
+
+	List<OrderListVO> list(OrderViewDto orderViewDto, List<OrderViewVO> search, int start, int end, String[] tStatus);
 }
