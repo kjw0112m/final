@@ -62,8 +62,7 @@ h4 {
 }
 </style>
 <script src="https:/code.jquery.com/jquery-latest.js"></script>
-<script>
-</script>
+ 
 <div class="total">
 	<div id="top">
 		<span>01 쇼핑백</span><span> > 02 주문결제</span><span

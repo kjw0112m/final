@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+/* ------------------------------------------------------------------기본 설정------------------------------------------------------ */
+
+ #btnSearch777 {
+	min-width: 84px;
+	height: 39px;
+	padding: 10px;
+	color: #fff;
+	line-height: 5px;
+	border: 1px solid transparent;
+	background-color: #55a0ff;
+	margin-right: 10px;
+} 
+
+
+
+/* .btnSearch {
+	min-width: 84px;
+	height: 36px;
+	padding: 10px;
+	color: #fff;
+	line-height: 34px;
+	border: 1px solid transparent;
+	background-color: #55a0ff;
+	margin-right: 10px;
+} */
+

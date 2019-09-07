@@ -4,17 +4,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include> 
-
+ <jsp:include page="/WEB-INF/views/template/admin/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/aside.jsp"></jsp:include>  
+ 
+ 
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/common2.css">
 
 
-<a  href="${pageContext.request.contextPath}/notice/noticeList">공지사항<i id=gi></i></a>
-&&&
-<a  href="${pageContext.request.contextPath}/board/listOne">1:1 문의 <i id=gi></i></a>
-&&&
-<a  href="${pageContext.request.contextPath}/review/reviewComment">상품후기 <i id=gi></i></a>
 <!-- 자바스크립트를 이용하여 페이지 이동을 처리 -->
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
@@ -42,36 +39,163 @@
 	
 </script>
 
-<form class="form" action="oneList" method="get">
+
+
+
+
+
+<!-- <form class="form" action="oneList" method="get"> -->
+
+
+<form class="form" action="oneList" method="get" >
+	
+	<div class="">
+		<h1>1:1 문의 </h1>
+	</div>
+	<div id="content">
+		<div class="optionArea">
+			<div class="mOption">
+				<table border="1" summary="">
+					<colgroup>
+						<col style="width: 170px;">
+						<col style="width: 600px;">
+						<col style="width: 170px;">
+						<col style="width: auto;">
+					</colgroup>
+					<tbody>
+						<tr>
+							<th scope="row">검색어</th>
+							<td colspan="3">
+								<div id="mainSearch">
+									<div>
+										<select class="fSelect" name="type" style="width: 163px;">
+											<option value="choice" disabled>-검색항목선택-</option>
+											<option value="title" ${type == 'title'?'selected':''}>제목</option>
+											<option value="content" ${type == 'content'?'selected':''}>내용</option>
+											<option value="title+content" ${type == 'title+content'?'selected':''}>제목+내용</option>
+										</select>
+										<input type="search" name="keyword" placeholder="검색어"
+											required value="${keyword}" class="fText searchBox" style="width: 300px;">
+									</div>
+								</div>
+					</tbody>
+				</table>
+			</div>
+			<div class="form_button">
+				<input type="submit" id="btnSearch777" class="btnSearch777" value="검색">
+				
+				<a href="${pageContext.request.contextPath}/seller/one/oneList" id="btnSearch"  class="btnSearch"> 초기화</a>
+				
+<%-- 				<a href="${pageContext.request.contextPath}/seller/notice/noticeList" id="btnInit"  class="btnSearch reset"> 초기화</a>				
+ 				<a href="${pageContext.request.contextPath}/seller/notice/noticeList" id="btnSearch"  class="btnSearch"> 초기화</a> 
+ 				<input type="submit" id="btnSearch777" class="btnSearch777" value="왜 안돼"> --%> 
+			</div>
+		</div>
+	
+
+		<div class="section" id="">
+			<div class="tab">
+				<ul>
+					<li class="selected"><a href="search" id="">1:1문의 목록</a></li>
+				</ul>
+			</div>
+			<div id="tabNumber" class="tabCont">
+				<div class="rState">
+					<div class="left"></div>
+
+
+
+
+
+
+<!-- <p>1111111111111111111111111111111111111111111111 </p> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--구 검색 설정 -->
+
+<!-- <form class="form" action="oneList" method="get">
 <div style="margin-left: 800px; border: 0px;">
 <input type="hidden"  name="type" value="title+content"/>
 <input type="search" name="keyword" placeholder="제목 + 내용" required>
 
 <input type="submit" value="검색">
 </div>
-</form>
+</form> -->
 
 
 <br>
 
 <!-- 표 -->
-<table class="table  table-hover" width="800">
+
+<div id="searchResultList"
+					class="mBoard typeOrder gScroll gCellSingle">
+
+<!-- <table class="table  table-hover" width="800"> -->
+<table border="1" summary="" class="thead table-hover">
 	<colgroup>
-	<col width="10%">
-	<col width="20%">
+	<col width="9%">
+	<col width="12%">
 	<col width="*">
-	<col width="10%">
+	<col width="12%">
 	<col width="15%">
-	<col width="10%">
+	<col width="12%">
+		<col width="15%">
 	</colgroup>
 	<thead>
 		<tr>
-			<th>번호</th>
+			<th>문의번호</th>
 			<th>카테고리</th>
 			<th>제목</th>
 			<th>작성자</th>
 			<th>작성일</th>
 			<th>답변상태</th>
+			<th>관리</th>
 		</tr>
 	</thead>
 	<!-- 게시글 -->
@@ -128,7 +252,7 @@
 					</td>
 					<td class="text-left">
 <%-- 			상세보기	<a href="contentOne.do?no=${bdto.serviceNo}">           --%>
-						<a href="${pageContext.request.contextPath}/one/oneEdit?mode=EDIT&id=${bdto.id}"> 
+						<a href="${pageContext.request.contextPath}/seller/one/oneEdit?mode=EDIT&id=${bdto.id}"> 
 							${bdto.title}
 						</a>
 					</td>
@@ -144,6 +268,15 @@
 						</c:otherwise>
 						</c:choose>
 					</td>
+						<td>
+				<!-- 상세보기 --> 
+				<a href="${pageContext.request.contextPath}/seller/one/oneEdit?mode=EDIT&id=${bdto.id}"> [답변등록] 
+				<a href="${pageContext.request.contextPath}/seller/one/oneEdit?mode=EDIT&id=${bdto.id}"> [상세보기]				
+									</td>
+					
+					
+					
+					
 					</tr>
 				</c:if>
 			</c:forEach>
@@ -153,27 +286,37 @@
 		</c:otherwise>
 		</c:choose>
 	</tbody>
-	<!-- 글쓰기 버튼 -->
+<%-- 	<!-- 글쓰기 버튼 -->
 	<tfoot>
 		<tr>
 			<td colspan="8" align="right">
 				
 				
-				<a href="${pageContext.request.contextPath}/one/oneEdit">글쓰기</a>
+				<a href="${pageContext.request.contextPath}/seller/one/oneEdit">글쓰기</a>
 			</td>
 		</tr>
-	</tfoot>
+	</tfoot> --%>
 </table>
+</div>
+
+
+
+
 
 <!-- 네비게이션 + 검색창 -->
-
-<div class="empty1"></div>
+<!-- <div class="empty1"></div>
 
 <form class="form" action="oneList" method="get">
 <input type="hidden" name="page" value="1">
 </form>
 
 <div class="empty"></div>
+ -->
+
+
+				<input name="page" type="hidden">
+				<div class="paginate">
+
 
 <ul class="navigator1">
 	<%-- 이전 구간 링크 --%>
@@ -198,28 +341,23 @@
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
-
-
-<!--  
-
+	
 	<%-- 다음 페이지 링크(pno + 1) --%>
 	<%-- <c:if test="${아닌 현재페이지 == 전체페이지 수}"> --%>
 	  <c:if test="${not (page eq pageCount)}"> 
-		<li><a href="noticeList?page=${page + 1}">&gt;</a></li>
-	  </c:if> 
-<%-- 	 <p> ${pageCount }   전체페이지 test 찍어보기 </p> --%>
+		<li><a href="oneList?page=${page + 1}">&gt;</a></li>
+	  </c:if>  
+	<%--  <p> ${pageCount }   전체페이지 test 찍어보기 </p> --%>
 	
 	<%-- 다음 구간 --%>
 	<c:if test="${not (page eq pageCount)}">
 		<li><a href="oneList?page=${endBlock }">&gt;&gt;</a></li>
 	</c:if> 
-	
--->	
-	
 </ul>
 
+</div> 
 
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
+
 
 
 

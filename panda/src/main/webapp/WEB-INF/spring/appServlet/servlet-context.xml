@@ -46,6 +46,30 @@
 		<beans:property name="maxUploadSizePerFile" value="10485760"></beans:property>
 	</beans:bean>
 	
+	<!-- 인터셉터 설정 -->
+	<interceptors>
+		<!-- 로그인 설정 -->
+		<interceptor> 
+ 			<mapping path="/**"/> 
+ 			<exclude-mapping path="/*"/>
+ 			<exclude-mapping path="/seller/**/**"/>
+ 			<exclude-mapping path="/member/regist"/> 
+ 			<exclude-mapping path="/member/agree"/>
+ 			<exclude-mapping path="/member/login"/> 
+ 			<exclude-mapping path="/member/emailCheck"/>
+ 			<exclude-mapping path="/member/find_id"/>
+ 			<exclude-mapping path="/member/find_pw"/>	
+ 			<exclude-mapping path="/member/new_pw"/>
+ 			<exclude-mapping path="/member/idCheck"/>
+ 			<exclude-mapping path="/member/email_cert_check"/>
+ 			<exclude-mapping path="/member/email_cert_check"/>
+ 			<exclude-mapping path="/member/email_cert"/>
+			<beans:bean class="com.kh17.panda.interceptor.MemebrLoginInterceptor"></beans:bean> 
+ 		</interceptor> 
+
+	</interceptors>
+	
+
 
 </beans:beans>
 
