@@ -88,7 +88,6 @@ $(function() {
 	// ----------------------------------------------- 체크박스 이벤트
 	// ---------------------------------------------------------
 	var tStatus = $("#tStatusCheck").find(".fChk");
-	var csStatus = $("#csStatusCheck").find(".fChk");
 	if (!page) {
 		tStatus.prop("checked", true);
 	}
@@ -112,25 +111,6 @@ $(function() {
 			$("#tStatAll").prop("checked", true);
 		}
 	});
-	csStatus.first().change(function() {
-		if ($("#csStatAll").is(":checked")) {
-			csStatus.prop("checked", true);
-		} else {
-			csStatus.prop("checked", false);
-		}
-	});
-	csStatus.not("#csStatAll").change(function() {
-		$("#csStatAll").prop("checked", false);
-		var check = 0;
-		$(csStatus.not('#csStatAll')).each(function() {
-			if ($(this).is(':checked')) {
-				check++;
-			}
-		});
-		if (check == 4) {
-			$("#csStatAll").prop("checked", true);
-		}
-	});
 
 	// ----------------------------------------------- 조건 유지 이벤트
 	// ---------------------------------------------------------
@@ -142,12 +122,6 @@ $(function() {
 		}
 	}
 	
-	for (var i = 0; i < csStatusAry.length; i++) {
-		if (csStatusAry[i]) {
-			$("input[value=" + csStatusAry[i] + "]").prop('checked', true);
-		}
-	}
-
 	$("input[name='pay_status']").each(function() {
 		if ($(this).val() == payStatus)
 			$(this).prop('checked', true);
@@ -162,15 +136,6 @@ $(function() {
 	});
 	if (tcheck == 5) {
 		$("#tStatAll").prop("checked", true);
-	}
-	var cscheck = 0;
-	$(csStatus.not('#csStatAll')).each(function() {
-		if ($(this).is(':checked')) {
-			cscheck++;
-		}
-	});
-	if (cscheck == 4) {
-		$("#csStatAll").prop("checked", true);
 	}
 
 	// ----------------------------------------------- 날짜 버튼 이벤트
@@ -337,6 +302,27 @@ $(function() {
 			move(parseInt(endBlock) + 1);
 			break;
 		}
+	});
+	
+	var id = [];
+	$("#btnInvoice").click(function(){
+		$('.cart_no').each(function() {
+			if ($(this).is(':checked')) {
+				id.push($(this).val());
+			}
+		});
+		jQuery.ajaxSettings.traditional = true;
+		$.ajax({
+			url : "delete",
+			type : "GET",
+			dataType : "text",
+			data : {
+				id : id
+			},
+			success : function(resp) {
+				location.reload();
+			}
+		});
 	});
 
 });

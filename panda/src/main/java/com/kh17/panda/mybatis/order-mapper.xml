@@ -195,9 +195,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		parameterType="map">
 		select * from ( 
 		<![CDATA[ 
-		select rownum rn, O.* from( select distinct team, order_dt from order_view 
+		select rownum rn, O.* from( select distinct team, order_dt, member_name from order_view 
 		]]>
-		where member_id=#{dto.member_id}
+		where 1=1
+		<if test="dto.member_id != null">
+		and member_id=#{dto.member_id}
+		</if>
+		<if test="dto.seller_id != null">
+		and seller_id=#{dto.seller_id}
+		</if>
 		<if test="dto.start_dt != null and dto.end_dt !=null"> and
 			order_dt between to_date(#{dto.start_dt}, 'YYYY-MM-DD') and
 			to_date(#{dto.end_dt},
@@ -207,7 +213,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and
 			team = {team}
 		</if>
-		)O)
+		order by order_dt desc)O)
 		<if test="start!=null and end!=null">
 		<![CDATA[ 
 		where rn >= #{start} and rn <= #{end}
@@ -224,7 +230,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="myOrderTeam" resultType="orderViewDto">
 		select * from order_view where
-		team = #{team} order by order_dt desc
+		team = #{team}
 	</select>
 	
 	<select id="myOrderCount" resultType="int" parameterType="orderViewDto">
@@ -236,8 +242,100 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 	</select>
 	
+	<select id="deliveryCount" resultType="int" parameterType="map">
+		select count(distinct team) from order_view where 1=1
+		<if test="vo.size() > 0 ">
+			and
+			<foreach collection="vo" separator="and" item="item" open="("
+				close=")">
+				${item.type} like '%' || #{item.keyword} || '%'
+			</foreach>
+		</if>
+		<if test="dto.start_dt != null and dto.end_dt !=null">
+			and
+			order_dt between to_date(#{dto.start_dt},
+			'YYYY-MM-DD')
+			and to_date(#{dto.end_dt}, 'YYYY-MM-DD') + 0.99999
+		</if>
+		<if test="dto.product_name != null">
+			and
+			product_name like '%' || #{dto.product_name} ||
+			'%'
+		</if>
+		<if test="dto.pay_status != null and !dto.pay_status.isEmpty()">
+			and
+			pay_status = #{dto.pay_status}
+		</if>
+		<if test="tStatus != null">
+			and
+			<foreach collection="tStatus" separator="or" item="tStat"
+				open="(" close=")">
+				t_status = #{tStat}
+			</foreach>
+		</if>
+		<if test="dto.member_id != null">
+			and
+			member_id = #{dto.member_id}
+		</if>
+		<if test="dto.seller_id != null">
+			and
+			seller_id = #{dto.seller_id}
+		</if>
+	</select>
+	
 	<select id="getDetail" parameterType="string" resultType="orderViewDto">
 		select * from order_view where team = #{team}
+	</select>
+	
+	
+	<select id="deliveryView" parameterType="map" resultMap="orderListVO">
+		select * from (
+		<![CDATA[
+			select rownum rn, O.* from(
+				select distinct team, order_dt, member_name, pay_type, pay_status, re_name, re_phone, re_addr from order_view
+		]]>
+		where 1=1
+		<if test="vo.size() > 0 ">
+			and
+			<foreach collection="vo" separator="and" item="item" open="("
+				close=")">
+				${item.type} like '%' || #{item.keyword} || '%'
+			</foreach>
+		</if>
+		<if test="dto.start_dt != null and dto.end_dt !=null">
+			and
+			order_dt between to_date(#{dto.start_dt},
+			'YYYY-MM-DD')
+			and to_date(#{dto.end_dt}, 'YYYY-MM-DD') + 0.99999
+		</if>
+		<if test="dto.product_name != null">
+			and
+			product_name like '%' || #{dto.product_name} ||
+			'%'
+		</if>
+		<if test="dto.pay_status != null and !dto.pay_status.isEmpty()">
+			and
+			pay_status = #{dto.pay_status}
+		</if>
+		<if test="tStatus != null">
+			and
+			<foreach collection="tStatus" separator="or" item="tStat"
+				open="(" close=")">
+				t_status = #{tStat}
+			</foreach>
+		</if>
+		<if test="dto.member_id != null">
+			and
+			member_id = #{dto.member_id}
+		</if>
+		<if test="dto.seller_id != null">
+			and
+			seller_id = #{dto.seller_id}
+		</if>
+		order by order_dt desc)O
+		<![CDATA[
+		) where rn >= #{start} and rn <= #{end}
+		]]>
 	</select>
 </mapper>
 

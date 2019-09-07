@@ -109,4 +109,31 @@ public class OrdersDaoImpl implements OrdersDao {
 	public List<OrderViewDto> list(String team) {
 		return sqlSession.selectList("order.getDetail", team);
 	}
+
+	@Override
+	public List<OrderListVO> list(OrderViewDto orderViewDto, List<OrderViewVO> orderViewVO, int start, int end,
+			String[] tStatus) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("dto", orderViewDto);
+		map.put("vo", orderViewVO);
+		map.put("start", start);
+		map.put("end", end);
+		map.put("tStatus", tStatus);
+
+		return sqlSession.selectList("order.deliveryView", map);
+	}
+
+	@Override
+	public int count(OrderViewDto orderViewDto, List<OrderViewVO> search, String[] tStatus) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("dto", orderViewDto);
+		map.put("vo", search);
+		map.put("tStatus", tStatus);
+		
+		try {
+			return sqlSession.selectOne("order.deliveryCount", map);
+		} catch(NullPointerException e) {
+			return 0;
+		}
+	}
 }
