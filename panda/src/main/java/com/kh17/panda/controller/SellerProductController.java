@@ -54,7 +54,6 @@ public class SellerProductController {
 		model.addAttribute("list", subcategoryDao.list());
 		return "seller/product/regist";		
 	}
-	
 	@PostMapping("/regist")
 	public String regist(@ModelAttribute ProductVO vo,
 			HttpSession session,
@@ -67,7 +66,6 @@ public class SellerProductController {
 
 		return "seller/product/regist_result";
 	}
-	
 	@GetMapping("/edit")
 	public String edit(
 			@RequestParam int id,
@@ -79,7 +77,6 @@ public class SellerProductController {
 		model.addAttribute("subcategory", subcategoryDao.get(productDto.getSub_category_id()));
 		return "seller/product/edit";
 	}
-	
 	@PostMapping("/edit")
 	public String edit(
 			@ModelAttribute ProductVO vo,
@@ -90,7 +87,6 @@ public class SellerProductController {
 		model.addAttribute("id", (String) session.getAttribute("sid"));
 		return "redirect:list";
 	}
-	
 	@GetMapping("/delete")
 	public String delete(@RequestParam int[] product_id) {
 		

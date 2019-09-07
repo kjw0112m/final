@@ -4,6 +4,11 @@
 
 <jsp:include page="/WEB-INF/views/template/admin/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/template/admin/aside.jsp"></jsp:include>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js/admin/member_search.js"></script>
+
+
 <script>
 	var page = "${page}";
 	var startBlock = "${startBlock}";
@@ -12,13 +17,11 @@
 	console.log(startBlock)
 	console.log(endBlock)
 </script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script
-	src="${pageContext.request.contextPath}/js/admin/member_search.js"></script>
 
 
 <form action="search" method="get" id="orderSearchForm">
 	<input type="hidden" name="id">
+	
 	<div class="head_tit">
 		<h1>전체 회원 목록</h1>
 	</div>
@@ -38,7 +41,7 @@
 							<td colspan="3">
 								<div id="mainSearch">
 									<div>
-										<select class="fSelect" name="type" style="width: 163px;">
+										<select class="fSelect" name="type" style="width: 163px;"  value="${type}">
 											<option value="choice" disabled>-검색항목선택-</option>
 											<option value="id" ${type == 'id'?'selected':''}>아이디</option>
 											<option value="email" ${type == 'email'?'selected':''}>이메일</option>
@@ -53,7 +56,7 @@
 				</table>
 			</div>
 			<div class="form_button">
-				<input type="submit" id="btnSearch" class="btnSearch" value="검색">
+				<input type="submit" i="btnSearch" class="btnSearch" value="검색">
 			</div>
 		</div>
 	
