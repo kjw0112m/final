@@ -81,7 +81,7 @@
 	<tbody>
 		<c:forEach var="list" items="${list}" >
 			<tr>
-				<td align="center">${list.rn}</td>
+				<td align="center">${noticeDto.rn}</td>
 				<td align="left"><a href="${pageContext.request.contextPath}/notice/noticeEdit?mode=EDIT&id=${list.id}">${list.title}</a></td>
 				<td align="center">${list.createUser}</td>
 				<td align="center">${list.createdate}</td>

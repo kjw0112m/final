@@ -20,22 +20,21 @@
 	});
 	//주소 찾기
 	function findAddress() {
+		//위에서 생성한 themeObj객체를 우편번호 서비스 생성자에 넣습니다.
+		//생성자의 자세한 설정은 예제 및 속성탭을 확인해 주세요.
 		new daum.Postcode({
 			oncomplete : function(data) {
 				// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
 				// 각 주소의 노출 규칙에 따라 주소를 조합한다.
 				// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
 				var addr = ''; // 주소 변수
 				var extraAddr = ''; // 참고항목 변수
-
 				//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
 				if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
 					addr = data.roadAddress;
 				} else { // 사용자가 지번 주소를 선택했을 경우(J)
 					addr = data.jibunAddress;
 				}
-
 				// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
 				if (data.userSelectedType === 'R') {
 					// 법정동명이 있을 경우 추가한다. (법정리는 제외)
@@ -53,7 +52,6 @@
 						extraAddr = ' (' + extraAddr + ')';
 					}
 					// 조합된 참고항목을 해당 필드에 넣는다.
-
 				}
 				// 이 코드는 jquery.js 를 먼저 불러온 경우만 사용 가능
 				$("input[name=post_code]").val(data.zonecode);
@@ -61,8 +59,8 @@
 				$("input[name=detail_addr]").focus();
 			}
 		}).open();
-	}
 
+	}
 	//아이디 중복 확인
 	$(function() {
 		$("#idCheck").click(function() {
@@ -85,7 +83,6 @@
 			});
 		});
 	});
-
 	// 아이디 형식 검사
 	$(function() {
 		$(".id")
@@ -105,9 +102,7 @@
 								$("#idCheck").prop("disabled", true).css(
 										"background-color", "#6c9391");
 							}
-
 						});
-
 		//  비밀번호 형식 검사
 		$(".pw")
 				.on(
@@ -123,14 +118,12 @@
 								span.innerHTML = "<font color = '#de2195' size = '2'>8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)로 입력해주세요</font>"
 							}
 						});
-
 		//비밀 번호 확인 검사
 		$(function() {
 			var span = document.querySelector(".cpw");
 			$('#user_pass').keyup(function() {
 				span.innerHTML = ""
 			}); //#user_pass.keyup
-
 			$('#chpass')
 					.keyup(
 							function() {
@@ -142,13 +135,11 @@
 							}); //#chpass.keyup
 		});
 	});
-
 	//  화면전송때 비밀번호숨기기
 	$(function() {
 		$("form").submit(
 				function(e) {
 					e.preventDefault();
-
 					var pw = $("input[name=pw]").val();
 					var encPw = CryptoJS.SHA256(pw).toString();
 					var ck_pw = $("input[name=pw_check]").val();
@@ -160,7 +151,6 @@
 					this.submit();
 				});
 	});
-
 	// email 형식 검사
 	$(function() {
 		$("#putemail")
@@ -181,7 +171,6 @@
 
 						});
 	});
-
 	//이메일 중복확인
 	$(function() {
 		$("#emailCheck").click(function() {
@@ -207,7 +196,6 @@
 			});
 		});
 	});
-
 	//이메일 본인 인증
 	$(function() {
 		$("#email").click(function() {
@@ -226,7 +214,6 @@
 			});
 		});
 	});
-
 	//이메일로 인번호 보내기
 	$(function() {
 		$(".verification_check").click(function() {
@@ -339,7 +326,6 @@ button {
 </head>
 
 <body>
-<body>
 	<div class="total">
 		<h1>회원 가입</h1>
 		<br>
@@ -417,23 +403,19 @@ button {
 							<td class="a">이메일</td>
 							<td class="b"><input type="text" name="email" id="putemail"
 								required class="iText">
-
 								<button class="email" id="emailCheck" type="button">이메일
 									중복확인</button> <span class="chemail"></span>
-
 								<button class="email" id="email" type="button">인증하기</button> <br>
-
 								<input class="iText" id="identity" type="text" name="identity"
 								required style="width: 20%">
 								<button id="chidentity" type="button" class="verification_check">인증번호확인</button>
 							</td>
 						</tr>
 					</tbody>
-
 				</table>
-
 			</div>
 			<input id="registcheck" type="submit" value="가입하기">
 		</form>
 	</div>
+	</body>
 	<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
