@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>    
+<jsp:include page="/WEB-INF/views/template/admin/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/aside.jsp"></jsp:include>  
 
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/common2.css">
@@ -18,13 +19,14 @@
 &&&
 <a  href="${pageContext.request.contextPath}/review/reviewComment">상품후기 <i id=gi></i></a>
 
-<form class="form" action="noticeList" method="get">
+<!-- <form class="form" action="list.do" method="get">
 <div style="margin-left: 800px; border: 0px;">
 <input type="hidden"  name="type" value="title+content"/>
 <input type="search" name="keyword" placeholder="제목 + 내용" required>
+
 <input type="submit" value="검색">
 </div>
-</form>
+</form> -->
 
 
 
@@ -105,7 +107,7 @@
 
 <div class="empty1"></div>
 
-<form class="form" action="noticeList" method="get">
+<form class="form" action="noticeListA" method="get">
 <input type="hidden" name="page" value="1">
 </form>
 
@@ -115,12 +117,12 @@
 	<%-- 이전 구간 링크 --%>
 	<%-- <c:if test="시작페이지가 1이 아니면"> --%>
 	<c:if test="${not (page eq 1)}"> <!-- 1과 같으면 숨겨라  -->
-<li><a href="noticeList?page=${startBlock}">&lt;&lt;</a></li>
+<li><a href="noticeListA?page=${startBlock}">&lt;&lt;</a></li>
 	</c:if>
 	
 	<%-- <c:if test="현재페이지가 1이 아니면"> --%>
 	<c:if test="${not (page eq 1)}">
-	<li><a href="noticeList?page=${page - 1}">&lt;</a></li>
+	<li><a href="noticeListA?page=${page - 1}">&lt;</a></li>
 	</c:if>
 	
 	<%-- 페이지 출력 --%>
@@ -138,15 +140,14 @@
 	<%-- 다음 페이지 링크(pno + 1) --%>
 	<%-- <c:if test="${아닌 현재페이지 == 전체페이지 수}"> --%>
 	  <c:if test="${not (page eq pageCount)}"> 
-		<li><a href="noticeList?page=${page + 1}">&gt;</a></li>
+		<li><a href="noticeListA?page=${page + 1}">&gt;</a></li>
 	  </c:if>  
-<%-- 	 <p> ${pageCount }   전체페이지 test 찍어보기 </p> --%>
+	 <p> ${pageCount }   전체페이지 test 찍어보기 </p>
 	
 	<%-- 다음 구간 --%>
 	<c:if test="${not (page eq pageCount)}">
-		<li><a href="noticeList?page=${endBlock }">&gt;&gt;</a></li>
+		<li><a href="noticeListA?page=${endBlock }">&gt;&gt;</a></li>
 	</c:if> 
 </ul>
 <!-- 공지사항 끝 -->
-
-<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>    
+   
