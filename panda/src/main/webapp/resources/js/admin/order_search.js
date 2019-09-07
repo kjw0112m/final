@@ -141,7 +141,7 @@ $(function() {
 		} else {
 		}
 	}
-	
+
 	for (var i = 0; i < csStatusAry.length; i++) {
 		if (csStatusAry[i]) {
 			$("input[value=" + csStatusAry[i] + "]").prop('checked', true);
@@ -336,6 +336,21 @@ $(function() {
 		case '>>':
 			move(parseInt(endBlock) + 1);
 			break;
+		}
+	});
+
+	// 몇개씩 보기 이벤트
+	var row = $('select[name=rows]')
+	row.change(function() {
+		$("form").submit();
+	});
+
+	// rows 조건유지
+	row.find('option').each(function() {
+		if ($(this).val() == rows) {
+			$(this).prop('selected', true);
+		} else {
+			$(this).prop('selected', false);
 		}
 	});
 
