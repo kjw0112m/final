@@ -20,6 +20,7 @@ public class OrderListVO {
 	private String pay_type;
 	private String pay_status;
 	private String re_name, re_phone, re_addr;
+	private String t_invoice, t_id;
 
 	private List<OrderViewDto> list;
 
