@@ -96,6 +96,12 @@
 		}).open();
 	}
 </script>
+  <script type="text/javascript">
+		window.history.forward();
+		function noBack() {
+			window.history.forward();
+		}
+         </script>
 <style>
 * {
 	box-sizing: border-box;
@@ -496,7 +502,9 @@ a {
 						style="border: #bbb solid 1px">
 						<p>카카오 결제</p> <input type="radio" id="kakao_pay" name="pay_type"
 						value="카카오페이">
-					</label> <label for="deposit" class="pay box"
+					</label> 
+					
+					<label for="deposit" class="pay box"
 						style="border: #bbb solid 1px">
 						<p>무통장입금</p> <input type="radio" id="deposit" name="pay_type"
 						value="무통장입금">

@@ -370,7 +370,7 @@ ul, li {
 	padding: 0 0 0 20px;
 	text-align: left;
 	font-weight: 400;
-	width: 10%;
+	width: 15%;
 }
 
 .b {
@@ -507,7 +507,8 @@ ul, li {
 				</tr>
 				<tr>
 					<td class="a">마지막 비밀번호 변경</td>
-					<td class="b">${mdto.pw_dt}</td>
+					<td class="b">${mdto.pw_dt} <font size="3em" color="red">
+					<strong>&nbsp&nbsp&nbsp비밀번호는 주기적으로 변경해주시는것이 보안상 좋습니다.</strong> </font></td>
 				</tr>
 				</tbody>
 			</table>

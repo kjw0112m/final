@@ -26,12 +26,11 @@ public class AdminController {
 	//회원 검색 기능
 	@GetMapping("/search")
 	public String search(@ModelAttribute MemberDto memberDto,
-				@RequestParam(required = false) String type,
+		    	@RequestParam(required = false) String type,
 				@RequestParam(required = false) String keyword,
 				@RequestParam(required = false, defaultValue = "1") int page,
-				Model model
-			) {
-		int pagesize = 10;
+				Model model) {
+		int pagesize = 25;
 		int start = pagesize * page - (pagesize - 1);
 		int end = pagesize * page;
 
@@ -48,6 +47,7 @@ public class AdminController {
 		model.addAttribute("page", page);
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
 		if(type != null && keyword != null) {
 			List<MemberDto> list =memberDao.search(type, keyword ,start, end);
 			model.addAttribute("list", list);

@@ -319,7 +319,6 @@ dt {
 					<p>주소: ${orderViewDto.get(0).getAddr()}</p></td>
 				<td><p>이름: ${orderViewDto.get(0).re_name}</p>
 					<p>연락처: ${orderViewDto.get(0).re_phone }</p>
-					</p>
 					<p>주소: ${orderViewDto.get(0).re_addr}</p></td>
 		</table>
 	</div>
