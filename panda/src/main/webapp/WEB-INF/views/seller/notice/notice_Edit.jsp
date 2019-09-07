@@ -3,17 +3,55 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>    
 
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/common2.css">
+<jsp:include page="/WEB-INF/views/template/admin/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/template/admin/aside.jsp"></jsp:include>  
 
-<h1 align="center">공지사항</h1>
+
+
+
+
+<script>
+	var page = "${page}";
+	var startBlock = "${startBlock}";
+	var endBlock = "${endBlock}";
+	console.log(page)
+	console.log(startBlock)
+	console.log(endBlock)
+</script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script
+	src="${pageContext.request.contextPath}/js/admin/member_search.js"></script>
+
+
+
+
+	<!-- <div id="content" class="head_tit">		
+		<h1>공지 사항1 </h1>
+	</div>
+
+	<div id="mOption">		
+		<h1>공지 사항2</h1>
+	</div>
+	
+		<div class="optionArea">
+		<h1>공지 사항3</h1>
+	</div>	-->
+	
+		<div class="optionArea">
+		<h1>공지 사항 수정</h1>
+	</div>	
+
+	
+
+
 
 <form method="post" id="noticeForm" class="form form-vertical">
 <input type="hidden" id="mode" name="mode" value="${mode}">
 <input type="hidden" id="id" name="id" value="${noticeDto.id}">
-<table border="1" width="700" class="table">
+
+
+<table border="1" width="500" class="table">   <!-- <table border="1" width="500" class="table"> -->
 	<tbody>
 		<colgroup>
 		<col width="150" >
@@ -24,24 +62,16 @@
 			<th rowspan="2">제목</th>
 			<c:choose>
 			<c:when test="${sessionScope.sid.toString().startsWith('!')}">
-<%-- 				<td colspan="2">
- 					<select name="head" >
+<!-- 				<td colspan="2">
+					<select name="head" >
 						<option value="">선택하세요</option>
-
-					<option value="1" <c:if test="${oneDto.product eq 1}">selected</c:if>>가격인상공지</option>
-					<option value="2" <c:if test="${oneDto.product eq 2}">selected</c:if>>가격인하공지</option>
-					<option value="3" <c:if test="${oneDto.product eq 3}">selected</c:if>>가격변경공지</option>
-					<option value="4" <c:if test="${oneDto.product eq 4}">selected</c:if>>PANDA</option>
-
-						
 					</select>
- 
- 				</td> --%>
+				</td> -->
 			</c:when>
 			<c:otherwise>
-<!-- 				<td colspan="1">
+				<td colspan="2">
 					
-				</td> -->
+				</td>
 			</c:otherwise>
 			</c:choose>
 			
@@ -49,10 +79,9 @@
 		<tr>
 			<c:choose>
 			<c:when test="${sessionScope.sid.toString().startsWith('!')}">
-				<!-- <td colspan="1"> -->
-					
 				<td colspan="2">
-				<input type="text" name="title" placeholder="제목"  value="${noticeDto.title}" size="70">
+					<input type="text" name="title" placeholder="제목"  value="${noticeDto.title}" size="70">
+				<td colspan="2">
 			</c:when>
 			<c:otherwise>
 				<td colspan="2">
@@ -119,42 +148,87 @@
 	</thead>
 	<tfoot>
 		<tr align="center">
-			<td colspan="3"> <input type="button" onclick="listNotice();" value="목록"></td>
+			<td colspan="3"><input type="button" onclick="saveNotice();" value="저장"> <c:if test="${mode eq 'EDIT'}"><input type="button" onclick="deleteNotice();" value="삭제"></c:if> <input type="button" onclick="listNotice();" value="목록"></td>
 		</tr>
 	</tfoot>
 </table>
 </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- 자바스크립트를 이용하여 페이지 이동을 처리 -->
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
 	function saveNotice() {
 		if(confirm("정말 저장할꾸야?")){
-			$('#noticeForm').attr('action','${pageContext.request.contextPath}/notice/noticeUpdate').submit();
+			$('#noticeForm').attr('action','${pageContext.request.contextPath}/seller/notice/noticeUpdate').submit();
 		}
 	}
 	
 	function deleteNotice(){
 		if(confirm("정말 삭제할꾸야?")){
-			$('#noticeForm').attr('action','${pageContext.request.contextPath}/notice/noticeDelete').submit();
+			$('#noticeForm').attr('action','${pageContext.request.contextPath}/seller/notice/noticeDelete').submit();
 		}
 	}
 	
 	function saveComment(){
 		if(confirm("정말 저장할꾸야?")){
-			$('#noticeForm').attr('action','${pageContext.request.contextPath}/notice/saveComment').submit();
+			$('#noticeForm').attr('action','${pageContext.request.contextPath}/seller/notice/saveComment').submit();
 		}
 	}
 	
 	function deleteComment(commentId){
 		if(confirm("정말 삭제할꾸야?")){
-			$('#noticeForm').attr('action','${pageContext.request.contextPath}/notice/deleteComment?commentId='+commentId).submit();
+			$('#noticeForm').attr('action','${pageContext.request.contextPath}/seller/notice/deleteComment?commentId='+commentId).submit();
 		}
 	}
 	
 	function listNotice() {
-		$('#noticeForm').attr('action','${pageContext.request.contextPath}/notice/noticeList').submit();
+		$('#noticeForm').attr('action','${pageContext.request.contextPath}/seller/notice/noticeList').submit();
 	}
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
+
+
+
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>   

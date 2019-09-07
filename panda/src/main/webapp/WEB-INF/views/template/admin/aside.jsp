@@ -21,8 +21,8 @@
 			<li><a href="${pageContext.request.contextPath }/seller/member/search" class="member"> 고객관리 </a></li>
 			<li><a href="#" class="board"> 게시판관리 </a>
 				<ul class="hide">
-					<li class=""><a href="#"> 게시판 설정 </a></li>
-					<li class=""><a href="#"> 게시물 관리 </a></li>
+					<li class=""><a href="${pageContext.request.contextPath}/seller/notice/noticeList"> 공지사항 설정 </a></li>
+					<li class=""><a href="${pageContext.request.contextPath}/seller/one/oneList"> 1:1문의 관리 </a></li>
 				</ul></li>
 			<li><a href="#" class="promotion"> 프로모션 </a>
 				<ul class="hide">
