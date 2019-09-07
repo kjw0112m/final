@@ -196,7 +196,7 @@
 			});
 		});
 	});
-	//이메일 본인 인증
+	//이메일로 인증번호 보내기
 	$(function() {
 		$("#email").click(function() {
 			$.ajax({
@@ -214,7 +214,7 @@
 			});
 		});
 	});
-	//이메일로 인번호 보내기
+	//인증번호 확인
 	$(function() {
 		$(".verification_check").click(function() {
 			$.ajax({
@@ -401,13 +401,13 @@ button {
 
 						<tr>
 							<td class="a">이메일</td>
-							<td class="b"><input type="text" name="email" id="putemail"
-								required class="iText">
-								<button class="email" id="emailCheck" type="button">이메일
-									중복확인</button> <span class="chemail"></span>
+							<td class="b"><input type="text" name="email" id="putemail"	required class="iText">
+								<button class="email" id="emailCheck" type="button">이메일중복확인</button> <span class="chemail"></span>
+								
 								<button class="email" id="email" type="button">인증하기</button> <br>
-								<input class="iText" id="identity" type="text" name="identity"
-								required style="width: 20%">
+								
+								<input class="iText" id="identity" type="text" name="identity"required style="width: 20%">
+								
 								<button id="chidentity" type="button" class="verification_check">인증번호확인</button>
 							</td>
 						</tr>
