@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <!DOCTYPE html>
 <html>
@@ -20,13 +21,11 @@
 			quan = 0;
 			$(".space").find(".num").each(function(i){
 				quan += parseInt($(this).val());
-				console.log(quan);
 				total = parseInt($(this).val());
-				var pri = parseInt($(".spec").find(".price").text());
+				var pri = parseInt($(".formdiv").find(".price").text());
 				total = (pri * quan);
-				console.log(total);
 			});
-			$(".total").text(total + "원");
+			$(".total").text(total + " KRW");
 		};
 		
 		$("#sizes").change(function() {
@@ -107,8 +106,14 @@
 			// 			$(clone).append(total);
 
 		});
+		
+		
 
-		$("form").submit(function(e) {
+		$('#cart').click(function(){
+			$('#cart').submit();
+		});
+		
+		$("#cart").submit(function(e) {
 			e.preventDefault();
 			$(".space").find("div").each(function() {
 				var sizes = $(this).find('.selectedSizes').text();
@@ -121,6 +126,25 @@
 			//this : form
 			this.submit();
 		});
+
+		$('#order').click(function(){
+			$('#order').submit();
+		});
+		
+		$("#order").submit(function(e) {
+			e.preventDefault();
+			$(".space").find("div").each(function() {
+				var sizes = $(this).find('.selectedSizes').text();
+				var count = $(this).find('.num').val();
+				var sum = sizes + "-" + count;
+				// $(this).find('.num').val(sum);
+				$(this).find('.s_q').val(sum);
+			});
+
+			//this : form
+			this.submit();
+		});
+		
 	});
 </script>
 <style>
@@ -210,6 +234,10 @@
 		border-top: 1px solid #bbb;
 	}
 
+	.content {
+		margin: auto;
+	}
+	
 	.total {
 		margin: auto;
 	}
@@ -225,10 +253,10 @@
 	}
 </style>
 </head>
-		<div class="total">
+		<div class="content">
 		<div class="textcontent">
 			<div class="spec">
-				<img src="productimg1.png"><br>
+				<img src="${pageContext.request.contextPath}/product/image?id=${productSellerDto.mainfile}"><br>
 			</div>
 			<div class="formdiv">
 				<h2>${productSellerDto.nickname}</h2><br>
@@ -240,8 +268,8 @@
 				<br><br>
 				<hr>
 				<br><br>
-				<!-- 	<form action="../cart/view" method="post"> -->
-				<form>
+				<form action="../cart/add" method="post">
+					<form>
 					<input type="hidden" name="product_id" value="${productSellerDto.product_id}">
 					<select id="sizes">
 						<option value="" selected="selected" disabled="disabled">사이즈 선택</option>
@@ -252,11 +280,13 @@
 					</select><br><br>
 					<div class="space"></div>
 					<div class="total"></div>
-					<div class="button"><input type="submit" value="카트담기" id="cart"> <input type="submit"
-							formaction="../orders/order" value="바로주문" id="order"></div>
+					<div class="button">
+						<input type="submit" value="카트담기" id="cart">
+						<input type="submit" formaction="../orders/order" value="바로주문" id="order">
+					</div>
 				</form>
 			</div>
-			<div class="template" style="display: none	">
+			<div class="template" style="display: none">
 					<div>
 						<!-- 템플릿 -->
 						<span class="selectedSizes"></span>
@@ -267,7 +297,6 @@
 						<a class="bt_up">
 							▲
 						</a>
-						<span class="selectedQuantity"></span>
 						<button class="del">삭제</button>
 						<br> <br> <input type="hidden" name="s_q" class="s_q">
 					</div>
@@ -275,7 +304,7 @@
 		</div>
 		
 		<div class="bottomimg">
-			<img src="productimg.png" id="pimg">
+			<img src="${pageContext.request.contextPath}/product/image?id=${productSellerDto.detailfile}" id="pimg">
 			</div>
 		</div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

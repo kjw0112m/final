@@ -53,7 +53,7 @@
 								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=14">반지</a></li>
 								<li><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=15">모자</a></li>
 							</ul></li>
-						<li class="dis_f ai_c"><a href="/sale">SALE</a></li>
+						<li class="dis_f ai_c"><a href="${pageContext.request.contextPath}/product/salesList">SALE</a></li>
 						<li class="dis_f ai_c"><a href="/event">EVENT</a></li>
 					</ul>
 				</nav>

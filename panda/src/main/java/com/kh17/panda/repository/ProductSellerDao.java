@@ -13,4 +13,6 @@ public interface ProductSellerDao {
 	int count();
 	int count(int sub_category_id);
 	int count(String seller_id);
+	int countSales();
+	List<ProductSellerDto> salesList(int start, int end);
 }

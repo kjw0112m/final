@@ -67,4 +67,17 @@ public class ProductSellerDaoImpl implements ProductSellerDao{
 		return sqlSession.selectOne("productSeller.count3", seller_id);
 	}
 
+	@Override
+	public int countSales() {
+		return sqlSession.selectOne("productSeller.count4");
+	}
+
+	@Override
+	public List<ProductSellerDto> salesList(int start, int end) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("start", start);
+		map.put("end", end);
+		return sqlSession.selectList("productSeller.salesList", map);
+	}
+
 }

@@ -183,12 +183,6 @@
 						<c:forEach var="sclist"  items="${sclist}">
 							<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=${sclist.id}">${sclist.name}</a></li>
 						</c:forEach>
-<%-- 						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=1"> 원피스 </a></li> --%>
-<%-- 						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=2"> 티샤스 </a></li> --%>
-<%-- 						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=3"> 샤츠 </a></li> --%>
-<%-- 						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=4"> 맨투맨 </a></li> --%>
-<%-- 						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=5"> 후드티 </a></li> --%>
-<%-- 						<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=6"> 아우터 </a></li> --%>
 					</ul>
 				</li>
 			</ul>
