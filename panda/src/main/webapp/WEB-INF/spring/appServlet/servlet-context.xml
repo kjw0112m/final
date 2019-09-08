@@ -51,8 +51,8 @@
 		<!-- 로그인 설정 -->
 		<interceptor> 
  			<mapping path="/**"/> 
- 			<exclude-mapping path="/*"/>
- 			<exclude-mapping path="/seller/**/**"/>
+ 	    	<exclude-mapping path="/*"/>
+ 	    	<exclude-mapping path="/template/**"/>
  			<exclude-mapping path="/member/regist"/> 
  			<exclude-mapping path="/member/agree"/>
  			<exclude-mapping path="/member/login"/> 
@@ -66,6 +66,8 @@
  			<exclude-mapping path="/member/email_cert"/>
 			<beans:bean class="com.kh17.panda.interceptor.MemebrLoginInterceptor"></beans:bean> 
  		</interceptor> 
+ 		
+       
 
 	</interceptors>
 	
