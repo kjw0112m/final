@@ -5,8 +5,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="/WEB-INF/views/template/admin/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/template/admin/aside.jsp"></jsp:include>
+
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 <script>
 	var searchType = new Array("${param['search[0].type']}",
 			"${param['search[1].type']}", "${param['search[2].type']}",
@@ -21,29 +23,22 @@
 
 	var productName = "${param.product_name}";
 
-	var tStatusAry = new Array("${paramValues.tStatus[0]}",
-			"${paramValues.tStatus[1]}", "${paramValues.tStatus[2]}",
-			"${paramValues.tStatus[3]}", "${paramValues.tStatus[4]}");
-
-	var csStatusAry = new Array("${paramValues.csStatus[0]}",
-			"${paramValues.csStatus[1]}", "${paramValues.csStatus[2]}",
-			"${paramValues.csStatus[3]}");
-
-	var payStatus = "${param.pay_status}"
-
 	var page = "${page}";
 	var startBlock = "${startBlock}";
 	var endBlock = "${endBlock}";
 	var rows = "${param.rows}";
 </script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script
-	src="${pageContext.request.contextPath}/js/admin/order_search.js"></script>
-<form action="search" method="post" id="orderSearchForm">
+<script src="${pageContext.request.contextPath}/js/admin/post_search.js"></script>
+
+<form action="before_deposit" method="get" id="orderSearchForm">
 	<div id="content">
 		<div class="head_tit">
-			<h1>전체주문목록</h1>
+			<h1>배송 관리</h1>
+			<h5 id="d_tit" style="display: none">before_deposit</h5>
 		</div>
+		<jsp:include page="/WEB-INF/views/template/admin/dTab.jsp"></jsp:include>
+
 		<div class="optionArea">
 			<div class="mOption">
 				<table border="1" summary="">
@@ -147,55 +142,13 @@
 							</select> <input type="text" name="product_name" class="fText"
 								style="width: 490px;" value=""></td>
 						</tr>
-
-						<tr>
-							<th scope="row">주문상태</th>
-							<td colspan="3" id="tStatusCheck"><label class="gLabel"><input
-									type="checkbox" id="tStatAll" class="fChk"> 전체</label> <!-- 						<label class="gLabel   " style="display: none;"><input type="checkbox" name="" class="fChk" value="상품준비중">상품준비중</label>  -->
-								<label class="gLabel"><input type="checkbox"
-									name="tStatus" class="fChk" value="배송준비중"> 배송준비중</label> <label
-								class="gLabel"><input type="checkbox" name="tStatus"
-									class="fChk" value="배송보류"> 배송보류</label> <label class="gLabel"><input
-									type="checkbox" name="tStatus" class="fChk" value="배송대기">
-									배송대기</label> <label class="gLabel"><input type="checkbox"
-									name="tStatus" class="fChk" value="배송중"> 배송중</label> <label
-								class="gLabel   "><input type="checkbox" name="tStatus"
-									class="fChk" value="배송완료"> 배송완료</label></td>
-						</tr>
-
-						<tr>
-							<th scope="row">CS주문상태</th>
-							<td colspan="3" id="csStatusCheck"><label class="gLabel"><input
-									type="checkbox" class="fChk" id="csStatAll"> 전체</label> <label
-								class="gLabel"><input type="checkbox" name="csStatus"
-									class="fChk" value="취소"> 취소</label> <label class="gLabel"><input
-									type="checkbox" name="csStatus" class="fChk" value="교환">
-									교환</label> <label class="gLabel"><input type="checkbox"
-									name="csStatus" class="fChk" value="반품"> 반품</label> <label
-								class="gLabel"><input type="checkbox" name="csStatus"
-									value="환불" class="fChk  "> 환불</label></td>
-						</tr>
-
-						<tr>
-							<th scope="row">입금/결제상태</th>
-							<td colspan="3"><label class="gLabel"> <input
-									type="radio" name="pay_status" value="" class="fChk"
-									checked="checked"> 전체
-							</label> <label class="gLabel"> <input type="radio"
-									name="pay_status" class="fChk" value="입금전"> 입금전
-							</label> <label class="gLabel"> <input type="radio"
-									name="pay_status" class="fChk" value="입금완료"> 입금완료
-							</label> <label class="gLabel"> <input type="radio"
-									name="pay_status" class="fChk" value="결제완료"> 결제완료
-							</label></td>
-						</tr>
 					</tbody>
 				</table>
 			</div>
 			<div class="form_button">
 				<input type="submit" style="display: none"> <a href="#none"
 					id="btnSearch" class="btnSearch"><span>검색</span></a> <a
-					href="search" id="btnInit" class="btnSearch reset"><span>초기화</span></a>
+					href="delivery" id="btnInit" class="btnSearch reset"><span>초기화</span></a>
 			</div>
 		</div>
 
@@ -216,43 +169,41 @@
 						</p>
 					</div>
 					<div class="right">
-						<select name="rows" class="fSelect" init_rows="10">
+						<select name="rows" class="fSelect">
 							<option value="10" selected="">10개씩보기</option>
 							<option value="20">20개씩보기</option>
 							<option value="30">30개씩보기</option>
 							<option value="50">50개씩보기</option>
-							<option value="100">100개씩보기</option>
-							<option value="200">200개씩보기</option>
-							<option value="300">300개씩보기</option>
-							<option value="500">500개씩보기</option>
 						</select>
 					</div>
+				</div>
+				<div class="ctrl">
+					<a href="#" id="btnDeposit" class="btnMini"><span>입금확인</span></a>
 				</div>
 				<div id="searchResultList"
 					class="mBoard typeOrder gScroll gCellSingle">
 					<table border="1" summary="" class="thead">
 						<tbody>
 							<tr>
-								<th scope="col" class="w24"><input type="checkbox"
+								<th scope="col" class="w85" style="">주문일</th>
+								<th scope="col" class="w160" style="">주문번호</th>
+								<th scope="col" class="w80" style="">주문자</th>
+								<th scope="col" class="w35"><input type="checkbox"
 									id="allChk"></th>
-								<th scope="col" class="w50" style="display: none;">No</th>
-								<th scope="col" class="w120" style="">주문일</th>
-								<th scope="col" class="w105" style="">주문번호</th>
-								<th scope="col" class="w95" style="">주문자</th>
-								<th scope="col" class="w120" style="">상품명</th>
-								<th scope="col" class="w105" style="display: none;">총
-									상품구매금액</th>
-								<th scope="col" class="w105" style="display: none;">총 주문금액</th>
-								<th scope="col" class="w105" style="">총 실결제금액</th>
+								<th scope="col" class="w140" style="">공급사</th>
+								<th scope="col" class="w140" style="">상품명/옵션</th>
+								<th scope="col" class="w35" style="">수량</th>
+								<th scope="col" class="w80" style="">판매가</th>
+								<th scope="col" class="w90" style="">상품구매금액</th>
+								<th scope="col" class="w110" style="">총 상품구매금액</th>
+								<th scope="col" class="w100" style="">총 주문금액</th>
 								<th scope="col" class="w60" style="">결제수단</th>
 								<th scope="col" class="w60" style="">결제상태</th>
-								<th scope="col" class="w60" style="">배송상태</th>
-								<th scope="col" class="w45 center" style="">CS상태</th>
 							</tr>
 						</tbody>
 					</table>
 					<c:choose>
-						<c:when test="${empty orderViewDto}">
+						<c:when test="${empty orderListVO}">
 							<table border="1" summary="">
 								<tbody class="empty center">
 									<tr>
@@ -262,28 +213,75 @@
 							</table>
 						</c:when>
 						<c:otherwise>
-								<table border="1">
-									<tbody class="right ">
-									<c:forEach var="orderViewDto" items="${orderViewDto}">
+							<table border="1">
+								<tbody class="right ">
+									<c:forEach var="orderListVO" items="${orderListVO}">
+										<c:forEach var="orderViewDto" items="${orderListVO.list}"
+											varStatus="status">
+											<tr>
+												<c:if test="${status.first }">
+													<td rowspan=${status.first? orderListVO.getCount()+1:""}
+														class="w85 center" style="">${orderListVO.getTime()}
+													</td>
+												</c:if>
+												<c:if test="${status.first }">
+													<td rowspan=${status.first? orderListVO.getCount()+1:""}
+														class="w160 orderNum" style=""><a href="#none" id=""><span
+															id=""> ${orderListVO.team } </span></a></td>
+												</c:if>
+												<c:if test="${status.first }">
+													<td rowspan=${status.first? orderListVO.getCount()+1:""}
+														class="w80 center" style="" bgcolor="">
+														${orderListVO.member_name}</td>
+												</c:if>
+												
+												<c:if test="${status.first }">
+												<td class="w35 center" rowspan=${status.first? orderListVO.getCount()+1:""}><input
+													type="checkbox" name="team" value="${orderViewDto.team}"
+													class="chkbox subChk" order_id="${orderViewDto.order_id}"></td>
+												</c:if>
+												<td class="w140 center" style="">
+													${orderViewDto.nickname}</td>
+												<td class="w140 center" style="">
+													${orderViewDto.product_name }</td>
+												<td class="w35 center" style="">
+													${orderViewDto.quantity }</td>
+												<td class="w80 right" style=""><fmt:formatNumber
+														value="${orderViewDto.price }" pattern="#,###.##" /></td>
+												<td class="w90 right" style=""><fmt:formatNumber
+														value="${orderViewDto.total_price }" pattern="#,###.##" /></td>
+												<c:if test="${status.first }">
+													<td class="w110 right" style=""
+														rowspan=${status.first? orderListVO.getCount()+1:""}>
+														<fmt:formatNumber value="${orderListVO.getTotalAmount()}"
+															pattern="#,###.##" />
+													</td>
+												</c:if>
+												<c:if test="${status.first }">
+													<td class="w100 right" style=""
+														rowspan=${status.first? orderListVO.getCount()+1:""}><fmt:formatNumber
+															value="${orderListVO.getTrueAmount()}" pattern="#,###.##" /></td>
+												</c:if>
+												<c:if test="${status.first }">
+													<td class="w60 center" style=""
+														rowspan=${status.first? orderListVO.getCount()+1:""}>${orderListVO.pay_type }</td>
+												</c:if>
+												<c:if test="${status.first }">
+													<td class="w60 center" style=""
+														rowspan=${status.first? orderListVO.getCount()+1:""}>${orderListVO.pay_status}</td>
+												</c:if>
+											</tr>
+										</c:forEach>
 										<tr>
-											<td class="w24 center"><input
-												type="checkbox" name="" class="chkbox"> <input
-												type="hidden" name="order_id" value=""></td>
-											<td class="w120  center" style="">${orderViewDto.order_dt}</td>
-											<td class="w105 orderNum" style=""><a href="#none" id=""><span
-													id="">${orderViewDto.team }</span></a>
-											<td class="w95 center" style="" bgcolor="">${orderViewDto.member_name}</td>
-											<td class="w120 left" style="">${orderViewDto.product_name }</td>
-											<td class="w105" style=""><fmt:formatNumber
-															value="${orderViewDto.total_price}" pattern="#,###.##" /></td>
-											<td class="w60 center" style="">${orderViewDto.pay_type }</td>
-											<td class="w60 center" style="">${orderViewDto.pay_status}</td>
-											<td class="w60 center" style="">${orderViewDto.t_status}</td>
-											<td class="w45 center" style="">${orderViewDto.cs_status}</td>
+											<td class="w140 left" colspan="5">
+												<p>수령자: ${orderListVO.re_name}</p>
+												<p>연락처: ${orderListVO.re_phone }</p>
+												<p>주소: ${orderListVO.re_addr}</p>
+											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
-								</table>
+							</table>
 						</c:otherwise>
 					</c:choose>
 				</div>

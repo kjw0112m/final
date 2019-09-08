@@ -53,6 +53,7 @@ $(function() {
 
 	// ----------------------------------------------- 조건 유지 이벤트
 	// ---------------------------------------------------------
+	
 	for (var i = 1; i < searchType.length; i++) {
 		if (searchType[i]) {
 			$(".plus").trigger("click");
@@ -87,56 +88,9 @@ $(function() {
 
 	// ----------------------------------------------- 체크박스 이벤트
 	// ---------------------------------------------------------
-	var tStatus = $("#tStatusCheck").find(".fChk");
-	if (!page) {
-		tStatus.prop("checked", true);
-	}
-	tStatus.first().change(function() {
-		if ($("#tStatAll").is(":checked")) {
-			tStatus.prop("checked", true);
-		} else {
-			tStatus.prop("checked", false);
-		}
-	});
-
-	tStatus.not(tStatus.first()).change(function() {
-		$("#tStatAll").prop("checked", false);
-		var check = 0;
-		$(tStatus.not(tStatus.first())).each(function() {
-			if ($(this).is(':checked')) {
-				check++;
-			}
-		});
-		if (check == 5) {
-			$("#tStatAll").prop("checked", true);
-		}
-	});
 
 	// ----------------------------------------------- 조건 유지 이벤트
 	// ---------------------------------------------------------
-
-	for (var i = 0; i < tStatusAry.length; i++) {
-		if (tStatusAry[i]) {
-			$("input[value=" + tStatusAry[i] + "]").prop('checked', true);
-		} else {
-		}
-	}
-	
-	$("input[name='pay_status']").each(function() {
-		if ($(this).val() == payStatus)
-			$(this).prop('checked', true);
-	});
-
-	// 전체 체크박스 외에 모든 박스가 체크되있으면 전체 체크박스도 체크( 단, 조건 유지 이벤트 다음 실행)
-	var tcheck = 0;
-	$(tStatus.not(tStatus.first())).each(function() {
-		if ($(this).is(':checked')) {
-			tcheck++;
-		}
-	});
-	if (tcheck == 5) {
-		$("#tStatAll").prop("checked", true);
-	}
 
 	// ----------------------------------------------- 날짜 버튼 이벤트
 	// ---------------------------------------------------------
@@ -303,21 +257,155 @@ $(function() {
 			break;
 		}
 	});
-	
-	var id = [];
-	$("#btnInvoice").click(function(){
-		$('.cart_no').each(function() {
+
+	// 전체 체크박스 이벤트
+	$('#allChk').change(function() {
+		if ($(this).is(':checked')) {
+			$('.subChk').prop('checked', true);
+		} else {
+			$('.subChk').prop('checked', false);
+		}
+	});
+	$('.subChk').change(function() {
+		$('.subChk').each(function() {
 			if ($(this).is(':checked')) {
-				id.push($(this).val());
+				$('#allChk').prop('checked', true);
+				return true;
+			} else {
+				$('#allChk').prop('checked', false);
+				return false;
+			}
+		});
+	});
+
+	// 송장번호 입력
+	var idAry = [];
+	
+	$('.btnInvoice').click(function() {
+		var t_id = $(this).prev().prev();
+		var t_invoice = $(this).prev();
+		$('input[name=team]').each(function() {
+			if ($(this).is(':checked')) {
+				idAry.push($(this).val());
 			}
 		});
 		jQuery.ajaxSettings.traditional = true;
 		$.ajax({
-			url : "delete",
-			type : "GET",
+			url : "ready/invoice",
+			type : "POST",
 			dataType : "text",
 			data : {
-				id : id
+				idAry : idAry,
+				t_id : t_id.val(),
+				t_invoice : t_invoice.val(),
+				t_status: "배송대기"
+			},
+			success : function(resp) {
+				location.reload();
+			}
+		});
+	});
+	
+	// 입금확인 버튼 이벤트
+	$("#btnDeposit").click(function() {
+		$('input[name=team]').each(function() {
+			if ($(this).is(':checked')) {
+				idAry.push($(this).val());
+			}
+		});
+		jQuery.ajaxSettings.traditional = true;
+		$.ajax({
+			url : "before_deposit/confirm",
+			type : "POST",
+			dataType : "text",
+			data : {
+				idAry : idAry
+			},
+			success : function(resp) {
+				location.reload();
+			}
+		});
+	});
+	
+	// 개별배송 버튼 이벤트
+	$("#btnDetach").click(function() {
+		$('input[name=team]').each(function() {
+			if ($(this).is(':checked')) {
+				idAry.push($(this).attr('order_id'));
+			}
+		});
+		jQuery.ajaxSettings.traditional = true;
+		$.ajax({
+			url : "ready/detach",
+			type : "POST",
+			dataType : "text",
+			data : {
+				idAry : idAry
+			},
+			success : function(resp) {
+				location.reload();
+			}
+		});
+	});
+	// 배송준비중 버튼 이벤트
+	$("#btnReady").click(function() {
+		$('input[name=team]').each(function() {
+			if ($(this).is(':checked')) {
+				idAry.push($(this).attr('order_id'));
+			}
+		});
+		jQuery.ajaxSettings.traditional = true;
+		$.ajax({
+			url : "waiting/ready",
+			type : "POST",
+			dataType : "text",
+			data : {
+				idAry : idAry,
+				t_status: "배송준비중"
+			},
+			success : function(resp) {
+				location.reload();
+			}
+		});
+	});
+	
+	// 배송중 버튼 이벤트
+	$("#btnShip").click(function() {
+		$('input[name=team]').each(function() {
+			if ($(this).is(':checked')) {
+				idAry.push($(this).val());
+			}
+		});
+		jQuery.ajaxSettings.traditional = true;
+		$.ajax({
+			url : "waiting/shipping",
+			type : "POST",
+			dataType : "text",
+			data : {
+				idAry : idAry,
+				t_status: "배송중"
+			},
+			success : function(resp) {
+				location.reload();
+			}
+		});
+	});
+	
+	// 배송완료 버튼 이벤트
+	$("#btnComplete").click(function() {
+		$('input[name=team]').each(function() {
+			if ($(this).is(':checked')) {
+				idAry.push($(this).val());
+			}
+		});
+		jQuery.ajaxSettings.traditional = true;
+		$.ajax({
+			url : "shipping/complete",
+			type : "POST",
+			dataType : "text",
+			data : {
+				idAry : idAry,
+				t_status: "배송완료"
 			},
 			success : function(resp) {
 				location.reload();
@@ -325,4 +413,30 @@ $(function() {
 		});
 	});
 
+	// dTap select 이벤트
+	var d_tit = $('#d_tit').text();
+	console.log(d_tit);
+	$('.tab_li').each(function() {
+		if ($(this).find('a').attr('href') == d_tit) {
+			$(this).addClass('selected');
+		} else {
+			$(this).removeClass('selected');
+		}
+	})
+	
+// 몇개씩 보기 이벤트
+	var row = $('select[name=rows]')
+	row.change(function(){
+		$("form").submit();
+	});
+	
+// rows 조건유지
+	row.find('option').each(function(){
+		if($(this).val() == rows){
+			$(this).prop('selected', true);
+		}
+		else{
+			$(this).prop('selected', false);
+		}
+	});
 });
