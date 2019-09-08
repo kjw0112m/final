@@ -61,7 +61,7 @@
 		<tr>
 			<th rowspan="2">제목</th>
 			<c:choose>
-			<c:when test="${sessionScope.sid.toString().startsWith('!')}">
+			<c:when test="${not empty sessionScope.aid}">
 <!-- 				<td colspan="2">
 					<select name="head" >
 						<option value="">선택하세요</option>
@@ -78,7 +78,7 @@
 		</tr>
 		<tr>
 			<c:choose>
-			<c:when test="${sessionScope.sid.toString().startsWith('!')}">
+			<c:when test="${not empty sessionScope.aid}">
 				<td colspan="2">
 					<input type="text" name="title" placeholder="제목"  value="${noticeDto.title}" size="70">
 				<td colspan="2">
@@ -93,7 +93,7 @@
 		<tr>
 			<th>내용</th>
 			<c:choose>
-			<c:when test="${sessionScope.sid.toString().startsWith('!')}">
+			<c:when test="${not empty sessionScope.aid}">
 				<td colspan="2">
 					<textarea name="content" placeholder="내용" rows="10" cols="100">${noticeDto.content}</textarea>
 				</td>
@@ -106,7 +106,7 @@
 			</c:choose>
 		</tr>
 		<c:choose>
-			<c:when test="${sessionScope.sid.toString().startsWith('@')}">
+			<c:when test="${not empty sessionScope.ssid}">
 				<c:forEach var="commentlist" items="${commentlist}">
 					<tr>
 						<td colspan="2">▶ ${commentlist.commentcontent}<br>${commentlist.createdate}</td>
@@ -126,11 +126,11 @@
 				<c:forEach var="commentlist" items="${commentlist}">
 					<tr>
 						<c:choose>
-						<c:when test="${sessionScope.sid.toString().startsWith('!')}">
+						<c:when test="${not empty sessionScope.aid}">
 							<td colspan="2">▶ ${commentlist.commentcontent}<br>${commentlist.createdate}</td>
 							<td><input type="button" onclick="deleteComment(${commentlist.id});" value="삭제"></td>
 						</c:when>
-						<c:when test="${sessionScope.sid.toString() eq commentlist.createUser}">
+						<c:when test="${sessionScope.ssid eq commentlist.createUser}">
 							<td colspan="2">▶ ${commentlist.commentcontent}<br>${commentlist.createdate}</td>
 							<td><input type="button" onclick="deleteComment(${commentlist.id});" value="삭제"></td>
 						</c:when>

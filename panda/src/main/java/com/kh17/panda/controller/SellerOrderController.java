@@ -1,6 +1,5 @@
 package com.kh17.panda.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -43,7 +42,7 @@ public class SellerOrderController {
 	public String list(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
 			Model model, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "10") int rows,HttpSession session,
 			@RequestParam(required = false) String[] csStatus, @RequestParam(required = false) String[] tStatus) {
-		if (session.getAttribute("sid") != null) {
+		if (session.getAttribute("ssid") != null) {
 			int pagesize = rows;
 			int start = pagesize * page - (pagesize - 1);
 			int end = pagesize * page;
@@ -87,7 +86,7 @@ public class SellerOrderController {
 		}
 	}
 
-	public void deTab(Model model, String seller_id) {
+	public void deTab(Model model) {
 		int before = ordersDao.deliveryCount(OrderViewDto.builder().pay_status("입금전").build());
 		int complete = ordersDao.deliveryCount(OrderViewDto.builder().t_status("배송완료").build());
 		int ready = ordersDao.deliveryCount(OrderViewDto.builder().t_status("배송준비중").build());
@@ -103,12 +102,12 @@ public class SellerOrderController {
 	@GetMapping("/delivery/before_deposit")
 	public String delivery(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
 			Model model, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
-		String seller_id = (String) session.getAttribute("sid");
+		String ssid = (String) session.getAttribute("ssid");
 		orderViewDto.setPay_status("입금전");
 
-		deTab(model, seller_id);
+		deTab(model);
 
-		if (seller_id != null) {
+		if (ssid != null) {
 			int pagesize = rows;
 			int start = pagesize * page - (pagesize - 1);
 			int end = pagesize * page;
@@ -158,12 +157,12 @@ public class SellerOrderController {
 	@GetMapping("/delivery/ready")
 	public String ready(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
 			Model model, @RequestParam(required = false, defaultValue = "1") int page,@RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
-		String seller_id = (String) session.getAttribute("sid");
+		String sid = (String) session.getAttribute("ssid");
 		orderViewDto.setT_status("배송준비중");
 
-		deTab(model, seller_id);
+		deTab(model);
 
-		if (seller_id != null) {
+		if (sid != null) {
 			int pagesize = rows;
 			int start = pagesize * page - (pagesize - 1);
 			int end = pagesize * page;
@@ -217,12 +216,12 @@ public class SellerOrderController {
 	@GetMapping("/delivery/waiting")
 	public String wating(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
 			Model model, @RequestParam(required = false, defaultValue = "1") int page,@RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
-		String seller_id = (String) session.getAttribute("sid");
+		String sid = (String) session.getAttribute("ssid");
 		orderViewDto.setT_status("배송대기");
 		
-		deTab(model, seller_id);
+		deTab(model);
 		
-		if (seller_id != null) {
+		if (sid != null) {
 			int pagesize = rows;
 			int start = pagesize * page - (pagesize - 1);
 			int end = pagesize * page;
@@ -276,12 +275,12 @@ public class SellerOrderController {
 	@GetMapping("/delivery/shipping")
 	public String shipping(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
 			Model model, @RequestParam(required = false, defaultValue = "1") int page,@RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
-		String seller_id = (String) session.getAttribute("sid");
+		String sid = (String) session.getAttribute("ssid");
 		orderViewDto.setT_status("배송중");
 		
-		deTab(model, seller_id);
+		deTab(model);
 		
-		if (seller_id != null) {
+		if (sid != null) {
 			int pagesize = rows;
 			int start = pagesize * page - (pagesize - 1);
 			int end = pagesize * page;
@@ -335,12 +334,12 @@ public class SellerOrderController {
 	@GetMapping("/delivery/complete")
 	public String complete(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
 			Model model, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "10") int rows,HttpSession session) {
-		String seller_id = (String) session.getAttribute("sid");
+		String sid = (String) session.getAttribute("ssid");
 		orderViewDto.setT_status("배송완료");
 		
-		deTab(model, seller_id);
+		deTab(model);
 		
-		if (seller_id != null) {
+		if (sid != null) {
 			int pagesize = rows;
 			int start = pagesize * page - (pagesize - 1);
 			int end = pagesize * page;

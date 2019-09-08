@@ -53,7 +53,7 @@ $(function() {
 
 	// ----------------------------------------------- 조건 유지 이벤트
 	// ---------------------------------------------------------
-	
+
 	for (var i = 1; i < searchType.length; i++) {
 		if (searchType[i]) {
 			$(".plus").trigger("click");
@@ -280,7 +280,7 @@ $(function() {
 
 	// 송장번호 입력
 	var idAry = [];
-	
+
 	$('.btnInvoice').click(function() {
 		var t_id = $(this).prev().prev();
 		var t_invoice = $(this).prev();
@@ -298,14 +298,14 @@ $(function() {
 				idAry : idAry,
 				t_id : t_id.val(),
 				t_invoice : t_invoice.val(),
-				t_status: "배송대기"
+				t_status : "배송대기"
 			},
 			success : function(resp) {
 				location.reload();
 			}
 		});
 	});
-	
+
 	// 입금확인 버튼 이벤트
 	$("#btnDeposit").click(function() {
 		$('input[name=team]').each(function() {
@@ -326,7 +326,7 @@ $(function() {
 			}
 		});
 	});
-	
+
 	// 개별배송 버튼 이벤트
 	$("#btnDetach").click(function() {
 		$('input[name=team]').each(function() {
@@ -361,14 +361,14 @@ $(function() {
 			dataType : "text",
 			data : {
 				idAry : idAry,
-				t_status: "배송준비중"
+				t_status : "배송준비중"
 			},
 			success : function(resp) {
 				location.reload();
 			}
 		});
 	});
-	
+
 	// 배송중 버튼 이벤트
 	$("#btnShip").click(function() {
 		$('input[name=team]').each(function() {
@@ -383,14 +383,14 @@ $(function() {
 			dataType : "text",
 			data : {
 				idAry : idAry,
-				t_status: "배송중"
+				t_status : "배송중"
 			},
 			success : function(resp) {
 				location.reload();
 			}
 		});
 	});
-	
+
 	// 배송완료 버튼 이벤트
 	$("#btnComplete").click(function() {
 		$('input[name=team]').each(function() {
@@ -405,7 +405,7 @@ $(function() {
 			dataType : "text",
 			data : {
 				idAry : idAry,
-				t_status: "배송완료"
+				t_status : "배송완료"
 			},
 			success : function(resp) {
 				location.reload();
@@ -423,20 +423,20 @@ $(function() {
 			$(this).removeClass('selected');
 		}
 	})
-	
-// 몇개씩 보기 이벤트
+
+	// 몇개씩 보기 이벤트
 	var row = $('select[name=rows]')
-	row.change(function(){
+	row.change(function() {
 		$("form").submit();
 	});
-	
-// rows 조건유지
-	row.find('option').each(function(){
-		if($(this).val() == rows){
+
+	// rows 조건유지
+	row.find('option').each(function() {
+		if ($(this).val() == rows) {
 			$(this).prop('selected', true);
-		}
-		else{
+		} else {
 			$(this).prop('selected', false);
 		}
 	});
+
 });

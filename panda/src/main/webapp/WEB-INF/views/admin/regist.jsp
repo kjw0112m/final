@@ -8,37 +8,19 @@
 <script
 	src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
 
-<script>
-	$(function() {
-		if ('${param.error}' != '') {
-			alert('회원가입 중 오류가 발생하였습니다.');
-		}
-	})
-</script>
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/admin/common.css">
 <style>
-ul, ol, dl, li {
-	list-style: none;
-}
-
-#header .util li {
-	position: relative;
-	display: inline-block;
-	padding: 20px;
-}
-
 #container {
-	margin: 100px 100px;
+	margin: 200px;
 }
 
 .regist_form {
-	height: 600px;
+	height: 300px;
 	background-color: white;
 	width: 900px;
 	margin: auto;
 	border: 1px solid #ddd;
 }
+
 .table {
 	border: none;
 	margin: auto;
@@ -106,20 +88,15 @@ ul, ol, dl, li {
 	margin-bottom: 50px;
 }
 </style>
-
 <script>
 	$(function() {
-		$("#registcheck").prop("disabled", true).css("background-color",
-				" #729a65");
-		$("#idCheck").prop("disabled", true)
-				.css("background-color", " #729a65");
 
 		// 아이디 형식 검사
 		$(".id")
 				.on(
 						"blur",
 						function() {
-							var regex = /^@[a-zA-z0-9]{7,15}$/;
+							var regex = /^![a-zA-z0-9]{7,15}$/;
 							var id = $(this).val();
 							var result = regex.test(id);
 							var span = document.querySelector(".sid");
@@ -128,35 +105,12 @@ ul, ol, dl, li {
 								$("#idCheck").prop("disabled", false).css(
 										"background-color", "#4790b8");
 							} else {
-								span.innerHTML = "<font color = '#de2195' size = '2'>@로시작하는 8~16자의 영문 소문자,대문자, 숫자로 입력해주세요</font>"
+								span.innerHTML = "<font color = '#de2195' size = '2'>!로시작하는 8~16자의 영문 소문자,대문자, 숫자로 입력해주세요</font>"
 								$("#idCheck").prop("disabled", true).css(
 										"background-color", "#729a65");
 							}
 						});
 
-		//아이디 중복검사
-		$("#idCheck").click(
-				function() {
-					$.ajax({
-						url : "idCheck",
-						data : {
-							id : $("input[name=id]").val()
-						},
-						dataType : "text",
-						success : function(resp) {
-							if (resp == "N") {
-								window.alert("이미 사용중인 아이디입니다");
-								$("input[name=id]").select();
-							}
-							//중복검사해서 사용할 수 있는 아이디이면 가입버튼 활성화
-							else {
-								window.alert("사용 가능한 아이디입니다")
-								$("#registcheck").prop("disabled", false).css(
-										"background-color", "#4790b8");
-							}
-						}
-					});
-				});
 		//  비밀번호 형식 검사
 		$(".pw")
 				.on(
@@ -182,13 +136,10 @@ ul, ol, dl, li {
 		$('#chpass')
 				.keyup(
 						function() {
-							if ($('#user_pass').val() != '') {
-								if ($('#user_pass').val() != $('#chpass').val()
-										&& $('#user_pass').val()) {
-									span.innerHTML = "<font color = '#de2195' size = '2'>암호틀림</font>"
-								} else {
-									span.innerHTML = "<font color = '#de2195' size = '2'>암호맞음</font>"
-								}
+							if ($('#user_pass').val() != $('#chpass').val()) {
+								span.innerHTML = "<font color = '#de2195' size = '2'>암호틀림</font>"
+							} else {
+								span.innerHTML = "<font color = '#de2195' size = '2'>암호맞음</font>"
 							}
 						}); //#chpass.keyup
 
@@ -207,24 +158,24 @@ ul, ol, dl, li {
 					$(this).append(newInput1);
 					this.submit();
 				});
+		if ('${param.error}' != '') {
+			alert('회원가입 중 오류가 발생하였습니다.');
+		}
 	});
 </script>
 <jsp:include page="/WEB-INF/views/template/admin/header.jsp"></jsp:include>
 <div id="container">
 	<div class="regist">
-		<h1>판매자 가입</h1>
+		<h1>관리자 가입</h1>
 	</div>
 	<div class="regist_form">
 		<form action="regist" method="post">
 			<table class="table">
 				<tbody>
-
 					<tr>
 						<td class="a">아이디</td>
 						<td class="b"><input class="id iText" type="text" name="id"
-							placeholder="아이디 8~16글자" required>
-							<button id="idCheck" type="button">중복확인</button> <br> <span
-							class="sid"></span></td>
+							placeholder="아이디 8~16글자" required> <span class="sid"></span></td>
 
 					</tr>
 
@@ -242,36 +193,13 @@ ul, ol, dl, li {
 							<span class="cpw"></span></td>
 					</tr>
 
-					<tr>
-						<td class="a">이름</td>
-						<td class="b"><input class="iText" type="text" name="name"
-							placeholder="이름" required></td>
-					</tr>
-
-					<tr>
-						<td class="a">상점이름</td>
-						<td class="b"><input class="iText" type="text"
-							name="nickname" placeholder="판다이름" required></td>
-					</tr>
-
-					<tr>
-						<td class="a">핸드폰번호</td>
-						<td class="b"><input type="text" name="phone"
-							placeholder="전화번호(- 제외)" class="iText"></td>
-					</tr>
-
-
-					<tr>
-						<td class="a">이메일</td>
-						<td class="b"><input type="text" name="email" id="putemail"
-							required class="iText"></td>
-					</tr>
 				</tbody>
 
 			</table>
 	</div>
 	<input id="registcheck" type="submit" value="가입하기">
 	</form>
+</div>
 </div>
 </body>
 </html>
