@@ -1,96 +1,85 @@
 package com.kh17.panda.controller;
 
-import java.util.List;
-
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh17.panda.entity.MemberDto;
-import com.kh17.panda.repository.MemberDao;
+import com.kh17.panda.entity.AdminDto;
+import com.kh17.panda.repository.AdminDao;
 
 @Controller
-@RequestMapping("/seller/member")
+@RequestMapping("/admin")
 public class AdminController {
-
+	
 	@Autowired
-	private MemberDao memberDao;
+	private AdminDao adminDao;
 	
-	//회원 검색 기능
-	@GetMapping("/search")
-	public String search(@ModelAttribute MemberDto memberDto,
-		    	@RequestParam(required = false) String type,
-				@RequestParam(required = false) String keyword,
-				@RequestParam(required = false, defaultValue = "1") int page,
-				Model model) {
-		int pagesize = 5;
-		int start = pagesize * page - (pagesize - 1);
-		int end = pagesize * page;
-		int blocksize = 5;
-		int startBlock = (page - 1) / blocksize * blocksize + 1;
-		int endBlock = startBlock + (blocksize - 1);
-		int count = memberDao.count(type, keyword);
-		int pageCount = (count - 1) / pagesize + 1;
-		if (endBlock > pageCount) {
-			endBlock = pageCount;
-		}
-		model.addAttribute("page", page);
-		model.addAttribute("startBlock", startBlock);
-		model.addAttribute("endBlock", endBlock);
-		model.addAttribute("pageCount", pageCount);
-		if(type != null && keyword != null) {
-			List<MemberDto> list =memberDao.search(type, keyword ,start, end);
-			model.addAttribute("keyword", keyword);
-			model.addAttribute("type", type);
-			model.addAttribute("list", list);
-		}
-		return "seller/member/search";
-	}
 	
-//	상세 정보 보기
-	@GetMapping("/info")
-	public String info(@RequestParam String id, Model model) {
-		model.addAttribute("mdto",memberDao.get(id));
-		return "seller/member/info";
-	}
-	
-//	회원 탈퇴
-	@GetMapping("/delete")
-	public String delete(
-			@RequestParam String id,
-			//검색 상태를 유지하기 위한 파라미터
-			@RequestParam String type,
-			@RequestParam String keyword,
-			Model model
-			) {
-		memberDao.delete(id);
-		model.addAttribute("type", type);
-		model.addAttribute("keyword", keyword);
-		return "redirect:search";
-	}
-	
-	//회원 정보 변경
-	@GetMapping("/change")
-	public String edit(@RequestParam String id, 
-			Model model) {
-		model.addAttribute("mdto",memberDao.get(id));
-		return "seller/member/info";
-	}
-	
-	@PostMapping("/change")
-	public String edit(@RequestParam String id,@ModelAttribute MemberDto memberDto,Model model) {
-		model.addAttribute("mdto",memberDao.get(id));
-		
-		memberDao.change(memberDto);
-		model.addAttribute("id", memberDto.getId());
-		return "redirect:info";
-	}
+	@GetMapping("/regist")
+	public String regist() {
+		return "admin/regist";
 	}
 
+	@PostMapping("/regist")
+	public String regist(@ModelAttribute AdminDto adminDto) {
+		String origin = adminDto.getPw();
+		String encrypt = BCrypt.hashpw(origin, BCrypt.gensalt());
+		adminDto.setPw(encrypt);
+
+		boolean result = adminDao.regist(adminDto);
+		if (result)
+			return "redirect:login";
+		else
+			return "redirect:login";
+	}
+
+//	로그인
+	@GetMapping("/login")
+	public String login() {
+		return "admin/login";
+	}
+
+//	로그인
+	@PostMapping("/login")
+	public String login(@ModelAttribute AdminDto adminDto, @RequestParam(required = false) String remember,
+			HttpSession session, HttpServletResponse response) {
+
+// 비밀번호 암호화처리
+		AdminDto result = adminDao.get(adminDto.getId());
+		if (result != null) {
+			if (BCrypt.checkpw(adminDto.getPw(), result.getPw())) {
+				session.setAttribute("aid", result.getId());
+
+				// 쿠키객체를 만들고 체크여부에 따라 시간 설정 후 response에 추가
+				Cookie c = new Cookie("saveId", adminDto.getId());
+				if (remember == null)// 체크 안했을때
+					c.setMaxAge(0);
+				else {// 체크 했을때
+					c.setMaxAge(1 * 7 * 24 * 60 * 60);// 1주
+				}
+				response.addCookie(c);
+				return "redirect:/seller";
+			} else {
+				return "redirect:login?error=1";
+			}
+		} else {
+			return "redirect:login?error=1";
+		}
+	}
+
+//	로그아웃
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("aid");
+		return "redirect:/admin/login";
+	}
+}

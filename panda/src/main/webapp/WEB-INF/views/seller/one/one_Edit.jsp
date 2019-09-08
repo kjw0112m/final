@@ -67,7 +67,7 @@
 		<tr> --%>
 			<td>
 				<c:choose>
-				<c:when test="${sessionScope.sid.toString().startsWith('!') or sessionScope.sid.toString().startsWith('@')}">
+				<c:when test="${not empty sessionScope.aid or not empty sessionScope.ssid}">
 					<input type="text" name="title" placeholder="제목"  value="${oneDto.title}" size="70">
 				</c:when>
 				<c:when test="${mode eq 'EDIT' }">
@@ -83,7 +83,7 @@
 			<th>내용</th>
 			<td>
 				<c:choose>
-				<c:when test="${sessionScope.sid.toString().startsWith('!') or sessionScope.sid.toString().startsWith('@')}">
+				<c:when test="${not empty sessionScope.aid or not empty sessionScope.ssid}">
 					<textarea name="content" placeholder="내용" rows="10" cols="100">${oneDto.content}</textarea>
 				</c:when>
 				<c:when test="${mode eq 'EDIT' }">
@@ -100,7 +100,7 @@
 		<tr>
 					<th>답변</th>
 					<c:choose>
-					<c:when test="${sessionScope.sid.toString().startsWith('!') or sessionScope.sid.toString().startsWith('@')}">
+					<c:when test="${not empty sessionScope.aid or not empty sessionScope.ssid}">
 						<td>
 							<textarea name="onecomment" rows="4" cols="100" placeholder="답변 입력">${oneDto.onecomment}</textarea>		
 							<br>${oneDto.onecommentdate} &nbsp; ${oneDto.onecommentuser} 

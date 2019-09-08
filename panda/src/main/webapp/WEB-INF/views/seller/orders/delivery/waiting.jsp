@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/admin/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/template/admin/aside.jsp"></jsp:include>
 <link rel="stylesheet"
@@ -178,8 +178,8 @@
 					</div>
 				</div>
 				<div class="ctrl">
-					<a href="#" id="btnShip" class="btnMini"><span>배송중처리</span></a>
-					<a href="#" id="btnReady" class="btnMini"><span>배송준비중처리</span></a>
+					<a href="#" id="btnShip" class="btnMini"><span>배송중처리</span></a> <a
+						href="#" id="btnReady" class="btnMini"><span>배송준비중처리</span></a>
 				</div>
 				<div id="searchResultList"
 					class="mBoard typeOrder gScroll gCellSingle">
@@ -241,11 +241,13 @@
 												<c:if test="${status.first }">
 													<td class="w140 left t_td" style=""
 														rowspan=${status.first? orderListVO.getCount():""}>
-														운송장번호:
-														<a href="#" t_id="${orderListVO.t_id}" style="color: #55a0ff">${orderListVO.t_invoice }</a>
-														</td>
+														운송장번호: <a
+														href="${pageContext.request.contextPath}/transport/tracking?t_invoice=${orderListVO.t_invoice}&t_id=${orderListVO.t_id}"
+														style="color: #55a0ff" class="tracking"
+														onclick="window.open(this.href,'','width=900,height=700,left=100,top=50'); return false;">${orderListVO.t_invoice }</a>
+													</td>
 												</c:if>
-													<td class="w90 center" style="">
+												<td class="w90 center" style="">
 													${orderViewDto.nickname}</td>
 												<td class="w140 center" style="">
 													${orderViewDto.product_name }</td>
