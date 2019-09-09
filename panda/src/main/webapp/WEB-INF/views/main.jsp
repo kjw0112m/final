@@ -30,7 +30,7 @@
 
 .img1 {
 	width: 100%;
-	height: 400px;
+	height: 500px;
 }
 
 .img2 {
@@ -130,13 +130,13 @@ div.item img {
 <div id="wrapper1">
 	<div class="bxSlider">
 		<div>
-			<img src="${pageContext.request.contextPath}/image/main/2019.png" class="img1">
+			<img src="${pageContext.request.contextPath}/image/main/main1.png" class="img1">
 		</div>
 		<div>
-			<img src="${pageContext.request.contextPath}/image/main/2018.png" class="img1">
+			<img src="${pageContext.request.contextPath}/image/main/main2.png" class="img1">
 		</div>
 		<div>
-			<img src="${pageContext.request.contextPath}/image/main/2017.png" class="img1">
+			<img src="${pageContext.request.contextPath}/image/main/main3.png" class="img1">
 		</div>
 	</div>
 </div>
