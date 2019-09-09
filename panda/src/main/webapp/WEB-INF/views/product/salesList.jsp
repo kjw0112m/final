@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>신상순</title>
+<title>할인상품</title>
 <style>
 .ul li a {
 	text-decoration: none;
@@ -18,18 +18,17 @@
 	float: left;
 	width: 20%;
 	color: #555;
-	margin-top: 5px;
 }
 
-.ul ::after{
+.ul::after{
 	content: '';
 	display: block;
 	clear: both;
 }
 
 .order-img {
-	width: 300px;
-	height: 300px;
+	width: 350px;
+	height: 350px;
 	margin-bottom: 12px;
 }
 
@@ -59,20 +58,10 @@
 	font-weight: bold;
 	color: #55a0ff;
 }
-
-img{
-	display: block;
-}
-
- .total ::after{ 
- 	content: ""; 
- 	display: block; 
-	clear: both; 
- } 
 </style>
 </head>
 
-<div class="total">
+<div>	
 
 	<ul class="ul">
 		<c:forEach var="productSellerDto" items="${list}">
@@ -97,10 +86,10 @@ img{
 <div class="paginate">
 	<ol>
 	<c:if test="${(not (page eq 1))&& not empty page && page>=11}">
-		<li><a href="newArrivals?page=${startBlock-1}" class="page_block">&lt;&lt;</a></li>
+		<li><a href="salesList?page=${startBlock-1}" class="page_block">&lt;&lt;</a></li>
 	</c:if>
 	<c:if test="${not (page eq 1) && not empty page}">
-		<li><a href="newArrivals?page=${page-1}" class="page_block">&lt;</a></li>
+		<li><a href="salesList?page=${page-1}" class="page_block">&lt;</a></li>
 	</c:if>
 	<!--페이지 출력 -->
 	<c:forEach var="i" begin="${startBlock}" end="${endBlock}">
@@ -110,16 +99,16 @@ img{
 		</c:when>
 		<c:otherwise>
 			<c:if test="${i>0}">
-				<li><a href="newArrivals?page=${i}" class="page_move">${i}</a></li>
+				<li><a href="salesList?page=${i}" class="page_move">${i}</a></li>
 			</c:if>
 		</c:otherwise>
 		</c:choose>
 	</c:forEach>
 	<c:if test="${not (page eq pageCount)}">
-		<li><a href="newArrivals?page=${page+1}" class="page_block">&gt;</a></li>
+		<li><a href="salesList?page=${page+1}" class="page_block">&gt;</a></li>
 	</c:if>
 	<c:if test="${(not (page eq pageCount)) && pageCount>=10}">
-		<li><a href="newArrivals?page=${endBlock+1}" class="page_block">&gt;&gt;</a></li>
+		<li><a href="salesList?page=${endBlock+1}" class="page_block">&gt;&gt;</a></li>
 	</c:if>
 	</ol>
 </div>

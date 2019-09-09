@@ -32,8 +32,9 @@ public class ProductSubcategoryDaoImpl implements ProductSubcategoryDao{
 	}
 	
 	@Override
-	public int count(String type, String keyword) {
+	public int count(String seller_id, String type, String keyword) {
 		Map<String, String> param = new HashMap<>();
+		param.put("seller_id", seller_id);
 		if(type != null && keyword != null) {
 			param.put("type", type.replace("+", "||"));
 			param.put("keyword", keyword);
