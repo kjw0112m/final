@@ -236,7 +236,10 @@
 													<td class="w140 left t_td" style=""
 														rowspan=${status.first? orderListVO.getCount():""}>
 														운송장번호:
-														<a href="#" t_id="${orderListVO.t_id}" style="color: #55a0ff">${orderListVO.t_invoice }</a>
+														<a
+														href="${pageContext.request.contextPath}/transport/tracking?t_invoice=${orderListVO.t_invoice}&t_id=${orderListVO.t_id}"
+														style="color: #55a0ff" class="tracking"
+														onclick="window.open(this.href,'','width=900,height=700,left=100,top=50'); return false;">${orderListVO.t_invoice }</a>
 														</td>
 												</c:if>
 													<td class="w90 center" style="">

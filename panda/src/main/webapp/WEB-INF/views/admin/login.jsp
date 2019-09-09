@@ -133,35 +133,28 @@
 	<div class="form">
 		<form action="login" method="post" class="needs-validation" novalidate>
 			<div class="login">
-				<h4>판매자 로그인</h4>
+				<h4>관리자 로그인</h4>
 			</div>
 			<table class="table">
 				<tr class="center">
 					<td><input type="text" class="form-control" id="uname"
-						placeholder="판다 아이디" name="id" value="${cookie.saveId.value}"
+						placeholder="판다 아이디" name="id" value=""
 						required></td>
 				</tr>
 				<tr class="center">
 					<td><input type="password" class="form-control" id="pw"
 						placeholder="판다 비밀번호" name="pw" required></td>
 				</tr>
-				<tr class="left">
-					<td><label for="remember" class="check-label"> <input
-							class="check-input" type="checkbox" name="remember" id="remember"
-							${not empty cookie.saveId?"checked":""}>아이디 저장하기
-					</label></td>
-				</tr>
 			</table>
 			<div align="center">
 				<input type="submit" value="LOGIN" class="btn1">
 			</div>
 			<div id="btn2div">
-				<a href="regist" class="btn2">판매자 회원가입</a> <a href="find_id"
-					class="btn2">아이디찾기</a> <a href="find_pw" class="btn2">비밀번호찾기</a>
+				<a href="regist" class="btn2">관리자 회원가입</a>
 			</div>
 		</form>
 	</div>
 </div>
-</div>
+
 </body>
 </html>

@@ -47,11 +47,13 @@
 	</beans:bean>
 	
 	<!-- 인터셉터 설정 -->
+
 	<interceptors>
 		<!-- 로그인 설정 -->
 		<interceptor> 
  			<mapping path="/**"/> 
  	    	<exclude-mapping path="/"/>
+ 	    	<exclude-mapping path="/seller/**"/>
  			<exclude-mapping path="/member/regist"/> 
  			<exclude-mapping path="/member/agree"/>
  			<exclude-mapping path="/member/login"/> 
@@ -69,6 +71,7 @@
        
 
 	</interceptors>
+
 	
 
 

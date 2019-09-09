@@ -59,7 +59,7 @@ public class SellerProductController {
 			HttpSession session,
 			MultipartRequest mRequest,
 			Model model) throws IllegalStateException, IOException {
-//		vo.setSeller_id((String) session.getAttribute("sid"));
+//		vo.setSeller_id((String) session.getAttribute("ssid"));
 		vo.setSeller_id("abc");
 		//id를 반환해서 사용할지 말지 결정
 		int id = productService.regist(vo);
@@ -84,7 +84,7 @@ public class SellerProductController {
 			HttpSession session) throws IllegalStateException, IOException {
 		productService.edit(vo);
 		
-		model.addAttribute("id", (String) session.getAttribute("sid"));
+		model.addAttribute("id", (String) session.getAttribute("ssid"));
 		return "redirect:list";
 	}
 	@GetMapping("/delete")
@@ -127,7 +127,7 @@ public class SellerProductController {
 			HttpSession session,
 			@RequestParam (required = false, defaultValue = "1") int page,
 			Model model) {
-//		String seller_id = (String) session.getAttribute("sid");
+//		String seller_id = (String) session.getAttribute("ssid");
 		String seller_id = "abc";
 		
 		int pagesize = 10;
@@ -162,7 +162,7 @@ public class SellerProductController {
 			@RequestParam (required = false, defaultValue = "1") int page,
 			Model model
 			) {
-//		String seller_id = (String) session.getAttribute("sid");
+//		String seller_id = (String) session.getAttribute("ssid");
 		String seller_id = "abc";
 		
 		int pagesize = 10;
