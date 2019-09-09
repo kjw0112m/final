@@ -7,8 +7,8 @@
 		<ul id="snb">
 			<li><a id="" href="#none" class="product"> 상품관리 </a>
 				<ul class="hide">
-					<li class=""><a id="" href="#" class=""> 상품 등록 </a></li>
-					<li class=""><a id="" href="#" class=""> 상품 목록 </a></li>
+					<li class=""><a id="" href="${pageContext.request.contextPath }/seller/product/regist" class=""> 상품 등록 </a></li>
+					<li class=""><a id="" href="${pageContext.request.contextPath }/seller/product/list" class=""> 상품 목록 </a></li>
 					<li class=""><a id="" href="#" class=""> 카테고리 관리(준비중) </a></li>
 					<li class=""><a id="" href="#" class=""> 메인 관리(준비중) </a></li>
 				</ul></li>

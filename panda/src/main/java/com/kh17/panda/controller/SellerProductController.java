@@ -131,8 +131,8 @@ public class SellerProductController {
 			HttpSession session,
 			@RequestParam (required = false, defaultValue = "1") int page,
 			Model model) {
-//		String seller_id = "abc";
-		String seller_id = (String) session.getAttribute("@sid");
+		String seller_id = "abc";
+//		String seller_id = (String) session.getAttribute("@sid");
 		
 		int pagesize = 10;
 		int start = 1;
@@ -166,8 +166,8 @@ public class SellerProductController {
 			@RequestParam (required = false, defaultValue = "1") int page,
 			Model model
 			) {
-//		String seller_id = "abc";
-		String seller_id = (String) session.getAttribute("@sid");
+		String seller_id = "abc";
+//		String seller_id = (String) session.getAttribute("@sid");
 		
 		int pagesize = 10;
 		int start = pagesize * page - (pagesize - 1);
