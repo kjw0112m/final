@@ -102,9 +102,9 @@
 				<a href="${pageContext.request.contextPath}/seller/notice/noticeList" id="btnSearch"  class="btnSearch"> 초기화</a>
 				
 				
-				<a href="${pageContext.request.contextPath}/testmember/login"  id="btnInit"  class="btnSearch reset">
+<%-- 				<a href="${pageContext.request.contextPath}/testmember/login"  id="btnInit"  class="btnSearch reset">
 				관리자 권한 접근 경로:_____해당 ID로 로그인 후 test 바랍니다 (ID/PW : gggggggg)</a>
-				
+ --%>				
 				
 <%-- 				<a href="${pageContext.request.contextPath}/seller/notice/noticeList" id="btnInit"  class="btnSearch reset"> 초기화</a>				
  				<a href="${pageContext.request.contextPath}/seller/notice/noticeList" id="btnSearch"  class="btnSearch"> 초기화</a> 
