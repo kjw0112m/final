@@ -10,31 +10,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 	$(function() {
-		function uncomma(str) {
-			str = String(str);
-			return str.replace(/[^\d]+/g, '');
-		}
-		
-		$('input[type=checkbox]').change(function(){
-			if($(this).is(':checked')){
-				var total = parseInt(uncomma($(this).parent().parent().find('#total').text()));
-				var cul = parseInt(uncomma($('#order_price').text())) + total;
-				
-				$('#order_price').text('');
-				$('#order_price').append(cul.toLocaleString());
-				$('#total_price').text('');
-				$('#total_price').append(cul.toLocaleString());
-			}
-			else{
-				var total = parseInt(uncomma($(this).parent().parent().find('#total').text()));
-				var cul = parseInt(uncomma($('#order_price').text())) - total;
-				
-				$('#order_price').text('');
-				$('#order_price').append(cul.toLocaleString());
-				$('#total_price').text('');
-				$('#total_price').append(cul.toLocaleString());
-			}
-		});
+
 	});
 </script>
 <style>
@@ -307,24 +283,48 @@ dt {
 }
 
 .c_btn {
-    border: 1px solid black;
-    background-color: black;
-    color: white;
-    height: 50px;
-    width: 150px;
-    font-size: 15px;
-    margin-right: 30px;
+	border: 1px solid black;
+	background-color: black;
+	color: white;
+	height: 50px;
+	width: 150px;
+	font-size: 15px;
+	margin-right: 30px;
 }
 
-.c_btn.white{
+.c_btn.white {
 	background-color: white;
 	color: black;
 }
 
 .btndiv {
-    text-align: center;
-    width: 100%;
-    margin-bottom: 50px;
+	text-align: center;
+	width: 100%;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+.dot_list {
+    margin-top: 17px;
+}
+
+.dot_list li {
+    font-size: 14px;
+    line-height: 22px;
+    position: relative;
+    padding-left: 7px;
+}
+
+.dot_list li+li {
+    margin-top: 3px;
+}
+
+.tc_8 {
+    color: #888;
+}
+
+.tc_3 {
+    color: #333!important;
 }
 </style>
 
@@ -333,11 +333,10 @@ dt {
 		<jsp:include page="/WEB-INF/views/template/side.jsp"></jsp:include>
 	</div>
 
-	<form action="${pageContext.request.contextPath}/orders/cancel" method="post">
-		<input type="hidden" name="pay_status" value="${orderViewDto.get(0).pay_status}">
+	<form action="" method="post">
 		<div class="total">
-			<p id="p">취소 신청</p>
-			
+			<p id="p">교환 신청</p>
+
 			<section class="myorder_list">
 				<ul class="my_orders">
 					<li>
@@ -367,7 +366,8 @@ dt {
 							<tbody>
 								<c:forEach var="orderViewDto" items="${orderViewDto}">
 									<tr class="b1">
-										<td><input type="checkbox" name="order_id" value="${orderViewDto.order_id}"> </td>
+										<td><input type="checkbox" name="order_id"
+											value="${orderViewDto.order_id}"></td>
 										<td class="img"><a href="#"> <img
 												src="http://placehold.it/140"></a></td>
 										<td id="td-d"><a href="#">
@@ -375,16 +375,15 @@ dt {
 										</a> <a href="#">
 												<div>${orderViewDto.product_name}</div>
 										</a>
-											<div id="">
+											<div>
 												<fmt:formatNumber value="${orderViewDto.price}"
 													pattern="#,###.##" />
 											</div>
 											<div>${orderViewDto.sizes}</div>
 											<div>${orderViewDto.quantity}개</div></td>
-										<td class="text-center" id="total"><fmt:formatNumber
+										<td class="text-center"><fmt:formatNumber
 												value="${orderViewDto.total_price}" pattern="#,###.##" /></td>
-										<td>${orderViewDto.pay_status }
-										</td>
+										<td>${orderViewDto.t_status }</td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -392,35 +391,23 @@ dt {
 					</li>
 				</ul>
 			</section>
-			<p id="p">주문 취소 결제 정보</p>
-			<table class="payinfo">
-				<tr class="a2">
-					<th>결제수단 : ${orderViewDto.get(0).pay_type }</th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-					<th></th>
-				</tr>
-				<tr class="b2">
-					<td><h3 id="order_price">0</h3>
-						<p>주문 금액</p></td>
-					<td><span id="span1">+</sapn></td>
-					<td><h3>0</h3>
-						<p>배송비</p></td>
-					<td><sapn id="span1">-</sapn></td>
-					<td><h3>0</h3>
-						<p>마일리지 사용</p></td>
-					<td><sapn id="span1">=</sapn></td>
-					<td><h3 id="total_price">0</h3>
-						<p>총 환불 금액</p></td>
-				</tr>
-			</table>
+			<p id="p">교환 반송 정보</p>
+			<ul class="dot_list">
+				<li class="tc_3">‘배송 받은 택배사로 직접 신청후 착불 발송’ 선택시 반드시 배송 받은 택배사에
+					연락하여 착불 반 신청을 직접 하셔야 합니다.</li>
+				<li class="tc_3">상품불량으로 인한 교환이 아닌 경우, 재배송비 금액이 포함됩니다.</li>
+				<li class="tc_3 hide">상품불량으로 인한 교환이 아닌 경우, 재배송비를 포함한 금액을 동봉해
+					주셔야 합니다. 미 동봉 시 배송비 입금 확인 후 배송이 시작됩니다.</li>
+				<li class="tc_8">교환 배송비가 발생하는 경우 교환 택배 내 배송비를 동봉 해야하며, 미 동봉 시
+					배송비 입금 확인 후 교환 처리가 시작됩니다.</li>
+				<li class="tc_8">최초 배송비가 무료인 경우에도 교환 혹은 환불 진행 시 추가 배송비가 발생될 수
+					있습니다.</li>
+			</ul>
 		</div>
 		<div class="btndiv">
-			<a href="${pageContext.request.contextPath}/"><button type="button" class="c_btn white">취소</button></a>
-			<a href="#"><button class="c_btn">취소 신청</button></a>
+			<a href="${pageContext.request.contextPath}/"><button
+					type="button" class="c_btn white">취소</button></a> <a href="#"><button
+					class="c_btn">교환 신청</button></a>
 		</div>
 	</form>
 </body>

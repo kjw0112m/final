@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<title>주문배송조회</title>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -336,7 +335,7 @@ dt {
 	</div>
 
 	<div class="total">
-		<p id="p">주문 배송 조회</p>
+		<p id="p">취소/교환/반품/환불</p>
 		<form action="">
 			<input name="page" type="hidden">
 			<table class="table1">
@@ -355,8 +354,7 @@ dt {
 		<section class="myorder_list">
 			<ul class="my_orders">
 				<c:forEach var="myOrder" items="${myOrder}">
-					<li><a href="detail/${myOrder.team}" class="go_detail">상세
-							내역</a>
+					<li>
 						<dl class="order_info dis_f tc_3">
 							<dt>주문일</dt>
 							<dd class="eng">${myOrder.getDate()}</dd>
@@ -376,52 +374,26 @@ dt {
 							</thead>
 							<tbody>
 								<c:forEach var="orderViewDto" items="${myOrder.list}">
-									<tr class="b1">
-										<td class="img"><a href="#"> <img
-												src="http://placehold.it/140"></a></td>
-										<td id="td-d"><a href="#">
-												<div>${orderViewDto.seller_id}</div>
-										</a> <a href="#">
-												<div>${orderViewDto.product_name}</div>
-										</a>
-											<div>
-												<fmt:formatNumber value="${orderViewDto.price}"
-													pattern="#,###.##" />
-											</div>
-											<div>${orderViewDto.sizes}</div>
-											<div>${orderViewDto.quantity}개</div></td>
-										<td class="text-center"><fmt:formatNumber
-												value="${orderViewDto.total_price}" pattern="#,###.##" /></td>
-										<td><c:choose>
-												<c:when test="${orderViewDto.cs_status != null }">
-													<div>${orderViewDto.cs_status }</div>
-												</c:when>
-												<c:when
-													test="${orderViewDto.t_status == '배송중' or orderViewDto.t_status == '배송대기'}">
-													배송중
-													<div>
-														<a
-															href="${pageContext.request.contextPath}/transport/tracking?t_invoice=${myOrder.t_invoice}&t_id=${myOrder.t_id}"
-															style="color: #55a0ff !important" class="tracking"
-															onclick="window.open(this.href,'','width=900,height=700,left=100,top=50'); return false;">[${myOrder.t_invoice}]
-															</a>
-													</div>
-												</c:when>
-												<c:when test="${orderViewDto.t_status == '배송완료'}">
-													<div>
-														<a href="#" style="color: #55a0ff !important">구매확정 ></a><br>
-														<a href="${pageContext.request.contextPath}/orders/exchange/${myOrder.team}" style="color: red !important">[교환]</a> / <a
-															href="${pageContext.request.contextPath}/orders/return/${myOrder.team}" style="color: red !important">[반품]</a>
-													</div>
-												</c:when>
-												<c:otherwise>
-													<div>${orderViewDto.pay_status }</div>
-													<a
-														href="${pageContext.request.contextPath}/orders/cancel/${myOrder.team}"
-														style="color: red !important">[취소]</a>
-												</c:otherwise>
-											</c:choose></td>
-									</tr>
+									<c:if test="${orderViewDto.cs_status != null }">
+										<tr class="b1">
+											<td class="img"><a href="#"> <img
+													src="http://placehold.it/140"></a></td>
+											<td id="td-d"><a href="#">
+													<div>${orderViewDto.seller_id}</div>
+											</a> <a href="#">
+													<div>${orderViewDto.product_name}</div>
+											</a>
+												<div>
+													<fmt:formatNumber value="${orderViewDto.price}"
+														pattern="#,###.##" />
+												</div>
+												<div>${orderViewDto.sizes}</div>
+												<div>${orderViewDto.quantity}개</div></td>
+											<td class="text-center"><fmt:formatNumber
+													value="${orderViewDto.total_price}" pattern="#,###.##" /></td>
+											<td>${orderViewDto.cs_status }</td>
+										</tr>
+									</c:if>
 								</c:forEach>
 							</tbody>
 						</table></li>

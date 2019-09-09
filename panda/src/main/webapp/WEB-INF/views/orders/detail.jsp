@@ -253,21 +253,41 @@ dt {
 											<div>${orderViewDto.quantity}개</div></td>
 										<td class="text-center"><fmt:formatNumber
 												value="${orderViewDto.total_price}" pattern="#,###.##" /></td>
-										<td>${orderViewDto.pay_status }
-											<p>
+										<td>
+											<div>
 												<c:choose>
+													<c:when test="${orderViewDto.cs_status != null }">
+														<div>${orderViewDto.cs_status }</div>
+													</c:when>
 													<c:when
-														test="${orderViewDto.t_status=='배송중' or orderViewDto.t_status == '배송완료'}">
-														<a href="#">[교환 및 환불]</a>
-														<c:if test="${orderViewDto.t_status=='배송중'}">
-															<a href="#">[배송조회]</a>
-														</c:if>
+														test="${orderViewDto.t_status == '배송중' or orderViewDto.t_status == '배송대기'}">
+													배송중
+													<div>
+															<a
+																href="${pageContext.request.contextPath}/transport/tracking?t_invoice=${myOrder.t_invoice}&t_id=${myOrder.t_id}"
+																style="color: #55a0ff !important" class="tracking"
+																onclick="window.open(this.href,'','width=900,height=700,left=100,top=50'); return false;">[${myOrder.t_invoice}]
+															</a>
+														</div>
+													</c:when>
+													<c:when test="${orderViewDto.t_status == '배송완료'}">
+														<div>
+															<a href="#" style="color: #55a0ff !important">구매확정 ></a><br>
+															<a
+																href="${pageContext.request.contextPath}/orders/exchange/${myOrder.team}"
+																style="color: red !important">[교환]</a> / <a
+																href="${pageContext.request.contextPath}/orders/return/${myOrder.team}"
+																style="color: red !important">[반품]</a>
+														</div>
 													</c:when>
 													<c:otherwise>
-														<a href="#">[취소]</a>
+														<div>${orderViewDto.pay_status }</div>
+														<a
+															href="${pageContext.request.contextPath}/orders/cancel/${myOrder.team}"
+															style="color: red !important">[취소]</a>
 													</c:otherwise>
 												</c:choose>
-											</p>
+											</div>
 										</td>
 									</tr>
 								</c:forEach>
@@ -324,8 +344,11 @@ dt {
 	</div>
 
 	<div class="btndiv">
-		<a href="${pageContext.request.contextPath}/one/one_List"><button class="btn1">1:1문의</button></a> <a href="cancel"><button
-				class="btn2">전체취소</button></a> <a href="${pageContext.request.contextPath}/orders/list"><button class="btn2">목록</button></a>
+		<a href="${pageContext.request.contextPath}/one/one_List"><button
+				class="btn1">1:1문의</button></a> <a href="cancel"><button
+				class="btn2">전체취소</button></a> <a
+			href="${pageContext.request.contextPath}/orders/list"><button
+				class="btn2">목록</button></a>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

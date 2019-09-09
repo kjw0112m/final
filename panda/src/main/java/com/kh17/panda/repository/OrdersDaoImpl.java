@@ -150,4 +150,19 @@ public class OrdersDaoImpl implements OrdersDao {
 		sqlSession.update("order.detach", order_id);
 	}
 
+	@Override
+	public int statCount(OrderViewDto orderViewDto) {
+		return sqlSession.selectOne("order.myStatCount", orderViewDto);
+	}
+
+	@Override
+	public List<OrderListVO> statList(OrderViewDto orderViewDto, int start, int end) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("dto", orderViewDto);
+		map.put("start", start);
+		map.put("end", end);
+		
+		return sqlSession.selectList("order.myStat", map);
+	}
+
 }
