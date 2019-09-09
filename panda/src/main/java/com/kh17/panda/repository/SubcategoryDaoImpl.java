@@ -29,5 +29,15 @@ public class SubcategoryDaoImpl implements SubcategoryDao{
 		return sqlSession.selectOne("subcategory.getDto", sub_category_id);
 	}
 
+	@Override
+	public List<SubcategoryDto> list(int category_id) {
+		return sqlSession.selectList("subcategory.sclist", category_id);
+	}
+
+	@Override
+	public int getCg(int sub_category_id) {
+		return sqlSession.selectOne("subcategory.getcg", sub_category_id);
+	}
+
 
 }

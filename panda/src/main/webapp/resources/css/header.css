@@ -1,4 +1,7 @@
 @charset "UTF-8";
+img{
+	display: block;
+}
 
 body, html {
     height: 100%;

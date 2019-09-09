@@ -15,5 +15,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getDto" parameterType="int" resultType="subcategoryDto">
 		select * from sub_category where id = #{sub_category_id}
 	</select>
+	
+	<select id="sclist" parameterType="int" resultType="subcategoryDto">
+		select * from sub_category where category_id = #{category_id}
+	</select>
+	
+	<select id="getcg" parameterType="int" resultType="int">
+		select category_id from sub_category where id = #{sub_category_id}
+	</select>
 
 </mapper>

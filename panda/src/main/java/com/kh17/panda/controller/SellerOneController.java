@@ -78,7 +78,7 @@ public class SellerOneController {
 	
 	@RequestMapping("/saveOne")
 	public String saveOne(OneDto oneDto, Model model, HttpSession session, @RequestParam(required = false, defaultValue = "NEW") String mode) {
-		oneDto.setMemberid(session.getAttribute("ssid").toString());
+		oneDto.setMemberid(session.getAttribute("aid").toString());
 		
 		if("NEW".equals(mode)) {
 			oneDao.insertOne(oneDto);

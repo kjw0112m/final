@@ -10,12 +10,23 @@
 	href="${pageContext.request.contextPath}/css/common2.css">
 
 
+<jsp:include page="/WEB-INF/views/notice/boardh.jsp"></jsp:include>
+
+
+
 <a  href="${pageContext.request.contextPath}/notice/noticeList">공지사항<i id=gi></i></a>
 &&&
 <a  href="${pageContext.request.contextPath}/board/listOne">1:1 문의 <i id=gi></i></a>
 &&&
 <a  href="${pageContext.request.contextPath}/review/reviewComment">상품후기 <i id=gi></i></a>
 <!-- 자바스크립트를 이용하여 페이지 이동을 처리 -->
+
+
+<div id="ha2">
+<h2 >1:1문의 </h2>
+</div>
+
+
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
 	$(function(){
@@ -42,6 +53,8 @@
 	
 </script>
 
+
+<div id="ha2">
 <form class="form" action="oneList" method="get">
 <div style="margin-left: 800px; border: 0px;">
 <input type="hidden"  name="type" value="title+content"/>
@@ -50,7 +63,7 @@
 <input type="submit" value="검색">
 </div>
 </form>
-
+</div>
 
 <br>
 
@@ -166,6 +179,8 @@
 </table>
 
 <!-- 네비게이션 + 검색창 -->
+<div id="ha2"><!--가운데 정렬   -->
+
 
 <div class="empty1"></div>
 
@@ -200,12 +215,12 @@
 	</c:forEach>
 
 
-<!--  
+
 
 	<%-- 다음 페이지 링크(pno + 1) --%>
 	<%-- <c:if test="${아닌 현재페이지 == 전체페이지 수}"> --%>
 	  <c:if test="${not (page eq pageCount)}"> 
-		<li><a href="noticeList?page=${page + 1}">&gt;</a></li>
+		<li><a href="oneList?page=${page + 1}">&gt;</a></li>
 	  </c:if> 
 <%-- 	 <p> ${pageCount }   전체페이지 test 찍어보기 </p> --%>
 	
@@ -214,10 +229,11 @@
 		<li><a href="oneList?page=${endBlock }">&gt;&gt;</a></li>
 	</c:if> 
 	
--->	
+
 	
 </ul>
 
+</div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 

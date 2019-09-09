@@ -18,10 +18,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="count" parameterType="map" resultType="int">
-		select count(*) from product_subcategory
+		<![CDATA[
+		select count(*) from product_subcategory where
+		]]>	
 			<if test= "type != null and keyword != null">
-			where ${type} like '%' || #{keyword} || '%'
+			${type} like '%' || #{keyword} || '%' and
 			</if>
+		<![CDATA[	
+		seller_id = #{seller_id}
+		]]>	
 	</select>
 	
 	<select id="search" parameterType="map" resultType="productSubcategoryDto">
