@@ -78,7 +78,7 @@ public class SellerOneController {
 	
 	@RequestMapping("/saveOne")
 	public String saveOne(OneDto oneDto, Model model, HttpSession session, @RequestParam(required = false, defaultValue = "NEW") String mode) {
-		oneDto.setMemberid(session.getAttribute("ssid").toString());
+		oneDto.setMemberid(session.getAttribute("aid").toString());
 		
 		if("NEW".equals(mode)) {
 			oneDao.insertOne(oneDto);
@@ -102,7 +102,7 @@ public class SellerOneController {
 	
 	@RequestMapping("/saveComment")
 	public String saveComment(OneDto oneDto, Model model, HttpSession session) {
-		oneDto.setOnecommentuser(session.getAttribute("ssid").toString());
+		oneDto.setOnecommentuser(session.getAttribute("aid").toString());
 		oneDao.updateComment(oneDto);
 		
 		return oneList(oneDto, model, null, null, 1);

@@ -9,6 +9,10 @@
 	href="${pageContext.request.contextPath}/css/common2.css">
 
 
+<jsp:include page="/WEB-INF/views/notice/boardh.jsp"></jsp:include>
+
+
+
 <!-- 공지사항 시작 -->
 
 
@@ -18,6 +22,11 @@
 &&&
 <a  href="${pageContext.request.contextPath}/review/reviewComment">상품후기 <i id=gi></i></a>
 
+<div id="ha2">
+<h2 >공지사항 </h2>
+</div>
+
+<div id="ha3">
 <form class="form" action="noticeList" method="get">
 <div style="margin-left: 800px; border: 0px;">
 <input type="hidden"  name="type" value="title+content"/>
@@ -25,7 +34,7 @@
 <input type="submit" value="검색">
 </div>
 </form>
-
+</div>
 
 
 
@@ -80,7 +89,7 @@
 	<tbody>
 		<c:forEach var="list" items="${list}" >
 			<tr>
-				<td align="center">${noticeDto.rn}</td>
+				<td align="center">${list.rn}</td>
 				<td align="left"><a href="${pageContext.request.contextPath}/notice/noticeEdit?mode=EDIT&id=${list.id}">${list.title}</a></td>
 				<td align="center">${list.createUser}</td>
 				<td align="center">${list.createdate}</td>
@@ -101,9 +110,14 @@
 	</c:if>
 </table>
 
+
+
 <!-- 네비게이션 + 검색창 -->
 
-<div class="empty1"></div>
+<div id="ha2">  <!--가운데 정렬  -->
+
+
+<div class="empty1" ></div>
 
 <form class="form" action="noticeList" method="get">
 <input type="hidden" name="page" value="1">
@@ -148,5 +162,8 @@
 	</c:if> 
 </ul>
 <!-- 공지사항 끝 -->
+
+
+</div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>    
