@@ -280,6 +280,8 @@ $(function() {
 
 	// 송장번호 입력
 	var idAry = [];
+	var notIdAry = [];
+	var getTeam;
 
 	$('.btnInvoice').click(function() {
 		var t_id = $(this).prev().prev();
@@ -333,6 +335,10 @@ $(function() {
 			if ($(this).is(':checked')) {
 				idAry.push($(this).attr('order_id'));
 			}
+			else{
+				notIdAry.push($(this).attr('order_id'));
+			}
+			getTeam = $(this).val();
 		});
 		jQuery.ajaxSettings.traditional = true;
 		$.ajax({
@@ -340,7 +346,9 @@ $(function() {
 			type : "POST",
 			dataType : "text",
 			data : {
-				idAry : idAry
+				idAry : idAry,
+				notIdAry: notIdAry,
+				getTeam: getTeam
 			},
 			success : function(resp) {
 				location.reload();

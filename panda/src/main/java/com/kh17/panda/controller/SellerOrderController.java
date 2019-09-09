@@ -1,5 +1,6 @@
 package com.kh17.panda.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -434,9 +435,35 @@ public class SellerOrderController {
 			ordersDao.t_change(ordersDto);
 		}
 	}
-
+	
+//	public void detach(String[] idAry,  String[] notIdAry, String getTeam) {
+//		Arrays.sort(idAry);
+//		Arrays.sort(notIdAry);
+//		int dCount = 0;
+//		String detachId = null;
+//		for (String order_id : idAry) {
+//			if(idAry.length==1 && order_id.equals(getTeam)) {
+//				for(String id : notIdAry) {
+//					if(dCount==0) {
+//						detachId = id;
+//					}
+//					ordersDao.detach(detachId);
+//					dCount++;
+//				}
+//			}
+//			else if(idAry.length>1 && order_id.equals(getTeam)) {
+//				if(dCount==0) {
+//					detachId = order_id;
+//				}
+//				ordersDao.detach(detachId);
+//				dCount++;
+//			}
+//		}
+//	}
+	
 	@PostMapping("/delivery/ready/detach")
-	public void detach(@RequestParam String[] idAry, HttpServletResponse resp) {
+	public void detach(@RequestParam String[] idAry, @RequestParam String[] notIdAry, @RequestParam String getTeam, HttpServletResponse resp) {
+		Arrays.sort(idAry);
 		for (String order_id : idAry) {
 			ordersDao.detach(order_id);
 		}
