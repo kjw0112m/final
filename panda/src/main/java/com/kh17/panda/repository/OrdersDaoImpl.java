@@ -140,7 +140,7 @@ public class OrdersDaoImpl implements OrdersDao {
 		sqlSession.update("order.cs_status", ordersDto);
 	}
 
-	@Override
+	@Override 
 	public int deliveryCount(OrderViewDto orderViewDto) {
 		return sqlSession.selectOne("order.status_count", orderViewDto);
 	}
