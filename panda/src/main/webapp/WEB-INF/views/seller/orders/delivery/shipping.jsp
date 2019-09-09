@@ -32,7 +32,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/js/admin/post_search.js"></script>
 
-<form action="delivery" method="post" id="orderSearchForm">
+<form action="" method="get" id="orderSearchForm">
 	<div id="content">
 		<div class="head_tit">
 			<h1>배송 관리</h1>

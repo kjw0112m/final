@@ -42,7 +42,7 @@ public class SellerOrderController {
 	public String list(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
 			Model model, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "10") int rows,HttpSession session,
 			@RequestParam(required = false) String[] csStatus, @RequestParam(required = false) String[] tStatus) {
-		if (session.getAttribute("ssid") != null) {
+		if (session.getAttribute("aid") != null) {
 			int pagesize = rows;
 			int start = pagesize * page - (pagesize - 1);
 			int end = pagesize * page;
@@ -102,12 +102,12 @@ public class SellerOrderController {
 	@GetMapping("/delivery/before_deposit")
 	public String delivery(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
 			Model model, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
-		String ssid = (String) session.getAttribute("ssid");
+		String aid = (String) session.getAttribute("aid");
 		orderViewDto.setPay_status("입금전");
 
 		deTab(model);
 
-		if (ssid != null) {
+		if (aid != null) {
 			int pagesize = rows;
 			int start = pagesize * page - (pagesize - 1);
 			int end = pagesize * page;
@@ -157,7 +157,7 @@ public class SellerOrderController {
 	@GetMapping("/delivery/ready")
 	public String ready(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
 			Model model, @RequestParam(required = false, defaultValue = "1") int page,@RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
-		String sid = (String) session.getAttribute("ssid");
+		String sid = (String) session.getAttribute("aid");
 		orderViewDto.setT_status("배송준비중");
 
 		deTab(model);
@@ -216,7 +216,7 @@ public class SellerOrderController {
 	@GetMapping("/delivery/waiting")
 	public String wating(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
 			Model model, @RequestParam(required = false, defaultValue = "1") int page,@RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
-		String sid = (String) session.getAttribute("ssid");
+		String sid = (String) session.getAttribute("aid");
 		orderViewDto.setT_status("배송대기");
 		
 		deTab(model);
@@ -275,7 +275,7 @@ public class SellerOrderController {
 	@GetMapping("/delivery/shipping")
 	public String shipping(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
 			Model model, @RequestParam(required = false, defaultValue = "1") int page,@RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
-		String sid = (String) session.getAttribute("ssid");
+		String sid = (String) session.getAttribute("aid");
 		orderViewDto.setT_status("배송중");
 		
 		deTab(model);
@@ -334,7 +334,7 @@ public class SellerOrderController {
 	@GetMapping("/delivery/complete")
 	public String complete(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
 			Model model, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "10") int rows,HttpSession session) {
-		String sid = (String) session.getAttribute("ssid");
+		String sid = (String) session.getAttribute("aid");
 		orderViewDto.setT_status("배송완료");
 		
 		deTab(model);

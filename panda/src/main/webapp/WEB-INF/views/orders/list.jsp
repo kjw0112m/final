@@ -390,27 +390,26 @@ dt {
 												value="${orderViewDto.total_price}" pattern="#,###.##" /></td>
 										<td><c:choose>
 												<c:when test="${orderViewDto.cs_status eq null}">
-										${orderViewDto.pay_status }
-										</c:when>
+													<div>${orderViewDto.pay_status }</div>
+												</c:when>
 												<c:otherwise>
-										${orderViewDto.cs_status }
-										</c:otherwise>
-											</c:choose> <c:if test="${orderViewDto.cs_status eq null}">
-												<p>
-													<c:choose>
-														<c:when
-															test="${orderViewDto.t_status=='배송중' or orderViewDto.t_status == '배송완료'}">
-															<a href="#">[교환 및 환불]</a>
-															<c:if test="${orderViewDto.t_status=='배송중'}">
-																<a href="#">[배송조회]</a>
-															</c:if>
-														</c:when>
-														<c:otherwise>
-															<a href="${pageContext.request.contextPath}/orders/cancel/team">[취소]</a>
-														</c:otherwise>
-													</c:choose>
-												</p>
-											</c:if></td>
+													<div>${orderViewDto.cs_status }</div>
+												</c:otherwise>
+											</c:choose> <c:choose>
+												<c:when test="${orderViewDto.t_invoice != null}">
+													<a
+														href="${pageContext.request.contextPath}/transport/tracking?t_invoice=${myOrder.t_invoice}&t_id=${myOrder.t_id}"
+														style="color: #55a0ff !important" class="tracking"
+														onclick="window.open(this.href,'','width=900,height=700,left=100,top=50'); return false;">배송조회
+														></a>
+													<br>
+													<a href="#">[교환 및 반품]</a>
+												</c:when>
+												<c:otherwise>
+													<a
+														href="${pageContext.request.contextPath}/orders/cancel/${myOrder.team}">[취소]</a>
+												</c:otherwise>
+											</c:choose></td>
 									</tr>
 								</c:forEach>
 							</tbody>
@@ -421,7 +420,7 @@ dt {
 
 		<div class="paginate">
 			<ol>
-				<c:if test="${(not (page eq 1))&& not empty page && page>=6}">
+				<c:if test="${(not (page eq 1))&& not empty page && page>6}">
 					<li><a href="#" class="page_block">&lt;&lt;</a></li>
 				</c:if>
 				<c:if test="${not (page eq 1) && not empty page}">
