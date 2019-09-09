@@ -79,8 +79,7 @@ public class OrdersController {
 		if (ordersDto.getPay_type().equals("카카오페이")) {
 			ordersDto.setPay_status("결제완료");
 			ordersDto.setT_status("배송준비중");
-		}
-		else if (ordersDto.getPay_type().equals("무통장입금"))
+		} else if (ordersDto.getPay_type().equals("무통장입금"))
 			ordersDto.setPay_status("입금전");
 		ordersDto.setRe_phone(re_phone.toString());
 		ordersDto.setRe_addr("[" + orderAddressVO.getPost_code() + "]" + orderAddressVO.getBasic_addr()
@@ -159,18 +158,18 @@ public class OrdersController {
 		if (id != null) {
 			List<OrderViewDto> list = ordersDao.list(team);
 			int price = 0;
-			for(OrderViewDto dto : list) {
-				price+=dto.getTotal_price();
+			for (OrderViewDto dto : list) {
+				price += dto.getTotal_price();
 			}
-			
+
 			model.addAttribute("price", price);
 			model.addAttribute("orderViewDto", list);
 		}
 		return "orders/detail";
 	}
 
-	@GetMapping("/cancel")
-	public String cancel(@ModelAttribute OrderViewDto orderViewDto, RedirectAttributes model,
+	@GetMapping("/csList")
+	public String csList(@ModelAttribute OrderViewDto orderViewDto, RedirectAttributes model,
 			@RequestParam(required = false, defaultValue = "1") int page) {
 		String cs_status = null;
 		String pay_status = orderViewDto.getPay_status();
@@ -186,6 +185,36 @@ public class OrdersController {
 
 		model.addAttribute("orderViewDto", orderViewDto);
 		model.addAttribute("page", page);
-		return "redirect:list";
+		return "redirect:csList";
+	}
+
+	@GetMapping("/cancel/{team}")
+	public String cancel(@PathVariable String team, Model model, HttpSession session) {
+		String id = (String) session.getAttribute("sid");
+
+		if (id != null) {
+			List<OrderViewDto> list = ordersDao.list(team);
+			int price = 0;
+			for (OrderViewDto dto : list) {
+				price += dto.getTotal_price();
+			}
+
+			model.addAttribute("price", price);
+			model.addAttribute("orderViewDto", list);
+		}
+		return "orders/cancel";
+	}
+	
+	@PostMapping("/cancel/{order_id}")
+	public String cancel(@PathVariable String[] order_id, Model model, HttpSession session) {
+		String id = (String) session.getAttribute("sid");
+		if (id != null) {
+			for(String order : order_id) {
+				ordersDao.cs_change(OrdersDto.builder().cs_status("취소").order_id(order).build());
+				ordersDao.t_change(OrdersDto.builder().t_status("").order_id(order).build());
+				ordersDao.pay_change(OrdersDto.builder().pay_status("").order_id(order).build());
+			}
+		}
+		return "orders/cancel";
 	}
 }

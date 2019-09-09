@@ -180,7 +180,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	<update id="cs_status" parameterType="ordersDto">
 		update orders set
-		<if test="t_status!=null">
+		<if test="cs_status!=null">
 			cs_status = #{cs_status}
 		</if>
 		where 1=1
@@ -234,7 +234,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="myOrder" resultMap="orderListVO" parameterType="map">
 		select * from ( 
 		<![CDATA[ 
-		select rownum rn, O.* from( select distinct team, order_dt, member_name from order_view 
+		select rownum rn, O.* from( select distinct team, order_dt, member_name, pay_type, pay_status, re_name, re_phone, re_addr, t_invoice, t_id from order_view 
 		]]>
 		where 1=1
 		<if test="dto.member_id != null">

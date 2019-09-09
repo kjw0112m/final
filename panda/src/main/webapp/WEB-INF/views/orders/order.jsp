@@ -96,12 +96,12 @@
 		}).open();
 	}
 </script>
-  <script type="text/javascript">
+<script type="text/javascript">
+	window.history.forward();
+	function noBack() {
 		window.history.forward();
-		function noBack() {
-			window.history.forward();
-		}
-         </script>
+	}
+</script>
 <style>
 * {
 	box-sizing: border-box;
@@ -178,7 +178,7 @@
 	border-style: solid;
 	margin: auto;
 	width: 100%;
-	height: 300;
+	height: 300px;
 }
 
 .table_new th, .table_new td {
@@ -218,11 +218,12 @@
 }
 
 .clearfix::after {
-	content: "";
-	clear: both;
+	content: ""; clear : both;
 	display: table;
+	clear: both;
 }
 
+}
 a {
 	text-decoration: none;
 	color: black;
@@ -238,7 +239,6 @@ a {
 }
 
 .intotal {
-	float: left;
 	width: 80%;
 	margin-bottom: 100px;
 }
@@ -502,9 +502,7 @@ a {
 						style="border: #bbb solid 1px">
 						<p>카카오 결제</p> <input type="radio" id="kakao_pay" name="pay_type"
 						value="카카오페이">
-					</label> 
-					
-					<label for="deposit" class="pay box"
+					</label> <label for="deposit" class="pay box"
 						style="border: #bbb solid 1px">
 						<p>무통장입금</p> <input type="radio" id="deposit" name="pay_type"
 						value="무통장입금">

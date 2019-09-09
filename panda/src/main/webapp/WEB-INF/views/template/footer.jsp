@@ -2,12 +2,12 @@
 	pageEncoding="UTF-8"%>
 <style>
 footer {
-  
+	
 }
 </style>
 
 <footer class="site_footer layout_full lc_d">
-<hr> 
+	<hr>
 	<div class="inner miw1180 clear">
 		<div class="left">
 			<a href="#" class="tel tc_3">8080-8080</a>
