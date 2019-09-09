@@ -11,6 +11,10 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/common2.css">
 
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/css/admin/a.css">
+
+
 
 <!-- 자바스크립트를 이용하여 페이지 이동을 처리 -->
 <script src="https://code.jquery.com/jquery-latest.js"></script>
@@ -73,12 +77,41 @@
 											<option value="title" ${type == 'title'?'selected':''}>제목</option>
 											<option value="content" ${type == 'content'?'selected':''}>내용</option>
 											<option value="title+content" ${type == 'title+content'?'selected':''}>제목+내용</option>
+											
+											
+											
+											<option value="product" ${type == 'product'?'selected':''}>카테고리</option>
+											<option value="state" ${type == 'state'?'selected':''}>답변상태</option>
+																						
 										</select>
+		
 										<input type="search" name="keyword" placeholder="검색어"
 											required value="${keyword}" class="fText searchBox" style="width: 300px;">
+										
 									</div>
 								</div>
 					</tbody>
+					
+					
+					
+					
+					<tbody>
+						<tr>
+							<th scope="row">답변상태</th>
+							<td colspan="3">
+								<div id="mainSearch">
+									<div>
+																			
+																					
+								<a href="${pageContext.request.contextPath}/seller/one/oneList?type=state&keyword=Y&page=" class="btnDate" date-interval="1"><span>YES</span></a>
+								<a href="${pageContext.request.contextPath}/seller/one/oneList?type=state&keyword=N&page=" class="btnDate" date-interval="1"><span>NO</span></a>
+								<a href="${pageContext.request.contextPath}/seller/one/oneList" class="btnDate" date-interval="1"><span>ALL</span></a>	
+									</div>
+								</div>
+					</tbody>
+
+
+					
 				</table>
 			</div>
 			<div class="form_button">
