@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -75,9 +76,10 @@ public class OrdersController {
 
 		// 기본 DTO 설정
 		ordersDto.setMember_id((String) session.getAttribute("sid"));
-		if (ordersDto.getPay_type().equals("카카오페이"))
+		if (ordersDto.getPay_type().equals("카카오페이")) {
 			ordersDto.setPay_status("결제완료");
-		else if (ordersDto.getPay_type().equals("무통장입금"))
+			ordersDto.setT_status("배송준비중");
+		} else if (ordersDto.getPay_type().equals("무통장입금"))
 			ordersDto.setPay_status("입금전");
 		ordersDto.setRe_phone(re_phone.toString());
 		ordersDto.setRe_addr("[" + orderAddressVO.getPost_code() + "]" + orderAddressVO.getBasic_addr()
@@ -95,18 +97,18 @@ public class OrdersController {
 				ordersDto.setTotal_price(cartViewDto.getQuantity() * cartViewDto.getProduct_price());
 				ordersDto.setSizes(cartViewDto.getSizes());
 				ordersDto.setProduct_id(cartViewDto.getProduct_id());
-				
+
 				if (count > 0) {
 					ordersDto.setTeam(team);
 				}
-				
+
 				ordersDao.insert(ordersDto);
 				if (count == 0) {
 					team = ordersDao.getOrderId(ordersDto.getId());
 				}
 				count++;
 			}
-		} 
+		}
 //		상품 상세화면에서 단일 주문할 경우
 		else {
 			ordersDto.setId(ordersDao.seq());
@@ -122,7 +124,7 @@ public class OrdersController {
 	@GetMapping("/list")
 	public String list(@ModelAttribute OrderViewDto orderViewDto, Model model,
 			@RequestParam(required = false, defaultValue = "1") int page, HttpSession session) {
-		
+
 		String member_id = (String) session.getAttribute("sid");
 		orderViewDto.setMember_id(member_id);
 		int pagesize = 5;
@@ -132,26 +134,42 @@ public class OrdersController {
 		int blocksize = 10;
 		int startBlock = (page - 1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
-		
 
 		int count = ordersDao.count(orderViewDto);
 		int pageCount = (count - 1) / pagesize + 1;
 		if (endBlock > pageCount) {
 			endBlock = pageCount;
 		}
-		
+
 		List<OrderListVO> list = ordersDao.list(orderViewDto, start, end);
 		model.addAttribute("page", page);
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
 		model.addAttribute("pageCount", pageCount);
 		model.addAttribute("myOrder", list);
-		
+
 		return "orders/list";
 	}
 
-	@GetMapping("/cancel")
-	public String cancel(@ModelAttribute OrderViewDto orderViewDto, RedirectAttributes model,
+	@GetMapping("/detail/{team}")
+	public String detail(@PathVariable String team, Model model, HttpSession session) {
+		String id = (String) session.getAttribute("sid");
+
+		if (id != null) {
+			List<OrderViewDto> list = ordersDao.list(team);
+			int price = 0;
+			for (OrderViewDto dto : list) {
+				price += dto.getTotal_price();
+			}
+
+			model.addAttribute("price", price);
+			model.addAttribute("orderViewDto", list);
+		}
+		return "orders/detail";
+	}
+
+	@GetMapping("/csList")
+	public String csList(@ModelAttribute OrderViewDto orderViewDto, RedirectAttributes model,
 			@RequestParam(required = false, defaultValue = "1") int page) {
 		String cs_status = null;
 		String pay_status = orderViewDto.getPay_status();
@@ -163,10 +181,40 @@ public class OrdersController {
 
 		OrdersDto ordersDto = OrdersDto.builder().cs_status(cs_status).team(orderViewDto.getTeam()).build();
 
-		ordersDao.cancel(ordersDto);
+//		ordersDao.cancel(ordersDto);
 
 		model.addAttribute("orderViewDto", orderViewDto);
 		model.addAttribute("page", page);
-		return "redirect:list";
+		return "redirect:csList";
+	}
+
+	@GetMapping("/cancel/{team}")
+	public String cancel(@PathVariable String team, Model model, HttpSession session) {
+		String id = (String) session.getAttribute("sid");
+
+		if (id != null) {
+			List<OrderViewDto> list = ordersDao.list(team);
+			int price = 0;
+			for (OrderViewDto dto : list) {
+				price += dto.getTotal_price();
+			}
+
+			model.addAttribute("price", price);
+			model.addAttribute("orderViewDto", list);
+		}
+		return "orders/cancel";
+	}
+	
+	@PostMapping("/cancel/{order_id}")
+	public String cancel(@PathVariable String[] order_id, Model model, HttpSession session) {
+		String id = (String) session.getAttribute("sid");
+		if (id != null) {
+			for(String order : order_id) {
+				ordersDao.cs_change(OrdersDto.builder().cs_status("취소").order_id(order).build());
+				ordersDao.t_change(OrdersDto.builder().t_status("").order_id(order).build());
+				ordersDao.pay_change(OrdersDto.builder().pay_status("").order_id(order).build());
+			}
+		}
+		return "orders/cancel";
 	}
 }

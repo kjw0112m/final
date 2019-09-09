@@ -100,7 +100,6 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public List<MemberDto> search(String type, String keyword,int start, int end) {
 		Map<String, Object> param = new HashMap<>();
-		//검색일 때 검색어를 mybatis에 전달
 		if(type != null && keyword != null) {
 			param.put("type", type.replace("+", "||"));
 			param.put("keyword", keyword);
@@ -110,7 +109,7 @@ public class MemberDaoImpl implements MemberDao {
 				
 		return sqlSession.selectList("member.search", param);
 	}
-
+   //회원 수 찾기
 	@Override
 	public int count(String type, String keyword) {
 		Map<String, String> param = new HashMap<>();

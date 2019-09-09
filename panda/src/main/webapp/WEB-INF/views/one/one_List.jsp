@@ -10,27 +10,68 @@
 	href="${pageContext.request.contextPath}/css/common2.css">
 
 
+<jsp:include page="/WEB-INF/views/notice/boardh.jsp"></jsp:include>
+
+
+
 <a  href="${pageContext.request.contextPath}/notice/noticeList">공지사항<i id=gi></i></a>
 &&&
 <a  href="${pageContext.request.contextPath}/board/listOne">1:1 문의 <i id=gi></i></a>
 &&&
 <a  href="${pageContext.request.contextPath}/review/reviewComment">상품후기 <i id=gi></i></a>
+<!-- 자바스크립트를 이용하여 페이지 이동을 처리 -->
 
-<!-- <form class="form" action="list.do" method="get"> -->
-<!-- <div style="margin-left: 600px; border: 0px;"> -->
-<!-- <input type="hidden"  name="type" value="title+content"/> -->
-<!-- <input type="search" name="keyword" placeholder="제목 + 내용" required> -->
 
-<!-- <input type="submit" value="검색"> -->
-<!-- </div> -->
-<!-- </form> -->
+<div id="ha2">
+<h2 >1:1문의 </h2>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script>
+	$(function(){
+		//목표 : 페이지 번호를 누르면 해당하는 번호의 페이지로 이동 처리
+		//			이동은 form을 전송하는 것으로 대체
+		$(".navigator-page").click(function(){
+			var p = $(this).text();
+			move(p);
+		});
+		
+		//이동 함수
+		function move(no){
+			//input[name=page]에 no를 설정한 뒤 form을 전송
+			$("input[name=page]").val(no);
+			$("form").submit();
+		}
+		
+		//select[name=type]인 항목의 값을 선택
+		var type = "${param.type}";
+		if(type){
+			$("select[name=type]").val(type);
+		}
+	});
+	
+</script>
+
+
+<div id="ha2">
+<form class="form" action="oneList" method="get">
+<div style="margin-left: 800px; border: 0px;">
+<input type="hidden"  name="type" value="title+content"/>
+<input type="search" name="keyword" placeholder="제목 + 내용" required>
+
+<input type="submit" value="검색">
+</div>
+</form>
+</div>
 
 <br>
+
 <!-- 표 -->
 <table class="table  table-hover" width="800">
 	<colgroup>
 	<col width="10%">
-	<col width="10%">
+	<col width="20%">
 	<col width="*">
 	<col width="10%">
 	<col width="15%">
@@ -65,7 +106,7 @@
 							배송지연/불만
 						</c:when>
 						<c:when test="${bdto.product eq 2}">
-							컬리패스(무료배송)
+							PANDA(무료배송)
 						</c:when>
 						<c:when test="${bdto.product eq 3}">
 							반품문의
@@ -138,47 +179,61 @@
 </table>
 
 <!-- 네비게이션 + 검색창 -->
+<div id="ha2"><!--가운데 정렬   -->
+
+
+<div class="empty1"></div>
+
+<form class="form" action="oneList" method="get">
+<input type="hidden" name="page" value="1">
+</form>
 
 <div class="empty"></div>
 
-
-
-<div class="empty"></div>
-
-<ul class="navigator">
+<ul class="navigator1">
 	<%-- 이전 구간 링크 --%>
-	<c:if test="${not p.isFirstBlock()}">
-	<li><a href="list.do?${p.getPrevBlock()}">&lt;&lt;</a></li>
+	<%-- <c:if test="시작페이지가 1이 아니면"> --%>
+	<c:if test="${not (page eq 1)}"> <!-- 1과 같으면 숨겨라  -->
+<li><a href="oneList?page=${startBlock}">&lt;&lt;</a></li>
 	</c:if>
 	
-	<%-- 이전 페이지 링크(pno - 1) --%>
-	<c:if test="${not p.isFirstPage()}">
-	<li><a href="list.do?${p.getPrevPage()}">&lt;</a></li>
+	<%-- <c:if test="현재페이지가 1이 아니면"> --%>
+	<c:if test="${not (page eq 1)}">
+	<li><a href="oneList?page=${page - 1}">&lt;</a></li>
 	</c:if>
 	
 	<%-- 페이지 출력 --%>
-	<c:forEach var="i" begin="${p.startBlock}" end="${p.endBlock}">
+	<c:forEach var="i" begin="${startBlock}" end="${endBlock}">
 		<c:choose>
-			<c:when test="${p.isCurrentPage(i)}">
+			<c:when test="${page == i}">
 				<li class="active">${i}</li>
 			</c:when>
 			<c:otherwise>
-				<li><a href="list.do?${p.getPage(i)}">${i}</a></li>
+				<li><a href="#" class="navigator-page">${i}</a></li>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
-	
+
+
+
+
 	<%-- 다음 페이지 링크(pno + 1) --%>
-	<c:if test="${not p.isLastPage()}">
-		<li><a href="list.do?${p.getNextPage()}">&gt;</a></li>
-	</c:if>
+	<%-- <c:if test="${아닌 현재페이지 == 전체페이지 수}"> --%>
+	  <c:if test="${not (page eq pageCount)}"> 
+		<li><a href="oneList?page=${page + 1}">&gt;</a></li>
+	  </c:if> 
+<%-- 	 <p> ${pageCount }   전체페이지 test 찍어보기 </p> --%>
 	
 	<%-- 다음 구간 --%>
-	<c:if test="${not p.isLastBlock()}">
-		<li><a href="list.do?${p.getNextBlock()}">&gt;&gt;</a></li>
-	</c:if>
+	<c:if test="${not (page eq pageCount)}">
+		<li><a href="oneList?page=${endBlock }">&gt;&gt;</a></li>
+	</c:if> 
+	
+
+	
 </ul>
 
+</div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
 

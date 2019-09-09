@@ -172,17 +172,6 @@ public class ProductServiceImpl implements ProductService{
 		productDto.setHit_yn(vo.getHit_yn());
 		productDto.setDisplay_yn(vo.getDisplay_yn());
 		
-//		 			productDto = ProductDto.builder()
-//														.id(vo.getId())
-//														.name(vo.getName())
-//														.price(vo.getPrice())
-//														.sale_yn(vo.getSale_yn())
-//														.hit_yn(vo.getHit_yn())
-//														.display_yn(vo.getDisplay_yn())
-//														.mainfile(vo.getMainfile())
-//														.detailfile(vo.getDetailfile())
-//														.build();
-
 		productDao.edit(productDto);
 
 		//vo에 들어있는 sizes를 분해

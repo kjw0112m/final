@@ -9,6 +9,10 @@
 	href="${pageContext.request.contextPath}/css/common2.css">
 
 
+<jsp:include page="/WEB-INF/views/notice/boardh.jsp"></jsp:include>
+
+
+
 <!-- 공지사항 시작 -->
 
 
@@ -18,15 +22,19 @@
 &&&
 <a  href="${pageContext.request.contextPath}/review/reviewComment">상품후기 <i id=gi></i></a>
 
-<form class="form" action="list.do" method="get">
+<div id="ha2">
+<h2 >공지사항 </h2>
+</div>
+
+<div id="ha3">
+<form class="form" action="noticeList" method="get">
 <div style="margin-left: 800px; border: 0px;">
 <input type="hidden"  name="type" value="title+content"/>
 <input type="search" name="keyword" placeholder="제목 + 내용" required>
-
 <input type="submit" value="검색">
 </div>
 </form>
-
+</div>
 
 
 
@@ -102,9 +110,14 @@
 	</c:if>
 </table>
 
+
+
 <!-- 네비게이션 + 검색창 -->
 
-<div class="empty1"></div>
+<div id="ha2">  <!--가운데 정렬  -->
+
+
+<div class="empty1" ></div>
 
 <form class="form" action="noticeList" method="get">
 <input type="hidden" name="page" value="1">
@@ -141,7 +154,7 @@
 	  <c:if test="${not (page eq pageCount)}"> 
 		<li><a href="noticeList?page=${page + 1}">&gt;</a></li>
 	  </c:if>  
-	 <%-- <p> ${pageCount }   전체페이지 test 찍어보기 </p> --%>
+<%-- 	 <p> ${pageCount }   전체페이지 test 찍어보기 </p> --%>
 	
 	<%-- 다음 구간 --%>
 	<c:if test="${not (page eq pageCount)}">
@@ -149,5 +162,8 @@
 	</c:if> 
 </ul>
 <!-- 공지사항 끝 -->
+
+
+</div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>    

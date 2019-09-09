@@ -12,5 +12,4 @@ public interface ProductDao {
 	void edit(ProductDto productDto);
 	void delete(int id);
 	List<ProductDto> list(String seller_id);
-
 }

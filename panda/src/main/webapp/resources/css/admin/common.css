@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
-html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6,
-	pre, code, form, fieldset, legend, input, textarea, p, blockquote, th,
-	td, img {
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre,
+	code, form, fieldset, legend, input, textarea, p, blockquote, th, td,
+	img {
 	margin: 0;
 	padding: 0;
 }
@@ -360,14 +360,13 @@ input[type="radio"] {
 	height: 22px;
 	margin-left: 5px;
 	vertical-align: -3px;
-/*datepicker 버튼 롤오버 시 손가락 모양 표시*/
+	/*datepicker 버튼 롤오버 시 손가락 모양 표시*/
 	cursor: pointer;
 }
 
 .bc_g {
 	background: #dedede;
 }
-
 
 .form_button {
 	position: relative;
@@ -391,6 +390,21 @@ input[type="radio"] {
 	color: #55a0ff;
 	border-color: #55a0ff;
 	background-color: #fff;
+}
+
+.btnMini{
+	min-width: 84px;
+	height: 26px;
+	padding: 5px;
+	color: #fff;
+	line-height: 34px;
+	border: 1px solid transparent;
+	background-color: #55a0ff;
+	margin-right: 10px;
+}
+
+.invText{
+	margin-bottom: 8px;
 }
 
 /* --------------------------------------------------- 정보 테이블 스타일------------------------------------------------------- */
@@ -613,6 +627,14 @@ input[type="radio"] {
 	text-align: center;
 }
 
+.mBoard .left {
+	text-align: left;
+}
+
+.codeSelect{
+	margin-bottom: 5px;
+}
+
 .w24 {
 	width: 24px;
 }
@@ -621,16 +643,32 @@ input[type="radio"] {
 	width: 50px;
 }
 
+.w180 {
+	width: 180px;
+}
+
+.w160 {
+	width: 160px;
+}
+
+.w220 {
+	width: 220px;
+}
+
 .w120 {
 	width: 120px;
+}
+
+.w140 {
+	width: 140px;
 }
 
 .w105 {
 	width: 105px;
 }
 
-.w95{
-	width:95px;
+.w95 {
+	width: 95px;
 }
 
 .w60 {
@@ -646,20 +684,21 @@ input[type="radio"] {
 }
 
 .paginate {
-    margin: 25px 0 0;
-    text-align: center;
+	margin: 25px 0 0;
+	text-align: center;
 }
 
 .paginate ol, .paginate li {
-    display: inline-block;
-    vertical-align: middle;
-    font-size: 16px;
-    line-height: 16px;
-    padding: 0 1px;
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 16px;
+	line-height: 16px;
+	padding: 0 1px;
 }
 
 .active_page {
 	font-weight: bold;
 	color: #55a0ff;
 }
+
 

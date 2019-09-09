@@ -4,7 +4,9 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
@@ -37,7 +39,7 @@
 	<tx:annotation-driven/>
 	<beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<beans:property name="dataSource" ref="dataSource"></beans:property>
-	</beans:bean>
+	</beans:bean>	
 	
 
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -46,6 +48,42 @@
 		<beans:property name="maxUploadSizePerFile" value="10485760"></beans:property>
 	</beans:bean>
 	
+	<!-- 인터셉터 설정 -->
+	<interceptors>
+		<interceptor> 
+ 			<mapping path="/member/**"/>
+ 			<mapping path="/orders/**"/>
+ 			<mapping path="/cart/**"/>
+ 			<exclude-mapping path="/member/regist"/> 
+ 			<exclude-mapping path="/member/agree"/>
+ 			<exclude-mapping path="/member/login"/> 
+ 			<exclude-mapping path="/member/emailCheck"/>
+ 			<exclude-mapping path="/member/find_id"/>
+ 			<exclude-mapping path="/member/find_pw"/>	
+ 			<exclude-mapping path="/member/new_pw"/>
+ 			<exclude-mapping path="/member/idCheck"/>
+ 			<exclude-mapping path="/member/email_cert_check"/>
+ 			<exclude-mapping path="/member/email_cert"/>
+			<beans:bean class="com.kh17.panda.interceptor.MemebrLoginInterceptor"></beans:bean> 
+ 		</interceptor> 
+ 		
+ 		<interceptor>
+ 			<mapping path="/admin/**"/>
+ 			<mapping path="/seller/**"/>
+ 			<exclude-mapping path="/seller/login"/>
+ 			<exclude-mapping path="/admin/login"/>
+ 			<exclude-mapping path="/seller/regist"/>
+ 			<exclude-mapping path="/seller/find_id"/>
+ 			<exclude-mapping path="/seller/idCheck"/>
+ 			<exclude-mapping path="/seller/find_pw"/>
+ 			<exclude-mapping path="/seller/new_pw"/>
+ 			<exclude-mapping path="/seller/regist"/>
+ 			<exclude-mapping path="/admin/regist"/>
+ 			<beans:bean class="com.kh17.panda.interceptor.SellerLoginInterceptor"></beans:bean> 
+ 		</interceptor>
+	</interceptors>
+	
+
 
 </beans:beans>
 

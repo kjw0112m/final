@@ -4,8 +4,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="productSubcategory">
 	
-	<select id="list" parameterType="String" resultType="productSubcategoryDto">
-		select * from product_subcategory where seller_id = #{seller_id} order by regist_dt desc
+	<select id="list" parameterType="map" resultType="productSubcategoryDto">
+		<![CDATA[
+		select * from(
+			select rownum rn, A.* from (
+				select * from product_subcategory
+		]]>
+		<![CDATA[
+				order by regist_dt desc
+			)A
+		) where seller_id = #{seller_id} and rn >= #{start} and rn <= #{end}
+		]]>
+	</select>
+	
+	<select id="count" parameterType="map" resultType="int">
+		<![CDATA[
+		select count(*) from product_subcategory where
+		]]>	
+			<if test= "type != null and keyword != null">
+			${type} like '%' || #{keyword} || '%' and
+			</if>
+		<![CDATA[	
+		seller_id = #{seller_id}
+		]]>	
+	</select>
+	
+	<select id="search" parameterType="map" resultType="productSubcategoryDto">
+	<![CDATA[
+		select * from(
+			select rownum rn, A.* from (
+				select * from product_subcategory
+		]]>
+				<if test="type != null and keyword != null">
+				where
+					${type} like '%' || #{keyword} || '%'
+				</if>
+		<![CDATA[
+				order by regist_dt desc
+			)A
+		) where seller_id = #{seller_id} and rn >= #{start} and rn <= #{end}
+		]]>
 	</select>
 	
 </mapper>

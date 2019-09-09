@@ -4,16 +4,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="categoryList">
 	
-	<select id="list" parameterType="int" resultType="categoryListDto">
+	<select id="list" parameterType="map" resultType="categoryListDto">
+		<![CDATA[
 		select * from (
-			<![CDATA[
 			select rownum rn, C.* from(
 				select * from category_list where category_id = #{category_id} order by product_regist_dt desc
 			]]>
 				) C 
 		<![CDATA[
-		) where rn > = 1 and rn<=10
+		) where rn > = #{start} and rn <= #{end}
 		]]>
+	</select>
+	
+	<select id="count" parameterType="int" resultType="int">
+		select count(*) from category_list where category_id = #{category_id}
 	</select>
 
 </mapper>

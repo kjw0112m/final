@@ -4,14 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,61 +62,236 @@ public class ProductController {
 	private FilesDao filesDao;
 
 	@GetMapping("/newArrivals")
-	public String newArrivals(Model model) {
-		List<ProductSellerDto> list = productSellerDao.newArrivals();
+	public String newArrivals(
+			Model model,
+			@RequestParam (required = false, defaultValue = "1") int page) {
+		
+		int pagesize = 15;
+		int start = pagesize * page - (pagesize - 1);
+		int end = pagesize * page;
+
+		int blocksize = 10;
+		int startBlock = (page - 1) / blocksize * blocksize + 1;
+		int endBlock = startBlock + (blocksize - 1);
+
+		int count = productSellerDao.count();
+		int pageCount = (count - 1) / pagesize + 1;
+		if (endBlock > pageCount) {
+			endBlock = pageCount;
+		}
+		
+		List<ProductSellerDto> list = productSellerDao.newArrivals(start, end);
 		model.addAttribute("list", list);
+		model.addAttribute("page", page);
+		model.addAttribute("startBlock", startBlock);
+		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
 		return "product/newArrivals";
 	}
 
 	@GetMapping("/sellerList")
-	public String sellers(@RequestParam String seller_id, Model model) {
-		List<ProductSellerDto> list = productSellerDao.sellerList(seller_id);
+	public String sellers(
+			@RequestParam (required = false, defaultValue = "1") int page,
+			@RequestParam String seller_id,
+			Model model) {
+		
+		int pagesize = 8;
+		int start = pagesize * page - (pagesize - 1);
+		int end = pagesize * page;
+
+		int blocksize = 10;
+		int startBlock = (page - 1) / blocksize * blocksize + 1;
+		int endBlock = startBlock + (blocksize - 1);
+
+		int count = productSellerDao.count(seller_id);
+		int pageCount = (count - 1) / pagesize + 1;
+		if (endBlock > pageCount) {
+			endBlock = pageCount;
+		}
+				
+		List<ProductSellerDto> list = productSellerDao.sellerList(seller_id, start, end);
 		model.addAttribute("list", list);
 		model.addAttribute("seller_id", seller_id);
+		model.addAttribute("page", page);
+		model.addAttribute("startBlock", startBlock);
+		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
 		return "product/sellerList";
 	}
 
 	@GetMapping("/subcategoryList")
-	public String subcategorylist(@RequestParam int sub_category_id, Model model) {
+	public String subcategorylist(
+			@RequestParam (required = false, defaultValue = "1") int page,
+			@RequestParam int sub_category_id,
+			Model model) {
+		
+		int pagesize = 10;
+		int start = pagesize * page - (pagesize - 1);
+		int end = pagesize * page;
+
+		int blocksize = 10;
+		int startBlock = (page - 1) / blocksize * blocksize + 1;
+		int endBlock = startBlock + (blocksize - 1);
+
+		int count = productSellerDao.count(sub_category_id);
+		int pageCount = (count - 1) / pagesize + 1;
+		if (endBlock > pageCount) {
+			endBlock = pageCount;
+		}
+		
 		SubcategoryDto subcategoryDto = subcategoryDao.getDto(sub_category_id);
-		List<ProductSellerDto> list = productSellerDao.categoryList(sub_category_id);
+		List<ProductSellerDto> list = productSellerDao.categoryList(sub_category_id, start, end);
+		int category_id = subcategoryDao.getCg(sub_category_id);
+		List<SubcategoryDto> sclist = subcategoryDao.list(category_id);
 		model.addAttribute("list", list);
+		model.addAttribute("sclist", sclist);
 		model.addAttribute("subcategoryDto", subcategoryDto);
+		model.addAttribute("page", page);
+		model.addAttribute("startBlock", startBlock);
+		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
 		return "product/subcategoryList";
 	}
 
 	@GetMapping("/tops")
-	public String topsList(@RequestParam int category_id, Model model) {
-		CategoryDto categoryDto = categoryDao.get(category_id);
-		List<CategoryListDto> list = categoryListDao.list(category_id);
-		model.addAttribute("list", list);
-		model.addAttribute("categoryDto", categoryDto);
-		return "product/categoryList";
-	}
-	@GetMapping("/bottoms")
-	public String bottomsList(@RequestParam int category_id, Model model) {
-		CategoryDto categoryDto = categoryDao.get(category_id);
-		List<CategoryListDto> list = categoryListDao.list(category_id);
-		model.addAttribute("list", list);
-		model.addAttribute("categoryDto", categoryDto);
-		return "product/categoryList";
-	}
-	@GetMapping("/acc")
-	public String accList(@RequestParam int category_id, Model model) {
-		CategoryDto categoryDto = categoryDao.get(category_id);
-		List<CategoryListDto> list = categoryListDao.list(category_id);
-		model.addAttribute("list", list);
-		model.addAttribute("categoryDto", categoryDto);
-		return "product/categoryList";
-	}
+	public String topsList(
+			HttpServletRequest request,
+			@RequestParam (required = false, defaultValue = "1") int page,
+			Model model) {
+		
+		model.addAttribute("address", request.getRequestURI());
+		
+		int category_id = 1;
+		
+		int pagesize = 10;
+		int start = pagesize * page - (pagesize - 1);
+		int end = pagesize * page;
 
-	@GetMapping("/list")
-	public String list(HttpSession session, Model model) {
-//		String seller_id = (String) session.getAttribute("sid");
-		String seller_id = "abc";
-		List<ProductDto> list = productDao.list(seller_id);
+		int blocksize = 10;
+		int startBlock = (page - 1) / blocksize * blocksize + 1;
+		int endBlock = startBlock + (blocksize - 1);
+
+		int count = categoryListDao.count(category_id);
+		int pageCount = (count - 1) / pagesize + 1;
+		if (endBlock > pageCount) {
+			endBlock = pageCount;
+		}
+		
+		CategoryDto categoryDto = categoryDao.get(category_id);
+		List<CategoryListDto> list = categoryListDao.list(category_id, start, end);
+		List<SubcategoryDto> sclist = subcategoryDao.list(category_id);
 		model.addAttribute("list", list);
-		return "product/list";
+		model.addAttribute("sclist", sclist);
+		model.addAttribute("categoryDto", categoryDto);
+		model.addAttribute("page", page);
+		model.addAttribute("startBlock", startBlock);
+		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
+		
+		return "product/categoryList";
+	}
+	
+	@GetMapping("/bottoms")
+	public String bottomsList(
+			HttpServletRequest request,
+			@RequestParam (required = false, defaultValue = "1") int page,
+			Model model) {
+		
+		model.addAttribute("address", request.getRequestURI());
+		
+		int category_id = 2;
+		
+		int pagesize = 10;
+		int start = pagesize * page - (pagesize - 1);
+		int end = pagesize * page;
+
+		int blocksize = 10;
+		int startBlock = (page - 1) / blocksize * blocksize + 1;
+		int endBlock = startBlock + (blocksize - 1);
+
+		int count = categoryListDao.count(category_id);
+		int pageCount = (count - 1) / pagesize + 1;
+		if (endBlock > pageCount) {
+			endBlock = pageCount;
+		}
+				
+		CategoryDto categoryDto = categoryDao.get(category_id);
+		List<CategoryListDto> list = categoryListDao.list(category_id, start, end);
+		List<SubcategoryDto> sclist = subcategoryDao.list(category_id);
+		model.addAttribute("list", list);
+		model.addAttribute("sclist", sclist);
+		model.addAttribute("categoryDto", categoryDto);
+		model.addAttribute("page", page);
+		model.addAttribute("startBlock", startBlock);
+		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
+		
+		return "product/categoryList";
+	}
+	
+	@GetMapping("/acc")
+	public String accList(
+			HttpServletRequest request,
+			@RequestParam (required = false, defaultValue = "1") int page,
+			Model model) {
+		model.addAttribute("address", request.getRequestURI());
+		
+		int category_id = 3;
+		
+		int pagesize = 10;
+		int start = pagesize * page - (pagesize - 1);
+		int end = pagesize * page;
+
+		int blocksize = 10;
+		int startBlock = (page - 1) / blocksize * blocksize + 1;
+		int endBlock = startBlock + (blocksize - 1);
+
+		int count = categoryListDao.count(category_id);
+		int pageCount = (count - 1) / pagesize + 1;
+		if (endBlock > pageCount) {
+			endBlock = pageCount;
+		}
+		
+		CategoryDto categoryDto = categoryDao.get(category_id);
+		List<CategoryListDto> list = categoryListDao.list(category_id, start, end);
+		List<SubcategoryDto> sclist = subcategoryDao.list(category_id);
+		model.addAttribute("list", list);
+		model.addAttribute("sclist", sclist);
+		model.addAttribute("categoryDto", categoryDto);
+		model.addAttribute("page", page);
+		model.addAttribute("startBlock", startBlock);
+		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
+		
+		return "product/categoryList";
+	}
+	
+	@GetMapping("/salesList")
+	public String salesList(
+			Model model,
+			@RequestParam (required = false, defaultValue = "1") int page) {
+		
+		int pagesize = 10;
+		int start = pagesize * page - (pagesize - 1);
+		int end = pagesize * page;
+
+		int blocksize = 10;
+		int startBlock = (page - 1) / blocksize * blocksize + 1;
+		int endBlock = startBlock + (blocksize - 1);
+
+		int count = productSellerDao.countSales();
+		int pageCount = (count - 1) / pagesize + 1;
+		if (endBlock > pageCount) {
+			endBlock = pageCount;
+		}
+		
+		List<ProductSellerDto> list = productSellerDao.salesList(start, end);
+		model.addAttribute("list", list);
+		model.addAttribute("page", page);
+		model.addAttribute("startBlock", startBlock);
+		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
+		return "product/salesList";
 	}
 	
 	@GetMapping("/detail")
@@ -157,51 +331,5 @@ public class ProductController {
 													.header(HttpHeaders.CONTENT_TYPE, filesDto.getType())
 													.body(res);
 	}
-	
-//	@GetMapping("/main")
-//	public ResponseEntity<ByteArrayResource> getMain(@RequestParam int id) throws IOException {
-//		
-//		ProductDto productDto = productDao.get(id);
-//		String filename = productDto.getName() + "-main";
-//		
-//		File file = new File("D:/upload/kh17/product", filename);
-//		
-//		byte[] data = FileUtils.readFileToByteArray(file);
-//		ByteArrayResource res = new ByteArrayResource(data);
-//		
-//		MediaType type;
-//		String extension = FilenameUtils.getExtension(file.getName());
-//		
-//		if(extension.equals("png")) type = MediaType.IMAGE_PNG;
-//		else if(extension.equals("jpeg")) type = MediaType.IMAGE_JPEG;
-//		else type = MediaType.IMAGE_GIF;
-//				
-//		return ResponseEntity.ok()
-//													.contentType(type)
-//													.body(res);
-//	}
-//	
-//	@GetMapping("/details")
-//	public ResponseEntity<ByteArrayResource> getDetails(@RequestParam int id) throws IOException {
-//		
-//		ProductDto productDto = productDao.get(id);
-//		String filename = productDto.getName() + "-details";
-//		
-//		File file = new File("D:/upload/kh17/product", filename);
-//		
-//		byte[] data = FileUtils.readFileToByteArray(file);
-//		ByteArrayResource res = new ByteArrayResource(data);
-//		
-//		MediaType type;
-//		String extension = FilenameUtils.getExtension(file.getName());
-//		
-//		if(extension.equals("png")) type = MediaType.IMAGE_PNG;
-//		else if(extension.equals("jpeg")) type = MediaType.IMAGE_JPEG;
-//		else type = MediaType.IMAGE_GIF;
-//				
-//		return ResponseEntity.ok()
-//													.contentType(type)
-//													.body(res);
-//	}
 	
 }
