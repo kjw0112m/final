@@ -36,8 +36,8 @@
 
 .order-img {
 	padding-left: 50px;
-	width: 280px;
-	height: 375px;
+	width: 350px;
+	height: 350px;
 	margin-bottom: 12px;
 }
 
@@ -86,13 +86,16 @@
 <ul class="ul">
 			<c:forEach var="productSellerDto" items="${list}">
 	<li>
-		<div class="order-img">
-				<a href="detail?product_id=${productSellerDto.product_id}"><img src="${pageContext.request.contextPath}/product/image?id=${productSellerDto.mainfile}"></a>
+		<div>
+				<a href="detail?product_id=${productSellerDto.product_id}"><img src="${pageContext.request.contextPath}/product/image?id=${productSellerDto.mainfile}" class="order-img"></a>
 		</div>
 		<div class="li-bottom">
 			<a href="sellerList?seller_id=${productSellerDto.seller_id}">${productSellerDto.nickname}</a><br>
 			<br> <a href="detail?product_id=${productSellerDto.product_id}">${productSellerDto.product_name}</a> <br>
-			<strong>${productSellerDto.price}</strong>
+			<strong>
+					<fmt:formatNumber value="${productSellerDto.price}"
+						pattern="#,###.##"/>
+			</strong>
 		</div> 
 	</li>
 		</c:forEach>

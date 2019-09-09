@@ -26,8 +26,8 @@
 }
 
 .order-img {
-	width: 280px;
-	height: 375px;
+	width: 350px;
+	height: 350px;
 	margin-bottom: 9px;
 }
 

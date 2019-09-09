@@ -18,16 +18,18 @@
 	float: left;
 	width: 20%;
 	color: #555;
+	margin-top: 5px;
 }
 
-.ul::after{
+.ul ::after{
 	content: '';
 	display: block;
 	clear: both;
 }
 
 .order-img {
-	width: 100%;
+	width: 300px;
+	height: 300px;
 	margin-bottom: 12px;
 }
 
@@ -57,16 +59,26 @@
 	font-weight: bold;
 	color: #55a0ff;
 }
+
+img{
+	display: block;
+}
+
+ .total ::after{ 
+ 	content: ""; 
+ 	display: block; 
+	clear: both; 
+ } 
 </style>
 </head>
 
-<div>	
+<div class="total">
 
 	<ul class="ul">
 		<c:forEach var="productSellerDto" items="${list}">
 			<li>
-				<div class="order-img">
-					<a href="detail?product_id=${productSellerDto.product_id}"><img src="${pageContext.request.contextPath}/product/image?id=${productSellerDto.mainfile}"></a>
+				<div>
+					<a href="detail?product_id=${productSellerDto.product_id}"><img src="${pageContext.request.contextPath}/product/image?id=${productSellerDto.mainfile}" class="order-img"></a>
 				</div>
 				<div class="li-bottom">
 					<a href="sellerList?seller_id=${productSellerDto.seller_id}">${productSellerDto.nickname}</a><br><br>

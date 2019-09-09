@@ -150,6 +150,7 @@ $(function() {
 			<tr>
 				<th scope="col" class="w24"><input type="checkbox" id="all_check"></th>
 				<th scope="col" class="w60" style="display: none;">No</th>
+				<th scope="col" class="w60" style="">상품번호</th>
 				<th scope="col" class="w200" style="">상품명</th>
 				<th scope="col" class="w120" style="">판매가</th>
 				<th scope="col" class="w100" style="">진열상태</th>
@@ -169,6 +170,7 @@ $(function() {
 				<c:forEach var="productSubcategoryDto" items="${list}">
 				<tr>
 					<td><input type="checkbox"  name="product_id" value=${productSubcategoryDto.product_id } class="sub_check"></td>
+					<td>${productSubcategoryDto.product_id}</td>
 					<td>${productSubcategoryDto.product_name}</td>
 					<td>${productSubcategoryDto.price}</td>
 					<td>${productSubcategoryDto.display_yn}</td>

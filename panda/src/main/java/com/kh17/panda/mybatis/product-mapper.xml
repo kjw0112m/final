@@ -46,7 +46,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<select id="list" parameterType="String" resultType="productDto">
-		select * from product where seller_id = #{seller_id} order by regist_dt desc
+		select * from product where 1=1
+		<if test="seller_id != null">
+			and
+		 	seller_id = #{seller_id} 
+		</if>
+		 order by regist_dt desc
 	</select>
 	
 	
