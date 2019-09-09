@@ -61,11 +61,6 @@ public class OrdersDaoImpl implements OrdersDao {
 	}
 
 	@Override
-	public void cancel(OrdersDto ordersDto) {
-		sqlSession.delete("order.cs_status", ordersDto);
-	}
-
-	@Override
 	public void delete() {
 		sqlSession.delete("order.delete");
 	}
@@ -75,10 +70,6 @@ public class OrdersDaoImpl implements OrdersDao {
 		sqlSession.update("order.invoice", ordersDto);
 	}
 
-	@Override
-	public void stat_change(OrdersDto ordersDto) {
-		sqlSession.delete("order.status", ordersDto);
-	}
 
 	@Override
 	public List<OrderViewDto> getTeam(String team) {
@@ -109,4 +100,54 @@ public class OrdersDaoImpl implements OrdersDao {
 	public List<OrderViewDto> list(String team) {
 		return sqlSession.selectList("order.getDetail", team);
 	}
+
+	@Override
+	public List<OrderListVO> list(OrderViewDto orderViewDto, List<OrderViewVO> orderViewVO, int start, int end) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("dto", orderViewDto);
+		map.put("vo", orderViewVO);
+		map.put("start", start);
+		map.put("end", end);
+
+		return sqlSession.selectList("order.deliveryView", map);
+	}
+
+	@Override
+	public int count(OrderViewDto orderViewDto, List<OrderViewVO> search) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("dto", orderViewDto);
+		map.put("vo", search);
+		
+		try {
+			return sqlSession.selectOne("order.deliveryCount", map);
+		} catch(NullPointerException e) {
+			return 0;
+		}
+	}
+
+	@Override
+	public void t_change(OrdersDto ordersDto) {
+		sqlSession.update("order.t_status", ordersDto);
+	}
+
+	@Override
+	public void pay_change(OrdersDto ordersDto) {
+		sqlSession.update("order.pay_status", ordersDto);
+	}
+
+	@Override
+	public void cs_change(OrdersDto ordersDto) {
+		sqlSession.update("order.cs_status", ordersDto);
+	}
+
+	@Override
+	public int deliveryCount(OrderViewDto orderViewDto) {
+		return sqlSession.selectOne("order.status_count", orderViewDto);
+	}
+
+	@Override
+	public void detach(String order_id) {
+		sqlSession.update("order.detach", order_id);
+	}
+
 }

@@ -24,16 +24,24 @@
 			<th rowspan="2">제목</th>
 			<c:choose>
 			<c:when test="${sessionScope.sid.toString().startsWith('!')}">
-				<td colspan="2">
-					<select name="head" >
+<%-- 				<td colspan="2">
+ 					<select name="head" >
 						<option value="">선택하세요</option>
+
+					<option value="1" <c:if test="${oneDto.product eq 1}">selected</c:if>>가격인상공지</option>
+					<option value="2" <c:if test="${oneDto.product eq 2}">selected</c:if>>가격인하공지</option>
+					<option value="3" <c:if test="${oneDto.product eq 3}">selected</c:if>>가격변경공지</option>
+					<option value="4" <c:if test="${oneDto.product eq 4}">selected</c:if>>PANDA</option>
+
+						
 					</select>
-				</td>
+ 
+ 				</td> --%>
 			</c:when>
 			<c:otherwise>
-				<td colspan="2">
+<!-- 				<td colspan="1">
 					
-				</td>
+				</td> -->
 			</c:otherwise>
 			</c:choose>
 			
@@ -41,9 +49,10 @@
 		<tr>
 			<c:choose>
 			<c:when test="${sessionScope.sid.toString().startsWith('!')}">
+				<!-- <td colspan="1"> -->
+					
 				<td colspan="2">
-					<input type="text" name="title" placeholder="제목"  value="${noticeDto.title}" size="70">
-				<td colspan="2">
+				<input type="text" name="title" placeholder="제목"  value="${noticeDto.title}" size="70">
 			</c:when>
 			<c:otherwise>
 				<td colspan="2">
@@ -76,7 +85,7 @@
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
-				<tr>
+				<!-- <tr>
 					<th>댓글</th>
 					<td>
 							<input type="hidden" name="serviceNo" value="">
@@ -84,7 +93,7 @@
 							
 					</td>
 					<td><input type="button" onclick="saveComment();" value="등록"></td>
-				</tr>
+				</tr> -->
 				<c:forEach var="commentlist" items="${commentlist}">
 					<tr>
 						<c:choose>
@@ -110,7 +119,7 @@
 	</thead>
 	<tfoot>
 		<tr align="center">
-			<td colspan="3"><input type="button" onclick="saveNotice();" value="저장"> <c:if test="${mode eq 'EDIT'}"><input type="button" onclick="deleteNotice();" value="삭제"></c:if> <input type="button" onclick="listNotice();" value="목록"></td>
+			<td colspan="3"> <input type="button" onclick="listNotice();" value="목록"></td>
 		</tr>
 	</tfoot>
 </table>
@@ -120,19 +129,27 @@
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
 	function saveNotice() {
-		$('#noticeForm').attr('action','${pageContext.request.contextPath}/notice/noticeUpdate').submit();
+		if(confirm("정말 저장할꾸야?")){
+			$('#noticeForm').attr('action','${pageContext.request.contextPath}/notice/noticeUpdate').submit();
+		}
 	}
 	
 	function deleteNotice(){
-		$('#noticeForm').attr('action','${pageContext.request.contextPath}/notice/noticeDelete').submit();
+		if(confirm("정말 삭제할꾸야?")){
+			$('#noticeForm').attr('action','${pageContext.request.contextPath}/notice/noticeDelete').submit();
+		}
 	}
 	
 	function saveComment(){
-		$('#noticeForm').attr('action','${pageContext.request.contextPath}/notice/saveComment').submit();
+		if(confirm("정말 저장할꾸야?")){
+			$('#noticeForm').attr('action','${pageContext.request.contextPath}/notice/saveComment').submit();
+		}
 	}
 	
 	function deleteComment(commentId){
-		$('#noticeForm').attr('action','${pageContext.request.contextPath}/notice/deleteComment?commentId='+commentId).submit();
+		if(confirm("정말 삭제할꾸야?")){
+			$('#noticeForm').attr('action','${pageContext.request.contextPath}/notice/deleteComment?commentId='+commentId).submit();
+		}
 	}
 	
 	function listNotice() {

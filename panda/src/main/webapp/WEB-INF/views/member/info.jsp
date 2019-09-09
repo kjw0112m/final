@@ -9,54 +9,52 @@
 	src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
 <script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
 <script>
-         $(function () {
-            var target = $(".product, .order, .member, .promotion, .stat, .board");
-            target.click(function () {
-                $(this).next().toggle();
-                $(this).parent().toggleClass("bc_w");
-                target.not($(this)).next().hide();
-                target.not($(this)).parent().removeClass("bc_w");
-            });
+	$(function() {
+		var target = $(".product, .order, .member, .promotion, .stat, .board");
+		target.click(function() {
+			$(this).next().toggle();
+			$(this).parent().toggleClass("bc_w");
+			target.not($(this)).next().hide();
+			target.not($(this)).parent().removeClass("bc_w");
+		});
 
-            target.next().find("a").click(function () {
-                $(this).addClass("a_bold");
-                target.next().find("a").not($(this)).removeClass("a_bold");
-                console.log(this);
-            });
-        });
-        //비밀번호 검사 후 형식에 안맞을시 보조메세지 출력	
-        $(function () {
-            $("input[name=new_pw]").blur(
-                function checkPw() {
-                    var m_pw = document.querySelector("#new_pw").value;
-                    var regex = /^[a-zA-Z0-9!@#$\-_]{8,15}$/;
+		target.next().find("a").click(function() {
+			$(this).addClass("a_bold");
+			target.next().find("a").not($(this)).removeClass("a_bold");
+			console.log(this);
+		});
+	});
+	//비밀번호 검사 후 형식에 안맞을시 보조메세지 출력	
+	$(function() {
+		$("input[name=new_pw]").blur(function checkPw() {
+			var m_pw = document.querySelector("#new_pw").value;
+			var regex = /^[a-zA-Z0-9!@#$\-_]{8,15}$/;
+		})
+	});
 	//주소
 	$(function() {
 		$(".addr").click(findAddress);
 		$("input[name=btn]").prop("disabled", true);
 	});
 
+	//주소 찾기
 	function findAddress() {
+		//위에서 생성한 themeObj객체를 우편번호 서비스 생성자에 넣습니다.
+		//생성자의 자세한 설정은 예제 및 속성탭을 확인해 주세요.
 		new daum.Postcode({
 			oncomplete : function(data) {
 				// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
 				// 각 주소의 노출 규칙에 따라 주소를 조합한다.
 				// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
 				var addr = ''; // 주소 변수
 				var extraAddr = ''; // 참고항목 변수
-                    }
-                });
-        });
 				//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
 				if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
 					addr = data.roadAddress;
 				} else { // 사용자가 지번 주소를 선택했을 경우(J)
 					addr = data.jibunAddress;
 				}
-
-				// 사용자가 선택
-				// 				한 주소가 도로명 타입일때 참고항목을 조합한다.
+				// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
 				if (data.userSelectedType === 'R') {
 					// 법정동명이 있을 경우 추가한다. (법정리는 제외)
 					// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
@@ -74,32 +72,23 @@
 					}
 					// 조합된 참고항목을 해당 필드에 넣는다.
 				}
-
-				// 우편번호와 주소 정보를 해당 필드에 넣는다.
-				// document.querySelector('input[name=postcode]').value = data.zonecode;
-				// document.querySelector("input[name=basicaddr]").value = addr;
-				// 커서를 상세주소 필드로 이동한다.
-				// document.querySelector("input[name=detailaddr]").focus();
-                } else {
-                    span.innerHTML = "<font color = '#de2195' size = '2'>암호맞음</font>"
-                    $("input[name=btn]").prop("disabled", false)
-                }
-            }); //#chpass.keyup
-        });
-        $(function () {  
-            $("form").submit(function (e) {
-                e.preventDefault();
-                var pw = $("input[name=origin_pw]").val();
-                var encPw = CryptoJS.SHA256(pw).toString();
-                var ck_pw = $("input[name=pw_check]").val();
-                var encNPW = CryptoJS.SHA256(ck_pw).toString();
-				// 이 코드는 jquery.js 를 먼저 불러온 경우만 사용 가능
 				$("input[name=post_code]").val(data.zonecode);
 				$("input[name=basic_addr]").val(addr);
+				$("input[name=detail_addr]").val('');
 				$("input[name=detail_addr]").focus();
 			}
 		}).open();
 	}
+
+	$(function() {
+		$("form").submit(function(e) {
+			e.preventDefault();
+			var pw = $("input[name=origin_pw]").val();
+			var encPw = CryptoJS.SHA256(pw).toString();
+			var ck_pw = $("input[name=pw_check]").val();
+			var encNPW = CryptoJS.SHA256(ck_pw).toString();
+		})
+	});
 
 	//비밀번호 검사 후 형식에 안맞을시 보조메세지 출력	
 	$(function() {
@@ -176,7 +165,7 @@
 								window.alert("비밀번호가 틀렸습니다");
 
 							} else {
-								$("#pw").val('');	
+								$("#pw").val('');
 								$("#new_pw").val('');
 								$("#chpass").val('');
 								window.alert("비밀번호를 변경했습니다")
@@ -185,8 +174,6 @@
 					});
 				});
 	});
-
-  
 </script>
 <style>
 .gBreak {
@@ -213,7 +200,6 @@ ul, li {
 #container {
 	position: relative;
 }
-
 
 .bc_w {
 	background-color: whitesmoke;
@@ -370,7 +356,7 @@ ul, li {
 	padding: 0 0 0 20px;
 	text-align: left;
 	font-weight: 400;
-	width: 10%;
+	width: 15%;
 }
 
 .b {
@@ -439,7 +425,7 @@ ul, li {
 </style>
 <body>
 	<div id="container">
-			<jsp:include page="/WEB-INF/views/template/side.jsp"></jsp:include>
+		<jsp:include page="/WEB-INF/views/template/side.jsp"></jsp:include>
 	</div>
 	<div class="total">
 		<h1>${mdto.name}회원님의정보</h1>
@@ -507,7 +493,9 @@ ul, li {
 				</tr>
 				<tr>
 					<td class="a">마지막 비밀번호 변경</td>
-					<td class="b">${mdto.pw_dt}</td>
+					<td class="b">${mdto.pw_dt}<font size="3em" color="red">
+							<strong>&nbsp&nbsp&nbsp비밀번호는 주기적으로 변경해주시는것이 보안상 좋습니다.</strong>
+					</font></td>
 				</tr>
 				</tbody>
 			</table>

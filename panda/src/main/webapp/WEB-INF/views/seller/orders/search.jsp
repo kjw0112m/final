@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="/WEB-INF/views/template/admin/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/template/admin/aside.jsp"></jsp:include>
 <link rel="stylesheet"
@@ -33,7 +34,7 @@
 	var page = "${page}";
 	var startBlock = "${startBlock}";
 	var endBlock = "${endBlock}";
-	
+	var rows = "${param.rows}";
 </script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script
@@ -261,27 +262,28 @@
 							</table>
 						</c:when>
 						<c:otherwise>
-							<c:forEach var="orderViewDto" items="${orderViewDto}">
 								<table border="1">
 									<tbody class="right ">
+									<c:forEach var="orderViewDto" items="${orderViewDto}">
 										<tr>
-											<td rowspan="2" class="w24 center"><input
+											<td class="w24 center"><input
 												type="checkbox" name="" class="chkbox"> <input
-												type="hidden" name="order_id" value="">
+												type="hidden" name="order_id" value=""></td>
 											<td class="w120  center" style="">${orderViewDto.order_dt}</td>
 											<td class="w105 orderNum" style=""><a href="#none" id=""><span
 													id="">${orderViewDto.team }</span></a>
 											<td class="w95 center" style="" bgcolor="">${orderViewDto.member_name}</td>
 											<td class="w120 left" style="">${orderViewDto.product_name }</td>
-											<td class="w105" style="">${orderViewDto.total_price}</td>
+											<td class="w105" style=""><fmt:formatNumber
+															value="${orderViewDto.total_price}" pattern="#,###.##" /></td>
 											<td class="w60 center" style="">${orderViewDto.pay_type }</td>
 											<td class="w60 center" style="">${orderViewDto.pay_status}</td>
 											<td class="w60 center" style="">${orderViewDto.t_status}</td>
 											<td class="w45 center" style="">${orderViewDto.cs_status}</td>
 										</tr>
-									</tbody>
+									</c:forEach>
+								</tbody>
 								</table>
-							</c:forEach>
 						</c:otherwise>
 					</c:choose>
 				</div>

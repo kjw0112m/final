@@ -18,11 +18,10 @@
 &&&
 <a  href="${pageContext.request.contextPath}/review/reviewComment">상품후기 <i id=gi></i></a>
 
-<form class="form" action="list.do" method="get">
+<form class="form" action="noticeList" method="get">
 <div style="margin-left: 800px; border: 0px;">
 <input type="hidden"  name="type" value="title+content"/>
 <input type="search" name="keyword" placeholder="제목 + 내용" required>
-
 <input type="submit" value="검색">
 </div>
 </form>
@@ -81,7 +80,7 @@
 	<tbody>
 		<c:forEach var="list" items="${list}" >
 			<tr>
-				<td align="center">${list.rn}</td>
+				<td align="center">${noticeDto.rn}</td>
 				<td align="left"><a href="${pageContext.request.contextPath}/notice/noticeEdit?mode=EDIT&id=${list.id}">${list.title}</a></td>
 				<td align="center">${list.createUser}</td>
 				<td align="center">${list.createdate}</td>
@@ -141,7 +140,7 @@
 	  <c:if test="${not (page eq pageCount)}"> 
 		<li><a href="noticeList?page=${page + 1}">&gt;</a></li>
 	  </c:if>  
-	 <%-- <p> ${pageCount }   전체페이지 test 찍어보기 </p> --%>
+<%-- 	 <p> ${pageCount }   전체페이지 test 찍어보기 </p> --%>
 	
 	<%-- 다음 구간 --%>
 	<c:if test="${not (page eq pageCount)}">

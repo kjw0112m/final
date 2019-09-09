@@ -38,18 +38,47 @@
 					<select name="product" >
 					<option value="">선택하세요</option>
 					<option value="1" <c:if test="${oneDto.product eq 1}">selected</c:if>>배송지연/불만</option>
-					<option value="2" <c:if test="${oneDto.product eq 2}">selected</c:if>>컬리패스(무료배송)</option>
+					<option value="2" <c:if test="${oneDto.product eq 2}">selected</c:if>>PANDA(무료배송)</option>
+					<option value="3" <c:if test="${oneDto.product eq 3}">selected</c:if>>반품문의</option>
+					<option value="4" <c:if test="${oneDto.product eq 4}">selected</c:if>>A/S문의</option>
+					<option value="5" <c:if test="${oneDto.product eq 5}">selected</c:if>>환불문의</option>
+					<option value="6" <c:if test="${oneDto.product eq 6}">selected</c:if>>주문결제문의</option>
+					<option value="7" <c:if test="${oneDto.product eq 7}">selected</c:if>>회원정보문의</option>
+					<option value="8" <c:if test="${oneDto.product eq 8}">selected</c:if>>취소문의</option>
+					<option value="9" <c:if test="${oneDto.product eq 9}">selected</c:if>>교환문의</option>
+					<option value="10" <c:if test="${oneDto.product eq 10}">selected</c:if>>상품정보문의</option>
+					<option value="11" <c:if test="${oneDto.product eq 11}">selected</c:if>>기타문의</option>
 					</select>
 				</c:when>
 				<c:when test="${mode eq 'EDIT' }">
 					<c:if test="${oneDto.product eq 1}">배송지연/불만</c:if>
-					<c:if test="${oneDto.product eq 2}">컬리패스(무료배송)</c:if>
+					<c:if test="${oneDto.product eq 2}">PANDA(무료배송)</c:if>
+					<c:if test="${oneDto.product eq 3}">반품문의</c:if>
+					<c:if test="${oneDto.product eq 4}">A/S문의</c:if>
+					<c:if test="${oneDto.product eq 5}">환불문의</c:if>
+					<c:if test="${oneDto.product eq 6}">주문결제문의</c:if>
+					<c:if test="${oneDto.product eq 7}">회원정보문의</c:if>
+					<c:if test="${oneDto.product eq 8}">취소문의</c:if>
+					<c:if test="${oneDto.product eq 9}">교환문의</c:if>
+					<c:if test="${oneDto.product eq 10}">상품정보문의</c:if>
+					<c:if test="${oneDto.product eq 11}">기타문의</c:if>
+					
+					
 				</c:when>
 				<c:otherwise>
 					<select name="product" >
 					<option value="">선택하세요</option>
 					<option value="1" <c:if test="${oneDto.product eq 1}">selected</c:if>>배송지연/불만</option>
-					<option value="2" <c:if test="${oneDto.product eq 2}">selected</c:if>>컬리패스(무료배송)</option>
+					<option value="2" <c:if test="${oneDto.product eq 2}">selected</c:if>>PANDA(무료배송)</option>
+					<option value="3" <c:if test="${oneDto.product eq 3}">selected</c:if>>반품문의</option>
+					<option value="4" <c:if test="${oneDto.product eq 4}">selected</c:if>>A/S문의</option>
+					<option value="5" <c:if test="${oneDto.product eq 5}">selected</c:if>>환불문의</option>
+					<option value="6" <c:if test="${oneDto.product eq 6}">selected</c:if>>주문결제문의</option>
+					<option value="7" <c:if test="${oneDto.product eq 7}">selected</c:if>>회원정보문의</option>
+					<option value="8" <c:if test="${oneDto.product eq 8}">selected</c:if>>취소문의</option>
+					<option value="9" <c:if test="${oneDto.product eq 9}">selected</c:if>>교환문의</option>
+					<option value="10" <c:if test="${oneDto.product eq 10}">selected</c:if>>상품정보문의</option>
+					<option value="11" <c:if test="${oneDto.product eq 11}">selected</c:if>>기타문의</option>
 					</select>
 				</c:otherwise>
 				</c:choose>
@@ -140,7 +169,10 @@
 	}
 	
 	function delOne() {
-		$('#oneForm').attr('action','${pageContext.request.contextPath}/one/delOne').submit();
+		if(confirm("정말 저장할꾸야?")){
+			$('#oneForm').attr('action','${pageContext.request.contextPath}/one/delOne').submit();
+		}
+		
 	}
 	
 	function listOne(){

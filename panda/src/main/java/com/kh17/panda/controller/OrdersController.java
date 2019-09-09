@@ -76,8 +76,10 @@ public class OrdersController {
 
 		// 기본 DTO 설정
 		ordersDto.setMember_id((String) session.getAttribute("sid"));
-		if (ordersDto.getPay_type().equals("카카오페이"))
+		if (ordersDto.getPay_type().equals("카카오페이")) {
 			ordersDto.setPay_status("결제완료");
+			ordersDto.setT_status("배송준비중");
+		}
 		else if (ordersDto.getPay_type().equals("무통장입금"))
 			ordersDto.setPay_status("입금전");
 		ordersDto.setRe_phone(re_phone.toString());
@@ -180,7 +182,7 @@ public class OrdersController {
 
 		OrdersDto ordersDto = OrdersDto.builder().cs_status(cs_status).team(orderViewDto.getTeam()).build();
 
-		ordersDao.cancel(ordersDto);
+//		ordersDao.cancel(ordersDto);
 
 		model.addAttribute("orderViewDto", orderViewDto);
 		model.addAttribute("page", page);

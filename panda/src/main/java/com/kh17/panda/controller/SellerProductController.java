@@ -54,20 +54,19 @@ public class SellerProductController {
 		model.addAttribute("list", subcategoryDao.list());
 		return "seller/product/regist";		
 	}
-	
 	@PostMapping("/regist")
 	public String regist(@ModelAttribute ProductVO vo,
 			HttpSession session,
 			MultipartRequest mRequest,
 			Model model) throws IllegalStateException, IOException {
-//		vo.setSeller_id("abc");
-		vo.setSeller_id((String) session.getAttribute("@sid"));
+
+//		vo.setSeller_id((String) session.getAttribute("ssid"));
+		vo.setSeller_id("abc");
 		//id를 반환해서 사용할지 말지 결정
 		int id = productService.regist(vo);
 
 		return "redirect:list";
 	}
-	
 	@GetMapping("/edit")
 	public String edit(
 			@RequestParam int id,
@@ -79,7 +78,6 @@ public class SellerProductController {
 		model.addAttribute("subcategory", subcategoryDao.get(productDto.getSub_category_id()));
 		return "seller/product/edit";
 	}
-	
 	@PostMapping("/edit")
 	public String edit(
 			@ModelAttribute ProductVO vo,
@@ -87,10 +85,9 @@ public class SellerProductController {
 			HttpSession session) throws IllegalStateException, IOException {
 		productService.edit(vo);
 		
-		model.addAttribute("id", (String) session.getAttribute("@sid"));
+		model.addAttribute("id", (String) session.getAttribute("ssid"));
 		return "redirect:list";
 	}
-	
 	@GetMapping("/delete")
 	public String delete(@RequestParam int[] product_id) {
 		
@@ -131,8 +128,10 @@ public class SellerProductController {
 			HttpSession session,
 			@RequestParam (required = false, defaultValue = "1") int page,
 			Model model) {
+
+//		String seller_id = (String) session.getAttribute("ssid");
 		String seller_id = "abc";
-//		String seller_id = (String) session.getAttribute("@sid");
+
 		
 		int pagesize = 10;
 		int start = 1;
@@ -166,8 +165,9 @@ public class SellerProductController {
 			@RequestParam (required = false, defaultValue = "1") int page,
 			Model model
 			) {
+//		String seller_id = (String) session.getAttribute("ssid");
 		String seller_id = "abc";
-//		String seller_id = (String) session.getAttribute("@sid");
+
 		
 		int pagesize = 10;
 		int start = pagesize * page - (pagesize - 1);
