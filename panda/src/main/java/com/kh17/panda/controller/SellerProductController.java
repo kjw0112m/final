@@ -60,12 +60,12 @@ public class SellerProductController {
 			HttpSession session,
 			MultipartRequest mRequest,
 			Model model) throws IllegalStateException, IOException {
-//		vo.setSeller_id((String) session.getAttribute("sid"));
-		vo.setSeller_id("abc");
+//		vo.setSeller_id("abc");
+		vo.setSeller_id((String) session.getAttribute("@sid"));
 		//id를 반환해서 사용할지 말지 결정
 		int id = productService.regist(vo);
 
-		return "seller/product/regist_result";
+		return "redirect:list";
 	}
 	
 	@GetMapping("/edit")
@@ -87,7 +87,7 @@ public class SellerProductController {
 			HttpSession session) throws IllegalStateException, IOException {
 		productService.edit(vo);
 		
-		model.addAttribute("id", (String) session.getAttribute("sid"));
+		model.addAttribute("id", (String) session.getAttribute("@sid"));
 		return "redirect:list";
 	}
 	
@@ -131,8 +131,8 @@ public class SellerProductController {
 			HttpSession session,
 			@RequestParam (required = false, defaultValue = "1") int page,
 			Model model) {
-//		String seller_id = (String) session.getAttribute("sid");
-		String seller_id = "abc";
+//		String seller_id = "abc";
+		String seller_id = (String) session.getAttribute("@sid");
 		
 		int pagesize = 10;
 		int start = 1;
@@ -166,8 +166,8 @@ public class SellerProductController {
 			@RequestParam (required = false, defaultValue = "1") int page,
 			Model model
 			) {
-//		String seller_id = (String) session.getAttribute("sid");
-		String seller_id = "abc";
+//		String seller_id = "abc";
+		String seller_id = (String) session.getAttribute("@sid");
 		
 		int pagesize = 10;
 		int start = pagesize * page - (pagesize - 1);
@@ -190,6 +190,8 @@ public class SellerProductController {
 		
 		if(type != null && keyword != null) {
 			List<ProductSubcategoryDto> list = productSubcategoryDao.search(type, keyword, start, end, seller_id);
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("type", type);
 			model.addAttribute("list", list);
 		}
 		else {

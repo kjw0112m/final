@@ -64,5 +64,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="count3" parameterType="String" resultType="int">
 		select count(*) from product_seller where seller_id = #{seller_id}
 	</select>
+	
+	<select id="count4" resultType="int">
+		select count(*) from product_seller where sale_yn = 'y'
+	</select>
 
+	<select id="salesList" parameterType="map" resultType="productSellerDto">
+	<![CDATA[
+	select * from(
+		select rownum rn, A.* from (
+			select * from product_seller where sale_yn = 'y'
+		]]>
+	<![CDATA[
+		order by regist_dt desc
+			)A
+		) where rn >= #{start} and rn <= #{end}
+	]]>	
+	</select>
+	
 </mapper>

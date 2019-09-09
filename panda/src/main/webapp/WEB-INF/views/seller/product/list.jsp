@@ -97,7 +97,7 @@ $(function() {
 											<option value="product_name">상품명</option>
 											<option value="product_id">상품번호</option>
 										</select>
-										<input type="text" class="fTextsearchBox" name="keyword" value="${param.keyword}" id="searchBox" style="width: 400px;">						
+										<input type="text" class="fTextsearchBox" name="keyword" value="${keyword}" id="searchBox" style="width: 400px;">						
 											<input type="submit"  id="search_form" style="display: none">
 											<a href="#none" id="btnSearch" class="btnSearch"><span>검색</span></a>
 									</div>

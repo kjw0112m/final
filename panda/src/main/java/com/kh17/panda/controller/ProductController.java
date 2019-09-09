@@ -265,14 +265,33 @@ public class ProductController {
 		
 		return "product/categoryList";
 	}
+	
+	@GetMapping("/salesList")
+	public String salesList(
+			Model model,
+			@RequestParam (required = false, defaultValue = "1") int page) {
+		
+		int pagesize = 10;
+		int start = pagesize * page - (pagesize - 1);
+		int end = pagesize * page;
 
-	@GetMapping("/list")
-	public String list(HttpSession session, Model model) {
-//		String seller_id = (String) session.getAttribute("sid");
-		String seller_id = "abc";
-		List<ProductDto> list = productDao.list(seller_id);
+		int blocksize = 10;
+		int startBlock = (page - 1) / blocksize * blocksize + 1;
+		int endBlock = startBlock + (blocksize - 1);
+
+		int count = productSellerDao.countSales();
+		int pageCount = (count - 1) / pagesize + 1;
+		if (endBlock > pageCount) {
+			endBlock = pageCount;
+		}
+		
+		List<ProductSellerDto> list = productSellerDao.salesList(start, end);
 		model.addAttribute("list", list);
-		return "product/list";
+		model.addAttribute("page", page);
+		model.addAttribute("startBlock", startBlock);
+		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
+		return "product/salesList";
 	}
 	
 	@GetMapping("/detail")
