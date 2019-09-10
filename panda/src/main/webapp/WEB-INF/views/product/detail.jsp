@@ -316,4 +316,5 @@
 			<img src="${pageContext.request.contextPath}/product/image?id=${productSellerDto.detailfile}" id="pimg">
 			</div>
 		</div>
+		
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
