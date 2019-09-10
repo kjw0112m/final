@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and
 			seller_id = #{dto.seller_id}
 		</if>
-		order by order_dt desc)O
+		order by team desc)O
 		<![CDATA[
 		) where rn >= #{start} and rn <= #{end}
 		]]>
@@ -234,7 +234,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="myOrder" resultMap="orderListVO" parameterType="map">
 		select * from ( 
 		<![CDATA[ 
-		select rownum rn, O.* from( select distinct team, order_dt, member_name, pay_type, pay_status, re_name, re_phone, re_addr, t_invoice, t_id from order_view 
+		select rownum rn, O.* from( select distinct team, member_name, pay_type, pay_status, re_name, re_phone, re_addr, t_invoice, t_id from order_view 
 		]]>
 		where 1=1
 		<if test="dto.member_id != null">
@@ -253,7 +253,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and
 			team = {team}
 		</if>
-		order by order_dt desc)O)
+		order by team desc)O)
 		<if test="start!=null and end!=null">
 		<![CDATA[ 
 		where rn >= #{start} and rn <= #{end}
@@ -264,7 +264,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="myStat" resultMap="orderListVO" parameterType="map">
 		select * from ( 
 		<![CDATA[ 
-		select rownum rn, O.* from( select distinct team, order_dt, member_name, pay_type, pay_status, re_name, re_phone, re_addr, t_invoice, t_id from order_view 
+		select rownum rn, O.* from( select distinct team, member_name, pay_type, pay_status, re_name, re_phone, re_addr, t_invoice, t_id from order_view 
 		]]>
 		where cs_status in('교환', '환불', '취소', '반품')
 		<if test="dto.member_id != null">
@@ -283,7 +283,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and
 			team = {team}
 		</if>
-		order by order_dt desc)O)
+		order by team desc)O)
 		<if test="start!=null and end!=null">
 		<![CDATA[ 
 		where rn >= #{start} and rn <= #{end}
@@ -377,7 +377,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from (
 		<![CDATA[
 			select rownum rn, O.* from(
-				select distinct team, order_dt, member_name, pay_type, pay_status, re_name, re_phone, re_addr, t_invoice, t_id from order_view
+				select distinct team, member_name, pay_type, pay_status, re_name, re_phone, re_addr, t_invoice, t_id from order_view
 		]]>
 		where 1=1
 		<if test="vo.size() > 0 ">
@@ -414,7 +414,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and
 			seller_id = #{dto.seller_id}
 		</if>
-		order by order_dt desc)O
+		order by team desc)O
 		<![CDATA[
 		) where rn >= #{start} and rn <= #{end}
 		]]>
@@ -436,8 +436,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 	</select>
 	
-	<update id="detach" parameterType="string">
-		update orders set team=#{order_id} where order_id=#{order_id}
+	<update id="detach" parameterType="ordersDto">
+		update orders set team=#{team} where order_id=#{order_id}
 	</update>
 </mapper>
 

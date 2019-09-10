@@ -146,8 +146,8 @@ public class OrdersDaoImpl implements OrdersDao {
 	}
 
 	@Override
-	public void detach(String order_id) {
-		sqlSession.update("order.detach", order_id);
+	public void detach(String order_id, String team) {
+		sqlSession.update("order.detach", OrdersDto.builder().order_id(order_id).team(team).build());
 	}
 
 	@Override
