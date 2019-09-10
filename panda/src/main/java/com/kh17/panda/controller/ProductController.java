@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh17.panda.entity.CategoryDto;
 import com.kh17.panda.entity.CategoryListDto;
 import com.kh17.panda.entity.FilesDto;
-import com.kh17.panda.entity.ProductDto;
 import com.kh17.panda.entity.ProductSellerDto;
 import com.kh17.panda.entity.SubcategoryDto;
 import com.kh17.panda.repository.CategoryDao;
