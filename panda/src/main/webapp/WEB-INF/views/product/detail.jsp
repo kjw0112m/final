@@ -151,6 +151,9 @@
 			this.submit();
 		});
 		
+		$("#ordersid").val($("[name='product_id']").val());
+		
+		
 	});
 </script>
 <style>
@@ -316,4 +319,7 @@
 			<img src="${pageContext.request.contextPath}/product/image?id=${productSellerDto.detailfile}" id="pimg">
 			</div>
 		</div>
+		
+<jsp:include page="/WEB-INF/views/review/review_comment.jsp"></jsp:include>    		
+		
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
