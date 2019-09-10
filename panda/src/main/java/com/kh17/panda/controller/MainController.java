@@ -9,5 +9,8 @@ public class MainController {
 	public String main() {
 		return "main";
 	}
-	
+	@RequestMapping("/policy")
+	public String policy() {
+		return "policy";
+	}
 }

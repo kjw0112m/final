@@ -262,6 +262,6 @@
   ② “몰”과 이용자 간에 제기된 전자상거래 소송에는 한국법을 적용합니다.
 
 </textarea>
-
+<br><br><br><br>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
