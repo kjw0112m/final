@@ -334,11 +334,15 @@ $(function() {
 		$('input[name=team]').each(function() {
 			if ($(this).is(':checked')) {
 				idAry.push($(this).attr('order_id'));
+				getTeam = $(this).val();
+			}
+		});
+		$('input[value='+getTeam+']').each(function(){
+			if ($(this).is(':checked')){
 			}
 			else{
 				notIdAry.push($(this).attr('order_id'));
 			}
-			getTeam = $(this).val();
 		});
 		jQuery.ajaxSettings.traditional = true;
 		$.ajax({
@@ -360,6 +364,14 @@ $(function() {
 		$('input[name=team]').each(function() {
 			if ($(this).is(':checked')) {
 				idAry.push($(this).attr('order_id'));
+				getTeam = $(this).val();
+			}
+		});
+		$('input[value='+getTeam+']').each(function(){
+			if ($(this).is(':checked')){
+			}
+			else{
+				notIdAry.push($(this).attr('order_id'));
 			}
 		});
 		jQuery.ajaxSettings.traditional = true;
@@ -369,6 +381,8 @@ $(function() {
 			dataType : "text",
 			data : {
 				idAry : idAry,
+				notIdAry: notIdAry,
+				getTeam: getTeam,
 				t_status : "배송준비중"
 			},
 			success : function(resp) {
