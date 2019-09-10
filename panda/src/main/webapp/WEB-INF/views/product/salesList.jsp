@@ -9,6 +9,10 @@
 <meta charset="UTF-8">
 <title>할인상품</title>
 <style>
+img{
+	display: block;
+}
+
 .ul li a {
 	text-decoration: none;
 	color: #555;

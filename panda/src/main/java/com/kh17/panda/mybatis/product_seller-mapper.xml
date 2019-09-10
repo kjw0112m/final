@@ -45,12 +45,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from product_seller where product_id = #{product_id}
 	</select>
 	
-	<select id="search" parameterType="String" resultType="productSellerDto">
-		select * from product_seller
-			where
-				product_name || nickname like '%' || #{keyword} || '%'
-			order by
-				regist_dt desc
+	<select id="search" parameterType="map" resultType="productSellerDto">
+		<![CDATA[
+		select * from (
+			select rownum rn, A.* from(
+				select * from product_seller
+					where product_name || nickname like '%' || #{keyword} || '%' order by regist_dt desc
+			]]>
+				)A 
+		<![CDATA[
+		) where rn > = #{start} and rn <= #{end}
+		]]>
 	</select>
 	
 	<select id="count" resultType="int">
@@ -80,6 +85,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			)A
 		) where rn >= #{start} and rn <= #{end}
 	]]>	
+	</select>
+	
+	<select id="count5" parameterType="String" resultType="int">
+		select count(*) from product_seller
+			where
+				product_name || nickname like '%' || #{keyword} || '%' 
 	</select>
 	
 </mapper>
