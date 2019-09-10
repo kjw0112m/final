@@ -140,14 +140,29 @@ public class OrdersDaoImpl implements OrdersDao {
 		sqlSession.update("order.cs_status", ordersDto);
 	}
 
-	@Override
+	@Override 
 	public int deliveryCount(OrderViewDto orderViewDto) {
 		return sqlSession.selectOne("order.status_count", orderViewDto);
 	}
 
 	@Override
-	public void detach(String order_id) {
-		sqlSession.update("order.detach", order_id);
+	public void detach(String order_id, String team) {
+		sqlSession.update("order.detach", OrdersDto.builder().order_id(order_id).team(team).build());
+	}
+
+	@Override
+	public int statCount(OrderViewDto orderViewDto) {
+		return sqlSession.selectOne("order.myStatCount", orderViewDto);
+	}
+
+	@Override
+	public List<OrderListVO> statList(OrderViewDto orderViewDto, int start, int end) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("dto", orderViewDto);
+		map.put("start", start);
+		map.put("end", end);
+		
+		return sqlSession.selectList("order.myStat", map);
 	}
 
 }

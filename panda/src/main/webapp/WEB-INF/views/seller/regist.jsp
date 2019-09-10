@@ -15,8 +15,6 @@
 		}
 	})
 </script>
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/css/admin/common.css">
 <style>
 ul, ol, dl, li {
 	list-style: none;
@@ -39,6 +37,7 @@ ul, ol, dl, li {
 	margin: auto;
 	border: 1px solid #ddd;
 }
+
 .table {
 	border: none;
 	margin: auto;
@@ -269,9 +268,10 @@ ul, ol, dl, li {
 				</tbody>
 
 			</table>
+			<input id="registcheck" type="submit" value="가입하기">
+		</form>
 	</div>
-	<input id="registcheck" type="submit" value="가입하기">
-	</form>
+</div>
 </div>
 </body>
 </html>
