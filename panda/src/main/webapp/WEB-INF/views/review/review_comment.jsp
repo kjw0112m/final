@@ -4,20 +4,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>    
+<%-- <jsp:include page="/WEB-INF/views/notice/boardh.jsp"></jsp:include>   --%>
 
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/common2.css">
-
-
-<!-- 공지사항 시작 -->
-
-
-<a  href="${pageContext.request.contextPath}/notice/noticeList">공지사항<i id=gi></i></a>
-&&&
-<a  href="${pageContext.request.contextPath}/one/oneList">1:1 문의 <i id=gi></i></a>
-&&&
-<a  href="${pageContext.request.contextPath}/review/reviewComment">상품후기 <i id=gi></i></a>
 
 
 
@@ -32,6 +22,16 @@
   cursor: pointer;
 }
 .starR.on{background-position:0 0;}
+
+
+/* 정렬 가운데  */
+#ha2 {
+	/* border:1px solid #dadcdd;; */
+	width: 100%;
+	text-align: center;
+}
+
+
 </style>
 
 <!-- 자바스크립트를 이용하여 페이지 이동을 처리 -->
@@ -53,6 +53,7 @@ $(function(){
 		  return false;
 	});
 	
+
 });
 
 function saveReview() {
@@ -89,14 +90,23 @@ function editChange(id){
 			updateComment(id);
 		}
 	}
+	
+
+
+	
 }
 
+
 </script>
+
+<div id="ha2">
+<h2 > 상품 후기  </h2>
+</div>
 
 <!-- REVIEW 시작 -->
 <form method="post" id="reviewForm" class="form form-vertical">
 <input type="hidden" id="starcnt" name="starcnt" value="1">
-<input type="hidden" id="ordersid" name="ordersid" value="1">
+<input type="hidden" id="ordersid" name="ordersid" value="7">
 <input type="hidden" id="title" name="title" value="">
 <input type="hidden" id="commentcontent" name="commentcontent" value="">
 <input type="hidden" id="commentstar" name="commentstar" value="1">
@@ -110,7 +120,7 @@ function editChange(id){
 		</colgroup>
 		<tr>
 			<td>${startotalcnt.startotalcnt}</td>
-			<td colspan="2" align="center">
+			<td colspan="2" align="center"> 로그인 후 평가해주세요! 
 				<div class="starRev">
 				  <span class="starR">1</span>
 				  <span class="starR">2</span>
@@ -121,9 +131,9 @@ function editChange(id){
 			</td>
 		</tr>
 		<tr>
-			<th>내용</th>
+			<th>리뷰</th>
 			<td colspan="2">
-				<textarea name="content" placeholder="내용" rows="10" cols="100"></textarea>
+				<textarea name="content" placeholder="리뷰 작성 시 광고 및 욕설, 비속어나 타인을 비방하는 문구를 사용하시면 삭제 될 수 있습니다." rows="10" cols="100"></textarea>
 			</td>
 		</tr>
 	</tbody>
@@ -131,8 +141,11 @@ function editChange(id){
 	</thead>
 	<tfoot>
 		<tr align="center">
-			<td colspan="3"><input type="button" onclick="saveReview();" value="등록"></td>
+			<td colspan="3"><input type="button" onclick="saveReview();" value="리뷰 남기기"></td>
 		</tr>
+		
+	<%-- 	<c:if test="${sessionScope.sid.toString().startsWith('!') or sessionScope.sid.toString() eq list.createuser}"> --%>
+		
 		<c:forEach var="list" items="${reviewList}">
 		<tr>
 			<td colspan="3" align="left">
@@ -161,6 +174,7 @@ function editChange(id){
 			</tr>
 		</c:if>
 		</c:forEach>
+	<%-- 	</c:if> --%>
 	</tfoot>
 </table>
 </form>

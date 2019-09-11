@@ -130,13 +130,13 @@ div.item img {
 <div id="wrapper1">
 	<div class="bxSlider">
 		<div>
-			<img src="${pageContext.request.contextPath}/image/main/main1.png" class="img1">
+			<img src="${pageContext.request.contextPath}/image/main/mainpage1.png" class="img1">
 		</div>
 		<div>
-			<img src="${pageContext.request.contextPath}/image/main/main2.png" class="img1">
+			<img src="${pageContext.request.contextPath}/image/main/mainpage2.png" class="img1">
 		</div>
 		<div>
-			<img src="${pageContext.request.contextPath}/image/main/main3.png" class="img1">
+			<img src="${pageContext.request.contextPath}/image/main/mainpage3.png" class="img1">
 		</div>
 	</div>
 </div>

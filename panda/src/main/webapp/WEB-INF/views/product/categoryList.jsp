@@ -145,6 +145,9 @@
 	font-weight: bold;
 	color: #55a0ff;
 }
+.list{
+	width: 100%;
+}
 </style>
 <%-- <h2>${categoryDto.name}</h2> --%>
 <!-- <div> -->
@@ -201,7 +204,7 @@
 			<li>
 				<div class="image-wrap">
 					<a href="detail?product_id=${categoryListDto.product_id}"><img src="${pageContext.request.contextPath}/product/image?id=${categoryListDto.mainfile}" class="order-img"></a>
-				</div>
+				
 				<div class="li-bottom">
 					<a href="sellerList?seller_id=${categoryListDto.seller_id}">${categoryListDto.nickname}</a>
 					<br><br>
@@ -211,6 +214,7 @@
 						<fmt:formatNumber value="${categoryListDto.price}"
 							pattern="#,###.##"/>
 						</strong>
+				</div>
 				</div>
 			</li>
 		</c:forEach>

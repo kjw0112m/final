@@ -42,5 +42,9 @@ public interface OrdersDao {
 	
 	int deliveryCount(OrderViewDto orderViewDto);
 
-	void detach(String order_id);
+	void detach(String order_id, String team);
+
+	int statCount(OrderViewDto orderViewDto);
+
+	List<OrderListVO> statList(OrderViewDto orderViewDto, int start, int end);
 }

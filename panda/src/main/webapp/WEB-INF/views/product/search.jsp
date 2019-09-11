@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include> 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -111,7 +112,10 @@
 	text-align: center;
 	font-weight: 500;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/kjw0112m/final
 .paginate {
 	margin: 25px 0 0;
 	text-align: center;
@@ -158,7 +162,8 @@
 						<span style="width: 100%;"> <input type="text"
 							class="input_text" name="keyword" placeholder="상품을 찾아보세요" value="${param.keyword}"
 							style="border: 0px; padding: 10px 30px 0px 60px;">
-						</span> <input type="submit" value="검색">
+						</span>
+						<button><img alt="" src=""></button>
 					</div>
 				</div>
 			</form>
@@ -183,8 +188,10 @@
 							<br> <br> <strong><fmt:formatNumber value="${productSellerDto.price}"
 							pattern="#,###.##"/></strong>
 						</div>
+
 					</li>
 					</c:forEach>
+
 				</ul>
 			</c:otherwise>
 		</c:choose>

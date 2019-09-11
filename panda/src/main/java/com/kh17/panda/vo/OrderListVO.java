@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrderListVO {
 	private String team;
-	private String order_dt;
 	private String member_name;
 	private String pay_type;
 	private String pay_status;
@@ -23,13 +22,13 @@ public class OrderListVO {
 	private String t_invoice, t_id;
 
 	private List<OrderViewDto> list;
-
+	
 	public String getDate() {
-		return order_dt.substring(0, 10);
+		return list.get(0).getOrder_dt().substring(0, 10);
 	}
 
 	public String getTime() {
-		return order_dt.substring(0, 19);
+		return list.get(0).getOrder_dt().substring(0, 19);
 	}
 
 	public int getCount() {

@@ -11,13 +11,20 @@
 	.fTextsearchBox{
 		height: 25px;
 	}
-	
-	.form_button {
-		position: relative;
-		text-align: left;
-		margin: 15px 0;
-		padding: 0 4px 0 0;
-	}
+
+	.btn_edit_delete{
+	width: 100px;
+	height: 50px;
+	border: 1px solid transparent;
+	background-color: #55a0ff;
+	color: white;
+	line-height: 34px;
+	font-size: 17px;
+}
+#delete{
+	margin-top: 30px;
+}
+
 </style>
 <script>
 
@@ -80,6 +87,7 @@ $(function() {
 </script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/js/admin/product_search.js"></script>
+
 <body>
 	<form action="list" method="post" id="orderSearchForm">
 		<div id="content">
@@ -185,7 +193,7 @@ $(function() {
 					<td>${productSubcategoryDto.sale_yn}</td>
 					<td>${productSubcategoryDto.category_name} > ${productSubcategoryDto.subcategory_name}</td>
 					<td>${productSubcategoryDto.regist_dt}</td>
-					<td><a href="edit?id=${productSubcategoryDto.product_id}"><input type="button" value="수정"></a></td>
+					<td><a href="edit?id=${productSubcategoryDto.product_id}"><input type="button" value="수정" class="btn_edit_delete"></a></td>
 				</tr>
 				</c:forEach>
 				</c:otherwise>	
@@ -194,13 +202,23 @@ $(function() {
 		<tfoot>
 		</tfoot>
 	</table>
+<<<<<<< HEAD
 	</div>
 	
 	<div class="form_button">
 		<input type="submit" value="삭제">
 	</div>
+=======
+>>>>>>> branch 'master' of https://github.com/kjw0112m/final
 	</form>
 	</div>
+<<<<<<< HEAD
+=======
+	<div id="delete">
+		<input type="submit" value="삭제" class="btn_edit_delete">
+	</div>
+	</div>
+>>>>>>> branch 'master' of https://github.com/kjw0112m/final
 	<input name="page" type="hidden">
 	<div class="paginate">
 		<ol>

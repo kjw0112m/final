@@ -59,6 +59,7 @@
 	padding: 5px;
 	font-size: 22px;
 	margin-bottom: 50px;
+	margin-top: 50px;
 }
 
 .text-left {
@@ -83,6 +84,7 @@
 
 #btn2div {
 	margin-top: 30px;
+	margin-bottom: 150px;
 	text-align: center;
 	width: 100%;
 }

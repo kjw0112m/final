@@ -9,21 +9,7 @@
 	src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
 <script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
 <script>
-	$(function() {
-		var target = $(".product, .order, .member, .promotion, .stat, .board");
-		target.click(function() {
-			$(this).next().toggle();
-			$(this).parent().toggleClass("bc_w");
-			target.not($(this)).next().hide();
-			target.not($(this)).parent().removeClass("bc_w");
-		});
-
-		target.next().find("a").click(function() {
-			$(this).addClass("a_bold");
-			target.next().find("a").not($(this)).removeClass("a_bold");
-			console.log(this);
-		});
-	});
+	
 	//비밀번호 검사 후 형식에 안맞을시 보조메세지 출력	
 	$(function() {
 		$("input[name=new_pw]").blur(function checkPw() {
@@ -442,8 +428,8 @@ ul, li {
 				</tr>
 				<tr>
 					<td class="a">비밀번호(수정가능)</td>
-					<td class="b"><span class="span">현재 비밀번호</span><input
-						type="password" name="origin_pw" id="pw" class="iText"><br>
+					<td class="b"><span class="span">현재 비밀번호</span>
+					<input	type="password" name="origin_pw" id="pw" class="iText"><br>
 						<span class="span">신규 비밀번호</span><input type="password"
 						class="iText" name="new_pw" id="new_pw"
 						pattern="^[a-zA-Z0-9!@#$\-_]{8,15}$"><span class="spw"></span><br>
@@ -501,8 +487,8 @@ ul, li {
 			</table>
 
 			<div id="btn2div">
-				<input type="button" value="취소" class="input"> <input
-					type="submit" value="저장" class="input">
+				<input type="button" value="취소" class="input"> 
+				<input	type="submit" value="저장" class="input">
 			</div>
 		</form>
 	</div>
