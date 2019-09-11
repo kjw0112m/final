@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/admin/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/template/admin/aside.jsp"></jsp:include>
 <link rel="stylesheet"
@@ -10,6 +11,20 @@
 	.fTextsearchBox{
 		height: 25px;
 	}
+
+	.btn_edit_delete{
+	width: 100px;
+	height: 50px;
+	border: 1px solid transparent;
+	background-color: #55a0ff;
+	color: white;
+	line-height: 34px;
+	font-size: 17px;
+}
+#delete{
+	margin-top: 30px;
+}
+
 </style>
 <script>
 
@@ -72,6 +87,7 @@ $(function() {
 </script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/js/admin/product_search.js"></script>
+
 <body>
 	<form action="list" method="post" id="orderSearchForm">
 		<div id="content">
@@ -80,7 +96,7 @@ $(function() {
 			</div>
 			<div class="optionArea">
 				<div class="mOption">
-					<table border="1" summary="">
+					<table border="1" summary="" >
 						<colgroup>
 							<col style="width: 170px;">
 							<col style="width: 600px;">
@@ -143,8 +159,8 @@ $(function() {
 
 	
 	<div class="section" id="">
-		<div id="searchResultList" class="mBoard typeOrder gScroll gCellSingle">
 	<form action="delete" method="get">
+		<div id="searchResultList" class="mBoard typeOrder gScroll gCellSingle">
 	<table border="1" summary="" class="thead" width="800">
 		<thead>
 			<tr>
@@ -172,12 +188,12 @@ $(function() {
 					<td><input type="checkbox"  name="product_id" value=${productSubcategoryDto.product_id } class="sub_check"></td>
 					<td>${productSubcategoryDto.product_id}</td>
 					<td>${productSubcategoryDto.product_name}</td>
-					<td>${productSubcategoryDto.price}</td>
+					<td><fmt:formatNumber value="${productSubcategoryDto.price}" pattern="#,###.##"/></td>
 					<td>${productSubcategoryDto.display_yn}</td>
 					<td>${productSubcategoryDto.sale_yn}</td>
 					<td>${productSubcategoryDto.category_name} > ${productSubcategoryDto.subcategory_name}</td>
 					<td>${productSubcategoryDto.regist_dt}</td>
-					<td><a href="edit?id=${productSubcategoryDto.product_id}"><input type="button" value="수정"></a></td>
+					<td><a href="edit?id=${productSubcategoryDto.product_id}"><input type="button" value="수정" class="btn_edit_delete"></a></td>
 				</tr>
 				</c:forEach>
 				</c:otherwise>	
@@ -186,12 +202,23 @@ $(function() {
 		<tfoot>
 		</tfoot>
 	</table>
-	<div>
+<<<<<<< HEAD
+	</div>
+	
+	<div class="form_button">
 		<input type="submit" value="삭제">
 	</div>
+=======
+>>>>>>> branch 'master' of https://github.com/kjw0112m/final
 	</form>
 	</div>
+<<<<<<< HEAD
+=======
+	<div id="delete">
+		<input type="submit" value="삭제" class="btn_edit_delete">
 	</div>
+	</div>
+>>>>>>> branch 'master' of https://github.com/kjw0112m/final
 	<input name="page" type="hidden">
 	<div class="paginate">
 		<ol>

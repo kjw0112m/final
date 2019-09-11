@@ -79,6 +79,8 @@
 											<option value="title+content" ${type == 'title+content'?'selected':''}>제목+내용</option>
 											<option value="product" ${type == 'product'?'selected':''}>카테고리</option>
 											<option value="state" ${type == 'state'?'selected':''}>답변상태</option>
+											<option value="memberid" ${type == 'memberid'?'selected':''}>작성자</option>
+											
 																						
 										</select>
 		

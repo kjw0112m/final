@@ -18,53 +18,11 @@
 	width: 100%;
 	text-align: center;
 }
-
-
-
-/* 배송 메뉴 스타일 */
-.tab_li {
-	border:1px solid #dadcdd;;
-	width: 50%;
-	text-align: center;
+.delTab ol{
+	width: 1260px;
+	margin: auto;
 }
 
- .tab_li a{
-	display:block;
-	padding: 8px 0px;   /* 폭 */
-	background-clip: content-box;
-} 
-
-/*  .tab_li .count{
-	font-weight: bold;
-	font-size: 26px;
-}  */
-
-
-/* 글자 색상 크기  */
-/*  .tab_li strong{                  
-	font-size: 18px;
-	color: #55a0ff;
-} */
- 
-  .delTab .dTab{     /* 나누기  */
-	/* height: 100px; */
-	background-color: #fff;
-	display: flex;
-}  
-
-/* .delTab{
-	width: 100%;
-	margin-bottom: 20px;
-} */
-
-.tab_li.selected:before {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 4px;
-    margin: -1px 0;
-    background-color: #55a0ff;
-}
 
 </style>
 

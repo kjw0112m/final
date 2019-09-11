@@ -8,10 +8,7 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/common2.css">
 
-
 <jsp:include page="/WEB-INF/views/notice/boardh.jsp"></jsp:include>
-
-
 
 <!-- 공지사항 시작 -->
 

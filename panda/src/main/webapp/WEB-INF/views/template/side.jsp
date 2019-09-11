@@ -4,11 +4,19 @@
 	$(function() {
 		var target = $(".product, .order, .member, .promotion, .stat, .board");
 // 		target.click(function() {
+<<<<<<< HEAD
 			$(this).next().toggle();
 			// 		$(this).parent().toggleClass("bc_w");
 			target.not($(this)).next().hide();
 			// 		target.not($(this)).parent().removeClass("bc_w");
 		});
+=======
+// 			$(this).next().toggle();
+// 			// 		$(this).parent().toggleClass("bc_w");
+// 			target.not($(this)).next().hide();
+// 			// 		target.not($(this)).parent().removeClass("bc_w");
+// 		});
+>>>>>>> refs/remotes/origin/master
 
 		target.next().find("a").click(function() {
 			$(this).addClass("a_bold");

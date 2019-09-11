@@ -9,7 +9,7 @@
 	src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
 <script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
 <script>
-	
+
 	//비밀번호 검사 후 형식에 안맞을시 보조메세지 출력	
 	$(function() {
 		$("input[name=new_pw]").blur(function checkPw() {
