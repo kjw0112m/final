@@ -9,10 +9,11 @@ public interface ProductSellerDao {
 	List<ProductSellerDto> sellerList(String seller_id, int start, int end);
 	List<ProductSellerDto> categoryList(int sub_category_id, int start, int end);
 	ProductSellerDto get(int product_id);
-	List<ProductSellerDto> search(String keyword);
+	List<ProductSellerDto> search(String keyword, int start, int end);
 	int count();
 	int count(int sub_category_id);
 	int count(String seller_id);
 	int countSales();
 	List<ProductSellerDto> salesList(int start, int end);
+	int countSearch(String keyword);
 }

@@ -306,11 +306,32 @@ public class ProductController {
 	@GetMapping("/search")
 	public String search(
 			@RequestParam(required=false) String keyword,
+			@RequestParam (required = false, defaultValue = "1") int page,
 			Model model) {
+		
 		if(keyword != null) {	
-		List<ProductSellerDto> list = productSellerDao.search(keyword);
+			
+			int pagesize = 12;
+			int start = pagesize * page - (pagesize - 1);
+			int end = pagesize * page;
+			
+			int blocksize = 10;
+			int startBlock = (page - 1) / blocksize * blocksize + 1;
+			int endBlock = startBlock + (blocksize - 1);
+			
+			int count = productSellerDao.countSearch(keyword);
+			int pageCount = (count - 1) / pagesize + 1;
+			if (endBlock > pageCount) {
+				endBlock = pageCount;
+			}
+			
+		List<ProductSellerDto> list = productSellerDao.search(keyword, start, end);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("list", list);
+		model.addAttribute("page", page);
+		model.addAttribute("startBlock", startBlock);
+		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
 		}
 		return "product/search";
 	}
