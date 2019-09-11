@@ -1,5 +1,6 @@
 package com.kh17.panda.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -25,6 +26,7 @@ import com.kh17.panda.repository.OrdersDao;
 import com.kh17.panda.repository.ProductDao;
 import com.kh17.panda.vo.OrderAddressVO;
 import com.kh17.panda.vo.OrderListVO;
+import com.kh17.panda.vo.OrderVO;
 
 @Controller
 @RequestMapping("/orders")
@@ -49,12 +51,19 @@ public class OrdersController {
 
 	@GetMapping("/order")
 	public String order(@RequestParam(required = false, defaultValue = "0") int product_id,
-			@RequestParam(required = false) String[] sizes, @RequestParam(required = false) int[] id,
+			@RequestParam(required = false) String[] s_q, @RequestParam(required = false) int[] id,
 			@RequestParam String totalPrice, HttpSession session, Model model) {
 		String member_id = (String) session.getAttribute("sid");
+		List<OrderVO> voList = new ArrayList<>();
 		if (product_id > 0) {
 			ProductDto productDto = productDao.get(product_id);
-			model.addAttribute("productDto", productDto);
+			for(String s : s_q) {
+				String size = s.split("-")[0];
+				int quantity = Integer.parseInt(s.split("-")[1]);
+				voList.add(OrderVO.builder().productDto(productDto).size(size).quantity(quantity).build());
+			}
+			session.setAttribute("orderVO", voList);
+			model.addAttribute("orderCount", voList.size());
 		} else {
 			List<CartViewDto> list = cartDao.list(id);
 			model.addAttribute("cartList", list);
@@ -85,11 +94,11 @@ public class OrdersController {
 		ordersDto.setRe_addr("[" + orderAddressVO.getPost_code() + "]" + orderAddressVO.getBasic_addr()
 				+ orderAddressVO.getDetail_addr());
 
+		int count = 0;
+		String team = null;
 //		장바구니에서 주문할 경우
-		if (c_id.length > 0) {
+		if (c_id != null) { 
 			List<CartViewDto> list = cartDao.list(c_id);
-			int count = 0;
-			String team = null;
 
 			for (CartViewDto cartViewDto : list) {
 				ordersDto.setId(ordersDao.seq());
@@ -112,11 +121,25 @@ public class OrdersController {
 		}
 //		상품 상세화면에서 단일 주문할 경우
 		else {
-			ordersDto.setId(ordersDao.seq());
-			ordersDto.setRe_phone(re_phone.toString());
-			ordersDto.setRe_addr("[" + orderAddressVO.getPost_code() + "]" + orderAddressVO.getBasic_addr()
-					+ orderAddressVO.getDetail_addr());
-			ordersDao.insert(ordersDto);
+			List<OrderVO> voList = (List<OrderVO>) session.getAttribute("orderVO");
+			
+			for(OrderVO orderVO : voList) {
+				ordersDto.setId(ordersDao.seq());
+				ordersDto.setQuantity(orderVO.getQuantity());
+				ordersDto.setTotal_price(orderVO.getQuantity() * orderVO.getProductDto().getPrice());
+				ordersDto.setSizes(orderVO.getSize());
+				ordersDto.setProduct_id(orderVO.getProductDto().getId());
+
+				if (count > 0) {
+					ordersDto.setTeam(team);
+				}
+
+				ordersDao.insert(ordersDto);
+				if (count == 0) {
+					team = ordersDao.getOrderId(ordersDto.getId());
+				}
+				count++;
+			}
 		}
 
 		return "orders/result";

@@ -113,7 +113,8 @@
 
 		});
 		
-		
+		var totalPrice = parseInt("${productSellerDto.price}");
+		var sumCount = 0;
 
 		$('#cart').click(function(){
 			$('#cart').submit();
@@ -128,7 +129,6 @@
 				// $(this).find('.num').val(sum);
 				$(this).find('.s_q').val(sum);
 			});
-
 			//this : form
 			this.submit();
 		});
@@ -143,17 +143,17 @@
 				var sizes = $(this).find('.selectedSizes').text();
 				var count = $(this).find('.num').val();
 				var sum = sizes + "-" + count;
+				sumCount += parseInt(count);
 				// $(this).find('.num').val(sum);
 				$(this).find('.s_q').val(sum);
 			});
-
+			totalPrice = totalPrice * sumCount;
+			$('#total_price').val(totalPrice);
 			//this : form
 			this.submit();
 		});
 		
 		$("#ordersid").val($("[name='product_id']").val());
-		
-		
 	});
 </script>
 <style>
@@ -256,6 +256,13 @@
 		margin: auto;
 		width: 1260px;
 	}
+	
+	.clear{
+		display: block;
+		clear: both;
+		content: "";
+	}
+	
 	.bottomimg{
 		margin: auto;
 		width: 1300px;	
@@ -279,8 +286,9 @@
 				<br><br>
 				<hr>
 				<br><br>
-				<form action="../cart/add" method="post">
+				<form action="../cart/add" method="get">
 					<input type="hidden" name="product_id" value="${productSellerDto.product_id}">
+					<input type="hidden" name="totalPrice" value="" id="total_price">
 					<select id="sizes">
 						<option value="" selected="selected" disabled="disabled">사이즈 선택</option>
 						<c:forEach var="sizesDto" items="${list}">
@@ -298,6 +306,7 @@
 					</div>
 				</form>
 			</div>
+			<div class="clear"></div>
 			<div class="template" style="display: none">
 					<div>
 						<!-- 템플릿 -->
@@ -319,7 +328,7 @@
 			<img src="${pageContext.request.contextPath}/product/image?id=${productSellerDto.detailfile}" id="pimg">
 			</div>
 		</div>
-		
-<!--<jsp:include page="/WEB-INF/views/review/review_comment.jsp"></jsp:include>    		-->
+
+				
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

@@ -3,12 +3,12 @@
 <script>
 	$(function() {
 		var target = $(".product, .order, .member, .promotion, .stat, .board");
-		target.click(function() {
-			$(this).next().toggle();
-			// 		$(this).parent().toggleClass("bc_w");
-			target.not($(this)).next().hide();
-			// 		target.not($(this)).parent().removeClass("bc_w");
-		});
+// 		target.click(function() {
+// 			$(this).next().toggle();
+// 			// 		$(this).parent().toggleClass("bc_w");
+// 			target.not($(this)).next().hide();
+// 			// 		target.not($(this)).parent().removeClass("bc_w");
+// 		});
 
 		target.next().find("a").click(function() {
 			$(this).addClass("a_bold");

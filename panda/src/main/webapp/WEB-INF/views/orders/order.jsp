@@ -107,6 +107,10 @@
 	box-sizing: border-box;
 }
 
+body{
+	min-width: 1800px !important;
+}
+
 .total {
 	min-width: 1180px !important;
 	max-width: 1260px;
@@ -218,7 +222,8 @@
 }
 
 .clearfix::after {
-	content: ""; clear : both;
+	content: "";
+	clear: both;
 	display: table;
 	clear: both;
 }
@@ -261,12 +266,12 @@ a {
 }
 
 .orderbox {
-	float: right;
-	border: none;
-	width: 320px;
 	position: fixed;
 	top: 250px;
-	right: 200px;
+	left: 1350px;
+/* 	float: right; */
+	border: none;
+	width: 320px;
 }
 
 .dl {
@@ -323,30 +328,31 @@ a {
 			> 03 주문완료</span>
 	</div>
 	<form action="" method="post" standby="true">
+		<div class="total">
 		<div class="orderbox">
 			<h4 style="font-size: 22px">
 				결제 금액 / 총
 				<c:choose>
 					<c:when test="${not empty cartList}">
-					${orderCount}
+					${orderCount}	
 					<input name="quantity" type="hidden" value="${orderCount}">
 					</c:when>
 					<c:otherwise>
-					1
-					<input name="quantity" type="hidden" value="1">
+					${orderCount}
+					<input name="quantity" type="hidden" value="${orderCount}"> 
 					</c:otherwise>
 				</c:choose>
 				개
 			</h4>
 			<dl class="dl">
 				<dt class="order-dt">주문금액</dt>
-				<dd class="order-dd">${totalPrice}</dd>
+				<dd class="order-dd"><fmt:formatNumber value="${totalPrice}" pattern="#,###.##" /></dd>
 				<dt class="order-dt">배송비</dt>
 				<dd class="order-dd">0</dd>
 				<div id="orderprice">
 					<dt class="order-dt">총 결제금액</dt>
-					<dd class="order-dd">${totalPrice}</dd>
-					<input type="hidden" name="total_amount" value="${totalPrice}">
+					<dd class="order-dd"><fmt:formatNumber value="${totalPrice}" pattern="#,###.##" /></dd>
+				<input type="hidden" name="total_amount" value="${totalPrice}">
 				</div>
 			</dl>
 			<ul class="order-ul">
@@ -361,7 +367,6 @@ a {
 			</ul>
 			<a href="#"><button class="orderbutton">주문하기</button></a>
 		</div>
-		<div class="total">
 			<div class="intotal">
 				<div class="top-table">
 					<h4>상품정보</h4>
@@ -384,8 +389,8 @@ a {
 									<tr>
 										<td class="imggg"><a href="#" class="img"> <img
 												src="http://placehold.it/100"></a></td>
-										<td class="text-left"><a href="#"><span>${c.product_seller_id}</span></a>
-											<a href="#"><span>${c.product_name}</span></a>
+										<td class="text-left"><div><a href="#">${c.product_seller_id}</a></div>
+											<div><a href="#">${c.product_name}</a></div>
 											<div>
 												<fmt:formatNumber value="${c.product_price}"
 													pattern="#,###.##" />
@@ -398,23 +403,31 @@ a {
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
-								<tr>
-									<td class="imggg"><a href="#" class="img"> <img
-											src="http://placehold.it/100"></a></td>
-									<td class="text-left"><a href="#"><span>${productDto.seller_id}</span></a>
-										<a href="#"><span>${productDto.name}</span></a>
-										<div>
-											<input type="hidden" name="total_price"
-												value="${productDto.price * quantity}">
-											<fmt:formatNumber value="${productDto.price}"
-												pattern="#,###.##" />
-										</div>
-										<div>${sizes}</div>
-										<div>수량: ${quantity} 개</div></td>
-									<td class="text-center w150"><fmt:formatNumber
-											value="${productDto.price * quantity}" pattern="#,###.##" />
-									</td>
-								</tr>
+								<c:forEach items="${sessionScope.orderVO }" var="orderVO" varStatus="status">
+									<c:if test="${status.first}">
+										<input name="product_id" type="hidden"
+											value="${orderVO.productDto.id }">
+										<input name="item_name" type="hidden"
+											value="${orderVO.productDto.name }">
+									</c:if>
+									<tr>
+										<td class="imggg"><a href="#" class="img"> <img
+												src="http://placehold.it/100"></a></td>
+										<td class="text-left"><div><a href="#">${orderVO.productDto.seller_id}</a></div>
+											<div><a href="#">${orderVO.productDto.name}</a></div>
+											<div>
+												<input type="hidden" name="total_price"
+													value="${orderVO.productDto.price * orderVO.quantity}">
+												<fmt:formatNumber value="${orderVO.productDto.price}"
+													pattern="#,###.##" />
+											</div>
+											<div>${orderVO.size}</div>
+											<div>수량: ${orderVO.quantity} 개</div></td>
+										<td class="text-center w150"><fmt:formatNumber
+												value="${orderVO.productDto.price * orderVO.quantity}"
+												pattern="#,###.##" /></td>
+									</tr>
+								</c:forEach>
 							</c:otherwise>
 						</c:choose>
 					</tbody>

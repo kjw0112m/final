@@ -79,6 +79,18 @@
  			<exclude-mapping path="/admin/regist"/>
  			<beans:bean class="com.kh17.panda.interceptor.SellerLoginInterceptor"></beans:bean> 
  		</interceptor>
+ 		
+ 		<interceptor>
+ 			<mapping path="/**"></mapping>
+ 			<exclude-mapping path="/product/image/**"/>
+ 			<exclude-mapping path="/css/**"/>
+ 			<exclude-mapping path="/js/**"/>
+ 			<exclude-mapping path="/font/**"/>
+ 			<exclude-mapping path="/image/**"/>
+ 			<exclude-mapping path="/admin/**"/>
+ 			<exclude-mapping path="/seller/**"/>
+ 			<beans:bean class="com.kh17.panda.interceptor.OrderSessionInterceptor"></beans:bean>
+ 		</interceptor>
 	</interceptors>
 	
 
