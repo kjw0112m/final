@@ -151,6 +151,9 @@
 			this.submit();
 		});
 		
+		$("#ordersid").val($("[name='product_id']").val());
+		
+		
 	});
 </script>
 <style>
@@ -169,7 +172,11 @@
 		width: 540px;
 		margin-left: 70px;
 	}
-
+	
+	.clear{
+		clear: both;
+	}
+	
 	.formdiv dt {
 		float: left;
 		width: 80px;
@@ -295,6 +302,7 @@
 					</div>
 				</form>
 			</div>
+			<div class="clear"></div>
 			<div class="template" style="display: none">
 					<div>
 						<!-- 템플릿 -->
@@ -316,4 +324,6 @@
 			<img src="${pageContext.request.contextPath}/product/image?id=${productSellerDto.detailfile}" id="pimg">
 			</div>
 		</div>
+		
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

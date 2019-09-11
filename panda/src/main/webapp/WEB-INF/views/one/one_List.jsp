@@ -14,14 +14,6 @@
 
 
 
-<a  href="${pageContext.request.contextPath}/notice/noticeList">공지사항<i id=gi></i></a>
-&&&
-<a  href="${pageContext.request.contextPath}/board/listOne">1:1 문의 <i id=gi></i></a>
-&&&
-<a  href="${pageContext.request.contextPath}/review/reviewComment">상품후기 <i id=gi></i></a>
-<!-- 자바스크립트를 이용하여 페이지 이동을 처리 -->
-
-
 <div id="ha2">
 <h2 >1:1문의 </h2>
 </div>

@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and
 			seller_id = #{dto.seller_id}
 		</if>
-		order by order_dt desc)O
+		order by team desc)O
 		<![CDATA[
 		) where rn >= #{start} and rn <= #{end}
 		]]>
@@ -234,7 +234,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="myOrder" resultMap="orderListVO" parameterType="map">
 		select * from ( 
 		<![CDATA[ 
-		select rownum rn, O.* from( select distinct team, order_dt, member_name, pay_type, pay_status, re_name, re_phone, re_addr, t_invoice, t_id from order_view 
+		select rownum rn, O.* from( select distinct team, member_name, pay_type, pay_status, re_name, re_phone, re_addr, t_invoice, t_id from order_view 
 		]]>
 		where 1=1
 		<if test="dto.member_id != null">
@@ -253,7 +253,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and
 			team = {team}
 		</if>
-		order by order_dt desc)O)
+		order by team desc)O)
+		<if test="start!=null and end!=null">
+		<![CDATA[ 
+		where rn >= #{start} and rn <= #{end}
+		]]>
+		</if>
+	</select>
+	
+	<select id="myStat" resultMap="orderListVO" parameterType="map">
+		select * from ( 
+		<![CDATA[ 
+		select rownum rn, O.* from( select distinct team, member_name, pay_type, pay_status, re_name, re_phone, re_addr, t_invoice, t_id from order_view 
+		]]>
+		where cs_status in('교환', '환불', '취소', '반품')
+		<if test="dto.member_id != null">
+			and member_id=#{dto.member_id}
+		</if>
+		<if test="dto.seller_id != null">
+			and seller_id=#{dto.seller_id}
+		</if>
+		<if test="dto.start_dt != null and dto.end_dt !=null"> and
+			order_dt between to_date(#{dto.start_dt},
+			'YYYY-MM-DD') and
+			to_date(#{dto.end_dt},
+			'YYYY-MM-DD') + 0.99999
+		</if>
+		<if test="team != null">
+			and
+			team = {team}
+		</if>
+		order by team desc)O)
 		<if test="start!=null and end!=null">
 		<![CDATA[ 
 		where rn >= #{start} and rn <= #{end}
@@ -278,6 +308,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		parameterType="orderViewDto">
 		select count(distinct team) from order_view where
 		member_id=#{member_id}
+		<if test="start_dt != null and end_dt !=null"> and
+			order_dt between to_date(#{start_dt}, 'YYYY-MM-DD')
+			and
+			to_date(#{end_dt},
+			'YYYY-MM-DD') + 0.99999
+		</if>
+	</select>
+	
+	<select id="myStatCount" resultType="int"
+		parameterType="orderViewDto">
+		select count(distinct team) from order_view where
+		member_id=#{member_id} and cs_status in('교환', '환불', '취소', '반품')
 		<if test="start_dt != null and end_dt !=null"> and
 			order_dt between to_date(#{start_dt}, 'YYYY-MM-DD')
 			and
@@ -335,7 +377,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from (
 		<![CDATA[
 			select rownum rn, O.* from(
-				select distinct team, order_dt, member_name, pay_type, pay_status, re_name, re_phone, re_addr, t_invoice, t_id from order_view
+				select distinct team, member_name, pay_type, pay_status, re_name, re_phone, re_addr, t_invoice, t_id from order_view
 		]]>
 		where 1=1
 		<if test="vo.size() > 0 ">
@@ -372,7 +414,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and
 			seller_id = #{dto.seller_id}
 		</if>
-		order by order_dt desc)O
+		order by team desc)O
 		<![CDATA[
 		) where rn >= #{start} and rn <= #{end}
 		]]>
@@ -394,8 +436,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 	</select>
 	
-	<update id="detach" parameterType="string">
-		update orders set team=#{order_id} where order_id=#{order_id}
+	<update id="detach" parameterType="ordersDto">
+		update orders set team=#{team} where order_id=#{order_id}
 	</update>
 </mapper>
 

@@ -13,6 +13,7 @@
 	margin: auto;
 	text-align: center;
 	background-color: #bbb;
+	
 }
 
 .a>th {
@@ -59,6 +60,7 @@ h4 {
 	margin-top: 30px;
 	text-align: center;
 	width: 100%;
+	padding-bottom: 150px;
 }
 </style>
 <script src="https:/code.jquery.com/jquery-latest.js"></script>

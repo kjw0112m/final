@@ -1,5 +1,6 @@
 package com.kh17.panda.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +41,8 @@ public class SellerOrderController {
 
 	@PostMapping("/search")
 	public String list(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
-			Model model, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "10") int rows,HttpSession session,
+			Model model, @RequestParam(required = false, defaultValue = "1") int page,
+			@RequestParam(required = false, defaultValue = "10") int rows, HttpSession session,
 			@RequestParam(required = false) String[] csStatus, @RequestParam(required = false) String[] tStatus) {
 		if (session.getAttribute("aid") != null) {
 			int pagesize = rows;
@@ -101,7 +103,8 @@ public class SellerOrderController {
 
 	@GetMapping("/delivery/before_deposit")
 	public String delivery(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
-			Model model, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
+			Model model, @RequestParam(required = false, defaultValue = "1") int page,
+			@RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
 		String aid = (String) session.getAttribute("aid");
 		orderViewDto.setPay_status("입금전");
 
@@ -156,7 +159,8 @@ public class SellerOrderController {
 
 	@GetMapping("/delivery/ready")
 	public String ready(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
-			Model model, @RequestParam(required = false, defaultValue = "1") int page,@RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
+			Model model, @RequestParam(required = false, defaultValue = "1") int page,
+			@RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
 		String sid = (String) session.getAttribute("aid");
 		orderViewDto.setT_status("배송준비중");
 
@@ -200,6 +204,9 @@ public class SellerOrderController {
 			List<OrderListVO> list = ordersDao.list(orderViewDto, search, start, end);
 
 			model.addAttribute("orderListVO", list);
+			for(OrderListVO vo : list) {
+				System.out.println(vo.getList().toString());
+			}
 			model.addAttribute("searchCount", count);
 
 			List<TransportDto> tList = transportDao.list();
@@ -212,177 +219,180 @@ public class SellerOrderController {
 			return "seller/orders/delivery/ready";
 		}
 	}
-	
+
 	@GetMapping("/delivery/waiting")
 	public String wating(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
-			Model model, @RequestParam(required = false, defaultValue = "1") int page,@RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
+			Model model, @RequestParam(required = false, defaultValue = "1") int page,
+			@RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
 		String sid = (String) session.getAttribute("aid");
 		orderViewDto.setT_status("배송대기");
-		
+
 		deTab(model);
-		
+
 		if (sid != null) {
 			int pagesize = rows;
 			int start = pagesize * page - (pagesize - 1);
 			int end = pagesize * page;
-			
+
 			int blocksize = 10;
 			int startBlock = (page - 1) / blocksize * blocksize + 1;
 			int endBlock = startBlock + (blocksize - 1);
-			
+
 			List<OrderViewVO> search = orderViewListVO.getSearch();
-			
+
 			for (int i = 0; i < search.size(); i++) {
 				if (search.get(i).getKeyword().isEmpty()) {
 					search.remove(i);
 					i--;
 				}
 			}
-			
+
 			for (int i = 0; i < search.size(); i++) {
 				if (search.get(i).getType() == null) {
 					search.remove(i);
 				}
 			}
-			
+
 			int count = ordersDao.count(orderViewDto, search);
 			int pageCount = (count - 1) / pagesize + 1;
 			if (endBlock > pageCount) {
 				endBlock = pageCount;
 			}
-			
+
 			model.addAttribute("page", page);
 			model.addAttribute("startBlock", startBlock);
 			model.addAttribute("endBlock", endBlock);
 			model.addAttribute("pageCount", pageCount);
-			
+
 			List<OrderListVO> list = ordersDao.list(orderViewDto, search, start, end);
-			
+
 			model.addAttribute("orderListVO", list);
 			model.addAttribute("searchCount", count);
-			
+
 			List<TransportDto> tList = transportDao.list();
-			
+
 			model.addAttribute("transportDto", tList);
-			
+
 			return "seller/orders/delivery/waiting";
 		} else {
 			model.addAttribute("orderListVO", null);
 			return "seller/orders/delivery/waiting";
 		}
 	}
-	
+
 	@GetMapping("/delivery/shipping")
 	public String shipping(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
-			Model model, @RequestParam(required = false, defaultValue = "1") int page,@RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
+			Model model, @RequestParam(required = false, defaultValue = "1") int page,
+			@RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
 		String sid = (String) session.getAttribute("aid");
 		orderViewDto.setT_status("배송중");
-		
+
 		deTab(model);
-		
+
 		if (sid != null) {
 			int pagesize = rows;
 			int start = pagesize * page - (pagesize - 1);
 			int end = pagesize * page;
-			
+
 			int blocksize = 10;
 			int startBlock = (page - 1) / blocksize * blocksize + 1;
 			int endBlock = startBlock + (blocksize - 1);
-			
+
 			List<OrderViewVO> search = orderViewListVO.getSearch();
-			
+
 			for (int i = 0; i < search.size(); i++) {
 				if (search.get(i).getKeyword().isEmpty()) {
 					search.remove(i);
 					i--;
 				}
 			}
-			
+
 			for (int i = 0; i < search.size(); i++) {
 				if (search.get(i).getType() == null) {
 					search.remove(i);
 				}
 			}
-			
+
 			int count = ordersDao.count(orderViewDto, search);
 			int pageCount = (count - 1) / pagesize + 1;
 			if (endBlock > pageCount) {
 				endBlock = pageCount;
 			}
-			
+
 			model.addAttribute("page", page);
 			model.addAttribute("startBlock", startBlock);
 			model.addAttribute("endBlock", endBlock);
 			model.addAttribute("pageCount", pageCount);
-			
+
 			List<OrderListVO> list = ordersDao.list(orderViewDto, search, start, end);
-			
+
 			model.addAttribute("orderListVO", list);
 			model.addAttribute("searchCount", count);
-			
+
 			List<TransportDto> tList = transportDao.list();
-			
+
 			model.addAttribute("transportDto", tList);
-			
+
 			return "seller/orders/delivery/shipping";
 		} else {
 			model.addAttribute("orderListVO", null);
 			return "seller/orders/delivery/shipping";
 		}
 	}
-	
+
 	@GetMapping("/delivery/complete")
 	public String complete(@ModelAttribute OrderViewDto orderViewDto, @ModelAttribute OrderViewListVO orderViewListVO,
-			Model model, @RequestParam(required = false, defaultValue = "1") int page, @RequestParam(required = false, defaultValue = "10") int rows,HttpSession session) {
+			Model model, @RequestParam(required = false, defaultValue = "1") int page,
+			@RequestParam(required = false, defaultValue = "10") int rows, HttpSession session) {
 		String sid = (String) session.getAttribute("aid");
 		orderViewDto.setT_status("배송완료");
-		
+
 		deTab(model);
-		
+
 		if (sid != null) {
 			int pagesize = rows;
 			int start = pagesize * page - (pagesize - 1);
 			int end = pagesize * page;
-			
+
 			int blocksize = 10;
 			int startBlock = (page - 1) / blocksize * blocksize + 1;
 			int endBlock = startBlock + (blocksize - 1);
-			
+
 			List<OrderViewVO> search = orderViewListVO.getSearch();
-			
+
 			for (int i = 0; i < search.size(); i++) {
 				if (search.get(i).getKeyword().isEmpty()) {
 					search.remove(i);
 					i--;
 				}
 			}
-			
+
 			for (int i = 0; i < search.size(); i++) {
 				if (search.get(i).getType() == null) {
 					search.remove(i);
 				}
 			}
-			
+
 			int count = ordersDao.count(orderViewDto, search);
 			int pageCount = (count - 1) / pagesize + 1;
 			if (endBlock > pageCount) {
 				endBlock = pageCount;
 			}
-			
+
 			model.addAttribute("page", page);
 			model.addAttribute("startBlock", startBlock);
 			model.addAttribute("endBlock", endBlock);
 			model.addAttribute("pageCount", pageCount);
-			
+
 			List<OrderListVO> list = ordersDao.list(orderViewDto, search, start, end);
-			
+
 			model.addAttribute("orderListVO", list);
 			model.addAttribute("searchCount", count);
-			
+
 			List<TransportDto> tList = transportDao.list();
-			
+
 			model.addAttribute("transportDto", tList);
-			
+
 			return "seller/orders/delivery/complete";
 		} else {
 			model.addAttribute("orderListVO", null);
@@ -409,24 +419,25 @@ public class SellerOrderController {
 			}
 		}
 	}
+
 	@PostMapping("/delivery/waiting/ready")
-	public void ready(@ModelAttribute OrdersDto ordersDto, @RequestParam String[] idAry, HttpServletResponse resp) {
-			for (String order_id : idAry) {
-				ordersDto.setOrder_id(order_id);;
-				ordersDao.t_change(ordersDto);
-				ordersDao.detach(order_id);
-			}
+	public void ready(@ModelAttribute OrdersDto ordersDto, @RequestParam String[] idAry, String[] notIdAry, String getTeam, HttpServletResponse resp) {
+		for (String order_id : idAry) {
+			ordersDto.setOrder_id(order_id);
+			ordersDao.t_change(ordersDto);
+			detach(idAry, notIdAry, getTeam);
+		}
 	}
-	
+
 	@PostMapping("/delivery/waiting/shipping")
 	public void shipping(@ModelAttribute OrdersDto ordersDto, @RequestParam String[] idAry, HttpServletResponse resp) {
-			for (String team : idAry) {
-				ordersDto.setTeam(team);
-				ordersDao.t_change(ordersDto);
-				break;
-			}
+		for (String team : idAry) {
+			ordersDto.setTeam(team);
+			ordersDao.t_change(ordersDto);
+			break;
+		}
 	}
-	
+
 	@PostMapping("/delivery/shipping/complete")
 	public void complete(@ModelAttribute OrdersDto ordersDto, @RequestParam String[] idAry, HttpServletResponse resp) {
 		for (String team : idAry) {
@@ -435,11 +446,47 @@ public class SellerOrderController {
 		}
 	}
 
-	@PostMapping("/delivery/ready/detach")
-	public void detach(@RequestParam String[] idAry, HttpServletResponse resp) {
-		for (String order_id : idAry) {
-			ordersDao.detach(order_id);
+	public void detach(String[] idAry, String[] notIdAry, String getTeam) {
+		Arrays.sort(idAry);
+		Arrays.sort(notIdAry);
+		int dCount = 0;
+		String detachId = null;
+		
+		for(String s : notIdAry) {
+			System.out.println(s);
 		}
+		
+		if (idAry.length == 1 && idAry[0].equals(getTeam)) {
+			for (String id : notIdAry) {
+				if (dCount == 0) {
+					detachId = id;
+				}
+				ordersDao.detach(id, detachId);
+				dCount++;
+			}
+		} else if (idAry.length > 1 && idAry[0].equals(getTeam)) {
+			for (String id : notIdAry) {
+				if (dCount == 0) {
+					detachId = id;
+				}
+				ordersDao.detach(id, detachId);
+				dCount++;
+			}
+		} else {
+			for (String id : idAry) {
+				if (dCount == 0) {
+					detachId = id;
+				}
+				ordersDao.detach(id, detachId);
+				dCount++;
+			}
+		}
+	}
+
+	@PostMapping("/delivery/ready/detach")
+	public void detach(@RequestParam String[] idAry, @RequestParam String[] notIdAry, @RequestParam String getTeam,
+			HttpServletResponse resp) {
+		detach(idAry, notIdAry, getTeam);
 	}
 
 	@GetMapping("/content")

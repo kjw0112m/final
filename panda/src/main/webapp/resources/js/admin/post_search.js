@@ -280,6 +280,8 @@ $(function() {
 
 	// 송장번호 입력
 	var idAry = [];
+	var notIdAry = [];
+	var getTeam;
 
 	$('.btnInvoice').click(function() {
 		var t_id = $(this).prev().prev();
@@ -332,6 +334,14 @@ $(function() {
 		$('input[name=team]').each(function() {
 			if ($(this).is(':checked')) {
 				idAry.push($(this).attr('order_id'));
+				getTeam = $(this).val();
+			}
+		});
+		$('input[value='+getTeam+']').each(function(){
+			if ($(this).is(':checked')){
+			}
+			else{
+				notIdAry.push($(this).attr('order_id'));
 			}
 		});
 		jQuery.ajaxSettings.traditional = true;
@@ -340,7 +350,9 @@ $(function() {
 			type : "POST",
 			dataType : "text",
 			data : {
-				idAry : idAry
+				idAry : idAry,
+				notIdAry: notIdAry,
+				getTeam: getTeam
 			},
 			success : function(resp) {
 				location.reload();
@@ -352,6 +364,14 @@ $(function() {
 		$('input[name=team]').each(function() {
 			if ($(this).is(':checked')) {
 				idAry.push($(this).attr('order_id'));
+				getTeam = $(this).val();
+			}
+		});
+		$('input[value='+getTeam+']').each(function(){
+			if ($(this).is(':checked')){
+			}
+			else{
+				notIdAry.push($(this).attr('order_id'));
 			}
 		});
 		jQuery.ajaxSettings.traditional = true;
@@ -361,6 +381,8 @@ $(function() {
 			dataType : "text",
 			data : {
 				idAry : idAry,
+				notIdAry: notIdAry,
+				getTeam: getTeam,
 				t_status : "배송준비중"
 			},
 			success : function(resp) {

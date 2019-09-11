@@ -87,7 +87,7 @@
 					<li class=""><a id="a"
 						href="${pageContext.request.contextPath}/orders/list"> 주문 배송
 							조회 </a></li>
-					<li class=""><a id="a" href="#"> 취소/교환/반품/환불 </a></li>
+					<li class=""><a id="a" href="${pageContext.request.contextPath}/orders/stat_list"> 취소/교환/반품/환불 </a></li>
 				</ul></li>
 			<li><a id="a" href="#" class="member"> 회원 혜택 </a>
 				<ul class="">
