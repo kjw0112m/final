@@ -56,7 +56,7 @@ h4 {
 	margin: auto;
 }
 
-#btn2div {
+#btn2div { 
 	margin-top: 30px;
 	text-align: center;
 	width: 100%;
