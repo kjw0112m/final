@@ -26,7 +26,6 @@ import com.kh17.panda.vo.KakaoPaySuccessVO;
 @RequestMapping("/pay/kakao")
 public class KakaoPayController {
 
-//	사용자가 결제 확인을 누른 경우 처리
 	@PostMapping("/confirm")
 	public String confirm(@RequestParam String[] item_name, @RequestParam int quantity, @RequestParam int total_amount,
 			HttpSession session) throws URISyntaxException {
