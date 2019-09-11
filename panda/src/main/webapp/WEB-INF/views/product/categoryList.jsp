@@ -43,10 +43,15 @@
 	clear: both;
 }
 
-.order-img {
-	width: 350px;
-	height: 350px;
-	margin-bottom: 12px;
+.image-wrap{
+	height:350px;
+	min-height:350px;
+	max-height:350px;
+	padding-right:15px;
+}
+.image-wrap .order-img {
+	width:100%;
+	height:100%;
 }
 
 .ul {
@@ -140,6 +145,9 @@
 	font-weight: bold;
 	color: #55a0ff;
 }
+.list{
+	width: 100%;
+}
 </style>
 <%-- <h2>${categoryDto.name}</h2> --%>
 <!-- <div> -->
@@ -194,17 +202,19 @@
 	<ul class="ul">
 		<c:forEach var="categoryListDto" items="${list}">
 			<li>
-				<div>
+				<div class="image-wrap">
 					<a href="detail?product_id=${categoryListDto.product_id}"><img src="${pageContext.request.contextPath}/product/image?id=${categoryListDto.mainfile}" class="order-img"></a>
-				</div>
+				
 				<div class="li-bottom">
-					<a href="sellerList?seller_id=${categoryListDto.seller_id}">${categoryListDto.nickname}</a><br><br>
+					<a href="sellerList?seller_id=${categoryListDto.seller_id}">${categoryListDto.nickname}</a>
+					<br><br>
 					<a href="detail?product_id=${categoryListDto.product_id}">${categoryListDto.product_name}</a>
 					<br>
 					<strong>
 						<fmt:formatNumber value="${categoryListDto.price}"
 							pattern="#,###.##"/>
 						</strong>
+				</div>
 				</div>
 			</li>
 		</c:forEach>

@@ -48,8 +48,12 @@ public class ProductSellerDaoImpl implements ProductSellerDao{
 	}
 
 	@Override
-	public List<ProductSellerDto> search(String keyword) {
-		return sqlSession.selectList("productSeller.search", keyword);
+	public List<ProductSellerDto> search(String keyword, int start, int end) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("start", start);
+		map.put("end", end);
+		return sqlSession.selectList("productSeller.search", map);
 	}
 
 	@Override
@@ -78,6 +82,11 @@ public class ProductSellerDaoImpl implements ProductSellerDao{
 		map.put("start", start);
 		map.put("end", end);
 		return sqlSession.selectList("productSeller.salesList", map);
+	}
+
+	@Override
+	public int countSearch(String keyword) {
+		return sqlSession.selectOne("productSeller.count5", keyword);
 	}
 
 }

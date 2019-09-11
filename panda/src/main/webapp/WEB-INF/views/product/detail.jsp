@@ -172,7 +172,11 @@
 		width: 540px;
 		margin-left: 70px;
 	}
-
+	
+	.clear{
+		clear: both;
+	}
+	
 	.formdiv dt {
 		float: left;
 		width: 80px;
@@ -328,7 +332,5 @@
 			<img src="${pageContext.request.contextPath}/product/image?id=${productSellerDto.detailfile}" id="pimg">
 			</div>
 		</div>
-
-				
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
