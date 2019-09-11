@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh17.panda.entity.NoticeDto;
 import com.kh17.panda.entity.OneDto;
 import com.kh17.panda.repository.OneDao;
 
@@ -42,7 +41,7 @@ public class OneController {
 //		 - 이 값들은 페이지에서 사용하므로 전달해줘야 한다
 //		startBlock = (page - 1) / blocksize * blocksize + 1
 //		endBlock = startBlock + (blocksize - 1)
-		int blocksize = 10;
+		int blocksize =10;
 		int startBlock = (page - 1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
 		
@@ -55,8 +54,11 @@ public class OneController {
 		model.addAttribute("page", page);
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
+		model.addAttribute("pageCount", pageCount);
 		
 		List<OneDto> list = oneDao.list(type, keyword, start, end);
+		model.addAttribute("keyword",keyword);
+		model.addAttribute("type",type);
 		model.addAttribute("list", list);
 		return "one/one_List";
 	}

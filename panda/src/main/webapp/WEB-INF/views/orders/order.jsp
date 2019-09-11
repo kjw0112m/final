@@ -218,7 +218,7 @@
 }
 
 .clearfix::after {
-	content: ""; clear : both;
+	content: ""; 
 	display: table;
 	clear: both;
 }

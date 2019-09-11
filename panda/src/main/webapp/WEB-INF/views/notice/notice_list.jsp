@@ -16,12 +16,6 @@
 <!-- 공지사항 시작 -->
 
 
-<a  href="${pageContext.request.contextPath}/notice/noticeList">공지사항<i id=gi></i></a>
-&&&
-<a  href="${pageContext.request.contextPath}/one/oneList">1:1 문의 <i id=gi></i></a>
-&&&
-<a  href="${pageContext.request.contextPath}/review/reviewComment">상품후기 <i id=gi></i></a>
-
 <div id="ha2">
 <h2 >공지사항 </h2>
 </div>

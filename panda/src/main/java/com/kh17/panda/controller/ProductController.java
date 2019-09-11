@@ -92,21 +92,17 @@ public class ProductController {
 			@RequestParam (required = false, defaultValue = "1") int page,
 			@RequestParam String seller_id,
 			Model model) {
-		
 		int pagesize = 8;
 		int start = pagesize * page - (pagesize - 1);
 		int end = pagesize * page;
-
 		int blocksize = 10;
 		int startBlock = (page - 1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
-
 		int count = productSellerDao.count(seller_id);
 		int pageCount = (count - 1) / pagesize + 1;
 		if (endBlock > pageCount) {
 			endBlock = pageCount;
 		}
-				
 		List<ProductSellerDto> list = productSellerDao.sellerList(seller_id, start, end);
 		model.addAttribute("list", list);
 		model.addAttribute("seller_id", seller_id);
