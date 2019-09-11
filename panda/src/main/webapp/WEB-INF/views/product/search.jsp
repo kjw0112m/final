@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,10 +38,9 @@
 .total {
 	width: 100%;
 	overflow: hidden;
-	position: absolute;
 	left: 0;
-	top: 30%;
-	transform: translateY(-50%);
+	margin: auto;
+
 }
 
 .form_in {
@@ -56,19 +57,20 @@
 }
 
 .find_div {
-	border-width: 0 0 4px;
-	justify-content: space-between;
-	border-style: solid;
-	align-items: center;
-	display: flex;
-	border-color: #333;
-}
+        border-width: 0 0 4px;
+        justify-content: space-between;
+        border-style: solid;
+        align-items: center;
+        display: flex;
+        border-color: #333;
+    }
 
 .top {
 	margin: auto;
-	padding-top: 300px;
+	padding-top: 100px;
 	width: 800px;
 	position: relative;
+	padding-bottom:200px;
 }
 
 .order_list li a {
@@ -104,6 +106,23 @@
 	text-align: center;
 	font-weight: 500;
 }
+.paginate {
+	margin: 25px 0 0;
+	text-align: center;
+}
+
+.paginate ol, .paginate li {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 16px;
+	line-height: 16px;
+	padding: 0 1px;
+}
+
+.active_page {
+	font-weight: bold;
+	color: #55a0ff;
+}
 </style>
 </head>
 <body>
@@ -117,7 +136,8 @@
 						<span style="width: 100%;"> <input type="text"
 							class="input_text" name="keyword" placeholder="상품을 찾아보세요"
 							style="border: 0px; padding: 10px 30px 0px 60px;">
-						</span> <input type="submit" value="검색">
+						</span>
+						<button><img alt="" src=""></button>
 					</div>
 				</div>
 			</form>
@@ -130,9 +150,9 @@
 			<c:otherwise>
 				<!-- 검색 결과가 출력될 부분 -->
 				<ul class="order_list">
+							<c:forEach var="productSellerDto" items="${list}">
 					<li>
 						<div>
-							<c:forEach var="productSellerDto" items="${list}">
 								<a href="detail?product_id=${productSellerDto.product_id}"><img
 									src="http://placehold.it/350x350" class="order-img"></a>
 						</div>
@@ -140,8 +160,9 @@
 							<a href="sellerList?seller_id=${productSellerDto.seller_id}">${productSellerDto.nickname}</a><br>
 							<a href="detail?product_id=${productSellerDto.product_id}">${productSellerDto.product_name}</a>
 							<br> <br> <strong>${productSellerDto.price}</strong>
-						</div> </c:forEach>
+						</div> 
 					</li>
+						</c:forEach>
 				</ul>
 			</c:otherwise>
 		</c:choose>
@@ -149,3 +170,4 @@
 	</div>
 </body>
 </html>
+<jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

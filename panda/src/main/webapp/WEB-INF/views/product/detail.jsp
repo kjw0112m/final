@@ -172,7 +172,11 @@
 		width: 540px;
 		margin-left: 70px;
 	}
-
+	
+	.clear{
+		clear: both;
+	}
+	
 	.formdiv dt {
 		float: left;
 		width: 80px;
@@ -298,6 +302,7 @@
 					</div>
 				</form>
 			</div>
+			<div class="clear"></div>
 			<div class="template" style="display: none">
 					<div>
 						<!-- 템플릿 -->
@@ -320,6 +325,5 @@
 			</div>
 		</div>
 		
-<!--<jsp:include page="/WEB-INF/views/review/review_comment.jsp"></jsp:include>    		-->
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
