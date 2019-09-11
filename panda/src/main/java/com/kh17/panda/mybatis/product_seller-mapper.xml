@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<![CDATA[
 		select * from(
 			select rownum rn, A.* from (
-				select * from product_seller
+				select * from product_seller where (to_char(regist_dt, 'yyyymmdd')) = (to_char(sysdate, 'yyyymmdd'))
 		]]>
 		<![CDATA[
 				order by regist_dt desc
@@ -59,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="count" resultType="int">
-		select count(*) from product_seller
+		select count(*) from product_seller where (to_char(regist_dt, 'yyyymmdd')) = (to_char(sysdate, 'yyyymmdd'))
 	</select>
 	
 	<select id="count2" parameterType="int" resultType="int">

@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/admin/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/template/admin/aside.jsp"></jsp:include>
 <link rel="stylesheet"
@@ -9,6 +10,13 @@
 <style>
 	.fTextsearchBox{
 		height: 25px;
+	}
+	
+	.form_button {
+		position: relative;
+		text-align: left;
+		margin: 15px 0;
+		padding: 0 4px 0 0;
 	}
 </style>
 <script>
@@ -80,7 +88,7 @@ $(function() {
 			</div>
 			<div class="optionArea">
 				<div class="mOption">
-					<table border="1" summary="">
+					<table border="1" summary="" >
 						<colgroup>
 							<col style="width: 170px;">
 							<col style="width: 600px;">
@@ -143,8 +151,8 @@ $(function() {
 
 	
 	<div class="section" id="">
-		<div id="searchResultList" class="mBoard typeOrder gScroll gCellSingle">
 	<form action="delete" method="get">
+		<div id="searchResultList" class="mBoard typeOrder gScroll gCellSingle">
 	<table border="1" summary="" class="thead" width="800">
 		<thead>
 			<tr>
@@ -172,7 +180,7 @@ $(function() {
 					<td><input type="checkbox"  name="product_id" value=${productSubcategoryDto.product_id } class="sub_check"></td>
 					<td>${productSubcategoryDto.product_id}</td>
 					<td>${productSubcategoryDto.product_name}</td>
-					<td>${productSubcategoryDto.price}</td>
+					<td><fmt:formatNumber value="${productSubcategoryDto.price}" pattern="#,###.##"/></td>
 					<td>${productSubcategoryDto.display_yn}</td>
 					<td>${productSubcategoryDto.sale_yn}</td>
 					<td>${productSubcategoryDto.category_name} > ${productSubcategoryDto.subcategory_name}</td>
@@ -186,11 +194,12 @@ $(function() {
 		<tfoot>
 		</tfoot>
 	</table>
-	<div>
+	</div>
+	
+	<div class="form_button">
 		<input type="submit" value="삭제">
 	</div>
 	</form>
-	</div>
 	</div>
 	<input name="page" type="hidden">
 	<div class="paginate">

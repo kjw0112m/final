@@ -27,10 +27,18 @@
 	clear: both;
 }
 
-.order-img {
-	width: 300px;
-	height: 300px;
-	margin-bottom: 12px;
+.image-wrap{
+	height:350px;
+	min-height:350px;
+	max-height:350px;
+	padding-right:15px;
+}
+.image-wrap .order-img {
+/* 	width: 300px; */
+/* 	height: 300px; */
+/* 	margin-bottom: 12px; */
+	width:100%;
+	height:100%;
 }
 
 .ul {
@@ -77,13 +85,17 @@ img{
 	<ul class="ul">
 		<c:forEach var="productSellerDto" items="${list}">
 			<li>
-				<div>
-					<a href="detail?product_id=${productSellerDto.product_id}"><img src="${pageContext.request.contextPath}/product/image?id=${productSellerDto.mainfile}" class="order-img"></a>
+				<div class="image-wrap">
+					<a href="detail?product_id=${productSellerDto.product_id}">
+					<img src="${pageContext.request.contextPath}/product/image?id=${productSellerDto.mainfile}" class="order-img">
+					</a>
 				</div>
 				<div class="li-bottom">
-					<a href="sellerList?seller_id=${productSellerDto.seller_id}">${productSellerDto.nickname}</a><br><br>
-					<a href="detail?product_id=${productSellerDto.product_id}">${productSellerDto.product_name}</a>
+					<a href="sellerList?seller_id=${productSellerDto.seller_id}">${productSellerDto.nickname}</a>
 					<br>
+<!-- 					<br> -->
+					<a href="detail?product_id=${productSellerDto.product_id}">${productSellerDto.product_name}</a>
+<!-- 					<br> -->
 					<strong>
 						<fmt:formatNumber value="${productSellerDto.price}"
 							pattern="#,###.##"/>

@@ -85,10 +85,15 @@
 	color: #555;
 }
 
-.order-img {
-	width: 350px;
-	height: 350px;
-	margin-bottom: 12px;
+.image-wrap{
+	height:350px;
+	min-height:350px;
+	max-height:350px;
+	padding-right:100px;
+}
+.image-wrap .order-img {
+	width:100%;
+	height:100%;
 }
 
 .order_list {
@@ -168,7 +173,7 @@
 				<ul class="order_list">
 					<c:forEach var="productSellerDto" items="${list}">
 					<li>
-						<div>
+						<div class="image-wrap">
 								<a href="detail?product_id=${productSellerDto.product_id}"><img
 									src="${pageContext.request.contextPath}/product/image?id=${productSellerDto.mainfile}" class="order-img"></a>
 						</div>

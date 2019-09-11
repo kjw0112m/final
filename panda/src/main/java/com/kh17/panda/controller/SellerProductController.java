@@ -141,7 +141,13 @@ public class SellerProductController {
 		int startBlock = (page - 1) / blocksize * blocksize + 1;
 		int endBlock = startBlock + (blocksize - 1);
 
-		int count = productSubcategoryDao.count(seller_id, null, null);
+		int count;
+		if(seller_id != null) {
+			count = productSubcategoryDao.count(seller_id, null, null);
+		}
+		else {
+			count = productSubcategoryDao.count(null, null, null);
+		}
 		int pageCount = (count - 1) / pagesize + 1;
 		if (endBlock > pageCount) {
 			endBlock = pageCount;
