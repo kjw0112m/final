@@ -25,12 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="login" parameterType="memberDto" resultType="memberDto">
 		select * from member where id = #{id} and pw = #{pw}
 	</select>
-	
-		<!-- 회원 탈퇴-->
-		<delete id="delete" parameterType="string">
-		delete member where id = #{id} 
-	</delete>
-	
+
 		
 			<select id="get" parameterType="string" resultType="memberDto">
 		select * from member where id= #{id}
@@ -80,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				id = #{id}
 	</update>
 	
-		<!-- 비밀번호 찾기 기능 -->
+		<!-- 아이디 찾기 기능 -->
 	<select id="findId" parameterType="memberDto" resultType="memberDto">
 		select * from member
 			where 
@@ -105,7 +100,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from member where email = #{email}
 	</select>
 
-	<!-- 관리자 사용 -->
 	
 	<!-- 관리자가 회원 검색하는 기능 -->
 	<select id="search" parameterType="map" resultType="memberDto">
