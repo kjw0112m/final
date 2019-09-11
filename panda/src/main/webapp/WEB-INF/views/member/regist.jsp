@@ -338,6 +338,7 @@ button {
 							<td class="a">아이디</td>
 							<td class="b"><input class="id iText" type="text" name="id"
 								placeholder="아이디 8~16글자" required>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<button id="idCheck" type="button">중복확인</button>
 								<br>
 							<span class="sid"></span></td>
@@ -375,9 +376,11 @@ button {
 							<td class="a">주소</td>
 							<td class="b">
 								<div>
-									<button class="addr" type="button">우편번호 찾기</button>
 									<input type="text" name="post_code" placeholder="우편번호" readonly
-										class="iText"> <br> <input type="text"
+										class="iText"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<button class="addr" type="button">우편번호 찾기</button>
+										<br> <input type="text"
 										name="basic_addr" placeholder="주소" readonly class="iText">
 									<input type="text" name="detail_addr" placeholder="상세주소"
 										class="iText">
@@ -401,13 +404,14 @@ button {
 
 						<tr>
 							<td class="a">이메일</td>
-							<td class="b"><input type="text" name="email" id="putemail"	required class="iText">
+							<td class="b"><input type="text" name="email" id="putemail"	required class="iText" placeholder="이메일을 입력하세요">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<button class="email" id="emailCheck" type="button">이메일중복확인</button> <span class="chemail"></span>
-								
+								&nbsp;&nbsp;&nbsp;&nbsp;
 								<button class="email" id="email" type="button">인증하기</button> <br>
 								
-								<input class="iText" id="identity" type="text" name="identity"required style="width: 20%">
-								
+								<input class="iText" id="identity" type="text" name="identity"required style="width: 20%"placeholder="이메일로 보내준 인증번호를 입력하세요">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<button id="chidentity" type="button" class="verification_check">인증번호확인</button>
 							</td>
 						</tr>
