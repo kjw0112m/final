@@ -121,6 +121,7 @@ public class OrdersController {
 		}
 //		상품 상세화면에서 단일 주문할 경우
 		else {
+			@SuppressWarnings("unchecked")
 			List<OrderVO> voList = (List<OrderVO>) session.getAttribute("orderVO");
 			
 			for(OrderVO orderVO : voList) {
@@ -141,7 +142,7 @@ public class OrdersController {
 				count++;
 			}
 		}
-
+		session.removeAttribute("orderVO");
 		return "orders/result";
 	}
 

@@ -89,6 +89,8 @@
  			<exclude-mapping path="/image/**"/>
  			<exclude-mapping path="/admin/**"/>
  			<exclude-mapping path="/seller/**"/>
+ 			<exclude-mapping path="/orders/order"/>
+ 			<exclude-mapping path="/pay/**"/>
  			<beans:bean class="com.kh17.panda.interceptor.OrderSessionInterceptor"></beans:bean>
  		</interceptor>
 	</interceptors>
