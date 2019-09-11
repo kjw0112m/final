@@ -9,6 +9,7 @@
 	src="${pageContext.request.contextPath}/js/cryptojs/components/sha256-min.js"></script>
 <script src="${pageContext.request.contextPath}/js/password-encoder.js"></script>
 <script>
+
 	//비밀번호 검사 후 형식에 안맞을시 보조메세지 출력	
 	$(function() {
 		$("input[name=new_pw]").blur(function checkPw() {
@@ -479,7 +480,7 @@ ul, li {
 				<tr>
 					<td class="a">마지막 비밀번호 변경</td>
 					<td class="b">${mdto.pw_dt}<font size="3em" color="red">
-							<strong>&nbsp&nbsp&nbsp비밀번호는 주기적으로 변경해주시는것이 보안상 좋습니다.</strong>
+							<strong>&nbsp;&nbsp;&nbsp;비밀번호는 주기적으로 변경해주시는것이 보안상 좋습니다.</strong>
 					</font></td>
 				</tr>
 				</tbody>

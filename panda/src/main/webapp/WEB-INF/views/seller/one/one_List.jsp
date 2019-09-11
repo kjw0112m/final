@@ -77,9 +77,6 @@
 											<option value="title" ${type == 'title'?'selected':''}>제목</option>
 											<option value="content" ${type == 'content'?'selected':''}>내용</option>
 											<option value="title+content" ${type == 'title+content'?'selected':''}>제목+내용</option>
-											
-											
-											
 											<option value="product" ${type == 'product'?'selected':''}>카테고리</option>
 											<option value="state" ${type == 'state'?'selected':''}>답변상태</option>
 											<option value="memberid" ${type == 'memberid'?'selected':''}>작성자</option>
@@ -92,12 +89,9 @@
 										
 									</div>
 								</div>
-					</tbody>
 					
 					
 					
-					
-					<tbody>
 						<tr>
 							<th scope="row">답변상태</th>
 							<td colspan="3">
@@ -126,7 +120,6 @@
  				<input type="submit" id="btnSearch777" class="btnSearch777" value="왜 안돼"> --%> 
 			</div>
 		</div>
-	
 
 		<div class="section" id="">
 			<div class="tab">
@@ -137,72 +130,9 @@
 			<div id="tabNumber" class="tabCont">
 				<div class="rState">
 					<div class="left"></div>
-
-
-
-
-
-
-<!-- <p>1111111111111111111111111111111111111111111111 </p> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--구 검색 설정 -->
-
-<!-- <form class="form" action="oneList" method="get">
-<div style="margin-left: 800px; border: 0px;">
-<input type="hidden"  name="type" value="title+content"/>
-<input type="search" name="keyword" placeholder="제목 + 내용" required>
-
-<input type="submit" value="검색">
-</div>
-</form> -->
-
+             </div>
+             </div>
+             </div>
 
 <br>
 
@@ -305,13 +235,9 @@
 					</td>
 						<td>
 				<!-- 상세보기 --> 
-				<a href="${pageContext.request.contextPath}/seller/one/oneEdit?mode=EDIT&id=${bdto.id}"> [답변등록] 
-				<a href="${pageContext.request.contextPath}/seller/one/oneEdit?mode=EDIT&id=${bdto.id}"> [상세보기]				
+				<a href="${pageContext.request.contextPath}/seller/one/oneEdit?mode=EDIT&id=${bdto.id}"> [답변등록] </a>
+				<a href="${pageContext.request.contextPath}/seller/one/oneEdit?mode=EDIT&id=${bdto.id}"> [상세보기]	</a>			
 									</td>
-					
-					
-					
-					
 					</tr>
 				</c:if>
 			</c:forEach>
@@ -321,32 +247,9 @@
 		</c:otherwise>
 		</c:choose>
 	</tbody>
-<%-- 	<!-- 글쓰기 버튼 -->
-	<tfoot>
-		<tr>
-			<td colspan="8" align="right">
-				
-				
-				<a href="${pageContext.request.contextPath}/seller/one/oneEdit">글쓰기</a>
-			</td>
-		</tr>
-	</tfoot> --%>
+
 </table>
 </div>
-
-
-
-
-
-<!-- 네비게이션 + 검색창 -->
-<!-- <div class="empty1"></div>
-
-<form class="form" action="oneList" method="get">
-<input type="hidden" name="page" value="1">
-</form>
-
-<div class="empty"></div>
- -->
 
 
 				<input name="page" type="hidden">
@@ -391,8 +294,8 @@
 </ul>
 
 </div> 
-
-
+</div>
+</form>
 
 
 

@@ -4,17 +4,28 @@
 	$(function() {
 		var target = $(".product, .order, .member, .promotion, .stat, .board");
 // 		target.click(function() {
+<<<<<<< HEAD
+			$(this).next().toggle();
+			// 		$(this).parent().toggleClass("bc_w");
+			target.not($(this)).next().hide();
+			// 		target.not($(this)).parent().removeClass("bc_w");
+		});
+=======
 // 			$(this).next().toggle();
 // 			// 		$(this).parent().toggleClass("bc_w");
 // 			target.not($(this)).next().hide();
 // 			// 		target.not($(this)).parent().removeClass("bc_w");
 // 		});
+>>>>>>> refs/remotes/origin/master
 
 		target.next().find("a").click(function() {
 			$(this).addClass("a_bold");
 			target.next().find("a").not($(this)).removeClass("a_bold");
 		});
 	});
+	
+	
+	
 </script>
 <style>
 #a {
@@ -105,9 +116,8 @@
 				</ul></li>
 			<li><a id="a" href="#" class="promotion"> 문의내역 </a>
 				<ul class="">
-					<li class=""><a id="a" href="#"> 통합 문의 </a></li>
-					<li class=""><a id="a" href="#"> 상품 문의 </a></li>
-					<li class=""><a id="a" href="#"> 1:1 문의 </a></li>
+				
+					<li class=""><a id="a" href="${pageContext.request.contextPath}/one/oneList"> 1:1 문의 </a></li>
 				</ul></li>
 		</ul>
 	</div>

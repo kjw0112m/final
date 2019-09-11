@@ -222,10 +222,11 @@ body{
 }
 
 .clearfix::after {
+
 	content: "";
 	clear: both;
 	display: table;
-	clear: both;
+
 }
 
 }

@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>    
-<style>
 <style>
         * {
             box-sizing: border-box;
@@ -57,7 +55,7 @@
             width: 100%;
         }
     </style>
-</head>
+<jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>    
 
 <body>
     <div class="total">

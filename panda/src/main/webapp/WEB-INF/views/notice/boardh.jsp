@@ -29,10 +29,10 @@
 <div class="delTab">
 			<ol class="dTab">
 				<li class="tab_li"><a href="${pageContext.request.contextPath}/notice/noticeList"> 
-				<strong class="title">공지사항</strong><br>
+				<strong class="title">공지사항</strong><br></a>
 				
 				<li class="tab_li"><a href="${pageContext.request.contextPath}/one/oneList">
-				<strong class="title">1:1 문의</strong><br>
+				<strong class="title">1:1 문의</strong><br></a>
 
 <!-- 				<li class="tab_li"><a href="waiting"> <strong class="title">지울 예정</strong><br> 
 
