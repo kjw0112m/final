@@ -68,6 +68,7 @@ public class MemberController {
 		else
 			return "member/regist_fail";
 	}
+	
 	// 아이디 중복 검사
 	@GetMapping("/idCheck")
 	public void idCheck(@RequestParam String id, HttpServletResponse resp) throws IOException  {

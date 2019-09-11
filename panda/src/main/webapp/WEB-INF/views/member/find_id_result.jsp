@@ -42,7 +42,8 @@
         }
 
         .total {
-            margin-top: 50px;
+             margin-top: 50px;
+            width:100%;
         }
 
         .a {
@@ -54,6 +55,7 @@
             margin-left: 10px;
             text-decoration: none;
         }
+
     </style>
 </head>
 
@@ -67,6 +69,7 @@
                     <th></th>
                 </tr>
             </thead>
+            <tbody></tbody>
             <tr class="b">
                
                 <td>
@@ -74,11 +77,14 @@
                 </td>
 
             </tr>
+            </tbody>
+            <tfoot>
             <tr class="c">
-                <td><a	href="find_pw" class="btn2">비밀번호찾기</a><br>
-                <a	href="login" class="btn2">로그인 </a></td>
+                <td><a	href="find_pw" class="btn2">[비밀번호찾기]</a><br>
+                <a	href="login" class="btn2">[로그인] </a></td>
                 <td></td>
             </tr>
+            </tfoot>
         </table>
     </div>
 </body>
