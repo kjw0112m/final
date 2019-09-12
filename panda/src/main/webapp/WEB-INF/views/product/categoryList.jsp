@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
 <script src="https://code.jquery.com/jquery-latest.js"></script>
@@ -43,15 +43,16 @@
 	clear: both;
 }
 
-.image-wrap{
-	height:350px;
-	min-height:350px;
-	max-height:350px;
-	padding-right:15px;
+.image-wrap {
+	height: 350px;
+	min-height: 350px;
+	max-height: 350px;
+	padding-right: 15px;
 }
+
 .image-wrap .order-img {
-	width:100%;
-	height:100%;
+	width: 100%;
+	height: 100%;
 }
 
 .ul {
@@ -131,6 +132,7 @@
 .paginate {
 	margin: 25px 0 0;
 	text-align: center;
+	min-width: 1180px;
 }
 
 .paginate ol, .paginate li {
@@ -145,7 +147,8 @@
 	font-weight: bold;
 	color: #55a0ff;
 }
-.list{
+
+.list {
 	width: 100%;
 }
 </style>
@@ -172,13 +175,19 @@
 	<div id="wrapper">
 		<div class="bxSlider">
 			<div>
-				<img src="${pageContext.request.contextPath}/image/product/category1.png" class="img1">
+				<img
+					src="${pageContext.request.contextPath}/image/product/category1.png"
+					class="img1">
 			</div>
 			<div>
-				<img src="${pageContext.request.contextPath}/image/product/category2.png" class="img1">
+				<img
+					src="${pageContext.request.contextPath}/image/product/category2.png"
+					class="img1">
 			</div>
 			<div>
-				<img src="${pageContext.request.contextPath}/image/product/category3.png" class="img1">
+				<img
+					src="${pageContext.request.contextPath}/image/product/category3.png"
+					class="img1">
 			</div>
 		</div>
 	</div>
@@ -189,8 +198,9 @@
 				<li class="detail">
 					<h2 id="clothing">${categoryDto.name}</h2>
 					<ul>
-						<c:forEach var="sclist"  items="${sclist}">
-							<li class="detail"><a href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=${sclist.id}">${sclist.name}</a></li>
+						<c:forEach var="sclist" items="${sclist}">
+							<li class="detail"><a
+								href="${pageContext.request.contextPath}/product/subcategoryList?sub_category_id=${sclist.id}">${sclist.name}</a></li>
 						</c:forEach>
 					</ul>
 				</li>
@@ -203,18 +213,17 @@
 		<c:forEach var="categoryListDto" items="${list}">
 			<li>
 				<div class="image-wrap">
-					<a href="detail?product_id=${categoryListDto.product_id}"><img src="${pageContext.request.contextPath}/product/image?id=${categoryListDto.mainfile}" class="order-img"></a>
-				
+					<a href="detail?product_id=${categoryListDto.product_id}"><img
+						src="${pageContext.request.contextPath}/product/image?id=${categoryListDto.mainfile}"
+						class="order-img"></a>
+				</div>
 				<div class="li-bottom">
 					<a href="sellerList?seller_id=${categoryListDto.seller_id}">${categoryListDto.nickname}</a>
-					<br><br>
-					<a href="detail?product_id=${categoryListDto.product_id}">${categoryListDto.product_name}</a>
-					<br>
-					<strong>
-						<fmt:formatNumber value="${categoryListDto.price}"
-							pattern="#,###.##"/>
-						</strong>
-				</div>
+					<br> <br> <a
+						href="detail?product_id=${categoryListDto.product_id}">${categoryListDto.product_name}</a>
+					<br> <strong> <fmt:formatNumber
+							value="${categoryListDto.price}" pattern="#,###.##" />
+					</strong>
 				</div>
 			</li>
 		</c:forEach>
@@ -223,31 +232,31 @@
 <input name="page" type="hidden">
 <div class="paginate">
 	<ol>
-	<c:if test="${(not (page eq 1))&& not empty page && page>=11}">
-		<li><a href="${address}?page=${startBlock-1}" class="page_block">&lt;&lt;</a></li>
-	</c:if>
-	<c:if test="${not (page eq 1) && not empty page}">
-		<li><a href="${address}?page=${page-1}" class="page_block">&lt;</a></li>
-	</c:if>
-	<!--페이지 출력 -->
-	<c:forEach var="i" begin="${startBlock}" end="${endBlock}">
-		<c:choose>
-		<c:when test="${page == i}">
-			<li class="active_page">${i}</li>
-		</c:when>
-		<c:otherwise>
-			<c:if test="${i>0}">
-				<li><a href="${address}?page=${i}" class="page_move">${i}</a></li>
-			</c:if>
-		</c:otherwise>
-		</c:choose>
-	</c:forEach>
-	<c:if test="${not (page eq pageCount)}">
-		<li><a href="${address}?page=${page+1}" class="page_block">&gt;</a></li>
-	</c:if>
-	<c:if test="${(not (page eq pageCount)) && pageCount>=10}">
-		<li><a href="${address}?page=${endBlock+1}" class="page_block">&gt;&gt;</a></li>
-	</c:if>
+		<c:if test="${(not (page eq 1))&& not empty page && page>=11}">
+			<li><a href="${address}?page=${startBlock-1}" class="page_block">&lt;&lt;</a></li>
+		</c:if>
+		<c:if test="${not (page eq 1) && not empty page}">
+			<li><a href="${address}?page=${page-1}" class="page_block">&lt;</a></li>
+		</c:if>
+		<!--페이지 출력 -->
+		<c:forEach var="i" begin="${startBlock}" end="${endBlock}">
+			<c:choose>
+				<c:when test="${page == i}">
+					<li class="active_page">${i}</li>
+				</c:when>
+				<c:otherwise>
+					<c:if test="${i>0}">
+						<li><a href="${address}?page=${i}" class="page_move">${i}</a></li>
+					</c:if>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		<c:if test="${not (page eq pageCount)}">
+			<li><a href="${address}?page=${page+1}" class="page_block">&gt;</a></li>
+		</c:if>
+		<c:if test="${(not (page eq pageCount)) && pageCount>=10}">
+			<li><a href="${address}?page=${endBlock+1}" class="page_block">&gt;&gt;</a></li>
+		</c:if>
 	</ol>
 </div>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

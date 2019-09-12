@@ -25,6 +25,7 @@ h1, h2, a {
 	height: 159px;
 	padding-top: 33px;
 	box-sizing: border-box;
+	min-width: 1180px;
 }
 
 .tit {
