@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="cart">
 	
 	<insert id="insert" parameterType="cartDto" >
-		insert into cart values(cart_seq.nextval, #{product_id}, #{member_id})
+		insert into cart values(cart_seq.nextval, #{product_id}, #{member_id}, #{sizes}, #{quantity})
 	</insert>
 	
 	<delete id="delete" parameterType="int">

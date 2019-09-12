@@ -130,6 +130,7 @@
 				$(this).find('.s_q').val(sum);
 			});
 			//this : form
+			$('form').attr('method', 'post');
 			this.submit();
 		});
 
@@ -293,7 +294,7 @@
 				<form action="../cart/add" method="get">
 					<input type="hidden" name="product_id" value="${productSellerDto.product_id}">
 					<input type="hidden" name="totalPrice" value="" id="total_price">
-					<select id="sizes">
+					<select id="sizes" required="required">
 						<option value="" selected="selected" disabled="disabled">사이즈 선택</option>
 						<c:forEach var="sizesDto" items="${list}">
 							<option value="${sizesDto.sizes}" data-size="${sizesDto.sizes}"
