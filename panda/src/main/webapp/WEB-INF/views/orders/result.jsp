@@ -93,8 +93,8 @@ h4 {
 		</tr>
 	</table>
 	<div id="btn2div">
-		<a href="${pageContext.request.contextPath}/"><button class="btn">홈으로 가기</button></a> <a href="${pageContext.request.contextPath}/member/info"><button
-				class="btn">마이페이지</button></a>
+		<a href="${pageContext.request.contextPath}/"><button class="btn">홈으로 가기</button></a> <a href="${pageContext.request.contextPath}/orders/list"><button
+				class="btn">주문내역</button></a>
 	</div>
 </div>
 

@@ -40,27 +40,108 @@
 			}
 		});
 
+		$('#deposit')
+				.change(
+						function() {
+							if ($(this).is(':checked')) {
+								$('form')
+										.attr('action',
+												'${pageContext.request.contextPath}/orders/order');
+								$('form').removeAttr('target');
+							}
+						})
+
 		$("form")
 				.submit(
 						function(e) {
 							e.preventDefault();
-							if ($(this).attr('standby')) {
-								var total_amount = $('input[name=total_amount]')
-										.val();
-								$('input[name=total_amount]').val(
-										uncomma(total_amount));
-								if ($('input[name=pay_type]:checked').val() == '카카오페이') {
-									$(this)
-											.attr('action',
-													'${pageContext.request.contextPath}/pay/kakao/confirm');
+							if ($('input[name=pay_type]:checked').val() == '카카오페이') {
+								$(this)
+										.attr('action',
+												'${pageContext.request.contextPath}/pay/kakao/confirm');
 
-									window
-											.open("", "kakaopay",
-													"width=730,height=520,left=50, top=50");
-									this.target = 'kakaopay';
-								}
+								window.open("", "kakaopay",
+										"width=730,height=520,left=50, top=50");
+								this.target = 'kakaopay';
 							}
 							this.submit();
+						});
+
+		var current = '${point}';
+		var can = '${canPoint}';
+		var total = '${totalPrice}';
+		$("input[name=discount_price]").on("change keyup paste", function() {
+			var point = $(this).val();
+
+			if (point > parseInt(total)) {
+				alert('주문 금액을 초과하였습니다.');
+				$(this).val(can);
+				$('#order_point').text('- ' + can.toLocaleString());
+				$('#total_amount').text((total - can).toLocaleString());
+				$('input[name=total_amount]').val(total - can);
+				$('input[name=total_price]').val(total - can);
+			}
+
+			else if (point > parseInt(can)) {
+				alert('최대 사용가능한 적립금을 초과하였습니다.');
+				$(this).val(can);
+				$('#order_point').text('- ' + can.toLocaleString());
+				$('#total_amount').text((total - can).toLocaleString());
+				$('input[name=total_amount]').val(total - can);
+				$('input[name=total_price]').val(total - can);
+			}
+
+			else if (point > parseInt(current)) {
+				alert('현재 적립금을 초과하였습니다.');
+				$(this).val(can);
+				$('#order_point').text('- ' + can.toLocaleString());
+				$('#total_amount').text((total - can).toLocaleString());
+				$('input[name=total_amount]').val(total - can);
+				$('input[name=total_price]').val(total - can);
+			} else {
+				$('#order_point').text('- ' + point.toLocaleString());
+				$('#total_amount').text((total - point).toLocaleString());
+				$('input[name=total_amount]').val(total - point);
+				$('input[name=total_price]').val(total - point);
+			}
+
+			if (point == '') {
+				$('#order_point').text('- ' + 0);
+			}
+		});
+
+		$('#point_all').click(function() {
+			$("input[name=discount_price]").val(can);
+			$('#order_point').text('- ' + can.toLocaleString());
+			$('#total_amount').text((total - can).toLocaleString());
+			$('input[name=total_amount]').val(total - can);
+			$('input[name=total_price]').val(total - can);
+		});
+
+		$("input[name=discount_price]")
+				.blur(
+						function() {
+							var point = $(this).val();
+							if (point % 100 > 0) {
+								alert('100원 단위로 입력 가능합니다.')
+								$('#order_point').text(
+										'- '
+												+ (parseInt(point / 100) * 100)
+														.toLocaleString());
+								$(this).val(
+										(parseInt(point / 100) * 100)
+												.toLocaleString());
+								$('#total_amount').text(
+										(total - parseInt(point / 100) * 100)
+												.toLocaleString());
+								$('input[name=total_amount]').val(
+										(total - parseInt(point / 100) * 100));
+								$('input[name=total_price]').val(
+										(total - parseInt(point / 100) * 100));
+							}
+							else if(point==''){
+								$(this).val(0);
+							}
 						});
 
 	});
@@ -107,7 +188,7 @@
 	box-sizing: border-box;
 }
 
-body{
+body {
 	min-width: 1800px !important;
 }
 
@@ -185,6 +266,13 @@ body{
 	height: 300px;
 }
 
+.table_point {
+	border-width: 2px 0 1px 0;
+	border-style: solid;
+	border-bottom-color: #d0d0d0;
+	width: 100%;
+}
+
 .table_new th, .table_new td {
 	border-width: 0 0 1px;
 	border-style: solid;
@@ -222,11 +310,9 @@ body{
 }
 
 .clearfix::after {
-
 	content: "";
 	clear: both;
 	display: table;
-
 }
 
 }
@@ -236,7 +322,6 @@ a {
 }
 
 .btn-find {
-	margin-top: 30px;
 	border: none;
 	background-color: black;
 	color: #fff;
@@ -270,7 +355,7 @@ a {
 	position: fixed;
 	top: 250px;
 	left: 1350px;
-/* 	float: right; */
+	/* 	float: right; */
 	border: none;
 	width: 320px;
 }
@@ -319,6 +404,25 @@ a {
 .w150 {
 	width: 150px;
 }
+
+.table_point .point {
+	min-width: 120px;
+	width: 120px;
+	padding-right: 15px;
+	text-align: right;
+	height: 30px;
+	padding: 0 19px 0 15px;
+}
+
+.table_point input[type="button"] {
+	vertical-align: -1.5px;
+}
+
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button
+	{
+	-webkit-appearance: none;
+	margin: 0;
+}
 </style>
 </head>
 
@@ -328,46 +432,54 @@ a {
 		<span>01 쇼핑백 > </span><span style="font-weight: bold">02 주문결제</span><span>
 			> 03 주문완료</span>
 	</div>
-	<form action="" method="post" standby="true">
+	<form action="order" method="post">
 		<div class="total">
-		<div class="orderbox">
-			<h4 style="font-size: 22px">
-				결제 금액 / 총
-				<c:choose>
-					<c:when test="${not empty cartList}">
+			<div class="orderbox">
+				<h4 style="font-size: 22px">
+					결제 금액 / 총
+					<c:choose>
+						<c:when test="${not empty cartList}">
 					${orderCount}	
 					<input name="quantity" type="hidden" value="${orderCount}">
-					</c:when>
-					<c:otherwise>
+						</c:when>
+						<c:otherwise>
 					${orderCount}
-					<input name="quantity" type="hidden" value="${orderCount}"> 
-					</c:otherwise>
-				</c:choose>
-				개
-			</h4>
-			<dl class="dl">
-				<dt class="order-dt">주문금액</dt>
-				<dd class="order-dd"><fmt:formatNumber value="${totalPrice}" pattern="#,###.##" /></dd>
-				<dt class="order-dt">배송비</dt>
-				<dd class="order-dd">0</dd>
-				<div id="orderprice">
-					<dt class="order-dt">총 결제금액</dt>
-					<dd class="order-dd"><fmt:formatNumber value="${totalPrice}" pattern="#,###.##" /></dd>
-				<input type="hidden" name="total_amount" value="${totalPrice}">
-				</div>
-			</dl>
-			<ul class="order-ul">
-				<li><span> <input type="checkbox" name="agree1" id=""
-						required> <label for="" class="order-li"> 주문 상품
-							정보에 동의(필수) </label>
-				</span></li>
-				<li><span> <input type="checkbox" name="agree2" id=""
-						required> <label for="" class="order-li">결제대행 서비스
-							이용을 위한 개인정보 제3자 제공 및 위탁 동의(필수)</label>
-				</span></li>
-			</ul>
-			<a href="#"><button class="orderbutton">주문하기</button></a>
-		</div>
+					<input name="quantity" type="hidden" value="${orderCount}">
+						</c:otherwise>
+					</c:choose>
+					개
+				</h4>
+				<dl class="dl">
+					<dt class="order-dt">주문금액</dt>
+					<dd class="order-dd">
+						<fmt:formatNumber value="${totalPrice}" pattern="#,###.##" />
+					</dd>
+					<dt class="order-dt">적립금</dt>
+					<dd class="order-dd" id="order_point">- 0</dd>
+
+					<dt class="order-dt">배송비</dt>
+					<dd class="order-dd">0</dd>
+					<div id="orderprice">
+						<dt class="order-dt">총 결제금액</dt>
+						<dd class="order-dd" id="total_amount">
+							<fmt:formatNumber value="${totalPrice}" pattern="#,###.##" />
+						</dd>
+						<input type="hidden" name="total_amount" value="${totalPrice}">
+						<input type="hidden" name="point" value="${point}">
+					</div>
+				</dl>
+				<ul class="order-ul">
+					<li><span> <input type="checkbox" name="agree1" id=""
+							required> <label for="" class="order-li"> 주문 상품
+								정보에 동의(필수) </label>
+					</span></li>
+					<li><span> <input type="checkbox" name="agree2" id=""
+							required> <label for="" class="order-li">결제대행 서비스
+								이용을 위한 개인정보 제3자 제공 및 위탁 동의(필수)</label>
+					</span></li>
+				</ul>
+				<a href="#"><button class="orderbutton">주문하기</button></a>
+			</div>
 			<div class="intotal">
 				<div class="top-table">
 					<h4>상품정보</h4>
@@ -390,8 +502,12 @@ a {
 									<tr>
 										<td class="imggg"><a href="#" class="img"> <img
 												src="http://placehold.it/100"></a></td>
-										<td class="text-left"><div><a href="#">${c.product_seller_id}</a></div>
-											<div><a href="#">${c.product_name}</a></div>
+										<td class="text-left"><div>
+												<a href="#">${c.product_seller_id}</a>
+											</div>
+											<div>
+												<a href="#">${c.product_name}</a>
+											</div>
 											<div>
 												<fmt:formatNumber value="${c.product_price}"
 													pattern="#,###.##" />
@@ -404,7 +520,8 @@ a {
 								</c:forEach>
 							</c:when>
 							<c:otherwise>
-								<c:forEach items="${sessionScope.orderVO }" var="orderVO" varStatus="status">
+								<c:forEach items="${sessionScope.orderVO }" var="orderVO"
+									varStatus="status">
 									<c:if test="${status.first}">
 										<input name="product_id" type="hidden"
 											value="${orderVO.productDto.id }">
@@ -414,8 +531,12 @@ a {
 									<tr>
 										<td class="imggg"><a href="#" class="img"> <img
 												src="http://placehold.it/100"></a></td>
-										<td class="text-left"><div><a href="#">${orderVO.productDto.seller_id}</a></div>
-											<div><a href="#">${orderVO.productDto.name}</a></div>
+										<td class="text-left"><div>
+												<a href="#">${orderVO.productDto.seller_id}</a>
+											</div>
+											<div>
+												<a href="#">${orderVO.productDto.name}</a>
+											</div>
 											<div>
 												<input type="hidden" name="total_price"
 													value="${orderVO.productDto.price * orderVO.quantity}">
@@ -433,6 +554,28 @@ a {
 						</c:choose>
 					</tbody>
 				</table>
+				<div class="top-table">
+					<h4>할인 정보</h4>
+				</div>
+				<table class="table_point">
+					<tbody>
+						<tr>
+							<th class="a">적립금</th>
+							<td><input type="number" name="discount_price" value="0"
+								pattern="[0-9]*" max="${canPoint}" min="0" class="point">
+								<input type="button" value="모두 사용" class="btn-find"
+								id="point_all"></td>
+							<td><p>
+									사용 가능 죽순 <span id="can_point"><fmt:formatNumber
+											value="${canPoint}" pattern="#,###.##" /></span>개 / 총 보유 죽순 <span
+										id="current_point"><fmt:formatNumber value="${point}"
+											pattern="#,###.##" /></span>개 (100원 단위로 사용 가능)
+								</p></td>
+						</tr>
+					</tbody>
+				</table>
+				<input type="hidden" name="current_point"> <input
+					type="hidden" name="use_point">
 				<div class="top-table">
 					<h4>주문하시는 분</h4>
 				</div>

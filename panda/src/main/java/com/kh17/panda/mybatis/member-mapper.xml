@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="regist" parameterType="memberDto">
 		insert into member values(
 		#{id},#{pw}, #{name},  #{email}, #{phone},
-			#{post_code}, #{basic_addr},#{detail_addr}, sysdate, null, sysdate, #{birth} 
+			#{post_code}, #{basic_addr},#{detail_addr}, sysdate, null, sysdate, #{birth}, 1
 		)
 	</insert>
 	
@@ -127,6 +127,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 	</select>
 	
+	<update id="gradeChange" parameterType="memberDto">
+		update member set grade_id = #{grade_id} where id = #{id}
+	</update> 
+	
+	<select id="myInfo" parameterType="string" resultType="myInfoDto">
+		select * from(
+			select * from my_info where member_id=#{member_id} order by when desc
+		) where rownum = 1
+	</select>
 </mapper>
 
 

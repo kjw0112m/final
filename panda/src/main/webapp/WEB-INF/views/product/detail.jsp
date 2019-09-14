@@ -291,7 +291,7 @@
 				<br><br>
 				<hr>
 				<br><br>
-				<form action="../cart/add" method="get">
+				<form action="../cart/add" method="post">
 					<input type="hidden" name="product_id" value="${productSellerDto.product_id}">
 					<input type="hidden" name="totalPrice" value="" id="total_price">
 					<select id="sizes" required="required">
@@ -307,7 +307,7 @@
 					</div>
 					<div class="button">
 						<input type="submit" value="카트담기 " id="cart">
-						<input type="submit"  formaction="../orders/order"  value="바로주문" id="order">
+						<input type="submit"  formaction="../orders/order_form" value="바로주문" id="order">
 					</div>
 				</form>
 			</div>

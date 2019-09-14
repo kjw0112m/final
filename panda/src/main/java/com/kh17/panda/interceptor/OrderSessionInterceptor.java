@@ -11,19 +11,15 @@ public class OrderSessionInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 
-		System.out.println("!!!!?!!?!?!?!?!?!?!??!");
 		if (request.getSession().getAttribute("orderVO") != null) {
 			String referer = request.getHeader("referer");
 			
-			if (referer.contains("?")) {
-				referer = referer.split("\\?")[0];
+			if (referer.contains("?")&&referer!=null) {
+				referer = referer.split("\\?")[0]; 
 			}
 			referer = referer.split(request.getContextPath())[1];
-			System.out.println(referer);
-//			String uri = request.getRequestURI().split(request.getContextPath())[1];
 			if (referer.equals("/orders/order")) {
 				request.getSession().removeAttribute("orderVO");
-				System.out.println("세션삭제!!!!!!!!!");
 			}
 		}
 		return true;

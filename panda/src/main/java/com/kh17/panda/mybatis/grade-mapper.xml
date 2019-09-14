@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="grade">
+	<select id="get" parameterType="int" resultType="gradeDto">
+		select * from grade where id=#{id}
+	</select>
+	
+	<select id="all" resultType="gradeDto">
+		select * from grade
+	</select>
+	
+	<update id="rate" parameterType="gradeDto">
+		update grade set rate=#{rate} where id=#{id}
+	</update>
+</mapper>

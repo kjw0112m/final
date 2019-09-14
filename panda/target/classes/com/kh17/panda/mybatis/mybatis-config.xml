@@ -30,5 +30,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh17.panda.entity.ReviewDto" alias="reviewDto"/>		
 		<typeAlias type="com.kh17.panda.entity.TransportDto" alias="transportDto"/>		
 		<typeAlias type="com.kh17.panda.entity.AdminDto" alias="adminDto"/>		
+		<typeAlias type="com.kh17.panda.entity.PointDto" alias="pointDto"/>		
+		<typeAlias type="com.kh17.panda.entity.ProceedsDto" alias="proceedsDto"/>		
+		<typeAlias type="com.kh17.panda.entity.GradeDto" alias="gradeDto"/>		
+		<typeAlias type="com.kh17.panda.entity.KakaoPayDto" alias="kakaoPayDto"/>		
+		<typeAlias type="com.kh17.panda.entity.MyInfoDto" alias="myInfoDto"/>	
 	</typeAliases>
 </configuration>

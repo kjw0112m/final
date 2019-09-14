@@ -191,7 +191,7 @@ a {
 			var cal_price = total_price + t_price - point;
 			$('#cal_price').text('');
 			$('#cal_price').append(' ').append(cal_price.toLocaleString());
-			$("input[name=totalPrice]").val(cal_price.toLocaleString());
+			$("input[name=totalPrice]").val(cal_price);
 			
 		}
 		$("#all_check").prop("checked", true);
@@ -294,8 +294,8 @@ a {
 	<div class="top-table">
 		<h4>쇼핑백</h4>
 	</div>
-	<form action="${pageContext.request.contextPath}/orders/order"
-		method="get">
+	<form action="${pageContext.request.contextPath}/orders/order_form"
+		method="post">
 		<input name="totalPrice" type="hidden">
 		<table class="table_st">
 			<thead>
