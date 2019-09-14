@@ -210,7 +210,9 @@ ul, li {
 }
 
 .total {
-	margin-left: 350px;
+	margin-left: 300px;
+	padding-top: 58px;
+	padding-bottom: 120px;
 	width: 1200px;
 }
 
@@ -332,6 +334,7 @@ dt {
 
 <body>
 	<div id="container">
+		<jsp:include page="/WEB-INF/views/template/my_info.jsp"></jsp:include>
 		<jsp:include page="/WEB-INF/views/template/side.jsp"></jsp:include>
 	</div>
 

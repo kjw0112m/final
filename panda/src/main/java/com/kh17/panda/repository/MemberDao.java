@@ -3,6 +3,7 @@ package com.kh17.panda.repository;
 import java.util.List;
 
 import com.kh17.panda.entity.MemberDto;
+import com.kh17.panda.entity.MyInfoDto;
 
 public interface MemberDao {
 	
@@ -45,6 +46,8 @@ public interface MemberDao {
 
 	int count(String type, String keyword);
 
-	
+	void gradeChange(MemberDto memberDto);
+
+	MyInfoDto myInfo(String member_id);
 	
 }

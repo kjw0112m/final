@@ -165,4 +165,9 @@ public class OrdersDaoImpl implements OrdersDao {
 		return sqlSession.selectList("order.myStat", map);
 	}
 
+	@Override
+	public int orderAmount(String member_id) {
+		return sqlSession.selectOne("order.order_price", member_id);
+	}
+
 }

@@ -20,7 +20,6 @@ public class SellerLoginInterceptor extends HandlerInterceptorAdapter{
 			return true;//chain.doFilter(request, response);
 		}
 	}
-
 	
 }
 

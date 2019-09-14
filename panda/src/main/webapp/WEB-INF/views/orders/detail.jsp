@@ -317,11 +317,11 @@ dt {
 				<td><h3>0</h3>
 					<p>배송비</p></td>
 				<td><sapn id="span1">-</sapn></td>
-				<td><h3>0</h3>
+				<td><h3><fmt:formatNumber value="${point}" pattern="#,###.##" /></h3>
 					<p>적립금 사용</p></td>
 				<td><sapn id="span1">=</sapn></td>
 				<td><h3>
-						<fmt:formatNumber value="${price}" pattern="#,###.##" />
+						<fmt:formatNumber value="${price-point}" pattern="#,###.##" />
 					</h3>
 					<p>총 결제 금액</p></td>
 			</tr>

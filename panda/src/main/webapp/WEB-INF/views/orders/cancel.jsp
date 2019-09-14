@@ -335,6 +335,8 @@ dt {
 
 	<form action="${pageContext.request.contextPath}/orders/cancel" method="post">
 		<input type="hidden" name="pay_status" value="${orderViewDto.get(0).pay_status}">
+		<input type="hidden" name="team" value="${orderViewDto.get(0).team}">
+		<input type="hidden" name="discount_price" value="${orderViewDto.get(0).discount_price}">
 		<div class="total">
 			<p id="p">취소 신청</p>
 			

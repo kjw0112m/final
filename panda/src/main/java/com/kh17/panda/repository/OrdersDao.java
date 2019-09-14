@@ -47,4 +47,6 @@ public interface OrdersDao {
 	int statCount(OrderViewDto orderViewDto);
 
 	List<OrderListVO> statList(OrderViewDto orderViewDto, int start, int end);
+	
+	int orderAmount(String member_id);
 }

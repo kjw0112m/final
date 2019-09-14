@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kakao">
+	<select id="get" resultType="kakaoPayDto" parameterType="string">
+		select * from kakaopay where team = #{team}
+	</select>
+	
+	<insert id="pay" parameterType="kakaoPayDto">
+		insert into kakaopay values(#{t_id}, #{total_amount}, null)
+	</insert>
+	
+	<update id="team" parameterType="kakaoPayDto">
+		update kakaopay set team=#{team} where t_id = #{t_id}
+	</update>
+</mapper>

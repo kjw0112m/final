@@ -91,7 +91,7 @@
 								span.innerHTML = ""
 								$("input[name=btn]").prop("disabled", true)
 							} else {
-								span.innerHTML = "<font color = '#de2195' size = '2'>8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)로 입력해주세요</font>"
+								span.innerHTML = "_$tag______________________________8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)로 입력해주세요_$tag__"
 								$("input[name=btn]").prop("disabled", true)
 
 							}
@@ -109,11 +109,11 @@
 				.keyup(
 						function() {
 							if ($('#new_pw').val() != $('#chpass').val()) {
-								span.innerHTML = "<font color = '#de2195' size = '2'>암호틀림</font>"
+								span.innerHTML = "_$tag______________________________암호틀림_$tag__"
 								$("input[name=btn]").prop("disabled", true)
 
 							} else {
-								span.innerHTML = "<font color = '#de2195' size = '2'>암호맞음</font>"
+								span.innerHTML = "_$tag______________________________암호맞음_$tag__"
 								$("input[name=btn]").prop("disabled", false)
 							}
 						}); //#chpass.keyup
@@ -129,9 +129,9 @@
 					var encNPW = CryptoJS.SHA256(ck_pw).toString();
 					$("input[name=origin_pw]").attr("name", "");
 					$("input[name=new_pw]").attr("name", "");
-					var newInput1 = $("<input/>").attr("name", "new_pw").val(
+					var newInput1 = $("_$tag___").attr("name", "new_pw").val(
 							encNPW).attr("type", "hidden");
-					var newInput2 = $("<input/>").attr("name", "pw").val(encPw)
+					var newInput2 = $("_$tag___").attr("name", "pw").val(encPw)
 							.attr("type", "hidden");
 					$("input[name=pw_check]").attr("name", "");
 					$(this).append(newInput1);
@@ -405,9 +405,11 @@ ul, li {
 .clear {
 	clear: both;
 }
+
 </style>
 <body>
 	<div id="container">
+		<jsp:include page="/WEB-INF/views/template/my_info.jsp"></jsp:include>
 		<jsp:include page="/WEB-INF/views/template/side.jsp"></jsp:include>
 	</div>
 	<div class="total">
