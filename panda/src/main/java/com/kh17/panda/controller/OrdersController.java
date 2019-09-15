@@ -103,7 +103,7 @@ public class OrdersController {
 	@PostMapping("/order")
 	public String order(@ModelAttribute OrdersDto ordersDto, @RequestParam(required = false) int[] c_id,
 			@ModelAttribute OrderAddressVO orderAddressVO, @RequestParam(required = false) String[] re_phones,
-			@RequestParam String t_id, @RequestParam int point, @RequestParam String[] item_name, Model model,
+			@RequestParam(required = false) String t_id, @RequestParam int point, @RequestParam String[] item_name, Model model,
 			HttpSession session) {
 		String team = orderService.order(ordersDto, c_id, orderAddressVO, re_phones, session, t_id);
 		session.removeAttribute("orderVO");
@@ -175,6 +175,17 @@ public class OrdersController {
 		MyInfoDto myInfo = myInfoService.myInfo(member_id);
 		model.addAttribute("myInfo", myInfo);
 		return "orders/stat_list";
+	}
+	
+	@GetMapping("/confirm/{team}")
+	public String confirm(@PathVariable String team, Model model, HttpSession session) {
+		String id = (String) session.getAttribute("sid");
+
+		if (id != null) {
+			ordersDao.pay_change(OrdersDto.builder().pay_status("구매확정").team(team).build());
+			pointDao.typeChange(PointDto.builder().type("적립").team(team).build());
+		}
+		return "redirect:list";
 	}
 
 	@GetMapping("/detail/{team}")
@@ -263,8 +274,7 @@ public class OrdersController {
 					PointDto.builder().type("반환").use_point(discount_price).current_point(current + discount_price)
 							.content("주문취소로 인한 포인트 반환").member_id(id).team(team).build());
 		}
-		pointDao.save(PointDto.builder().type("회수").use_point(cancel).current_point(current - cancel)
-				.content("주문취소로 인한 포인트 회수").member_id(id).team(team).build());
+		pointDao.cancel(PointDto.builder().type("대기").team(team).build());
 
 		orderService.cancelOrder(kakaoPayDto.getT_id(), kakaoPayDto.getTotal_amount(), model);
 		return "redirect:list";

@@ -4,20 +4,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="point">
 	<insert id="save" parameterType="pointDto">
-		insert into point values(point_seq.nextval, #{member_id}, #{use_point}, #{current_point}, #{content}, sysdate, #{type}, #{team})
+		insert into point
+		values(point_seq.nextval, #{member_id}, #{use_point},
+		#{current_point}, #{content}, sysdate, #{type}, #{team})
 	</insert>
-	
+
 	<select id="list" parameterType="string" resultType="pointDto">
-		select * from point where member_id = #{member_id}
+		select *
+		from point where member_id = #{member_id} order by id desc
 	</select>
-	
+
+	<select id="view" parameterType="map" resultType="pointDto">
+		select * from (
+		<![CDATA[
+			select rownum rn, P.* from(
+				select * from point where member_id = #{member_id} order by id desc
+		]]>
+				)P
+		<![CDATA[
+			)where rn >= #{start} and rn <= #{end}
+		]]>
+	</select>
+
+	<select id="count" parameterType="string" resultType="int">
+		select
+		count(*) from point where member_id = #{member_id}
+	</select>
+
 	<select id="current" parameterType="string" resultType="int">
-		select current_point from(
-			select current_point from point where member_id=#{member_id} order by when desc
+		select
+		current_point from(
+		select current_point from point where member_id=#{member_id} and type
+		in('적립', '회수', '사용') order by when desc
 		) where rownum = 1
 	</select>
-	
+
 	<select id="getPoint" parameterType="string" resultType="int">
-		select use_point from point where team=#{team}
+		select
+		use_point from point where team=#{team}
 	</select>
+
+	<select id="typeChange" parameterType="pointDto">
+		update point set
+		type=#{type} where team=#{team}
+	</select>
+
+	<delete id="cancel" parameterType="string">
+		delete point where
+		team=#{team} and type=#{type}
+	</delete>
 </mapper>

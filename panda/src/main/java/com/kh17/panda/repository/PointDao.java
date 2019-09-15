@@ -13,4 +13,12 @@ public interface PointDao {
 	void save(PointDto pointDto);
 
 	int getPoint(String team);
+	
+	void typeChange(PointDto pointDto);
+	
+	void cancel(PointDto pointDto);
+
+	int count(String member_id);
+
+	List<PointDto> list(String member_id, int start, int end);
 }
