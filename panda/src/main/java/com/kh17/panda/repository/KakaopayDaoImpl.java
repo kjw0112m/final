@@ -26,5 +26,10 @@ public class KakaopayDaoImpl implements KakaopayDao{
 	public void team(KakaoPayDto kakaoPayDto) {
 		sqlSession.update("kakao.team", kakaoPayDto);
 	}
+
+	@Override
+	public void delete(String t_id) {
+		sqlSession.delete("kakao.delete", t_id);
+	}
 	
 }
