@@ -9,4 +9,6 @@ public interface KakaopayDao {
 	void pay(KakaoPayDto kakaoPayDto);
 	
 	void team(KakaoPayDto kakaoPayDto);
+	
+	void delete(String t_id);
 }

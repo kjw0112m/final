@@ -210,7 +210,7 @@ public class OrderServiceImpl implements OrderService {
 		KakaoPayCancelVO cancel = template.postForObject(uri, send, KakaoPayCancelVO.class);
 
 //		model.addAttribute("cancel", cancel);
-		System.out.println(cancel);
+		kakaopayDao.delete(tid);
 	}
 
 }

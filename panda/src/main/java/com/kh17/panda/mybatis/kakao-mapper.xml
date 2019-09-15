@@ -14,4 +14,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="team" parameterType="kakaoPayDto">
 		update kakaopay set team=#{team} where t_id = #{t_id}
 	</update>
+	
+	<delete id="delete" parameterType="string">
+		delete kakaopay where t_id=#{t_id}
+	</delete>
 </mapper>
