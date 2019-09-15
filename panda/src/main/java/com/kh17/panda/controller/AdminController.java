@@ -1,5 +1,7 @@
 package com.kh17.panda.controller;
 
+import java.util.List;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -7,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh17.panda.entity.AdminDto;
+import com.kh17.panda.entity.TotalDto;
 import com.kh17.panda.repository.AdminDao;
+import com.kh17.panda.repository.TotalDao;
 
 @Controller
 @RequestMapping("/admin")
@@ -23,6 +28,21 @@ public class AdminController {
 	@Autowired
 	private AdminDao adminDao;
 	
+	@Autowired
+	private TotalDao totalDao;
+	
+	@GetMapping("/seller")
+	public String seller(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword, Model model, HttpSession session) {
+		String aid = (String) session.getAttribute("aid");
+		if(aid!=null) {
+			List<TotalDto> list = totalDao.seller(type, keyword);
+			model.addAttribute("totalDto", list);
+		}
+		model.addAttribute("type", type);
+		model.addAttribute("keyword", keyword);
+		
+		return "admin/seller";
+	}
 	
 	@GetMapping("/regist")
 	public String regist() {

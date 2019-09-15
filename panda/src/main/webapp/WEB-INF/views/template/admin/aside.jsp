@@ -25,8 +25,13 @@
 						<li class=""><a href="#"> 취소/교환/반품/환불(준비중) </a></li>
 					</ul></li>
 				<li><a
-					href="${pageContext.request.contextPath }/seller/member/search"
-					class="member"> 고객관리 </a></li>
+					href="#"
+					class="member"> 고객관리 </a>
+					<ul class="hide">
+						<li><a href="${pageContext.request.contextPath }/seller/member/search">회원 관리</a></li>
+						<li><a href="${pageContext.request.contextPath }/admin/seller">판매자 관리</a></li>
+					</ul>
+					</li>
 				<li><a href="#" class="board"> 게시판관리 </a>
 					<ul class="hide">
 						<li class=""><a
