@@ -35,5 +35,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh17.panda.entity.GradeDto" alias="gradeDto"/>		
 		<typeAlias type="com.kh17.panda.entity.KakaoPayDto" alias="kakaoPayDto"/>		
 		<typeAlias type="com.kh17.panda.entity.MyInfoDto" alias="myInfoDto"/>	
+		<typeAlias type="com.kh17.panda.entity.TotalDto" alias="totalDto"/>	
 	</typeAliases>
 </configuration>

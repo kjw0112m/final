@@ -290,7 +290,7 @@
 				<input name="page" type="hidden">
 				<div class="paginate">
 					<ol>
-						<c:if test="${(not (page eq 1))&& not empty page && page>=11}">
+						<c:if test="${(not (page eq 1))&& not empty page && startBlock-1>0}">
 							<li><a href="#" class="page_block">&lt;&lt;</a></li>
 						</c:if>
 						<c:if test="${not (page eq 1) && not empty page}">
@@ -312,7 +312,7 @@
 						<c:if test="${not (page eq pageCount)}">
 							<li><a href="#" class="page_block">&gt;</a></li>
 						</c:if>
-						<c:if test="${(not (page eq pageCount)) && pageCount>=10}">
+						<c:if test="${(not (page eq pageCount)) && pageCount>endBlock}">
 							<li><a href="#" class="page_block">&gt;&gt;</a></li>
 						</c:if>
 					</ol>
