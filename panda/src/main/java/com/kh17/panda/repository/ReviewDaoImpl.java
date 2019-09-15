@@ -40,4 +40,22 @@ public class ReviewDaoImpl implements ReviewDao{
 
 	
 	
-}
+	
+	
+	@Override
+	public void ainsertReviewComment(ReviewDto reviewDto) {
+		sqlSession.insert("review.ainsertReviewComment",reviewDto);
+		
+	}
+
+	
+	
+	
+
+		
+		
+		
+	}
+
+	
+

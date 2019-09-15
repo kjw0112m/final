@@ -23,6 +23,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 	</select>
 	
+	
+	<select id="alistReviewComment" parameterType="reviewDto" resultType="reviewDto">
+		SELECT * FROM
+		review
+		WHERE ordersid= #{ordersid}
+		<if test="ordersid != null">	
+			AND ordersid = #{ordersid}
+		</if>
+	</select>
+	
+	
+	
 	<update id="updateComment" parameterType="reviewDto">
 		update review set 
 			content = #{content},
