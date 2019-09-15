@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style>
 /* 나의 정보 */
 #myInfo {
@@ -13,7 +14,7 @@
 }
 
 #myInfo div {
-	float:left;
+	float: left;
 	width: 30%;
 }
 
@@ -56,22 +57,24 @@
 }
 </style>
 <div id="myInfo">
-			<div>
-				<p class="id">
-					${myInfo.member_name} <em>(${myInfo.member_id })</em>
-				</p>
-				<p class="grade">
-					${myInfo.grade_name } <a href="javascript:alert('준비중입니다.')"
-						class="">혜택보기</a>
-				</p>
-			</div>
-			<div>
-				<p class="number">적립금</p>
-				<p class="number_dd">${myInfo.current_point}원</p>
-			</div>
-			<div>
-				<p class="number">팔로우</p>
-				<p class="number_dd">0명</p>
-			</div>
-			<div class="clear"></div>
-		</div>
+	<div>
+		<p class="id">
+			${myInfo.member_name} <em>(${myInfo.member_id })</em>
+		</p>
+		<p class="grade">
+			${myInfo.grade_name } <a href="javascript:alert('준비중입니다.')" class="">혜택보기</a>
+		</p>
+	</div>
+	<div>
+		<p class="number">적립금</p>
+		<p class="number_dd">
+			<fmt:formatNumber value="${myInfo.current_point}" pattern="#,###.##" />
+			원
+		</p>
+	</div>
+	<div>
+		<p class="number">팔로우</p>
+		<p class="number_dd">0명</p>
+	</div>
+	<div class="clear"></div>
+</div>

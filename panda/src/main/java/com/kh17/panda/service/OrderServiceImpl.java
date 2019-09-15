@@ -49,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private PointDao pointDao;
-	
+
 	@Autowired
 	private KakaopayDao kakaopayDao;
 
@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
 		for (String s : re_phones) {
 			re_phone.append(s);
 		}
-		
+
 		// 기본 DTO 설정
 		ordersDto.setMember_id((String) session.getAttribute("sid"));
 		if (ordersDto.getPay_type().equals("카카오페이")) {
@@ -121,8 +121,8 @@ public class OrderServiceImpl implements OrderService {
 				count++;
 			}
 		}
-		System.out.println(t_id);
-		kakaopayDao.team(KakaoPayDto.builder().t_id(t_id).team(team).build());
+		if (t_id != null)
+			kakaopayDao.team(KakaoPayDto.builder().t_id(t_id).team(team).build());
 		return team;
 	}
 
@@ -177,15 +177,14 @@ public class OrderServiceImpl implements OrderService {
 		for (String s : item_name) {
 			items_name.append(s + "/");
 		}
-		
+
 		if (use > 0) {
 			pointDao.save(PointDto.builder().type("사용").use_point(use).current_point(point - use)
-					.content(items_name.substring(0, items_name.length()-1)).member_id(member_id).team(team).build());
+					.content(items_name.substring(0, items_name.length() - 1)).member_id(member_id).team(team).build());
 		}
-		pointDao.save(PointDto.builder().type("적립").use_point(save).current_point(point + save)
-				.content(items_name.substring(0, items_name.length()-1)).member_id(member_id).team(team).build());
+		pointDao.save(PointDto.builder().type("대기").use_point(save).current_point(point + save)
+				.content(items_name.substring(0, items_name.length() - 1)).member_id(member_id).team(team).build());
 	}
-	
 
 	@Override
 	public void cancelOrder(String tid, int total_amount, Model model) throws URISyntaxException {

@@ -133,7 +133,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="myInfo" parameterType="string" resultType="myInfoDto">
 		select * from(
-			select * from my_info where member_id=#{member_id} order by when desc
+			select * from my_info where member_id=#{member_id} and type in('적립', '회수', '사용') order by when desc
 		) where rownum = 1
 	</select>
 </mapper>

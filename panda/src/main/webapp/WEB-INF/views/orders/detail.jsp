@@ -159,7 +159,7 @@ a {
 	text-decoration: none;
 }
 
-.myorder_list {
+.orderViewDto_list {
 	width: 100%;
 }
 
@@ -211,7 +211,7 @@ dt {
 	<jsp:include page="/WEB-INF/views/template/side.jsp"></jsp:include>
 	<div class="total">
 		<form action="">
-			<section class="myorder_list">
+			<section class="orderViewDto_list">
 				<ul class="my_orders">
 					<li>
 						<dl class="order_info dis_f tc_3">
@@ -264,26 +264,36 @@ dt {
 													배송중
 													<div>
 															<a
-																href="${pageContext.request.contextPath}/transport/tracking?t_invoice=${myOrder.t_invoice}&t_id=${myOrder.t_id}"
+																href="${pageContext.request.contextPath}/transport/tracking?t_invoice=${orderViewDto.t_invoice}&t_id=${orderViewDto.t_id}"
 																style="color: #55a0ff !important" class="tracking"
-																onclick="window.open(this.href,'','width=900,height=700,left=100,top=50'); return false;">[${myOrder.t_invoice}]
+																onclick="window.open(this.href,'','width=900,height=700,left=100,top=50'); return false;">[${orderViewDto.t_invoice}]
 															</a>
 														</div>
 													</c:when>
 													<c:when test="${orderViewDto.t_status == '배송완료'}">
 														<div>
-															<a href="#" style="color: #55a0ff !important">구매확정 ></a><br>
-															<a
-																href="${pageContext.request.contextPath}/orders/exchange/${myOrder.team}"
-																style="color: red !important">[교환]</a> / <a
-																href="${pageContext.request.contextPath}/orders/return/${myOrder.team}"
-																style="color: red !important">[반품]</a>
+															<c:choose>
+																<c:when test="${orderViewDto.pay_status == '구매확정'}">
+																	<span>구매확정</span>
+																</c:when>
+																<c:otherwise>
+																	<a
+																		href="${pageContext.request.contextPath}/orders/confirm/${orderViewDto.team}"
+																		style="color: #55a0ff !important">구매확정 ></a>
+																	<br>
+																	<a
+																		href="${pageContext.request.contextPath}/orders/exchange/${orderViewDto.team}"
+																		style="color: red !important">[교환]</a> / <a
+																		href="${pageContext.request.contextPath}/orders/return/${orderViewDto.team}"
+																		style="color: red !important">[반품]</a>
+																</c:otherwise>
+															</c:choose>
 														</div>
 													</c:when>
 													<c:otherwise>
 														<div>${orderViewDto.pay_status }</div>
 														<a
-															href="${pageContext.request.contextPath}/orders/cancel/${myOrder.team}"
+															href="${pageContext.request.contextPath}/orders/cancel/${orderViewDto.team}"
 															style="color: red !important">[취소]</a>
 													</c:otherwise>
 												</c:choose>
@@ -317,7 +327,9 @@ dt {
 				<td><h3>0</h3>
 					<p>배송비</p></td>
 				<td><sapn id="span1">-</sapn></td>
-				<td><h3><fmt:formatNumber value="${point}" pattern="#,###.##" /></h3>
+				<td><h3>
+						<fmt:formatNumber value="${point}" pattern="#,###.##" />
+					</h3>
 					<p>적립금 사용</p></td>
 				<td><sapn id="span1">=</sapn></td>
 				<td><h3>

@@ -4,19 +4,16 @@
 	$(function() {
 		var target = $(".product, .order, .member, .promotion, .stat, .board");
 // 		target.click(function() {
-<<<<<<< HEAD
-			$(this).next().toggle();
+// 			$(this).next().toggle();
 			// 		$(this).parent().toggleClass("bc_w");
-			target.not($(this)).next().hide();
+// 			target.not($(this)).next().hide();
 			// 		target.not($(this)).parent().removeClass("bc_w");
-		});
-=======
+// 		});
 // 			$(this).next().toggle();
 // 			// 		$(this).parent().toggleClass("bc_w");
 // 			target.not($(this)).next().hide();
 // 			// 		target.not($(this)).parent().removeClass("bc_w");
 // 		});
->>>>>>> refs/remotes/origin/master
 
 		target.next().find("a").click(function() {
 			$(this).addClass("a_bold");
@@ -103,7 +100,7 @@
 			<li><a id="a" href="#" class="member"> 회원 혜택 </a>
 				<ul class="">
 					<li class=""><a id="a"
-						href="#"> 적립금</a></li>
+						href="${pageContext.request.contextPath}/point"> 적립금</a></li>
 				</ul></li>
 			<li><a id="a" href="#" class="board"> 정보 관리 </a>
 				<ul class="">

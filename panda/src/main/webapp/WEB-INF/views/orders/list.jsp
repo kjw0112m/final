@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<title>주문배송조회</title>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -214,6 +213,7 @@ ul, li {
 	padding-top: 58px;
 	padding-bottom: 120px;
 	width: 1200px;
+	min-height: 1000px;
 }
 
 a {
@@ -331,8 +331,6 @@ dt {
 	font-weight: bold;
 }
 </style>
-
-<body>
 	<div id="container">
 		<jsp:include page="/WEB-INF/views/template/my_info.jsp"></jsp:include>
 		<jsp:include page="/WEB-INF/views/template/side.jsp"></jsp:include>
@@ -407,14 +405,27 @@ dt {
 															href="${pageContext.request.contextPath}/transport/tracking?t_invoice=${myOrder.t_invoice}&t_id=${myOrder.t_id}"
 															style="color: #55a0ff !important" class="tracking"
 															onclick="window.open(this.href,'','width=900,height=700,left=100,top=50'); return false;">[${myOrder.t_invoice}]
-															</a>
+														</a>
 													</div>
 												</c:when>
 												<c:when test="${orderViewDto.t_status == '배송완료'}">
 													<div>
-														<a href="#" style="color: #55a0ff !important">구매확정 ></a><br>
-														<a href="${pageContext.request.contextPath}/orders/exchange/${myOrder.team}" style="color: red !important">[교환]</a> / <a
-															href="${pageContext.request.contextPath}/orders/return/${myOrder.team}" style="color: red !important">[반품]</a>
+														<c:choose>
+															<c:when test="${orderViewDto.pay_status == '구매확정'}">
+																<span>구매확정</span>
+															</c:when>
+															<c:otherwise>
+																<a
+																	href="${pageContext.request.contextPath}/orders/confirm/${myOrder.team}"
+																	style="color: #55a0ff !important">구매확정 ></a>
+																<br>
+																<a
+																	href="${pageContext.request.contextPath}/orders/exchange/${myOrder.team}"
+																	style="color: red !important">[교환]</a> / <a
+																	href="${pageContext.request.contextPath}/orders/return/${myOrder.team}"
+																	style="color: red !important">[반품]</a>
+															</c:otherwise>
+														</c:choose>
 													</div>
 												</c:when>
 												<c:otherwise>
@@ -434,7 +445,8 @@ dt {
 
 		<div class="paginate">
 			<ol>
-				<c:if test="${(not (page eq 1))&& not empty page && page>6}">
+				<c:if
+					test="${(not (page eq 1))&& not empty page && startBlock-1 >0}">
 					<li><a href="#" class="page_block">&lt;&lt;</a></li>
 				</c:if>
 				<c:if test="${not (page eq 1) && not empty page}">
@@ -456,12 +468,11 @@ dt {
 				<c:if test="${not (page eq pageCount)}">
 					<li><a href="#" class="page_block">&gt;</a></li>
 				</c:if>
-				<c:if test="${(not (page eq pageCount)) && pageCount>5}">
+				<c:if test="${(not (page eq pageCount)) && pageCount>endBlock}">
 					<li><a href="#" class="page_block">&gt;&gt;</a></li>
 				</c:if>
 			</ol>
 		</div>
 	</div>
-</body>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
