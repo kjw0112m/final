@@ -367,7 +367,7 @@ dt {
 
 	<div class="btndiv">
 		<a href="${pageContext.request.contextPath}/one/one_List"><button
-				class="btn1">1:1문의</button></a> <a href="cancel"><button
+				class="btn1">1:1문의</button></a> <a href="${pageContext.request.contextPath }/orders/cancel/${orderViewDto.get(0).team }"><button
 				class="btn2">전체취소</button></a> <a
 			href="${pageContext.request.contextPath}/orders/list"><button
 				class="btn2">목록</button></a>

@@ -5,31 +5,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="sizes">
 
 	<insert id="regist" parameterType="sizesDto">
-		insert into sizes values(#{product_id}, #{sizes}, #{quantity})
+		insert into sizes
+		values(#{product_id}, #{sizes}, #{quantity})
 	</insert>
-	
+
 	<select id="get" parameterType="int" resultType="sizesDto">
-		select * from sizes where product_id = #{id}
+		select * from
+		sizes where product_id = #{id}
 	</select>
-	
+
 	<update id="edit" parameterType="sizesDto">
 		update sizes
-			set
-				quantity = #{quantity}
-			where
-				product_id = #{product_id}
-				and
-				sizes = #{sizes}	
+		set
+		quantity = #{quantity}
+		where
+		product_id = #{product_id}
+		and
+		sizes = #{sizes}
 	</update>
-	
+
 	<update id="minus" parameterType="sizesDto">
 		update sizes
-			set
-				quantity = quantity - #{quantity}
-			where
-				product_id = #{product_id}
-				and
-				sizes = #{sizes}
+		set
+		quantity = quantity - #{quantity}
+		where
+		product_id = #{product_id}
+		and
+		sizes = #{sizes}
+	</update>
+
+	<update id="plus">
+		update sizes
+		set
+		quantity = quantity + #{quantity}
+		where
+		product_id = #{product_id}
+		and
+		sizes = #{sizes}
 	</update>
 
 </mapper>

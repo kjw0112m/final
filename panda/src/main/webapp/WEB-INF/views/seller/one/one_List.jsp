@@ -172,7 +172,7 @@
 		<c:otherwise>
 		<c:set var="listCnt" value="0" />
 			<c:forEach var="bdto" items="${list}" varStatus="num">
-				<c:if test="${sessionScope.sid.toString() eq bdto.memberid or sessionScope.sid.toString().startsWith('!') or sessionScope.sid.toString().startsWith('@')}">
+				<c:if test="${sessionScope.aid != null}">
 				<c:set var="listCnt" value="${listCnt+1}" />
 				<tr>
 					<td>${bdto.rn}</td>

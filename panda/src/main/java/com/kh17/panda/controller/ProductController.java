@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh17.panda.entity.CategoryDto;
 import com.kh17.panda.entity.CategoryListDto;
 import com.kh17.panda.entity.FilesDto;
+import com.kh17.panda.entity.FollowDto;
 import com.kh17.panda.entity.ProductSellerDto;
 import com.kh17.panda.entity.SubcategoryDto;
 import com.kh17.panda.repository.CategoryDao;
 import com.kh17.panda.repository.CategoryListDao;
 import com.kh17.panda.repository.FilesDao;
+import com.kh17.panda.repository.FollowDao;
 import com.kh17.panda.repository.ProductDao;
 import com.kh17.panda.repository.ProductSellerDao;
 import com.kh17.panda.repository.SizesDao;
@@ -58,6 +61,9 @@ public class ProductController {
 	
 	@Autowired
 	private FilesDao filesDao;
+	
+	@Autowired
+	private FollowDao followDao;
 
 	@GetMapping("/newArrivals")
 	public String newArrivals(
@@ -90,7 +96,7 @@ public class ProductController {
 	@GetMapping("/sellerList")
 	public String sellers(
 			@RequestParam (required = false, defaultValue = "1") int page,
-			@RequestParam String seller_id,
+			@RequestParam String seller_id, HttpSession session,
 			Model model) {
 		int pagesize = 8;
 		int start = pagesize * page - (pagesize - 1);
@@ -104,6 +110,15 @@ public class ProductController {
 			endBlock = pageCount;
 		}
 		List<ProductSellerDto> list = productSellerDao.sellerList(seller_id, start, end);
+		String member_id = (String) session.getAttribute("sid");
+		
+		int follows = followDao.count(FollowDto.builder().seller_id(seller_id).build());
+		int isFollow = followDao.count(FollowDto.builder().seller_id(seller_id).member_id(member_id).build());
+		
+		System.out.println(isFollow);
+		
+		model.addAttribute("follows", follows);
+		model.addAttribute("isFollow", isFollow);
 		model.addAttribute("list", list);
 		model.addAttribute("seller_id", seller_id);
 		model.addAttribute("page", page);

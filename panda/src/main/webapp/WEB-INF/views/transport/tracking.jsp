@@ -63,9 +63,7 @@ style>.del_tit {
 			url : "http://info.sweettracker.co.kr/api/v1/trackingInfo?t_key="
 					+ myKey + "&t_code=" + t_code + "&t_invoice=" + t_invoice,
 			success : function(data) {
-				console.log(data);
 				if (data.status == false) {
-					console.log('????')
 					info.children().css('display', 'none');
 					track.css('display', 'none');
 					info.append('<p>조회된 결과가 없습니다.</p>');

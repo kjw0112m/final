@@ -151,8 +151,6 @@ public class SellerController {
 		return "seller/find_pw";
 	}
 
-	@Autowired
-	private EmailService emailService;
 
 //	목표 : 넘긴 정보를 조회하여 일치할 경우 이메일을 발송
 	@PostMapping("/find_pw")

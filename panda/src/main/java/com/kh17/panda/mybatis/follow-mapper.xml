@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	이 파일은 SQL 명령만 보관하는 파일
+	따라서 외부에서 접근할 수 있도록 namespace를 지정
+ -->
+<mapper namespace="follow">
+	<insert id="insert" parameterType="followDto">
+		insert into follow values(follow_seq.nextval, #{member_id}, #{seller_id})
+	</insert>
+	
+	<delete id="delete" parameterType="followDto">
+		delete follow where member_id= #{member_id} and seller_id = #{seller_id}
+	</delete>
+	
+	<select id="count" parameterType="followDto" resultType="int">
+		select count(*) from follow where 1=1
+		<if test="member_id != null">
+			and member_id = #{member_id}
+		</if>
+		<if test="seller_id != null">
+			and seller_id = #{seller_id}
+		</if>
+	</select>
+	
+	<select id="list" parameterType="string" resultType="followDto">
+		select * from follows where member_id = #{member_id}
+	</select>
+</mapper>

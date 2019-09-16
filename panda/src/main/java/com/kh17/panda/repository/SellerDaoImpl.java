@@ -72,6 +72,5 @@ public class SellerDaoImpl implements SellerDao{
 		public SellerDto findId(SellerDto sellerDto) {
 			return sqlSession.selectOne("seller.findId", sellerDto);
 		}
-		
 	
 }

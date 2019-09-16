@@ -12,5 +12,4 @@ public interface OneDao {
 	void delOne(OneDto oneDto);
 	void updateComment(OneDto oneDto);
 	OneDto selectOne(String id);
-	
 }

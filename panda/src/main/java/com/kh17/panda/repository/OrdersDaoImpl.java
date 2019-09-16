@@ -170,4 +170,9 @@ public class OrdersDaoImpl implements OrdersDao {
 		return sqlSession.selectOne("order.order_price", member_id);
 	}
 
+	@Override
+	public List<OrdersDto> cancelInfo(String team) {
+		return sqlSession.selectList("order.cancelInfo", team);
+	}
+
 }

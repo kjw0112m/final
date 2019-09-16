@@ -24,12 +24,14 @@ import com.kh17.panda.entity.OrderViewDto;
 import com.kh17.panda.entity.OrdersDto;
 import com.kh17.panda.entity.PointDto;
 import com.kh17.panda.entity.ProductDto;
+import com.kh17.panda.entity.SizesDto;
 import com.kh17.panda.repository.CartDao;
 import com.kh17.panda.repository.KakaopayDao;
 import com.kh17.panda.repository.MemberDao;
 import com.kh17.panda.repository.OrdersDao;
 import com.kh17.panda.repository.PointDao;
 import com.kh17.panda.repository.ProductDao;
+import com.kh17.panda.repository.SizesDao;
 import com.kh17.panda.service.MyInfoService;
 import com.kh17.panda.service.OrderService;
 import com.kh17.panda.vo.OrderAddressVO;
@@ -62,6 +64,9 @@ public class OrdersController {
 
 	@Autowired
 	private MyInfoService myInfoService;
+	
+	@Autowired
+	private SizesDao sizesDao;
 
 	@GetMapping("/result")
 	public String result() {
@@ -103,11 +108,11 @@ public class OrdersController {
 	@PostMapping("/order")
 	public String order(@ModelAttribute OrdersDto ordersDto, @RequestParam(required = false) int[] c_id,
 			@ModelAttribute OrderAddressVO orderAddressVO, @RequestParam(required = false) String[] re_phones,
-			@RequestParam(required = false) String t_id, @RequestParam int point, @RequestParam String[] item_name, Model model,
-			HttpSession session) {
+			@RequestParam(required = false) String t_id, @RequestParam int point, @RequestParam String[] item_name,
+			Model model, HttpSession session) {
 		String team = orderService.order(ordersDto, c_id, orderAddressVO, re_phones, session, t_id);
 		session.removeAttribute("orderVO");
-		
+
 		orderService.save(ordersDto, session, point, item_name, team);
 		orderService.gradeCheck(session);
 		return "orders/result";
@@ -176,7 +181,7 @@ public class OrdersController {
 		model.addAttribute("myInfo", myInfo);
 		return "orders/stat_list";
 	}
-	
+
 	@GetMapping("/confirm/{team}")
 	public String confirm(@PathVariable String team, Model model, HttpSession session) {
 		String id = (String) session.getAttribute("sid");
@@ -252,6 +257,7 @@ public class OrdersController {
 	public String cancel(@RequestParam String[] order_id, @RequestParam String team, @RequestParam String pay_status,
 			@RequestParam int discount_price, Model model, HttpSession session) throws URISyntaxException {
 		String id = (String) session.getAttribute("sid");
+		List<OrdersDto> cancelList = ordersDao.cancelInfo(team);
 		KakaoPayDto kakaoPayDto = kakaopayDao.get(team);
 
 		if (id != null) {
@@ -275,8 +281,13 @@ public class OrdersController {
 							.content("주문취소로 인한 포인트 반환").member_id(id).team(team).build());
 		}
 		pointDao.cancel(PointDto.builder().type("대기").team(team).build());
-
-		orderService.cancelOrder(kakaoPayDto.getT_id(), kakaoPayDto.getTotal_amount(), model);
+		
+		for(OrdersDto dto : cancelList) {
+			sizesDao.plus(SizesDto.builder().product_id(dto.getProduct_id()).quantity(dto.getQuantity()).sizes(dto.getSizes()).build());
+		}
+		
+		if (kakaoPayDto != null)
+			orderService.cancelOrder(kakaoPayDto.getT_id(), kakaoPayDto.getTotal_amount(), model);
 		return "redirect:list";
 	}
 
