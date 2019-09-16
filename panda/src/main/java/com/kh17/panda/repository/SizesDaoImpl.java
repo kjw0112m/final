@@ -29,4 +29,9 @@ public class SizesDaoImpl implements SizesDao{
 		sqlSession.update("sizes.edit", sizesDto);
 	}
 
+	@Override
+	public void minus(SizesDto sizesDto) {
+		sqlSession.update("sizes.minus", sizesDto);
+	}
+
 }

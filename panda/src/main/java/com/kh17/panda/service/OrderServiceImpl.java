@@ -22,14 +22,15 @@ import com.kh17.panda.entity.KakaoPayDto;
 import com.kh17.panda.entity.MemberDto;
 import com.kh17.panda.entity.OrdersDto;
 import com.kh17.panda.entity.PointDto;
+import com.kh17.panda.entity.SizesDto;
 import com.kh17.panda.repository.CartDao;
 import com.kh17.panda.repository.GradeDao;
 import com.kh17.panda.repository.KakaopayDao;
 import com.kh17.panda.repository.MemberDao;
 import com.kh17.panda.repository.OrdersDao;
 import com.kh17.panda.repository.PointDao;
+import com.kh17.panda.repository.SizesDao;
 import com.kh17.panda.vo.KakaoPayCancelVO;
-import com.kh17.panda.vo.KakaoPaySuccessVO;
 import com.kh17.panda.vo.OrderAddressVO;
 import com.kh17.panda.vo.OrderVO;
 
@@ -52,6 +53,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Autowired
 	private KakaopayDao kakaopayDao;
+	
+	@Autowired
+	private SizesDao sizesDao;
 
 	@Override
 	@Transactional
@@ -96,6 +100,7 @@ public class OrderServiceImpl implements OrderService {
 				}
 				count++;
 				cartDao.delete(cartViewDto.getCart_id());
+				sizesDao.minus(SizesDto.builder().quantity(ordersDto.getQuantity()).product_id(ordersDto.getProduct_id()).sizes(ordersDto.getSizes()).build());
 			}
 		}
 //		상품 상세화면에서 단일 주문할 경우
@@ -119,6 +124,7 @@ public class OrderServiceImpl implements OrderService {
 					team = ordersDao.getOrderId(ordersDto.getId());
 				}
 				count++;
+				sizesDao.minus(SizesDto.builder().quantity(ordersDto.getQuantity()).product_id(ordersDto.getProduct_id()).sizes(ordersDto.getSizes()).build());
 			}
 		}
 		if (t_id != null)
