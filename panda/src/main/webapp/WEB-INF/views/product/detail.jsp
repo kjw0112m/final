@@ -243,7 +243,8 @@
 	}
 
 	#pimg {
-		width: 1260px;
+		min-width: 1200px;
+		max-width: 1200px;
 		padding: 100px 20px 20px 20px;
 		margin-top: 50px;
 		margin-bottom: 150px;
@@ -272,6 +273,7 @@
 	
 	.bottomimg{
 		margin: auto;
+		text-align: center;
 		width: 1300px;	
 	}
 </style>

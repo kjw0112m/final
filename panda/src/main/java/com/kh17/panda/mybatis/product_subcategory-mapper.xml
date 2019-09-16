@@ -3,61 +3,67 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="productSubcategory">
-	
-	<select id="list" parameterType="map" resultType="productSubcategoryDto">
+
+	<select id="list" parameterType="map"
+		resultType="productSubcategoryDto">
 		<![CDATA[
 		select * from(
 			select rownum rn, A.* from (
 				select * from product_subcategory
 		]]>
+		where 1=1
+		<if test="seller_id != null">
+			and
+			seller_id = #{seller_id}
+		</if>
 		<![CDATA[
 				order by regist_dt desc
 			)A
-		) where 1=1
+		)
 		]]>
-		<if test="seller_id != null">
-		and
-		seller_id = #{seller_id} 
-		</if>
+		
 		<![CDATA[
-		and rn >= #{start} and rn <= #{end}
+		where rn >= #{start} and rn <= #{end}
 		]]>
 	</select>
-	
+
 	<select id="count" parameterType="map" resultType="int">
 		<![CDATA[
 		select count(*) from product_subcategory where 1=1
-		]]>	
-			<if test= "type != null and keyword != null">
+		]]>
+		<if test="type != null and keyword != null">
 			and ${type} like '%' || #{keyword} || '%'
-			</if>
+		</if>
 		<if test="seller_id != null">
-		and seller_id = #{seller_id}
+			and seller_id = #{seller_id}
 		</if>
 	</select>
-	
-	<select id="search" parameterType="map" resultType="productSubcategoryDto">
+
+	<select id="search" parameterType="map"
+		resultType="productSubcategoryDto">
 	<![CDATA[
 		select * from(
 			select rownum rn, A.* from (
 				select * from product_subcategory
 		]]>
-				<if test="type != null and keyword != null">
-				where
-					${type} like '%' || #{keyword} || '%'
-				</if>
+		where 1=1
+		<if test="type != null and keyword != null">
+			and
+			${type} like '%' || #{keyword} || '%'
+		</if>
+		<if test="seller_id != null">
+			and
+			seller_id = #{seller_id}
+		</if>
 		<![CDATA[
 				order by regist_dt desc
 			)A
-		) where 1=1
+		) 
 		]]>
-		<if test="seller_id != null">
-			and
-			seller_id = #{seller_id} 
-		</if>
+		
 		<![CDATA[
-		and rn >= #{start} and rn <= #{end}
+		where rn >= #{start} and rn <= #{end}
 		]]>
 	</select>
-	
+
 </mapper>
