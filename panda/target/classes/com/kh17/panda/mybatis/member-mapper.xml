@@ -12,8 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="regist" parameterType="memberDto">
 		insert into member values(
 		#{id},#{pw}, #{name},  #{email}, #{phone},
-			#{post_code}, #{basic_addr},#{detail_addr}, sysdate, null, sysdate, #{birth}, 1
-		)
+			#{post_code}, #{basic_addr},#{detail_addr}, sysdate, null, sysdate, #{birth}, 1)
 	</insert>
 	
 		<!-- 회원 아이디 중복 확인-->
@@ -126,6 +125,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where ${type} like '%' || #{keyword} || '%'
 			</if>
 	</select>
+		
+		<!-- 회원탈퇴 -->
+	<delete id="delete" parameterType="string">
+		delete member where id = #{id}
+	</delete>
 	
 	<update id="gradeChange" parameterType="memberDto">
 		update member set grade_id = #{grade_id} where id = #{id}

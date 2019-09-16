@@ -235,6 +235,13 @@
 			});
 		});
 	});
+	
+	$(function() {
+		$("#email").click(
+				function() {
+								window.alert("이메일로 인증번호를 보냈습니다");
+					});
+				});
 </script>
 <style>
 .total {
