@@ -97,7 +97,7 @@
 			<li>
 				<h1>MY PAGE</h1>
 			</li>
-			<li><a id="a" href="#none" class="product"> 좋아요 </a></li>
+			<li><a id="a" href="${pageContext.request.contextPath }/follow/list" class="product"> 좋아요 </a></li>
 			<li><a id="a" href="#" class="order"> 주문 관리 </a>
 				<ul class="">
 					<li class=""><a id="a"

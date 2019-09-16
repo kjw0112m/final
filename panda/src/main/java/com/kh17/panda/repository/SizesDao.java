@@ -10,4 +10,5 @@ public interface SizesDao {
 	List<String> get(int id);
 	void edit(SizesDto sizesDto);
 	void minus(SizesDto sizesDto);
+	void plus(SizesDto sizesDto);
 }

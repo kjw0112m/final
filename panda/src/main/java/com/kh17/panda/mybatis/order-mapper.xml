@@ -370,6 +370,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultType="orderViewDto">
 		select * from order_view where team = #{team}
 	</select>
+	
+	<select id="cancelInfo" parameterType="string" resultType="ordersDto">
+		select * from orders where team=#{team}
+	</select>
 
 
 	<select id="deliveryView" parameterType="map"

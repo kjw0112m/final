@@ -49,4 +49,6 @@ public interface OrdersDao {
 	List<OrderListVO> statList(OrderViewDto orderViewDto, int start, int end);
 	
 	int orderAmount(String member_id);
+	
+	List<OrdersDto> cancelInfo(String team);
 }

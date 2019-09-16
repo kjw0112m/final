@@ -91,9 +91,8 @@
 								span.innerHTML = ""
 								$("input[name=btn]").prop("disabled", true)
 							} else {
-								span.innerHTML = "_$tag______________________________8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)로 입력해주세요_$tag__"
+								span.innerHTML = "8~15자의 영문 대소문자, 숫자, 특수문자(!@#$-_)로 입력해주세요"
 								$("input[name=btn]").prop("disabled", true)
-
 							}
 						});
 	});
@@ -109,11 +108,11 @@
 				.keyup(
 						function() {
 							if ($('#new_pw').val() != $('#chpass').val()) {
-								span.innerHTML = "_$tag______________________________암호틀림_$tag__"
+								span.innerHTML = "<font color = '#de2195' size='2'>암호틀림</font>"
 								$("input[name=btn]").prop("disabled", true)
 
 							} else {
-								span.innerHTML = "_$tag______________________________암호맞음_$tag__"
+								span.innerHTML = "<font color = '#de2195' size='2'>암호맞음</font>"
 								$("input[name=btn]").prop("disabled", false)
 							}
 						}); //#chpass.keyup
@@ -129,9 +128,9 @@
 					var encNPW = CryptoJS.SHA256(ck_pw).toString();
 					$("input[name=origin_pw]").attr("name", "");
 					$("input[name=new_pw]").attr("name", "");
-					var newInput1 = $("_$tag___").attr("name", "new_pw").val(
+					var newInput1 = $("<input/>").attr("name", "new_pw").val(
 							encNPW).attr("type", "hidden");
-					var newInput2 = $("_$tag___").attr("name", "pw").val(encPw)
+					var newInput2 = $("<input/>").attr("name", "pw").val(encPw)
 							.attr("type", "hidden");
 					$("input[name=pw_check]").attr("name", "");
 					$(this).append(newInput1);
@@ -407,7 +406,6 @@ ul, li {
 .clear {
 	clear: both;
 }
-
 </style>
 <body>
 	<div id="container">

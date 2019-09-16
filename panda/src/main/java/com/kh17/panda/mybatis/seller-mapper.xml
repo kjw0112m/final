@@ -4,26 +4,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="seller">
 
-	<!-- 회원등록 -->
 	<insert id="regist" parameterType="sellerDto">
 		insert into seller values(
 		#{id}, #{pw}, #{name}, #{nickname}, #{email}, #{phone}, sysdate, null
 		)
 	</insert>
 
-	<!-- 회원 아이디 중복 확인 -->
 	<select id="idCheck" parameterType="string"
 		resultType="sellerDto">
 		select * from seller where id = #{id}
 	</select>
 
-	<!-- 회원 로그인 -->
-	<select id="login" parameterType="memberDto"
+	<select id="login" parameterType="sellerDto"
 		resultType="sellerDto">
 		select * from seller where id = #{id} and pw = #{pw}
 	</select>
 
-	<!-- 회원 탈퇴 -->
 	<delete id="delete" parameterType="string">
 		delete seller where id = #{id}
 	</delete>
@@ -34,7 +30,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		seller where id= #{id}
 	</select>
 
-	<!-- 최종접속시간 -->
 	<update id="lastlogin" parameterType="sellerDto">
 		update seller
 		set
@@ -42,7 +37,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where id = #{id}
 	</update>
 
-	<!-- 회원 정보 수정 -->
 	<update id="change" parameterType="sellerDto">
 		update seller
 		set
@@ -54,8 +48,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 
-
-	<!-- 비밀번호 찾기 기능 -->
 	<select id="findpw" parameterType="sellerDto"
 		resultType="sellerDto">
 		select * from seller
@@ -65,7 +57,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		email= #{email}
 	</select>
 
-	<!-- 비밀 번호 바꾸기 -->
 	<update id="changePw" parameterType="sellerDto">
 		update seller
 		set
@@ -74,7 +65,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		id = #{id}
 	</update>
 
-	<!-- 아이디 찾기 기능 -->
 	<select id="findId" parameterType="sellerDto"
 		resultType="sellerDto">
 		select * from seller
@@ -85,10 +75,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
-
-	<!-- 관리자 사용 -->
-
-	<!-- 관리자가판매자 검색하는 기능 -->
 	<select id="search" parameterType="map" resultType="sellerDto">
 		select * from
 		seller
@@ -96,9 +82,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		${type} like '%' || #{keyword} || '%'
 		order by ${type} asc
 	</select>
-
-
-
-
+	
 	<!-- https://forms.gle/PMPMAMyqRh6c7Ucj6 이미지 신청 주소 -->
 </mapper>

@@ -63,6 +63,7 @@
 								window.open("", "kakaopay",
 										"width=730,height=520,left=50, top=50");
 								this.target = 'kakaopay';
+								
 							}
 							this.submit();
 						});

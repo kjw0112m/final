@@ -35,6 +35,22 @@
 				$('#total_price').append(cul.toLocaleString());
 			}
 		});
+		
+		$('form').submit(function(e){
+			e.preventDefault();
+			var check = 0;
+			$('input[type=checkbox]').each(function(){
+				if($(this).is(':checked')){
+					check++;
+				}
+			});
+			if(check>0){
+				this.submit();
+			}
+			else{
+				alert('하나 이상 선택해주세요.')
+			}
+		});
 	});
 </script>
 <style>
@@ -326,6 +342,11 @@ dt {
     width: 100%;
     margin-bottom: 50px;
 }
+
+.img img {
+	width: 150px;
+	height: 150px;
+}	
 </style>
 
 <body>
@@ -370,11 +391,11 @@ dt {
 								<c:forEach var="orderViewDto" items="${orderViewDto}">
 									<tr class="b1">
 										<td><input type="checkbox" name="order_id" value="${orderViewDto.order_id}"> </td>
-										<td class="img"><a href="#"> <img
-												src="http://placehold.it/140"></a></td>
-										<td id="td-d"><a href="#">
+										<td class="img"><a href="${pageContext.request.contextPath}/product/detail?product_id=${orderViewDto.product_id}"> <img
+												src="${pageContext.request.contextPath}/product/image?id=${orderViewDto.mainfile}"></a></td>
+										<td id="td-d"><a href="${pageContext.request.contextPath}/product/sellerList?seller_id=${orderViewDto.seller_id}">
 												<div>${orderViewDto.seller_id}</div>
-										</a> <a href="#">
+										</a> <a href="${pageContext.request.contextPath}/product/detail?product_id=${orderViewDto.product_id}">
 												<div>${orderViewDto.product_name}</div>
 										</a>
 											<div id="">
@@ -421,7 +442,7 @@ dt {
 			</table>
 		</div>
 		<div class="btndiv">
-			<a href="${pageContext.request.contextPath}/"><button type="button" class="c_btn white">취소</button></a>
+			<a href="${pageContext.request.contextPath}/orders/list"><button type="button" class="c_btn white">취소</button></a>
 			<a href="#"><button class="c_btn">취소 신청</button></a>
 		</div>
 	</form>
