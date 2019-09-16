@@ -43,7 +43,7 @@
 							href="${pageContext.request.contextPath}/seller/one/oneList">
 								1:1문의 관리 </a></li>
 					</ul></li>
-			<li><a href="#" class="promotion"> 프로모션 </a>
+			<li><a href="javascript:alert('준비중입니다.')" class="promotion"> 프로모션 </a>
 				<ul class="hide">
 					<li class=""><a href="#"> 혜택 관리 </a></li>
 					<li class=""><a href="#"> 쿠폰 관리 </a></li>
@@ -52,8 +52,8 @@
 			</c:if>
 			<li><a href="#" class="stat"> 통계분석 </a>
 				<ul class="hide">
-					<li class=""><a href="#"> 매출 분석 </a></li>
-					<li class=""><a href="#"> 상품 분석 </a></li>
+					<li class=""><a href="${pageContext.request.contextPath }/statistics/proceed"> 매출 분석 </a></li>
+					<li class=""><a href="${pageContext.request.contextPath }/statistics/product"> 상품 분석 </a></li>
 				</ul></li>
 		</ul>
 		<div class="customer">
