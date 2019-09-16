@@ -71,7 +71,7 @@
             <tr class="b">
                
                 <td>
-                    <h4>비밀번호 변경이 완료되었습니다</h4>
+                    <h4>회원가입에 실패 하셨습니다</h4>
                 </td>
 
             </tr>
@@ -82,7 +82,6 @@
             </tr>
         </table>
         <div class="btndiv">
-            <a href="login" class="a">로그인 하러 가기</a>
             <a href="regist" class="a">다시 가입하러 가기</a>
             <a href="${pageContext.request.contextPath}" class="a">HOME</a>
         </div>
