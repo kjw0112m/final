@@ -6,6 +6,7 @@
 <div id="sidebar">
 	<div class="snbArea">
 		<ul id="snb">
+		<c:if test="${not empty sessionScope.ssid }">
 			<li><a id="" href="#none" class="product"> 상품관리 </a>
 				<ul class="hide">
 					<li class=""><a id="" href="${pageContext.request.contextPath }/seller/product/regist" class=""> 상품 등록 </a></li>
@@ -13,6 +14,7 @@
 					<li class=""><a id="" href="#" class=""> 카테고리 관리(준비중) </a></li>
 					<li class=""><a id="" href="#" class=""> 메인 관리(준비중) </a></li>
 				</ul></li>
+		</c:if>
 			<c:if test="${not empty sessionScope.aid }">
 				<li><a href="#none" class="order"> 주문관리 </a>
 					<ul class="hide">

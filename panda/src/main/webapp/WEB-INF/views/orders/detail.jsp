@@ -205,6 +205,11 @@ dd, dt {
 dt {
 	font-weight: bold;
 }
+
+.img img {
+	width: 150px;
+	height: 150px;
+}
 </style>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <div id="container">
@@ -238,11 +243,16 @@ dt {
 							<tbody>
 								<c:forEach var="orderViewDto" items="${orderViewDto}">
 									<tr class="b1">
-										<td class="img"><a href="#"> <img
-												src="http://placehold.it/140"></a></td>
-										<td id="td-d"><a href="#">
+										<td class="img"><a
+											href="${pageContext.request.contextPath}/product/detail?product_id=${orderViewDto.product_id}">
+												<img
+												src="${pageContext.request.contextPath}/product/image?id=${orderViewDto.mainfile}">
+										</a></td>
+										<td id="td-d"><a
+											href="${pageContext.request.contextPath}/product/sellerList?seller_id=${orderViewDto.seller_id}">
 												<div>${orderViewDto.seller_id}</div>
-										</a> <a href="#">
+										</a> <a
+											href="${pageContext.request.contextPath}/product/detail?product_id=${orderViewDto.product_id}">
 												<div>${orderViewDto.product_name}</div>
 										</a>
 											<div>

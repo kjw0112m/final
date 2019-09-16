@@ -199,6 +199,11 @@ body {
 	margin: 0 auto;
 }
 
+.total img{
+	width: 100px;
+	height: 100px;
+}
+
 .table_st {
 	border-width: 2px 0 0;
 	border-style: solid;
@@ -501,7 +506,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 										value="${c.product_name }">
 									<tr>
 										<td class="imggg"><a href="#" class="img"> <img
-												src="http://placehold.it/100"></a></td>
+												src="${pageContext.request.contextPath}/product/image?id=${c.mainfile}"></a></td>
 										<td class="text-left"><div>
 												<a href="#">${c.product_seller_id}</a>
 											</div>
@@ -530,7 +535,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 									</c:if>
 									<tr>
 										<td class="imggg"><a href="#" class="img"> <img
-												src="http://placehold.it/100"></a></td>
+												src="${pageContext.request.contextPath}/product/image?id=${orderVO.productDto.mainfile}"></a></td>
 										<td class="text-left"><div>
 												<a href="#">${orderVO.productDto.seller_id}</a>
 											</div>

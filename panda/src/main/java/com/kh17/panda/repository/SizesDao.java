@@ -9,5 +9,5 @@ public interface SizesDao {
 	void regist(SizesDto sizesDto);
 	List<String> get(int id);
 	void edit(SizesDto sizesDto);
-
+	void minus(SizesDto sizesDto);
 }

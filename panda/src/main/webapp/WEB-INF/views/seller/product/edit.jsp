@@ -50,7 +50,7 @@ form > p {
 	margin-left: 12px;
 	vertical-align: 5px;
 }
-#submit{
+input[type=submit]{
 	width: 150px;
 	height: 50px;
 	margin-left: 100px;
@@ -115,7 +115,7 @@ form > p {
 			${productDto.display_yn eq 'y'?'checked':''}> Y <input
 			type="radio" name="display_yn" value="n"
 			${productDto.display_yn eq 'n'?'checked':''}> N <br>
-		<br> <input type="submit" value="수정" id="submit">
+		<br> <input type="submit" value="수정">
 	</form>
 	</div>
 	</div>

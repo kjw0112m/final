@@ -74,7 +74,7 @@
 							</ul></li>
 						<li class="dis_f ai_c"><a
 							href="${pageContext.request.contextPath}/product/salesList">SALE</a></li>
-						<li class="dis_f ai_c"><a href="/event">EVENT</a></li>
+						<li class="dis_f ai_c"><a href="javascript:alert('준비중입니다.')">EVENT</a></li>
 					</ul>
 				</nav>
 				<div class="dis_f header_links ai_c">

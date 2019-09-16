@@ -19,4 +19,5 @@ public interface OrderService {
 	void save(OrdersDto ordersDto, HttpSession session, int point, String[] item_name, String team);
 	
 	void cancelOrder(String t_id, int total_amount, Model model) throws URISyntaxException;
+	
 }

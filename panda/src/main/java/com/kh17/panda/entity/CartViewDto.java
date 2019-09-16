@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class CartViewDto {
 	private int cart_id, product_price, quantity, product_id;
-	private String product_seller_id, product_name, sizes, member_id;
+	private String product_seller_id, product_name, sizes, member_id, mainfile;
 }

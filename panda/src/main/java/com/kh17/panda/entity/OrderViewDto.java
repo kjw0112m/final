@@ -12,7 +12,7 @@ public class OrderViewDto {
 	private String order_dt, order_id, pay_type, t_invoice, team, re_addr, detail_addr, basic_addr, post_code;
 	private String re_name, re_phone, sizes, phone;
 	private String start_dt, end_dt;
-	private String nickname;
+	private String nickname, mainfile, product_id;
 	
 	private int total_price, discount_price, price, quantity;
 	
