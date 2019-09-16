@@ -63,6 +63,7 @@ function getCommentList(){
         url: '${pageContext.request.contextPath}/review/reviewListAjax?orderid=${param.orderid}'
       , dataType : 'json'
       , success: function(data) {
+    	  
     	  $(data).each(function(i) {
     		  var createHtml = '';
     			createHtml += '<tr>';
@@ -131,6 +132,8 @@ function saveReview() {
       , data : queryString
       , dataType : 'json'
       , success: function(data) {
+    	  
+    	  $("#ftComment1").val(""); /*  화면 초기화 해줌  */
     	  getCommentList();
         }
       , error : function(xhr, status, error) {
@@ -146,7 +149,7 @@ function delComment(id) {
 	        url: '${pageContext.request.contextPath}/review/delCommentAjax?id='+id
 	      , dataType : 'json'
 	      , success: function(data) {
-	    	  $("#ftComment").html(""); /*  화면 초기화 해줌  */
+	    	  $("#ftComment").html(""); /*  화면 초기화 해보자  */
 	    	  getCommentList();
 	        }
 	      , error : function(xhr, status, error) {
@@ -252,7 +255,7 @@ function editChange(id){
 		<tr>
 			<th>리뷰</th>
 			<td colspan="2">
-				<textarea name="content" placeholder="리뷰 작성 시 광고 및 욕설, 비속어나 타인을 비방하는 문구를 사용하시면 삭제 될 수 있습니다." rows="10" cols="100"></textarea>
+				<textarea  id="ftComment1"   name="content" placeholder="리뷰 작성 시 광고 및 욕설, 비속어나 타인을 비방하는 문구를 사용하시면 삭제 될 수 있습니다." rows="10" cols="100"></textarea>
 			</td>
 		</tr>
 		<tr align="center">
