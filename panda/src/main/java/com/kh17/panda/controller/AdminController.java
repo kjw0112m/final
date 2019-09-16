@@ -63,7 +63,7 @@ public class AdminController {
 	}
 
 //	로그인
-	@GetMapping("/login")
+	@GetMapping(value = {"", "/","/login"})
 	public String login() {
 		return "admin/login";
 	}

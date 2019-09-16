@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 이 파일은 SQL 명령만 보관하는 파일 따라서 외부에서 접근할 수 있도록 namespace를 지정 -->
+<mapper namespace="static">
+	<select id="month" resultType="ordersDto">
+		select
+		to_char(order_dt,
+		'YYYY-MM-DD') order_dt,
+		nvl(pay_status, '결제취소') pay_status,
+		sum(total_price) total_price
+		from
+		orders
+		group by to_char(order_dt,
+		'YYYY-MM-DD'), pay_status
+		having pay_status = '구매확정'
+	</select>
+
+	<select id="detail" resultType="ordersDto">
+		select
+		to_char(order_dt,
+		'YYYY-MM') order_dt,
+		sum(total_price) total_price,
+		count(*) orders,
+		sum(quantity) quantity
+		from
+		orders
+		group by to_char(order_dt, 'YYYY-MM'),
+		pay_status
+		having to_char(order_dt,'YYYY-MM') = to_char(sysdate,
+		'YYYY-MM') and
+		pay_status in('구매확정')
+	</select>
+
+	<select id="product_top" resultType="orderViewDto">
+		select * from (
+	<![CDATA[
+		select rownum rn, A.* from (
+		]]>
+		select
+		product_name,
+		sum(total_price) total_price,
+		to_char(order_dt, 'YYYY-MM') dt
+		from order_view
+	<![CDATA[
+		where order_dt between sysdate-7 and sysdate
+		]]>
+		group by product_name, to_char(order_dt, 'YYYY-MM')
+		order by total_price desc
+		)A
+		) where rn between 1 and 10
+	</select>
+	
+	<select id="seller_top" resultType="orderViewDto">
+		select * from (
+	<![CDATA[
+		select rownum rn, A.* from (
+		]]>
+		select
+		nickname,
+		sum(total_price) total_price,
+		to_char(order_dt, 'YYYY-MM') dt
+		from order_view
+	<![CDATA[
+		where order_dt between sysdate-7 and sysdate
+		]]>
+		group by nickname, to_char(order_dt, 'YYYY-MM')
+		order by total_price desc
+		)A
+		) where rn between 1 and 10
+	</select>
+</mapper>
