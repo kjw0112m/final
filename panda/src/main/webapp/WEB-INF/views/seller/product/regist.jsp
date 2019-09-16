@@ -19,9 +19,8 @@
 				//$(this) : 체크박스
 				//$(this).next() : 수량 입력창
 				var sizes = $(this).val();
-				var count = $(this).next().val();
+				var count = $(this).next().find('input').val();
 				var sum = sizes + "-" + count;
-				console.log(sum);
 				$(this).val(sum);
 			});
 
@@ -32,7 +31,7 @@
 	});
 </script>
 <style>
-#submit {
+input[type=submit] {
 	width: 150px;
 	height: 50px;
 	border: 1px solid transparent;
@@ -105,7 +104,7 @@
 				<br> <input type="hidden" name="sale_yn" value="n"> <input
 					type="hidden" name="hit_yn" value="n"> <input type="hidden"
 					name="display_yn" value="n"> <input type="submit"
-					value="등록 요청" id="submit">
+					value="등록 요청">
 			</form>
 		</div>
 		</div>

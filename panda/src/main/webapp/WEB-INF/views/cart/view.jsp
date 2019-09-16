@@ -146,6 +146,11 @@ a {
 .product_info {
 	padding-left: 30px;
 }
+
+.table_st img{
+	width: 150px;
+	height: 150px;
+}
 </style>
 <script>
 	$(function() {
@@ -313,8 +318,8 @@ a {
 					<tr class="cart_wrap">
 						<td><input type="checkbox" name="id" value="${c.cart_id }"
 							class="cart_no sub_check"></td>
-						<td class="b1"><a href="#" class="img"> <img
-								src="http://placehold.it/140"></a></td>
+						<td class="b1"><a href="${pageContext.request.contextPath}/product/detail?product_id=${c.product_id}" class="img"> <img
+								src="${pageContext.request.contextPath}/product/image?id=${c.mainfile}"></a></td>
 						<td class="text-left product_info"><a href="#"><div>${c.product_seller_id}</div></a>
 							<a href="#"><div>${c.product_name}</div></a>
 							<div class="product_price">

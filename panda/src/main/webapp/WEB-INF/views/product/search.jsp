@@ -87,9 +87,9 @@
 }
 
 .image-wrap{
-	height:350px;
-	min-height:350px;
-	max-height:350px;
+	height:400px;
+	min-height:400px;
+	max-height:400px;
 	padding-right:100px;
 }
 .image-wrap .order-img {
@@ -112,10 +112,7 @@
 	text-align: center;
 	font-weight: 500;
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> branch 'master' of https://github.com/kjw0112m/final
 .paginate {
 	margin: 25px 0 0;
 	text-align: center;
@@ -132,6 +129,11 @@
 .active_page {
 	font-weight: bold;
 	color: #55a0ff;
+}
+
+#s_button {
+	background-color: white;
+	border: none;
 }
 </style>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
@@ -163,7 +165,7 @@
 							class="input_text" name="keyword" placeholder="상품을 찾아보세요" value="${param.keyword}"
 							style="border: 0px; padding: 10px 30px 0px 60px;">
 						</span>
-						<button><img alt="" src=""></button>
+						<button id="s_button"><img src="${pageContext.request.contextPath}/image/main/search2.PNG"></button>
 					</div>
 				</div>
 			</form>

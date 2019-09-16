@@ -330,6 +330,11 @@ dd, dl, h1, h2, h3, h4, h5, input, p, pre {
 dt {
 	font-weight: bold;
 }
+
+.img img{
+	width: 140px;
+	height: 140px;
+}
 </style>
 	<div id="container">
 		<jsp:include page="/WEB-INF/views/template/my_info.jsp"></jsp:include>
@@ -378,11 +383,11 @@ dt {
 							<tbody>
 								<c:forEach var="orderViewDto" items="${myOrder.list}">
 									<tr class="b1">
-										<td class="img"><a href="#"> <img
-												src="http://placehold.it/140"></a></td>
-										<td id="td-d"><a href="#">
+										<td class="img"><a href="${pageContext.request.contextPath}/product/detail?product_id=${orderViewDto.product_id}"> <img
+												src="${pageContext.request.contextPath}/product/image?id=${orderViewDto.mainfile}"></a></td>
+										<td id="td-d"><a href="${pageContext.request.contextPath}/product/sellerList?seller_id=${orderViewDto.seller_id}">
 												<div>${orderViewDto.seller_id}</div>
-										</a> <a href="#">
+										</a> <a href="${pageContext.request.contextPath}/product/detail?product_id=${orderViewDto.product_id}">
 												<div>${orderViewDto.product_name}</div>
 										</a>
 											<div>

@@ -44,9 +44,9 @@
 }
 
 .image-wrap {
-	height: 350px;
-	min-height: 350px;
-	max-height: 350px;
+	height: 400px;
+	min-height: 400px;
+	max-height: 400px;
 	padding-right: 15px;
 }
 
