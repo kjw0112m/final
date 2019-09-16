@@ -25,11 +25,9 @@ import com.kh17.panda.entity.SubcategoryDto;
 import com.kh17.panda.repository.CategoryDao;
 import com.kh17.panda.repository.CategoryListDao;
 import com.kh17.panda.repository.FilesDao;
-import com.kh17.panda.repository.ProductDao;
 import com.kh17.panda.repository.ProductSellerDao;
 import com.kh17.panda.repository.SizesDao;
 import com.kh17.panda.repository.SubcategoryDao;
-import com.kh17.panda.service.ProductService;
 
 @Controller
 @RequestMapping("/product")
@@ -37,13 +35,6 @@ public class ProductController {
 
 	@Autowired
 	private SubcategoryDao subcategoryDao;
-
-	@Autowired
-	private ProductDao productDao;
-
-	@Autowired
-	private ProductService productService;
-	
 	@Autowired
 	private ProductSellerDao productSellerDao;
 

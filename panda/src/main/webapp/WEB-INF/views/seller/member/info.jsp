@@ -171,7 +171,7 @@ ul, li {
 }
 
 .total {
-	margin: 0 auto;
+	margin-left: 350px;
 	max-width: 70%;
 	padding-top: 58px;
 	padding-bottom: 120px;
