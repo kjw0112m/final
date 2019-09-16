@@ -134,7 +134,7 @@ function saveReview() {
     	  getCommentList();
         }
       , error : function(xhr, status, error) {
-    	  alert("code:"+status+"\n"+"message:"+xhr+"\n"+"error:"+error);
+    	  alert("로그인 후 리뷰를 남겨주세요."+error);
       	}
 	});
 }

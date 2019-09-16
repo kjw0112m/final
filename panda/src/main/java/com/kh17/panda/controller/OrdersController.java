@@ -107,7 +107,7 @@ public class OrdersController {
 			HttpSession session) {
 		String team = orderService.order(ordersDto, c_id, orderAddressVO, re_phones, session, t_id);
 		session.removeAttribute("orderVO");
-
+		
 		orderService.save(ordersDto, session, point, item_name, team);
 		orderService.gradeCheck(session);
 		return "orders/result";
