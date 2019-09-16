@@ -172,7 +172,7 @@
 		<c:otherwise>
 		<c:set var="listCnt" value="0" />
 			<c:forEach var="bdto" items="${list}" varStatus="num">
-				<c:if test="${sessionScope.sid.toString() eq bdto.memberid or sessionScope.sid.toString().startsWith('!') or sessionScope.sid.toString().startsWith('@')}">
+				<%-- <c:if test="${sessionScope.aid.toString() eq bdto.memberid or sessionScope.sid.toString().startsWith('!') or sessionScope.sid.toString().startsWith('@')}"> --%>
 				<c:set var="listCnt" value="${listCnt+1}" />
 				<tr>
 					<td>${bdto.rn}</td>
@@ -239,7 +239,7 @@
 				<a href="${pageContext.request.contextPath}/seller/one/oneEdit?mode=EDIT&id=${bdto.id}"> [상세보기]	</a>			
 									</td>
 					</tr>
-				</c:if>
+				<%-- </c:if> --%>
 			</c:forEach>
 			<c:if test="${listCnt eq 0}">
 				<td colspan="6">1:1문의 내역이 존재하지않습니다.</td>
