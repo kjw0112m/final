@@ -103,7 +103,7 @@ input[type=submit]{
 				value="${productDto.detailfile}">
 		</c:if>
 		<br>
-		<br> 판매 여부 <input type="radio" name="sale_yn" value="y"
+		<br> 할인 여부 <input type="radio" name="sale_yn" value="y"
 			${productDto.sale_yn eq 'y'?'checked':''}> Y <input
 			type="radio" name="sale_yn" value="n"
 			${productDto.sale_yn eq 'n'?'checked':''}> N <br>

@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh17.panda.entity.CertDto;
+import com.kh17.panda.entity.FollowDto;
 import com.kh17.panda.entity.IdentityVerificationDto;
 import com.kh17.panda.entity.MemberDto;
 import com.kh17.panda.entity.MyInfoDto;
 import com.kh17.panda.entity.PointDto;
 import com.kh17.panda.repository.CertDao;
+import com.kh17.panda.repository.FollowDao;
 import com.kh17.panda.repository.IdentityVerificationDao;
 import com.kh17.panda.repository.MemberDao;
 import com.kh17.panda.repository.PointDao;
@@ -42,6 +44,9 @@ public class MemberController {
 
 	@Autowired
 	private MyInfoService myInfoService;
+	
+	@Autowired
+	private FollowDao followDao;
 	
 //	약관 동의
 	@GetMapping("/agree")
@@ -91,7 +96,10 @@ public class MemberController {
 
 //	로그인
 	@GetMapping("/login")
-	public String login() {
+	public String login(HttpServletRequest req, HttpSession session) {
+		String referer = req.getHeader("Referer");
+		session.setAttribute("referer", referer);
+		System.out.println(referer);
 		return "member/login";
 	}
 
@@ -113,8 +121,10 @@ public class MemberController {
 				else // 체크 했을때
 					c.setMaxAge(1 * 7 * 24 * 60 * 60);// 1주
 				response.addCookie(c);
+				String referer = (String)session.getAttribute("referer");
+				session.removeAttribute("referer");
 
-				return "redirect:/";
+				return "redirect:"+referer;
 			} else {
 				return "member/login_fail";
 			}
@@ -138,6 +148,8 @@ public class MemberController {
 		model.addAttribute("mdto", memberDto);
 		MyInfoDto myInfo =  myInfoService.myInfo(id);
 		model.addAttribute("myInfo", myInfo);
+		int follows = followDao.count(FollowDto.builder().member_id(id).build());
+		model.addAttribute("follows", follows);
 		return "member/info";
 	}
 
@@ -145,7 +157,6 @@ public class MemberController {
 	@GetMapping("/delete")
 	public String delete(HttpSession session) {
 		String id = (String) session.getAttribute("sid");
-
 		memberDao.delete(id);
 		session.removeAttribute("sid");
 		return "member/goodbye";

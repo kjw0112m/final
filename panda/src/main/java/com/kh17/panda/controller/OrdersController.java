@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh17.panda.entity.CartViewDto;
+import com.kh17.panda.entity.FollowDto;
 import com.kh17.panda.entity.KakaoPayDto;
 import com.kh17.panda.entity.MyInfoDto;
 import com.kh17.panda.entity.OrderViewDto;
@@ -26,6 +27,7 @@ import com.kh17.panda.entity.PointDto;
 import com.kh17.panda.entity.ProductDto;
 import com.kh17.panda.entity.SizesDto;
 import com.kh17.panda.repository.CartDao;
+import com.kh17.panda.repository.FollowDao;
 import com.kh17.panda.repository.KakaopayDao;
 import com.kh17.panda.repository.MemberDao;
 import com.kh17.panda.repository.OrdersDao;
@@ -67,6 +69,9 @@ public class OrdersController {
 	
 	@Autowired
 	private SizesDao sizesDao;
+	
+	@Autowired
+	private FollowDao followDao;
 
 	@GetMapping("/result")
 	public String result() {
@@ -147,6 +152,9 @@ public class OrdersController {
 
 		MyInfoDto myInfo = myInfoService.myInfo(member_id);
 		model.addAttribute("myInfo", myInfo);
+		
+		int follows = followDao.count(FollowDto.builder().member_id(member_id).build());
+		model.addAttribute("follows", follows);
 		return "orders/list";
 	}
 
@@ -179,6 +187,9 @@ public class OrdersController {
 
 		MyInfoDto myInfo = myInfoService.myInfo(member_id);
 		model.addAttribute("myInfo", myInfo);
+		
+		int follows = followDao.count(FollowDto.builder().member_id(member_id).build());
+		model.addAttribute("follows", follows);
 		return "orders/stat_list";
 	}
 

@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.kh17.panda.entity.FollowDto;
+import com.kh17.panda.entity.MyInfoDto;
 import com.kh17.panda.repository.FollowDao;
 import com.kh17.panda.repository.SellerDao;
+import com.kh17.panda.service.MyInfoService;
 
 @Controller
 public class FollowController {
@@ -24,6 +26,9 @@ public class FollowController {
 	
 	@Autowired
 	private SellerDao sellerDao;
+	
+	@Autowired
+	private MyInfoService myInfoService;
 	
 	@GetMapping("/follow")
 	public void follow(@ModelAttribute FollowDto followDto,HttpServletResponse resp) throws IOException {
@@ -47,6 +52,10 @@ public class FollowController {
 		
 		List<FollowDto> list = followDao.list(member_id);
 		int count = followDao.count(FollowDto.builder().member_id(member_id).build());
+		
+		MyInfoDto myInfo = myInfoService.myInfo(member_id);
+		model.addAttribute("myInfo", myInfo);
+		
 		model.addAttribute("followDto", list);
 		model.addAttribute("follows", count);
 		return "follow/list";
