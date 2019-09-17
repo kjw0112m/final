@@ -74,7 +74,7 @@
 	</div>
 	<div>
 		<p class="number">팔로우</p>
-		<p class="number_dd">0명</p>
+		<p class="number_dd">${follows}명</p>
 	</div>
 	<div class="clear"></div>
 </div>

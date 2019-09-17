@@ -10,8 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh17.panda.entity.FollowDto;
 import com.kh17.panda.entity.MyInfoDto;
 import com.kh17.panda.entity.PointDto;
+import com.kh17.panda.repository.FollowDao;
 import com.kh17.panda.repository.PointDao;
 import com.kh17.panda.service.MyInfoService;
 
@@ -21,6 +23,9 @@ public class PointController {
 
 	@Autowired
 	private PointDao pointDao;
+	
+	@Autowired
+	private FollowDao followDao;
 
 	@Autowired
 	private MyInfoService myInfoService;
@@ -54,6 +59,9 @@ public class PointController {
 
 		MyInfoDto myInfo = myInfoService.myInfo(member_id);
 		model.addAttribute("myInfo", myInfo);
+		
+		int follows = followDao.count(FollowDto.builder().member_id(member_id).build());
+		model.addAttribute("follows", follows);
 		return "point/list";
 	}
 }
