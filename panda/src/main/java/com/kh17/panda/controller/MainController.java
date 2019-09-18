@@ -19,7 +19,6 @@ public class MainController {
 	public String main(Model model) {
 		List<OrderViewDto> list = staticDao.main_top();
 		model.addAttribute("top", list);
-		System.out.println(list);
 		return "main";
 	}
 	@RequestMapping("/policy")
