@@ -78,14 +78,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		select
 		nickname,
-		sum(total_price) total_price, mainfile, product_id,
+		sum(quantity) quantity, mainfile, product_id,
 		to_char(order_dt, 'YYYY-MM-DD') order_dt
 		from order_view
 	<![CDATA[
 		where to_char(order_dt, 'YYYY-MM-DD')=to_char(sysdate-1, 'YYYY-MM-DD')
 		]]>
 		group by nickname, to_char(order_dt, 'YYYY-MM-DD'), mainfile, product_id
-		order by total_price desc
+		order by quantity desc
 		)A
 		) where rn between 1 and 5
 	</select>
