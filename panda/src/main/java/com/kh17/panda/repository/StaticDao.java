@@ -12,4 +12,6 @@ public interface StaticDao {
 	
 	List<OrderViewDto> product_top();
 	List<OrderViewDto> seller_top();
+	
+	List<OrderViewDto> main_top();
 }

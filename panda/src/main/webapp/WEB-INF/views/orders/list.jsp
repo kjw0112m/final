@@ -93,6 +93,15 @@
 			$('#startDate').datepicker('setDate', startDate);
 			$('#endDate').datepicker('setDate', endDate);
 		}
+		
+		$("#confirm").click(function(e) {
+			e.preventDefault();
+			if (confirm("구매확정하시겠습니까?")==true) {
+				location.href = $(this).attr('href');
+			} else {
+				  return ;
+						}
+		});
 	});
 </script>
 <style>
@@ -422,7 +431,7 @@ dt {
 															<c:otherwise>
 																<a
 																	href="${pageContext.request.contextPath}/orders/confirm/${myOrder.team}"
-																	style="color: #55a0ff !important">구매확정 ></a>
+																	style="color: #55a0ff !important" id="confirm">구매확정 ></a>
 																<br>
 																<a
 																	href="${pageContext.request.contextPath}/orders/exchange/${myOrder.team}"

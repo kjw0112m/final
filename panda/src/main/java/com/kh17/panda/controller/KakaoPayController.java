@@ -3,6 +3,7 @@ package com.kh17.panda.controller;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class KakaoPayController {
 	
 	@PostMapping("/confirm")
 	public String confirm(@RequestParam String[] item_name, @RequestParam int quantity, @RequestParam int total_amount,
-			HttpSession session) throws URISyntaxException {
+			HttpSession session, HttpServletRequest req) throws URISyntaxException {
 		StringBuffer items_name = new StringBuffer();
 		for (String s : item_name) {
 			items_name.append(s + "/");
@@ -56,9 +57,14 @@ public class KakaoPayController {
 		params.add("quantity", String.valueOf(quantity));
 		params.add("total_amount", String.valueOf(total_amount));
 		params.add("tax_free_amount", "0");
-		params.add("approval_url", "http://localhost:8080/panda/pay/kakao/success");
-		params.add("cancel_url", "http://localhost:8080/panda/pay/kakao/cancel");
-		params.add("fail_url", "http://localhost:8080/panda/pay/kakao/fail");
+		
+		String url = req.getRequestURL().toString();
+		String home = url.split(req.getContextPath())[0];
+		String setUrl = home+req.getContextPath(); 
+		
+		params.add("approval_url", setUrl+"/pay/kakao/success");
+		params.add("cancel_url", setUrl+"/pay/kakao/cancel");
+		params.add("fail_url", setUrl+"/pay/kakao/fail");
 
 //		headers와 params를 합쳐서 전송할 객체를 생성
 		HttpEntity<MultiValueMap<String, String>> send = new HttpEntity<MultiValueMap<String, String>>(params, headers);

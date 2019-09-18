@@ -114,6 +114,7 @@ a {
 
 .box-price {
 	margin-top: 30px;
+	margin-bottom: 50px;
 	text-align: center;
 	width: 100%;
 }
@@ -351,7 +352,7 @@ a {
 			</tr>
 		</table>
 		<div class="box-price">
-			<a href="${pageContext.request.contextPath}/panda/"><button
+			<a href="${pageContext.request.contextPath}/"><button type="button"
 					class="btn">쇼핑계속하기</button></a> <a href="#"><button class="btn"
 					id="buy_btn">구매하기</button></a>
 		</div>

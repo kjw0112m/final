@@ -213,6 +213,7 @@ ul, li {
 	padding-top: 58px;
 	padding-bottom: 120px;
 	width: 1300px;
+	min-height: 800px;
 }
 
 a {
