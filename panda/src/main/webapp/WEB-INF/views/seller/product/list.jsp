@@ -143,8 +143,8 @@
 								<th scope="col" class="w60" style="">상품번호</th>
 								<th scope="col" class="w200" style="">상품명</th>
 								<th scope="col" class="w120" style="">판매가</th>
-								<th scope="col" class="w100" style="">진열상태</th>
-								<th scope="col" class="w100" style="">판매상태</th>
+								<th scope="col" class="w100" style="">진열여부</th>
+								<th scope="col" class="w100" style="">할인여부</th>
 								<th scope="col" class="w200" style="">상품분류</th>
 								<th scope="col" class="w250" style="">상품 등록일</th>
 								<th scope="col" class="w100 center" style="">수정</th>

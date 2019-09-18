@@ -81,6 +81,7 @@ public class ProductController {
 		model.addAttribute("startBlock", startBlock);
 		model.addAttribute("endBlock", endBlock);
 		model.addAttribute("pageCount", pageCount);
+		model.addAttribute("count", count);
 		return "product/newArrivals";
 	}
 

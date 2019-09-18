@@ -71,14 +71,14 @@ input[type=submit] {
 
 </style>
 </head>
-<body>
+<body onload= "document.form.reset();">
 	<div id="content">
 		<div class="head_tit">
 			<h1>상품 등록</h1>
 		</div>
 		<div class="optionArea">
 		<div class="regist_form">
-			<form action="regist" method="post" enctype="multipart/form-data">
+			<form action="regist" method="post" enctype="multipart/form-data" name="form">
 				<select name="sub_category_id" id="sub_ctg">
 					<c:forEach var="category" items="${list}">
 						<option value="${category.id}">${category.name}</option>
@@ -95,7 +95,10 @@ input[type=submit] {
 					type="number" value="0" class="size"></span> <br>
 				<br> <input type="checkbox" name="sizes" value="L"><span class="select_size"> L <input
 					type="number" value="0" class="size"></span> <br>
-				<br> <input type="checkbox" name="sizes" value="XL"><span class="select_size"> XL <input type="number" value="0" class="size"></span> <br>
+				<br> <input type="checkbox" name="sizes" value="XL"><span class="select_size"> XL <input
+					type="number" value="0" class="size"></span> <br>
+				<br> <input type="checkbox" name="sizes" value="FREE"><span class="select_size"> FREE <input
+					type="number" value="0" class="size"></span> <br>
 				<br> 대표이미지(.gif, .jpeg, .jpg, .png만 등록 가능합니다) <input
 					type="file" name="main" accept=".gif, .jpeg, .jpg, .png"> <br>
 				<br> 상세이미지(.gif, .jpeg, .jpg, .png만 등록 가능합니다) <input
