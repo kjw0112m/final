@@ -123,34 +123,36 @@
 			<tbody>
 				<c:choose>
 					<c:when test="${pointDto != null }">
-					<c:forEach items="${pointDto}" var="pointDto">
-						<tr>
-							<td><c:choose>
-									<c:when
-										test="${pointDto.type == '적립' or pointDto.type == '대기' }">
+						<c:forEach items="${pointDto}" var="pointDto">
+							<tr>
+								<td><c:choose>
+										<c:when
+											test="${pointDto.type == '적립' or pointDto.type == '대기' or pointDto.type == '반환'}">
 							${pointDto.type }
 						</c:when>
-									<c:otherwise>
-										<span style="color: red">${pointDto.type}</span>
-									</c:otherwise>
-								</c:choose></td>
-							<td><c:choose>
-									<c:when
-										test="${pointDto.type == '적립' or pointDto.type == '대기' }">
+										<c:otherwise>
+											<span style="color: red">${pointDto.type}</span>
+										</c:otherwise>
+									</c:choose></td>
+								<td><c:choose>
+										<c:when
+											test="${pointDto.type == '적립' or pointDto.type == '대기' or pointDto.type == '반환'}">
 							+${pointDto.use_point }
 						</c:when>
-									<c:otherwise>
-										<span style="color: red">-${pointDto.use_point }</span>
-									</c:otherwise>
-								</c:choose></td>
-							<td>${pointDto.content }</td>
-							<td>${pointDto.team }</td>
-							<td>${pointDto.getDate() }</td>
-						</tr>
-					</c:forEach>
+										<c:otherwise>
+											<span style="color: red">-${pointDto.use_point }</span>
+										</c:otherwise>
+									</c:choose></td>
+								<td>${pointDto.content }</td>
+								<td>${pointDto.team }</td>
+								<td>${pointDto.getDate() }</td>
+							</tr>
+						</c:forEach>
 					</c:when>
 					<c:otherwise>
-						<tr><td colspan="5">포인트 내역이 없습니다.</td></tr>
+						<tr>
+							<td colspan="5">포인트 내역이 없습니다.</td>
+						</tr>
 					</c:otherwise>
 				</c:choose>
 			</tbody>

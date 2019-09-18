@@ -11,14 +11,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="list" parameterType="string" resultType="pointDto">
 		select *
-		from point where member_id = #{member_id} order by id desc
+		from point where member_id = #{member_id} order by when desc
 	</select>
 
 	<select id="view" parameterType="map" resultType="pointDto">
 		select * from (
 		<![CDATA[
 			select rownum rn, P.* from(
-				select * from point where member_id = #{member_id} order by id desc
+				select * from point where member_id = #{member_id} order by when desc
 		]]>
 				)P
 		<![CDATA[
@@ -46,7 +46,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="typeChange" parameterType="pointDto">
 		update point set
-		type=#{type} where team=#{team}
+		type=#{type} 
+		<if test='type == "적립"'>
+			, when = sysdate
+			, current_point = #{current_point} + use_point
+		</if>
+		where team=#{team} and type='대기'
 	</select>
 
 	<delete id="cancel" parameterType="string">

@@ -107,7 +107,7 @@ public class OrderServiceImpl implements OrderService {
 		else {
 			@SuppressWarnings("unchecked")
 			List<OrderVO> voList = (List<OrderVO>) session.getAttribute("orderVO");
-
+			
 			for (OrderVO orderVO : voList) {
 				ordersDto.setId(ordersDao.seq());
 				ordersDto.setQuantity(orderVO.getQuantity());
@@ -188,7 +188,7 @@ public class OrderServiceImpl implements OrderService {
 			pointDao.save(PointDto.builder().type("사용").use_point(use).current_point(point - use)
 					.content(items_name.substring(0, items_name.length() - 1)).member_id(member_id).team(team).build());
 		}
-		pointDao.save(PointDto.builder().type("대기").use_point(save).current_point(point + save)
+		pointDao.save(PointDto.builder().type("대기").use_point(save)
 				.content(items_name.substring(0, items_name.length() - 1)).member_id(member_id).team(team).build());
 	}
 

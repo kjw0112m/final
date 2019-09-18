@@ -198,8 +198,9 @@ public class OrdersController {
 		String id = (String) session.getAttribute("sid");
 
 		if (id != null) {
+			int point = pointDao.current(id);
 			ordersDao.pay_change(OrdersDto.builder().pay_status("구매확정").team(team).build());
-			pointDao.typeChange(PointDto.builder().type("적립").team(team).build());
+			pointDao.typeChange(PointDto.builder().type("적립").team(team).current_point(point).build());
 		}
 		return "redirect:/orders/list";
 	}
