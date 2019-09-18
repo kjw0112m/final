@@ -13,7 +13,7 @@ public class SellerLoginInterceptor extends HandlerInterceptorAdapter{
 		String id = (String) request.getSession().getAttribute("ssid");
 		String aid = (String) request.getSession().getAttribute("aid");
 		if(id == null && aid == null) {
-			response.sendRedirect(request.getContextPath()+"/seller/login");
+			response.sendRedirect(request.getContextPath()+"/admin/login");
 			return false;//컨트롤러로 이동하는 것을 차단
 		}
 		else {

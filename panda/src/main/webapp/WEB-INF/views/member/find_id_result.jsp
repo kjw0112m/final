@@ -42,8 +42,9 @@
         }
 
         .total {
-             margin-top: 50px;
-            width:100%;
+            margin-left: 350px;
+            margin-top: 100px;
+            margin-bottom: 100px;
         }
 
         .a {

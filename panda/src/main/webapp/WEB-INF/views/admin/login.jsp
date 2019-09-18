@@ -36,6 +36,9 @@
 	});
 </script>
 <style>
+input[type=text], input[type=password]{
+	padding-left: 10px !important;
+}
 .needs-validation {
 	height: 600px;
 	background-color: white;
@@ -150,7 +153,7 @@
 				<input type="submit" value="LOGIN" class="btn1">
 			</div>
 			<div id="btn2div">
-				<a href="regist" class="btn2">관리자 회원가입</a>
+				<a href="regist" class="btn2" style="display:none;">관리자 회원가입</a>
 			</div>
 		</form>
 	</div>

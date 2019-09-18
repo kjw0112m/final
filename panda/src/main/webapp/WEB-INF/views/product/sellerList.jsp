@@ -9,11 +9,11 @@
 <script src="https://kit.fontawesome.com/f890a3719c.js"></script>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
-	$(function(){
+	$(function() {
 		$('#follow').click(function() {
-			if($(this).children().hasClass('fas')){
+			if ($(this).children().hasClass('fas')) {
 				$.ajax({
-					url : rootContext+"/unfollow",
+					url : rootContext + "/unfollow",
 					type : "GET",
 					dataType : "text",
 					data : {
@@ -26,10 +26,9 @@
 						$('.follow-score').text(data);
 					}
 				});
-			}
-			else{
+			} else {
 				$.ajax({
-					url : rootContext+"/follow",
+					url : rootContext + "/follow",
 					type : "GET",
 					dataType : "text",
 					data : {
@@ -133,17 +132,18 @@
 </head>
 <div class="top">
 	<h1>${list.get(0).nickname}</h1>
-	<a href="#" id="follow">
-	<c:choose>
-		<c:when test="${isFollow>0}">
-			<i class="follow fas fa-heart fa-2x"></i>
-		</c:when>
-		<c:otherwise>
-			<i class="follow far fa-heart fa-2x"></i>
-		</c:otherwise>
-	</c:choose>
-	</a>
-	<h2 class="follow-score">${follows}</h2>
+	<c:if test="${sessionScope.sid != null }">
+		<a href="#" id="follow"> <c:choose>
+				<c:when test="${isFollow>0}">
+					<i class="follow fas fa-heart fa-2x"></i>
+				</c:when>
+				<c:otherwise>
+					<i class="follow far fa-heart fa-2x"></i>
+				</c:otherwise>
+			</c:choose>
+		</a>
+		<h2 class="follow-score">${follows}</h2>
+	</c:if>
 </div>
 <ul class="ul">
 	<c:forEach var="productSellerDto" items="${list}">
@@ -167,6 +167,7 @@
 <input name="page" type="hidden">
 <div class="paginate">
 	<ol>
+
 		<c:if test="${(not (page eq 1))&& not empty page && page>=11}">
 			<li><a
 				href="sellerList?page=${startBlock-1}&seller_id=${param.seller_id}"

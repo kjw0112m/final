@@ -127,6 +127,10 @@
 	margin-left: 50px;
 	margin-top: 10px;
 }
+
+input[type=text], input[type=password]{
+	padding-left: 10px !important;
+}
 </style>
 <jsp:include page="/WEB-INF/views/template/admin/header.jsp"></jsp:include>
 <div id="container">

@@ -98,8 +98,11 @@ public class MemberController {
 	@GetMapping("/login")
 	public String login(HttpServletRequest req, HttpSession session) {
 		String referer = req.getHeader("Referer");
+		if(!referer.contains("product") || referer == null) {
+			referer = "/";
+		}
 		session.setAttribute("referer", referer);
-		System.out.println(referer);
+		
 		return "member/login";
 	}
 
@@ -111,7 +114,7 @@ public class MemberController {
 // 비밀번호 암호화처리
 		MemberDto result = memberDao.get(memberDto.getId());
 		if (result != null) {
-			if (BCrypt.checkpw(memberDto.getPw(), result.getPw())) {
+			if (BCrypt.checkpw(memberDto.getPw(), result.getPw())) {	
 				session.setAttribute("sid", result.getId());
 				memberDao.lastlogin(memberDto.getId());
 				// 쿠키객체를 만들고 체크여부에 따라 시간 설정 후 response에 추가
