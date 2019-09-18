@@ -43,7 +43,7 @@
         }
 
         .total {
-            margin-top: 50px;
+            margin-top : 250px;
         }
 
         .a {
@@ -58,6 +58,7 @@
 
         .btndiv {
             margin-top: 30px;
+            margin-bottom: 400px;
             text-align: center;
             width: 100%;
         }
@@ -89,8 +90,8 @@
         </table>
         <div class="btndiv">
             <a href="login" >LOGIN</a><br>
-            <a href="find_id" >아이디 찾으러 가실래요?</a><br>
-            <a href="find_pw" >비밀번호 찾으러 가실래요?</a><br>
+            <a href="find_id" >아이디 찾기</a><br>
+            <a href="find_pw" >비밀번호 찾기</a><br>
             <a href="${pageContext.request.contextPath}">HOME</a>
         </div>
     </div>
