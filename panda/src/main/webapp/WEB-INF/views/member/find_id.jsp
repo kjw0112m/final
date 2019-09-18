@@ -90,6 +90,7 @@
 
         #btn2div {
             margin-top: 30px;
+            margin-bottom:50px;
             text-align: center;
             width: 100%;
         }
