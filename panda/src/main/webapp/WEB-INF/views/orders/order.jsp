@@ -63,7 +63,7 @@
 								window.open("", "kakaopay",
 										"width=730,height=520,left=50, top=50");
 								this.target = 'kakaopay';
-								
+
 							}
 							this.submit();
 						});
@@ -139,8 +139,7 @@
 										(total - parseInt(point / 100) * 100));
 								$('input[name=total_price]').val(
 										(total - parseInt(point / 100) * 100));
-							}
-							else if(point==''){
+							} else if (point == '') {
 								$(this).val(0);
 							}
 						});
@@ -193,6 +192,10 @@ body {
 	min-width: 1800px !important;
 }
 
+form{
+	position: relative;
+}
+
 .total {
 	min-width: 1180px !important;
 	max-width: 1260px;
@@ -200,7 +203,7 @@ body {
 	margin: 0 auto;
 }
 
-.total img{
+.total img {
 	width: 100px;
 	height: 100px;
 }
@@ -358,12 +361,11 @@ a {
 }
 
 .orderbox {
-	position: fixed;
-	top: 250px;
-	left: 1350px;
-	/* 	float: right; */
-	border: none;
+	position: absolute;
+	right: 180px;
+	top: 100px;
 	width: 320px;
+	border: none;
 }
 
 .dl {
@@ -433,59 +435,58 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 </head>
 
 <body>
-
 	<div id="top">
 		<span>01 쇼핑백 > </span><span style="font-weight: bold">02 주문결제</span><span>
 			> 03 주문완료</span>
 	</div>
 	<form action="order" method="post">
-		<div class="total">
-			<div class="orderbox">
-				<h4 style="font-size: 22px">
-					결제 금액 / 총
-					<c:choose>
-						<c:when test="${not empty cartList}">
+		<div class="orderbox">
+			<h4 style="font-size: 22px">
+				결제 금액 / 총
+				<c:choose>
+					<c:when test="${not empty cartList}">
 					${orderCount}	
 					<input name="quantity" type="hidden" value="${orderCount}">
-						</c:when>
-						<c:otherwise>
+					</c:when>
+					<c:otherwise>
 					${orderCount}
 					<input name="quantity" type="hidden" value="${orderCount}">
-						</c:otherwise>
-					</c:choose>
-					개
-				</h4>
-				<dl class="dl">
-					<dt class="order-dt">주문금액</dt>
-					<dd class="order-dd">
+					</c:otherwise>
+				</c:choose>
+				개
+			</h4>
+			<dl class="dl">
+				<dt class="order-dt">주문금액</dt>
+				<dd class="order-dd">
+					<fmt:formatNumber value="${totalPrice}" pattern="#,###.##" />
+				</dd>
+				<dt class="order-dt">적립금</dt>
+				<dd class="order-dd" id="order_point">- 0</dd>
+
+				<dt class="order-dt">배송비</dt>
+				<dd class="order-dd">0</dd>
+				<div id="orderprice">
+					<dt class="order-dt">총 결제금액</dt>
+					<dd class="order-dd" id="total_amount">
 						<fmt:formatNumber value="${totalPrice}" pattern="#,###.##" />
 					</dd>
-					<dt class="order-dt">적립금</dt>
-					<dd class="order-dd" id="order_point">- 0</dd>
-
-					<dt class="order-dt">배송비</dt>
-					<dd class="order-dd">0</dd>
-					<div id="orderprice">
-						<dt class="order-dt">총 결제금액</dt>
-						<dd class="order-dd" id="total_amount">
-							<fmt:formatNumber value="${totalPrice}" pattern="#,###.##" />
-						</dd>
-						<input type="hidden" name="total_amount" value="${totalPrice}">
-						<input type="hidden" name="point" value="${point}">
-					</div>
-				</dl>
-				<ul class="order-ul">
-					<li><span> <input type="checkbox" name="agree1" id=""
-							required> <label for="" class="order-li"> 주문 상품
-								정보에 동의(필수) </label>
-					</span></li>
-					<li><span> <input type="checkbox" name="agree2" id=""
-							required> <label for="" class="order-li">결제대행 서비스
-								이용을 위한 개인정보 제3자 제공 및 위탁 동의(필수)</label>
-					</span></li>
-				</ul>
-				<a href="#"><button class="orderbutton">주문하기</button></a>
-			</div>
+					<input type="hidden" name="total_amount" value="${totalPrice}">
+					<input type="hidden" name="point" value="${point}">
+				</div>
+			</dl>
+			<ul class="order-ul">
+				<li><span> <input type="checkbox" name="agree1" id=""
+						required> <label for="" class="order-li"> 주문 상품
+							정보에 동의(필수) </label>
+				</span></li>
+				<li><span> <input type="checkbox" name="agree2" id=""
+						required> <label for="" class="order-li">결제대행 서비스
+							이용을 위한 개인정보 제3자 제공 및 위탁 동의(필수)</label>
+				</span></li>
+			</ul>
+			<a href="#"><button class="orderbutton">주문하기</button></a>
+		</div>
+		<div class="total">
 			<div class="intotal">
 				<div class="top-table">
 					<h4>상품정보</h4>

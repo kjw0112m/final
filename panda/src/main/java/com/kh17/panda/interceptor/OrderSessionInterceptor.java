@@ -19,6 +19,7 @@ public class OrderSessionInterceptor extends HandlerInterceptorAdapter {
 			}
 			referer = referer.split(request.getContextPath())[1];
 			if (referer.equals("/orders/order")) {
+				System.out.println("주문세션 삭제");
 				request.getSession().removeAttribute("orderVO");
 			}
 		}

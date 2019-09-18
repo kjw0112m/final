@@ -44,6 +44,8 @@
         .total {
              margin-top: 250px;
             width:100%;
+            margin-left: 350px;
+            margin-bottom: 100px;
         }
 
         .a {

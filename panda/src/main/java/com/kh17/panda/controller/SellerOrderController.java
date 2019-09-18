@@ -204,7 +204,7 @@ public class SellerOrderController {
 			List<OrderListVO> list = ordersDao.list(orderViewDto, search, start, end);
 
 			model.addAttribute("orderListVO", list);
-			for(OrderListVO vo : list) {
+			for (OrderListVO vo : list) {
 				System.out.println(vo.getList().toString());
 			}
 			model.addAttribute("searchCount", count);
@@ -421,7 +421,8 @@ public class SellerOrderController {
 	}
 
 	@PostMapping("/delivery/waiting/ready")
-	public void ready(@ModelAttribute OrdersDto ordersDto, @RequestParam String[] idAry, String[] notIdAry, String getTeam, HttpServletResponse resp) {
+	public void ready(@ModelAttribute OrdersDto ordersDto, @RequestParam String[] idAry, String[] notIdAry,
+			String getTeam, HttpServletResponse resp) {
 		for (String order_id : idAry) {
 			ordersDto.setOrder_id(order_id);
 			ordersDao.t_change(ordersDto);
@@ -448,29 +449,30 @@ public class SellerOrderController {
 
 	public void detach(String[] idAry, String[] notIdAry, String getTeam) {
 		Arrays.sort(idAry);
-		Arrays.sort(notIdAry);
 		int dCount = 0;
 		String detachId = null;
-		
-		for(String s : notIdAry) {
-			System.out.println(s);
-		}
-		
+		if (notIdAry != null)
+			Arrays.sort(notIdAry);
+
 		if (idAry.length == 1 && idAry[0].equals(getTeam)) {
-			for (String id : notIdAry) {
-				if (dCount == 0) {
-					detachId = id;
+			if (notIdAry != null) {
+				for (String id : notIdAry) {
+					if (dCount == 0) {
+						detachId = id;
+					}
+					ordersDao.detach(id, detachId);
+					dCount++;
 				}
-				ordersDao.detach(id, detachId);
-				dCount++;
 			}
 		} else if (idAry.length > 1 && idAry[0].equals(getTeam)) {
-			for (String id : notIdAry) {
-				if (dCount == 0) {
-					detachId = id;
+			if (notIdAry != null) {
+				for (String id : notIdAry) {
+					if (dCount == 0) {
+						detachId = id;
+					}
+					ordersDao.detach(id, detachId);
+					dCount++;
 				}
-				ordersDao.detach(id, detachId);
-				dCount++;
 			}
 		} else {
 			for (String id : idAry) {

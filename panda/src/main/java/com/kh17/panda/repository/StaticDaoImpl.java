@@ -34,5 +34,10 @@ public class StaticDaoImpl implements StaticDao{
 	public List<OrderViewDto> seller_top() {
 		return sqlSession.selectList("static.seller_top");
 	}
+
+	@Override
+	public List<OrderViewDto> main_top() {
+		return sqlSession.selectList("static.main_top");
+	}
 	
 }
