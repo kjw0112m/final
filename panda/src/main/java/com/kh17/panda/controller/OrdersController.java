@@ -201,7 +201,7 @@ public class OrdersController {
 			ordersDao.pay_change(OrdersDto.builder().pay_status("구매확정").team(team).build());
 			pointDao.typeChange(PointDto.builder().type("적립").team(team).build());
 		}
-		return "redirect:list";
+		return "redirect:/orders/list";
 	}
 
 	@GetMapping("/detail/{team}")
@@ -284,7 +284,7 @@ public class OrdersController {
 		}
 
 		int current = pointDao.current(id);
-		int cancel = pointDao.getPoint(team);
+//		int cancel = pointDao.getPoint(team);
 
 		if (discount_price > 0) {
 			pointDao.save(

@@ -7,8 +7,7 @@
 		var form = $("form", window.opener.document);
 
 		form.attr('action', '${pageContext.request.contextPath}/orders/order');
-		form
-				.append("<input type='hidden' name='t_id' value="+success+">")
+		form.append("<input type='hidden' name='t_id' value="+success+">")
 		form.submit();
 
 		opener.location.href = '${pageContext.request.contextPath}/orders/result'

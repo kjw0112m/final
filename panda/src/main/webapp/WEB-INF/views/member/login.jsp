@@ -34,7 +34,9 @@
 .total {
 	margin: auto;
 }
-
+input[type=text], input[type=password]{
+	padding-left: 10px !important;
+}
 .btn1 {
 	margin-top: 30px;
 	border: none;

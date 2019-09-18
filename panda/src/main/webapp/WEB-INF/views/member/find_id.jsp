@@ -12,6 +12,7 @@
 
         #btn1 {
             margin-top: 30px;
+            margin-bottom: 50px;
             border: none;
             background-color: black;
             color: white;
@@ -89,6 +90,7 @@
 
         #btn2div {
             margin-top: 30px;
+            margin-bottom:50px;
             text-align: center;
             width: 100%;
         }

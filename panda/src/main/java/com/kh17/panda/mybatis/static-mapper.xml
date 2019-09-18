@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select
 		product_name,
 		sum(total_price) total_price,
-		to_char(order_dt, 'YYYY-MM') dt
+		to_char(order_dt, 'YYYY-MM') order_dt
 		from order_view
 	<![CDATA[
 		where order_dt between sysdate-7 and sysdate
@@ -60,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select
 		nickname,
 		sum(total_price) total_price,
-		to_char(order_dt, 'YYYY-MM') dt
+		to_char(order_dt, 'YYYY-MM') order_dt
 		from order_view
 	<![CDATA[
 		where order_dt between sysdate-7 and sysdate
@@ -69,5 +69,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by total_price desc
 		)A
 		) where rn between 1 and 10
+	</select>
+	
+	<select id="main_top" resultType="orderViewDto">
+		select * from (
+	<![CDATA[
+		select rownum rn, A.* from (
+		]]>
+		select
+		nickname,
+		sum(quantity) quantity, mainfile, product_id,
+		to_char(order_dt, 'YYYY-MM-DD') order_dt
+		from order_view
+	<![CDATA[
+		where to_char(order_dt, 'YYYY-MM-DD')=to_char(sysdate-1, 'YYYY-MM-DD')
+		]]>
+		group by nickname, to_char(order_dt, 'YYYY-MM-DD'), mainfile, product_id
+		order by quantity desc
+		)A
+		) where rn between 1 and 5
 	</select>
 </mapper>

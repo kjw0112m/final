@@ -37,6 +37,9 @@
 	text-align: center;
 	margin: auto;
 }
+.btn_next{
+	margin-bottom: 50px;
+}
 </style>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>   
@@ -302,8 +305,9 @@
 	<form action="regist" method="get"
 		onsubmit="return checkCheckBox(this)">
 
-		<br> <input type="checkbox" value="0" name="agree"> 동의합니다
-		<button disabled class="btn btn-primary">다음 단계로 이동</button>
+		<br> 
+		<div class="btn_next"><input type="checkbox" value="0" name="agree"> 동의합니다
+		<button disabled class="btn btn-primary">다음 단계로 이동</button></div>
 
 
 	</form>
