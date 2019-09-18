@@ -75,11 +75,19 @@ img {
 	display: block;
 	clear: both;
 }
+
+.top h2 {
+	display: inline-block;
+	margin-right: 10px;
+	margin-left: 40px;
+}
 </style>
 </head>
 
 <div class="total">
-
+	<div class="top">
+		<h2>오늘 업데이트된 상품 <font color="#BDBDBD">${count}</font></h2>
+	</div>
 	<ul class="ul">
 		<c:forEach var="productSellerDto" items="${list}">
 			<li>

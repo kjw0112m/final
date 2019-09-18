@@ -106,6 +106,9 @@ input[type=submit] {
 						class="size"></span> <br> <br> <input type="checkbox"
 						name="sizes" value="XL"><span class="select_size">
 						XL <input type="number" value="0" class="size">
+					</span> <br> <br> <input type="checkbox"
+						name="sizes" value="FREE"><span class="select_size">
+						FREE <input type="number" value="0" class="size">
 					</span> <br> <br> 대표이미지(.gif, .jpeg, .jpg, .png만 등록 가능합니다) <input
 						type="file" name="main" accept=".gif, .jpeg, .jpg, .png"
 						required="required"> <br> <br> 상세이미지(.gif,

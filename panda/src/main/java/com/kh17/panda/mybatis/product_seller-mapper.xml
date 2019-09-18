@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from (
 			select rownum rn, A.* from(
 				select * from product_seller
-					where product_name || nickname like '%' || #{keyword} || '%' order by regist_dt desc
+					where lower(product_name) || lower(nickname) like lower('%' || #{keyword} || '%') order by regist_dt desc
 			]]>
 				)A 
 		<![CDATA[
