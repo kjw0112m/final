@@ -42,7 +42,7 @@
         }
 
         .total {
-            margin-top: 150px;
+            margin-top: 250px;
         }
 
         .a {
@@ -57,6 +57,7 @@
 
         .btndiv {
             margin-top: 30px;
+            margin-bottom: 400px;
             text-align: center;
             width: 100%;
         }

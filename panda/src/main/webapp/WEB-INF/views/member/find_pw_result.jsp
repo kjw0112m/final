@@ -40,7 +40,8 @@
         }
 
         .total {
-            margin-top: 50px;
+            margin-top: 250px;
+            margin-bottom:250px;
         }
 
         .a {

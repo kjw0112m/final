@@ -16,7 +16,7 @@
             width: 1128px;
             height: 222px;
             text-align: center;
-            margin: top;
+            margin: auto;
         }
 
         .a>th {
@@ -42,7 +42,7 @@
         }
 
         .total {
-             margin-top: 50px;
+             margin-top: 250px;
             width:100%;
         }
 
@@ -55,7 +55,13 @@
             margin-left: 10px;
             text-decoration: none;
         }
-
+		
+		.btndiv {
+            margin-top: 30px;
+            margin-bottom: 400px;
+            text-align: center;
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -80,12 +86,15 @@
             </tbody>
             <tfoot>
             <tr class="c">
-                <td><a	href="find_pw" class="btn2">[비밀번호찾기]</a><br>
-                <a	href="login" class="btn2">[로그인] </a></td>
+                <td></td>
+                <td></td>
                 <td></td>
             </tr>
             </tfoot>
         </table>
+     	<div class="btndiv"><a	href="find_pw" class="btn2">비밀번호찾기</a>
+                <a	href="login" class="btn2">LOGIN</a>
+                </div>
     </div>
 </body>
 
