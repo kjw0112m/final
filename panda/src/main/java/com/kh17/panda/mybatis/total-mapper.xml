@@ -6,19 +6,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="seller" parameterType="map"
 		resultType="totalDto">
-		select seller_name,nickname, sum(product_price) as
+		select seller_name,nickname, sum(total_price) as
 		proceeds,email,phone,seller_id,
-		TO_CHAR(order_dt, 'yyyy-mm') from total
-		group by seller_name, nickname,
-		seller_id,email,phone,seller_id,TO_CHAR(order_dt,
-		'yyyy-mm')
-		having 1=1
+		TO_CHAR(order_dt, 'YYYY-MM') from total
+		where 1=1
 		<if test="type != null and keyword != null">
 			and
 			${type} like '%' || #{keyword} || '%'
 		</if>
 		and
-		to_char(order_dt, 'yyyy-mm') = to_char(sysdate,'yyyy-mm')
+		to_char(order_dt, 'YYYY-MM') = to_char(sysdate,'YYYY-MM')
+		group by seller_name, nickname,
+		seller_id,email,phone,seller_id,TO_CHAR(order_dt,
+		'YYYY-MM')
 	</select>
 
 </mapper>

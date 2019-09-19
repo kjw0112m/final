@@ -4,17 +4,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 이 파일은 SQL 명령만 보관하는 파일 따라서 외부에서 접근할 수 있도록 namespace를 지정 -->
 <mapper namespace="static">
+
 	<select id="month" resultType="ordersDto">
 		select
 		to_char(order_dt,
 		'YYYY-MM-DD') order_dt,
-		nvl(pay_status, '결제취소') pay_status,
 		sum(total_price) total_price
 		from
 		orders
+		where pay_status = '구매확정' or pay_status= '결제완료'
 		group by to_char(order_dt,
-		'YYYY-MM-DD'), pay_status
-		having pay_status = '구매확정'
+		'YYYY-MM-DD')
+		order by order_dt
 	</select>
 
 	<select id="detail" resultType="ordersDto">
@@ -26,11 +27,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		sum(quantity) quantity
 		from
 		orders
-		group by to_char(order_dt, 'YYYY-MM'),
-		pay_status
-		having to_char(order_dt,'YYYY-MM') = to_char(sysdate,
+		where to_char(order_dt,'YYYY-MM') = to_char(sysdate,
 		'YYYY-MM') and
-		pay_status in('구매확정')
+		pay_status = '구매확정' or pay_status= '결제완료'
+		group by to_char(order_dt, 'YYYY-MM')
+<!-- 		,pay_status -->
 	</select>
 
 	<select id="product_top" resultType="orderViewDto">

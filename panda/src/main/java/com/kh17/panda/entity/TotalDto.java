@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 public class TotalDto {
 	private String seller_id, nickname, email, phone;
 	private String product_name, seller_name;
-	private int product_price, product_id, proceeds;
+	private int product_price, product_id, proceeds, total_price;
 	private String pay_status, order_dt, find_dt;
 	private int quantity;
 }

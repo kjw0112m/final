@@ -25,10 +25,10 @@
 		<c:forEach items="${day}" var="day">
 		data.push({
 			day : "${day.order_dt}",
-			value : "${day.total_price}"
+			value : ${day.total_price}
 		});
 		</c:forEach>
-
+		console.log(data);
 		chart.data = data;
 		chart.dateFormatter.inputDateFormat = "yyyy-MM-dd";
 
