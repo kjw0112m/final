@@ -177,7 +177,7 @@
 			<div class="tab">
 				<ul>
 					<li class="selected"><a href="#none" id="">주문번호별</a></li>
-					<li><a href="#none" id="">품목주문별</a></li>
+<!-- 					<li><a href="#none" id="">품목주문별</a></li> -->
 				</ul>
 			</div>
 			<div id="tabNumber" class="tabCont">

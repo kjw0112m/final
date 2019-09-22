@@ -72,6 +72,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		) where rn between 1 and 10
 	</select>
 	
+	
+	
 	<select id="main_top" resultType="orderViewDto">
 		select * from (
 	<![CDATA[
