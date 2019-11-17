@@ -50,7 +50,7 @@ style>.del_tit {
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script>
 	$(function() {
-		var myKey = "3RrDks38GpZk8FDQYCoeng"; // sweet tracker에서 발급받은 자신의 키 넣는다.
+		var myKey = "mSjyhdGvU9Ooh8WRuH3DhA"; // sweet tracker에서 발급받은 자신의 키 넣는다.
 
 		var t_code = '${param.t_id}';
 		var t_invoice = '${param.t_invoice}';
